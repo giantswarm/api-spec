@@ -1,0 +1,815 @@
+swagger: "2.0"
+host: api.giantswarm.io
+basePath: /v4
+schemes:
+  - https
+info:
+  title: The Giant Swarm API Documentation
+  description: Description to be added here
+  termsOfService: https://giantswarm.io/terms/
+  version: 4.0.1
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /users/:
+    get:
+      operationId: getUsers
+      summary: List users
+      description: Fetch list of users. The result depends on the permissions of the user. To find a user account matching a certain email address, the `email` query parameter can be used. Only an exact match will be returned.
+      parameters:
+        - name: email
+          description: Email address to filter by
+          required: false
+          type: string
+          in: query
+      responses:
+        "200":
+          description: Success. The body contains a list of partial user objects. This list may be empty if no users exist or no users match the request parameters.
+          schema:
+            $ref: '#/definitions/Users'
+        "400":
+          description: Bad request syntax. A detailed error message will be sent as the response body.
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: Not authorized
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      operationId: addUser
+      summary: Create a new user
+      parameters:
+        - name: user
+          in: body
+          description: User details
+          required: true
+          schema:
+            $ref: '#/definitions/NewUser'
+      responses:
+        "201":
+          description: Success
+          headers:
+            Location:
+              type: string
+              description: URI of the created user
+        "401":
+          description: Not authorized
+          schema:
+            $ref: '#/definitions/Error'
+        "409":
+          description: Duplicate not created
+          schema:
+            $ref: '#/definitions/Error'
+
+  /users/{user_id}/:
+    get:
+      operationId: getUser
+      summary: Get user details
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkUser
+      summary: Check existence of user and access to it
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    patch:
+      operationId: updateUser
+      summary: Update user details
+      description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+    delete:
+      operationId: deleteUser
+      summary: Delete a user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+
+  /organizations/:
+    get:
+      operationId: getOrganizations
+      summary: Get list of organizations
+      parameters:
+      - name: name
+        in: query
+        description: Filter organizations by name
+        required: false
+        type: string
+      responses:
+        "200":
+          description: Success
+    post:
+      operationId: addOrganization
+      summary: Create new organiztion
+      responses:
+        "201":
+          description: Success
+
+  /organizations/{organization_id}/:
+    get:
+      operationId: getOrganization
+      summary: Get details on organization
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkOrganization
+      summary: Check organization existence and access
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    patch:
+      operationId: updateOrganization
+      summary: Update organization
+      description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    delete:
+      operationId: deleteOrganization
+      summary: Delete organization
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+
+  /organizations/{organization_id}/domains/:
+    get:
+      operationId: getDomains
+      summary: Get domains owned by the organization
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    post:
+      operationId: addDomain
+      summary: Add a domain to the organization
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "201":
+          description: Success
+
+  /organizations/{organization_id}/domains/{domain}/:
+    get:
+      operationId: getDomain
+      summary: Get domain details
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: domain
+          in: path
+          required: true
+          type: string
+          description: Domain name
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkDomain
+      summary: Check domain existence and access
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: domain
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    delete:
+      operationId: deleteDomain
+      summary: Delete domain
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: domain
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+
+  /organizations/{organization_id}/invoices/:
+    get:
+      operationId: getInvoices
+      summary: Get list of invoices for this organization
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+
+  /organizations/{organization_id}/invoices/{invoice_number}/:
+    get:
+      operationId: getInvoice
+      summary: Get invoice details
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: invoice_number
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkInvoice
+      summary: Check invoice existence and access
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: invoice_number
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+
+  /organizations/{organization_id}/invoices/{invoice_number}/download/:
+    get:
+      operationId: downloadInvoices
+      summary: Download invoice
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: invoice_number
+          in: path
+          required: true
+          type: string
+      produces:
+      - application/pdf
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkInvoiceDownload
+      summary: Check invoice document existence and access
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: invoice_number
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+
+  /organizations/{organization_id}/usage-reports/:
+    get:
+      operationId: getUsageReports
+      summary: Get list of usage reports for this organization
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+
+  /organizations/{organization_id}/usage-reports/{id}/:
+    get:
+      operationId: getUsageReport
+      summary: Get details on usage report
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkUsageReport
+      summary: Check usage report existence and access
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+
+  /organizations/{organization_id}/usage-reports/{id}/download/:
+    get:
+      operationId: downloadUsageReport
+      summary: Download usage report
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+      produces:
+      - text/csv
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkUsageReportDownload
+      summary: Check usage report download existence and access
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+
+  /clusters/:
+    get:
+      operationId: getClusters
+      summary: List clusters
+      description: Lists all clusters the current user has permissions to know about.
+      responses:
+        "200":
+          description: Success
+    post:
+      operationId: addCluster
+      summary: Create a new cluster
+      responses:
+        "200":
+          description: Success
+
+  /clusters/{cluster_id}/:
+    get:
+      operationId: getCluster
+      summary: Get details on a cluster
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkCluster
+      summary: Check cluster existence and access
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    patch:
+      operationId: updateCluster
+      summary: Update cluster details
+      description: Update details of a cluster, e. g. the cluster name. The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+    delete:
+      operationId: deleteCluster
+      summary: Delete cluster
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+
+  /clusters/{cluster_id}/key-pairs/:
+    get:
+      operationId: getKeyPairs
+      summary: Get list of key pairs
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    post:
+      operationId: addKeyPair
+      summary: Add a key pair
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+
+  /clusters/{cluster_id}/key-pairs/{id}/:
+    get:
+      operationId: getKeyPair
+      summary: Get information on a key pair
+      description: This method does not return the credentials.
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ID of the key pair to retrieve information for
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkKeyPair
+      summary: Check key pair existence and access
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ID of the key pair
+      responses:
+        "200":
+          description: Success
+    delete:
+      operationId: deleteKeyPair
+      summary: Revoke this key pair
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ID of the key pair to revoke
+      responses:
+        "204":
+          description: Success
+
+  /clusters/{cluster_id}/workers/:
+    get:
+      operationId: getWorkers
+      summary: Get list of worker nodes for a cluster
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    post:
+      operationId: addWorker
+      summary: Add workers to a cluster
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+
+  /clusters/{cluster_id}/workers/{worker_id}/:
+    get:
+      operationId: getWorker
+      summary: Get info on a worker node
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: worker_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkWorker
+      summary: Check worker node existence and access
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: worker_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    patch:
+      operationId: updateWorker
+      summary: Update worker node details
+      description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: worker_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+    delete:
+      operationId: deleteWorker
+      summary: Delete a worker node
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: worker_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+
+  /clusters/{cluster_id}/masters/:
+    get:
+      operationId: getMasters
+      summary: Get list of master nodes for a cluster
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    post:
+      operationId: addMaster
+      summary: Add masters to a cluster
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+
+  /clusters/{cluster_id}/masters/{master_id}/:
+    get:
+      operationId: getMaster
+      summary: Get info on a master node
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: master_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    head:
+      operationId: checkMaster
+      summary: Check master node existence and access
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: master_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+    patch:
+      operationId: updateMaster
+      summary: Update master node details
+      description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: master_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+    delete:
+      operationId: deleteMaster
+      summary: Delete a master node
+      parameters:
+        - name: cluster_id
+          in: path
+          required: true
+          type: string
+        - name: master_id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Success
+  /tokens/:
+    get:
+      operationId: getTokens
+      summary: Fetch list of tokens the current user has access to
+      responses:
+        "200":
+          description: Success
+    post:
+      operationId: addToken
+      summary: Create session or API token (login)
+      responses:
+        "201":
+          description: Created
+
+  /tokens/info/:
+    post:
+      operationId: getToken
+      summary: Get token details
+      description: For security reasons, information on a token is queried using `POST` requests with JSON request body.
+      responses:
+        "200":
+          description: Success
+
+  /tokens/delete/:
+    post:
+      operationId: deleteToken
+      summary: Delete a token
+      description: |
+        Deletes a token. In a consequence, this token can no longer be used to authenticate requests.
+
+        As a consequence, clients using this token will effectively be logged out.
+
+        For security reasons, deleting a token is done using a `POST` requests with JSON request body.
+      responses:
+        "204":
+          description: Success
+
+definitions:
+  Error:
+    type: object
+    required:
+     - code
+     - message
+    properties:
+      message:
+        type: string
+      code:
+        type: integer
+  User:
+    type: object
+    required:
+     - id
+     - email
+    properties:
+      id:
+        type: string
+        description: Unique identifier of the user
+      created:
+        type: string
+        format: date-time
+        description: Creation date and time of the user
+      email:
+        type: string
+        format: email
+        description: Email address of the user
+      expiry:
+        type: string
+        format: date-time
+        description: Date and time when the account will expire
+  Users:
+    type: array
+    items:
+      $ref: '#/definitions/User'
+  NewUser:
+    type: object
+    required: ["email"]
+    properties:
+      email:
+        type: string
+        format: email
+        description: Email address of the user
+      expiry:
+        type: string
+        format: date-time
+        description: Date and time when the account will expire
+  Organization:
+    type: object
+
+parameters:
+  userIdUrlParam:
+    name: user_id
+    in: path
+    description: User ID
+    required: true
+    type: string
