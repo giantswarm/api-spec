@@ -1,0 +1,143 @@
+definitions:
+
+  # Common error object
+  Error:
+    type: object
+    required:
+     - code
+     - message
+    properties:
+      message:
+        type: string
+      code:
+        type: integer
+
+  # User object
+  User:
+    type: object
+    required:
+     - id
+     - email
+    properties:
+      id:
+        type: string
+        description: Unique identifier of the user
+      created:
+        type: string
+        format: date-time
+        description: Creation date and time of the user
+      email:
+        type: string
+        format: email
+        description: Email address of the user
+      expiry:
+        type: string
+        format: date-time
+        description: Date and time when the account will expire
+
+  # Object used to create a new user
+  NewUser:
+    type: object
+    required: ["email"]
+    properties:
+      email:
+        type: string
+        format: email
+        description: Email address of the user
+      expiry:
+        type: string
+        format: date-time
+        description: Date and time when the account will expire
+      password:
+        type: string
+        description: Base64 encoded password. If no password is given, a secure one will be generated but not exposed anywhere.
+
+  # Model for updating a user
+  UpdateUser:
+    type: object
+    required: []
+    properties:
+      email:
+        type: string
+        format: email
+        description: Email address of the user
+      expiry:
+        type: string
+        format: date-time
+        description: Date and time when the account will expire
+      password:
+        type: string
+        description: Base64 encoded password
+
+  Organization:
+    type: object
+    required:
+      - id
+      - created
+      - members
+    properties:
+      id:
+        type: string
+      created:
+        type: string
+        format: date-time
+        description: Creation date and time of the user
+      members:
+        type: array
+        description: Array of membership objects
+        items:
+          $ref: '#/definitions/OrganizationMembership'
+
+  OrganizationListItem:
+    type: object
+    required:
+      - id
+      - created
+    properties:
+      id:
+        type: string
+        description: Organization ID
+      created:
+        type: string
+        format: date-time
+        description: Creation date and time of the user
+
+  OrganizationMembership:
+    type: object
+    required:
+      - user_id
+      - role
+    properties:
+      user_id:
+        type: string
+        description: User ID
+      role:
+        type: string
+        description: Role name, e. g. `OWNER`, `MEMBER`
+
+  Domain:
+    type: object
+    properties:
+      creation_date:
+        type: string
+        format: date-time
+        description: Creation date and time
+      domain:
+        type: string
+        description: Domain name
+      last_validation_attempt_date:
+        type: string
+        format: date-time
+        description: Last date/time the domain has been tried to validate
+      organization:
+        type: string
+        description: The owning organization's ID
+      status:
+        type: string
+        description: The domain's status, either `PENDING`, `VALIDATED` or `FAILED`
+      validation_comment:
+        type: string
+        description: Additional info on the result of the last validation attempt
+      validation_token:
+        type: string
+        description: Credentials for the validation of this domain

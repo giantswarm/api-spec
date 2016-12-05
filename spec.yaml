@@ -4,20 +4,57 @@ basePath: /v4
 schemes:
   - https
 info:
-  title: The Giant Swarm API Documentation
+  title: The Giant Swarm API v4
   description: Description to be added here
   termsOfService: https://giantswarm.io/terms/
   version: 4.0.1
+license:
+  name: Apache 2.0
+  url: http://www.apache.org/licenses/LICENSE-2.0.html
 consumes:
   - application/json
 produces:
   - application/json
+tags:
+  - name: tokens
+    description: Access to authorization tokens
+  - name: users
+    description: Access to user resources, settings etc.
+  - name: organizations
+    description: Access to organizations, members, owned clusters, invoices, usage reports etc.
+  - name: clusters
+    description: Access to clusters
+  - name: cluster nodes
+    description: Access to worker or master nodes of a cluster
+  - name: key pairs
+    description: A key pair is a unique combinations of a X.509 certificate and a private key. Key pairs are used to access the Kubernetes API of a cluster, both with `kubectl` and a web browser.
+    externalDocs:
+      url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
+      description: This user guide gives more information on how to use key pairs
+  - name: domains
+    description: Access to domains usable by an organization
+  - name: invoices
+    description: Access to invoices
+  - name: reports
+    description: Access to reports, like the usage report
+securityDefinitions:
+  token:
+    description: Currently the only scheme supported. Requires the auth token to be passed via the `Authorization` header with a value of the format `giantswarm <token>`.
+    type: apiKey
+    name: Authorization
+    in: header
+    scopes:
+      write:tokens: Create and delete tokens
+      write:organizations: Create and modify organizations
+
 
 paths:
   /users/:
     get:
       operationId: getUsers
-      summary: List users
+      tags:
+        - users
+      summary: Get list of users
       description: Fetch list of users. The result depends on the permissions of the user. To find a user account matching a certain email address, the `email` query parameter can be used. Only an exact match will be returned.
       parameters:
         - name: email
@@ -29,25 +66,33 @@ paths:
         "200":
           description: Success. The body contains a list of partial user objects. This list may be empty if no users exist or no users match the request parameters.
           schema:
-            $ref: '#/definitions/Users'
+            type: array
+            items:
+              $ref: 'definitions.yaml#/definitions/User'
+          examples:
+            application/json:
+              - {"id": "123-abc-456-defgh-789-ijk", "email": "foo@example.com"}
+              - {"id": "123-abc-456-defgh-789-ijl", "email": "bar@example.net"}
         "400":
           description: Bad request syntax. A detailed error message will be sent as the response body.
           schema:
-            $ref: '#/definitions/Error'
+            $ref: 'definitions.yaml#/definitions/Error'
         "401":
           description: Not authorized
           schema:
-            $ref: '#/definitions/Error'
+            $ref: 'definitions.yaml#/definitions/Error'
     post:
       operationId: addUser
-      summary: Create a new user
+      tags:
+        - users
+      summary: Create user
       parameters:
         - name: user
           in: body
           description: User details
           required: true
           schema:
-            $ref: '#/definitions/NewUser'
+            $ref: 'definitions.yaml#/definitions/NewUser'
       responses:
         "201":
           description: Success
@@ -58,55 +103,71 @@ paths:
         "401":
           description: Not authorized
           schema:
-            $ref: '#/definitions/Error'
+            $ref: 'definitions.yaml#/definitions/Error'
         "409":
           description: Duplicate not created
           schema:
-            $ref: '#/definitions/Error'
+            $ref: 'definitions.yaml#/definitions/Error'
 
   /users/{user_id}/:
     get:
       operationId: getUser
+      tags:
+        - users
       summary: Get user details
       parameters:
-        - name: user_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/UserIdPathParameter'
       responses:
         "200":
           description: Success
+          schema:
+            $ref: 'definitions.yaml#/definitions/User'
+          examples:
+            application/json:
+              id: 123-abc-456-defgh-789-ijk
+              email: foo@example.com
+              expiry: "2016-12-05T11:20:34Z"
+        "404":
+          description: Not found
+          schema:
+            $ref: 'definitions.yaml#/definitions/Error'
     head:
       operationId: checkUser
-      summary: Check existence of user and access to it
+      tags:
+        - users
+      summary: Check user existence
+      description: This method allows to check if a user with the given `user_id` exists and if the current user has access to it.
       parameters:
-        - name: user_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/UserIdPathParameter'
       responses:
         "200":
           description: Success
+        "404":
+          description: Not found
     patch:
       operationId: updateUser
-      summary: Update user details
-      description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
+      tags:
+        - users
+      summary: Update user
+      description: This method allows to modify certain user attributes. The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396).
       parameters:
-        - name: user_id
-          in: path
+        - $ref: 'parameters.yaml#/UserIdPathParameter'
+        - name: body
+          in: body
           required: true
-          type: string
+          description: Changes in JSON Merge Patch format
+          schema:
+            $ref: 'definitions.yaml#/definitions/UpdateUser'
       responses:
         "204":
           description: Success
     delete:
       operationId: deleteUser
-      summary: Delete a user
+      tags:
+        - users
+      summary: Delete user
       parameters:
-        - name: user_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/UserIdPathParameter'
       responses:
         "204":
           description: Success
@@ -114,6 +175,8 @@ paths:
   /organizations/:
     get:
       operationId: getOrganizations
+      tags:
+        - organizations
       summary: Get list of organizations
       parameters:
       - name: name
@@ -124,56 +187,62 @@ paths:
       responses:
         "200":
           description: Success
-    post:
-      operationId: addOrganization
-      summary: Create new organiztion
-      responses:
-        "201":
-          description: Success
+          schema:
+            type: array
+            items:
+              $ref: 'definitions.yaml#/definitions/OrganizationListItem'
 
   /organizations/{organization_id}/:
     get:
       operationId: getOrganization
-      summary: Get details on organization
+      tags:
+        - organizations
+      summary: Get organization details
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
       responses:
         "200":
           description: Success
+          schema:
+            $ref: 'definitions.yaml#/definitions/Organization'
     head:
       operationId: checkOrganization
-      summary: Check organization existence and access
+      tags:
+        - organizations
+      summary: Check organization existence
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
       responses:
         "200":
+          description: Success
+    put:
+      operationId: addOrganization
+      tags:
+        - organizations
+      summary: Create organization
+      parameters:
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
+      responses:
+        "201":
           description: Success
     patch:
       operationId: updateOrganization
+      tags:
+        - organizations
       summary: Update organization
       description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
       responses:
         "200":
           description: Success
     delete:
       operationId: deleteOrganization
+      tags:
+        - organizations
       summary: Delete organization
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
       responses:
         "204":
           description: Success
@@ -181,71 +250,65 @@ paths:
   /organizations/{organization_id}/domains/:
     get:
       operationId: getDomains
-      summary: Get domains owned by the organization
+      tags:
+        - domains
+      summary: Get list of domains
+      description: Returns a list of domains belonging to the organization specified via `organization_id`.
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
       responses:
         "200":
           description: Success
-    post:
-      operationId: addDomain
-      summary: Add a domain to the organization
-      parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "201":
-          description: Success
+          schema:
+            type: array
+            items:
+              $ref: 'definitions.yaml#/definitions/Domain'
 
   /organizations/{organization_id}/domains/{domain}/:
     get:
       operationId: getDomain
+      tags:
+        - domains
       summary: Get domain details
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
-        - name: domain
-          in: path
-          required: true
-          type: string
-          description: Domain name
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
+        - $ref: 'parameters.yaml#/DomainPathParameter'
       responses:
         "200":
           description: Success
+          schema:
+            $ref: 'definitions.yaml#/definitions/Domain'
     head:
       operationId: checkDomain
-      summary: Check domain existence and access
+      tags:
+        - domains
+      summary: Check domain existence
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
-        - name: domain
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
+        - $ref: 'parameters.yaml#/DomainPathParameter'
       responses:
         "200":
           description: Success
+    put:
+      operationId: addDomain
+      tags:
+        - domains
+      summary: Add domain
+      description: This method allows adding a domain for an organization. After it has been added and validated, a domain (as well as all its sub-domains) can be used for Ingress within any cluster of the organization.
+      parameters:
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
+      responses:
+        "201":
+          description: Success
+
     delete:
       operationId: deleteDomain
+      tags:
+        - domains
       summary: Delete domain
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
-        - name: domain
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
+        - $ref: 'parameters.yaml#/DomainPathParameter'
       responses:
         "204":
           description: Success
@@ -253,12 +316,12 @@ paths:
   /organizations/{organization_id}/invoices/:
     get:
       operationId: getInvoices
-      summary: Get list of invoices for this organization
+      tags:
+        - invoices
+      summary: Get list of invoices
+      description: Returns a list of invoices for the organization specified via `organization_id`.
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
       responses:
         "200":
           description: Success
@@ -266,31 +329,23 @@ paths:
   /organizations/{organization_id}/invoices/{invoice_number}/:
     get:
       operationId: getInvoice
+      tags:
+        - invoices
       summary: Get invoice details
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
-        - name: invoice_number
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
+        - $ref: 'parameters.yaml#/InvoiceNumberPathParameter'
       responses:
         "200":
           description: Success
     head:
       operationId: checkInvoice
-      summary: Check invoice existence and access
+      tags:
+        - invoices
+      summary: Check invoice existence
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
-        - name: invoice_number
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
+        - $ref: 'parameters.yaml#/InvoiceNumberPathParameter'
       responses:
         "200":
           description: Success
@@ -298,16 +353,12 @@ paths:
   /organizations/{organization_id}/invoices/{invoice_number}/download/:
     get:
       operationId: downloadInvoices
-      summary: Download invoice
+      tags:
+        - invoices
+      summary: Download invoice document
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
-        - name: invoice_number
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
+        - $ref: 'parameters.yaml#/InvoiceNumberPathParameter'
       produces:
       - application/pdf
       responses:
@@ -315,16 +366,12 @@ paths:
           description: Success
     head:
       operationId: checkInvoiceDownload
-      summary: Check invoice document existence and access
+      tags:
+        - invoices
+      summary: Check invoice document existence
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
-        - name: invoice_number
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
+        - $ref: 'parameters.yaml#/InvoiceNumberPathParameter'
       responses:
         "200":
           description: Success
@@ -332,12 +379,12 @@ paths:
   /organizations/{organization_id}/usage-reports/:
     get:
       operationId: getUsageReports
-      summary: Get list of usage reports for this organization
+      tags:
+        - reports
+      summary: Get list of reports
+      description: Returns a list of reports for the organization specified via `organization_id`.
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
       responses:
         "200":
           description: Success
@@ -345,12 +392,11 @@ paths:
   /organizations/{organization_id}/usage-reports/{id}/:
     get:
       operationId: getUsageReport
+      tags:
+        - reports
       summary: Get details on usage report
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
         - name: id
           in: path
           required: true
@@ -360,12 +406,11 @@ paths:
           description: Success
     head:
       operationId: checkUsageReport
+      tags:
+        - reports
       summary: Check usage report existence and access
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
         - name: id
           in: path
           required: true
@@ -377,12 +422,11 @@ paths:
   /organizations/{organization_id}/usage-reports/{id}/download/:
     get:
       operationId: downloadUsageReport
+      tags:
+        - reports
       summary: Download usage report
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
         - name: id
           in: path
           required: true
@@ -394,12 +438,11 @@ paths:
           description: Success
     head:
       operationId: checkUsageReportDownload
+      tags:
+        - reports
       summary: Check usage report download existence and access
       parameters:
-        - name: organization_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
         - name: id
           in: path
           required: true
@@ -411,14 +454,18 @@ paths:
   /clusters/:
     get:
       operationId: getClusters
-      summary: List clusters
+      tags:
+        - clusters
+      summary: Get list of clusters
       description: Lists all clusters the current user has permissions to know about.
       responses:
         "200":
           description: Success
     post:
       operationId: addCluster
-      summary: Create a new cluster
+      tags:
+        - clusters
+      summary: Create cluster
       responses:
         "200":
           description: Success
@@ -426,46 +473,42 @@ paths:
   /clusters/{cluster_id}/:
     get:
       operationId: getCluster
-      summary: Get details on a cluster
+      tags:
+        - clusters
+      summary: Get cluster details
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "200":
           description: Success
     head:
       operationId: checkCluster
-      summary: Check cluster existence and access
+      tags:
+        - clusters
+      summary: Check cluster existence
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "200":
           description: Success
     patch:
       operationId: updateCluster
-      summary: Update cluster details
+      tags:
+        - clusters
+      summary: Update cluster
       description: Update details of a cluster, e. g. the cluster name. The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "204":
           description: Success
     delete:
       operationId: deleteCluster
+      tags:
+        - clusters
       summary: Delete cluster
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "204":
           description: Success
@@ -473,23 +516,21 @@ paths:
   /clusters/{cluster_id}/key-pairs/:
     get:
       operationId: getKeyPairs
+      tags:
+        - key pairs
       summary: Get list of key pairs
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "200":
           description: Success
     post:
       operationId: addKeyPair
-      summary: Add a key pair
+      tags:
+        - key pairs
+      summary: Add key pair
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "200":
           description: Success
@@ -497,13 +538,12 @@ paths:
   /clusters/{cluster_id}/key-pairs/{id}/:
     get:
       operationId: getKeyPair
-      summary: Get information on a key pair
-      description: This method does not return the credentials.
+      tags:
+        - key pairs
+      summary: Get  key pair details
+      description: This method returns metadata on a key pair. However it *does not* return the actual certificate and private key data, which can only be accessed on key pair creation.
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: id
           in: path
           required: true
@@ -514,12 +554,11 @@ paths:
           description: Success
     head:
       operationId: checkKeyPair
-      summary: Check key pair existence and access
+      tags:
+        - key pairs
+      summary: Check key pair existence
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: id
           in: path
           required: true
@@ -530,12 +569,11 @@ paths:
           description: Success
     delete:
       operationId: deleteKeyPair
-      summary: Revoke this key pair
+      tags:
+        - key pairs
+      summary: Revoke key pair
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: id
           in: path
           required: true
@@ -548,23 +586,21 @@ paths:
   /clusters/{cluster_id}/workers/:
     get:
       operationId: getWorkers
+      tags:
+        - cluster nodes
       summary: Get list of worker nodes for a cluster
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "200":
           description: Success
     post:
       operationId: addWorker
+      tags:
+        - cluster nodes
       summary: Add workers to a cluster
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "204":
           description: Success
@@ -572,12 +608,11 @@ paths:
   /clusters/{cluster_id}/workers/{worker_id}/:
     get:
       operationId: getWorker
+      tags:
+        - cluster nodes
       summary: Get info on a worker node
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: worker_id
           in: path
           required: true
@@ -587,12 +622,11 @@ paths:
           description: Success
     head:
       operationId: checkWorker
+      tags:
+        - cluster nodes
       summary: Check worker node existence and access
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: worker_id
           in: path
           required: true
@@ -602,13 +636,12 @@ paths:
           description: Success
     patch:
       operationId: updateWorker
+      tags:
+        - cluster nodes
       summary: Update worker node details
       description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: worker_id
           in: path
           required: true
@@ -618,12 +651,11 @@ paths:
           description: Success
     delete:
       operationId: deleteWorker
+      tags:
+        - cluster nodes
       summary: Delete a worker node
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: worker_id
           in: path
           required: true
@@ -635,23 +667,21 @@ paths:
   /clusters/{cluster_id}/masters/:
     get:
       operationId: getMasters
+      tags:
+        - cluster nodes
       summary: Get list of master nodes for a cluster
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "200":
           description: Success
     post:
       operationId: addMaster
+      tags:
+        - cluster nodes
       summary: Add masters to a cluster
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "204":
           description: Success
@@ -659,12 +689,11 @@ paths:
   /clusters/{cluster_id}/masters/{master_id}/:
     get:
       operationId: getMaster
+      tags:
+        - cluster nodes
       summary: Get info on a master node
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: master_id
           in: path
           required: true
@@ -674,12 +703,11 @@ paths:
           description: Success
     head:
       operationId: checkMaster
+      tags:
+        - cluster nodes
       summary: Check master node existence and access
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: master_id
           in: path
           required: true
@@ -689,13 +717,12 @@ paths:
           description: Success
     patch:
       operationId: updateMaster
+      tags:
+        - cluster nodes
       summary: Update master node details
       description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: master_id
           in: path
           required: true
@@ -705,12 +732,11 @@ paths:
           description: Success
     delete:
       operationId: deleteMaster
+      tags:
+        - cluster nodes
       summary: Delete a master node
       parameters:
-        - name: cluster_id
-          in: path
-          required: true
-          type: string
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
         - name: master_id
           in: path
           required: true
@@ -721,13 +747,19 @@ paths:
   /tokens/:
     get:
       operationId: getTokens
-      summary: Fetch list of tokens the current user has access to
+      tags:
+        - tokens
+      summary: Get list of tokens
+      description: This methods returns a list of tokens the current user has access to.
       responses:
         "200":
           description: Success
     post:
       operationId: addToken
-      summary: Create session or API token (login)
+      tags:
+        - tokens
+      summary: Create token
+      description: This method allows to create a new token to be used for a client session or API access.
       responses:
         "201":
           description: Created
@@ -735,6 +767,8 @@ paths:
   /tokens/info/:
     post:
       operationId: getToken
+      tags:
+        - tokens
       summary: Get token details
       description: For security reasons, information on a token is queried using `POST` requests with JSON request body.
       responses:
@@ -744,7 +778,9 @@ paths:
   /tokens/delete/:
     post:
       operationId: deleteToken
-      summary: Delete a token
+      tags:
+        - tokens
+      summary: Delete token
       description: |
         Deletes a token. In a consequence, this token can no longer be used to authenticate requests.
 
@@ -754,62 +790,3 @@ paths:
       responses:
         "204":
           description: Success
-
-definitions:
-  Error:
-    type: object
-    required:
-     - code
-     - message
-    properties:
-      message:
-        type: string
-      code:
-        type: integer
-  User:
-    type: object
-    required:
-     - id
-     - email
-    properties:
-      id:
-        type: string
-        description: Unique identifier of the user
-      created:
-        type: string
-        format: date-time
-        description: Creation date and time of the user
-      email:
-        type: string
-        format: email
-        description: Email address of the user
-      expiry:
-        type: string
-        format: date-time
-        description: Date and time when the account will expire
-  Users:
-    type: array
-    items:
-      $ref: '#/definitions/User'
-  NewUser:
-    type: object
-    required: ["email"]
-    properties:
-      email:
-        type: string
-        format: email
-        description: Email address of the user
-      expiry:
-        type: string
-        format: date-time
-        description: Date and time when the account will expire
-  Organization:
-    type: object
-
-parameters:
-  userIdUrlParam:
-    name: user_id
-    in: path
-    description: User ID
-    required: true
-    type: string
