@@ -38,7 +38,7 @@ tags:
   - name: reports
     description: Access to reports, like the usage report
 securityDefinitions:
-  token:
+  Authorization:
     description: Currently the only scheme supported. Requires the auth token to be passed via the `Authorization` header with a value of the format `giantswarm <token>`.
     type: apiKey
     name: Authorization
