@@ -8,9 +8,9 @@ info:
   description: Description to be added here
   termsOfService: https://giantswarm.io/terms/
   version: 4.0.1
-license:
-  name: Apache 2.0
-  url: http://www.apache.org/licenses/LICENSE-2.0.html
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 consumes:
   - application/json
 produces:
