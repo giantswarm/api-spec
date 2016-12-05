@@ -43,9 +43,6 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
-    scopes:
-      write:tokens: Create and delete tokens
-      write:organizations: Create and modify organizations
 
 
 paths:
