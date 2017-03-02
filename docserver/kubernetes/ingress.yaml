@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: api-spec-docserver
+  namespace: giantswarm
+  labels:
+    app: api-spec-docserver
+spec:
+  rules:
+  - host: api-spec-docserver.giantswarm.io
+    http:
+      paths:
+      - backend:
+          serviceName: api-spec-docserver
+          servicePort: 8000
+        path: /
