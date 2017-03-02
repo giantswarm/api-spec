@@ -8,7 +8,7 @@ metadata:
     app: api-spec-docserver
 
 spec:
-  replicas: 2
+  replicas: 1
 
   template:
     metadata:
@@ -18,19 +18,5 @@ spec:
       containers:
       - name: api-spec-docserver
         image: registry.giantswarm.io/giantswarm/api-spec-docserver:%%DOCKER_TAG%%
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8000
-            scheme: HTTP
-          initialDelaySeconds: 5
-          timeoutSeconds: 1
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8000
-            scheme: HTTP
-          initialDelaySeconds: 10
-          timeoutSeconds: 1
       imagePullSecrets:
       - name: circleci-giantswarm-registry

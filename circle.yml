@@ -32,5 +32,6 @@ deployment:
             - ./kubectl cluster-info
             # update the manifests with the tag, apply the new manifests, and watch the rollout
             - sed -i "s/%%DOCKER_TAG%%/$CIRCLE_SHA1/g" ./docserver/kubernetes/*
+            - sed -i "s/%%BRANCHNAME%%/$CIRCLE_BRANCH/g" ./docserver/kubernetes/*
             - ./kubectl apply --namespace=$CIRCLE_PROJECT_USERNAME -f ./docserver/kubernetes/
             - ./kubectl rollout --namespace=$CIRCLE_PROJECT_USERNAME status deployment/$CIRCLE_PROJECT_REPONAME-docserver
