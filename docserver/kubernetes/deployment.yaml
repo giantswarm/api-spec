@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        app: api-spec-docserver
+        app: api-spec-docserver-%%SLUG%%
     spec:
       containers:
       - name: api-spec-docserver-%%SLUG%%
