@@ -18,5 +18,7 @@ spec:
       containers:
       - name: api-spec-docserver-%%SLUG%%
         image: registry.giantswarm.io/giantswarm/api-spec-docserver:%%DOCKER_TAG%%
+        ports:
+        - containerPort: 8000
       imagePullSecrets:
       - name: circleci-giantswarm-registry
