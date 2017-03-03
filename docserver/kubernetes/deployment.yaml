@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 
 metadata:
-  name: api-spec-docserver
+  name: api-spec-docserver-%%SLUG%%
   namespace: giantswarm
   labels:
     app: api-spec-docserver
@@ -16,7 +16,7 @@ spec:
         app: api-spec-docserver
     spec:
       containers:
-      - name: api-spec-docserver
+      - name: api-spec-docserver-%%SLUG%%
         image: registry.giantswarm.io/giantswarm/api-spec-docserver:%%DOCKER_TAG%%
       imagePullSecrets:
       - name: circleci-giantswarm-registry
