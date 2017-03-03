@@ -34,7 +34,7 @@ deployment:
             # use root path for serving
             - sed -i "s:%%PATH%%:/:g" ./docserver/kubernetes/ingress.yaml
             - ./kubectl apply --namespace=$CIRCLE_PROJECT_USERNAME -f ./docserver/kubernetes/
-            - ./kubectl rollout --namespace=$CIRCLE_PROJECT_USERNAME status deployment/$CIRCLE_PROJECT_REPONAME-docserver
+            - ./kubectl rollout --namespace=$CIRCLE_PROJECT_USERNAME status deployment/$CIRCLE_PROJECT_REPONAME-docserver-master
     staging:
         # this will apply to all branches not named "master"
         branch: /.*/
@@ -59,4 +59,4 @@ deployment:
             # use root path for serving
             - sed -i "s:%%PATH%%:/$CIRCLE_BRANCH/:g" ./docserver/kubernetes/ingress.yaml
             - ./kubectl apply --namespace=$CIRCLE_PROJECT_USERNAME -f ./docserver/kubernetes/
-            - ./kubectl rollout --namespace=$CIRCLE_PROJECT_USERNAME status deployment/$CIRCLE_PROJECT_REPONAME-docserver
+            - ./kubectl rollout --namespace=$CIRCLE_PROJECT_USERNAME status deployment/$CIRCLE_PROJECT_REPONAME-docserver-staging
