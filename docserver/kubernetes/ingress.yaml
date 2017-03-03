@@ -4,7 +4,7 @@ metadata:
   name: api-spec-docserver-%%SLUG%%
   namespace: giantswarm
   labels:
-    app: api-spec-docserver
+    app: api-spec-docserver-%%SLUG%%
   annotations:
     ingress.kubernetes.io/rewrite-target: /
 spec:
