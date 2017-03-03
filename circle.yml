@@ -4,7 +4,7 @@ machine:
 
 test:
     override:
-        # biuld the docserver docker image
+        # build the docserver docker image
         - docker build -t registry.giantswarm.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-docserver:$CIRCLE_SHA1 -f docserver/Dockerfile .
         # sanity check
         - docker run -d -p 8000:8000 registry.giantswarm.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-docserver:$CIRCLE_SHA1
