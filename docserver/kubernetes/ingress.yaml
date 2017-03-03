@@ -5,6 +5,8 @@ metadata:
   namespace: giantswarm
   labels:
     app: api-spec-docserver
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: apispec.g8s.fra-1.giantswarm.io
