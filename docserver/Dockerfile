@@ -1,0 +1,6 @@
+FROM nginx:1.11
+RUN rm -r /etc/nginx/conf.d
+ADD docserver/index.html /www/
+ADD *.yaml /www/
+ADD docserver/nginx.conf /etc/nginx/
+EXPOSE 8000
