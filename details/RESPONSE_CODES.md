@@ -1,4 +1,6 @@
-This file documents response codes as used by the API.
+# Response codes
+
+Error messages and standard responses, like after creation of a resource, contain both a `code` and a `message` part to inform about the outcome of an operation. The `code` part can be any of the following:
 
 - `INVALID_CREDENTIALS`: Indicates the provided credentials are not valid.
 - `PERMISSION_DENIED`: Indicates the provided credentials are valid, but the requested resource requires other permissions.
