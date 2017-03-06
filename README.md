@@ -34,6 +34,6 @@ Error messages and standard responses, like the ones returned after creating a r
 }
 ```
 
-The `code` is a documented, machine readable string identifier. See [RESPONSE_CODES.md](https://github.com/giantswarm/api-spec/blob/master/RESPONSE_CODES.md) for a list of response codes.
+The `code` is a documented, machine readable string identifier. See [RESPONSE_CODES.md](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) for a list of response codes.
 
 The `message` part gives additional information intended for end users, not meant to be machine readable.
