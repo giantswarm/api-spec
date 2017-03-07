@@ -5,7 +5,7 @@ schemes:
 info:
   title: The Giant Swarm API v4
   description: |
-    This is the authoritative specification/documentation for the Giant Swarm API starting at version `v4`.
+    This is the documentation for the Giant Swarm API starting at version `v4`.
 
     For an introduction to Giant Swarm, refer to the [documentation site](https://docs.giantswarm.io/).
 
@@ -17,7 +17,7 @@ info:
 
     Feedback on the API as well as this documentation is welcome via `support@giantswarm.io` or on IRC channel [#giantswarm](irc://irc.freenode.org:6667/#giantswarm) on freenode.
 
-    The source of this specification/documentation is available on [GitHub](https://github.com/giantswarm/api-spec).
+    The source of this documentation is available on [GitHub](https://github.com/giantswarm/api-spec).
 
   termsOfService: https://giantswarm.io/terms/
   version: 4.0.0
@@ -33,14 +33,14 @@ tags:
     description: |
       Clusters are a central resource of the Giant Swarm API. As a user or team using Giant Swarm, you set up Kubernetes clusters to run your own workoads.
 
-      The API currently provides operations to create and delete clusters, as well as list all available clusters and get details on certain clusters.
+      The API currently provides operations to create and delete clusters, as well as list all available clusters and get details on specific clusters.
   - name: key pairs
-    description: A key pair is a unique combinations of a X.509 certificate and a private key. Key pairs are used to access the Kubernetes API of a cluster, both using `kubectl` and any standard web browser.
+    description: A key pair is a unique combination of a X.509 certificate and a private key. Key pairs are used to access the Kubernetes API of a cluster, both using `kubectl` and any standard web browser.
     externalDocs:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
       description: "User guide: Accessing Pods and Services from the Outside"
 securityDefinitions:
-  Authorization:
+  token_auth:
     description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
     type: apiKey
     name: Authorization
@@ -98,7 +98,7 @@ paths:
 
         It is *recommended* to also specify the `name` attribute to give the cluster a friendly name, like e. g. "Development Cluster".
 
-        Additional definition attributes can be used. Where attributes are ommitted, default configuration values will be applied. For example, if no `kubernetes_version` is specified, the latest stable version is used.
+        Additional definition attributes can be used. Where attributes are ommitted, default configuration values will be applied. For example, if no `kubernetes_version` is specified, the latest version tested and provided by Giant Swarm is used.
 
         The `workers` attribute, if present, must contain an array of node definition objects. The number of objects given determines the number of workers created. For example, requesting three worker nodes with default configuration can be achieved by submitting an array of three empty objects:
 
@@ -195,7 +195,7 @@ paths:
       description: |
         This operation allows to delete a cluster.
 
-        __Caution:__ Deleting a cluster causes the termination of all workloads running on the cluster. Data stored on the worker nodes' non-persistent storage will be lost. There is no way to undo this operation.
+        __Caution:__ Deleting a cluster causes the termination of all workloads running on the cluster. Data stored on the worker nodes will be lost. There is no way to undo this operation.
 
         The response is sent as soon as the request is validated. At that point, workloads might still be running on the cluster and may be accessible for a little wile, until the cluster is actually deleted.
       responses:
@@ -252,9 +252,9 @@ paths:
       description: |
         This operation allows to create a new key pair for accessing a specific cluster.
 
-        A key pair actually consists of an unencrypted private RSA key and an X.509 certificate. In addition, when obtaining a key pair for a cluster, the cluster's certificate authority file (CA certificate) is delivered, which is required by TLS clients to establish trust to the cluster.
+        A key pair consists of an unencrypted private RSA key and an X.509 certificate. In addition, when obtaining a key pair for a cluster, the cluster's certificate authority file (CA certificate) is delivered, which is required by TLS clients to establish trust to the cluster.
 
-        In addition to the credentials itself, a key pair has some metadata like a unique ID, a creation timestamp and a free text `description` that you can use at will, for example to memorize for whom a key pair has been issued.
+        In addition to the credentials itself, a key pair has some metadata like a unique ID, a creation timestamp and a free text `description` that you can use at will, for example to note for whom a key pair has been issued.
 
         __Note:__ The actual credentials coming with the key pair (key, certificate) can only be accessed once, as the result of the `POST` request that triggers their creation. This restriction exists to minimize the risk of credentials being leaked. If you fail to capture the credentials upon creation, you'll have to repeat the creation request.
       responses:
