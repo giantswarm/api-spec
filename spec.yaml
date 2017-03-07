@@ -185,6 +185,28 @@ paths:
           description: Error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
+    patch:
+      operationId: modifyCluster
+      tags:
+        - clusters
+      parameters:
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
+      summary: Modify cluster
+      description: |
+        This operation allows to modify an existing cluster.
+
+        Currently only changing the `name` and `owner` attribute is supported.
+
+        The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard. Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
+      responses:
+        "200":
+          description: Cluster modified
+          schema:
+            $ref: 'definitions.yaml#/definitions/V4ClusterDetailsResponse'
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
     delete:
       operationId: deleteCluster
       tags:
