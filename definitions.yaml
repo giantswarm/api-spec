@@ -1,7 +1,7 @@
 definitions:
 
-  # Common error object
-  Error:
+  # Generic response model
+  V4GenericResponse:
     type: object
     required:
      - code
@@ -10,134 +10,156 @@ definitions:
       message:
         type: string
       code:
-        type: integer
+        type: string
 
-  # User object
-  User:
+  # Request to create a new cluster
+  V4AddClusterRequest:
     type: object
     required:
-     - id
-     - email
+      - owner
+    description: Request model for creating a new cluster
     properties:
-      id:
+      owner:
         type: string
-        description: Unique identifier of the user
-      created:
+        description: Name of the organization owning the cluster
+      name:
         type: string
-        format: date-time
-        description: Creation date and time of the user
-      email:
+        description: Cluster name
+      kubernetes_version:
         type: string
-        format: email
-        description: Email address of the user
-      expiry:
-        type: string
-        format: date-time
-        description: Date and time when the account will expire
-
-  # Object used to create a new user
-  NewUser:
-    type: object
-    required: ["email"]
-    properties:
-      email:
-        type: string
-        format: email
-        description: Email address of the user
-      expiry:
-        type: string
-        format: date-time
-        description: Date and time when the account will expire
-      password:
-        type: string
-        description: Base64 encoded password. If no password is given, a secure one will be generated but not exposed anywhere.
-
-  # Model for updating a user
-  UpdateUser:
-    type: object
-    required: []
-    properties:
-      email:
-        type: string
-        format: email
-        description: Email address of the user
-      expiry:
-        type: string
-        format: date-time
-        description: Date and time when the account will expire
-      password:
-        type: string
-        description: Base64 encoded password
-
-  Organization:
-    type: object
-    required:
-      - id
-      - created
-      - members
-    properties:
-      id:
-        type: string
-      created:
-        type: string
-        format: date-time
-        description: Creation date and time of the user
-      members:
+        description: Kubernetes version number
+      workers:
         type: array
-        description: Array of membership objects
         items:
-          $ref: '#/definitions/OrganizationMembership'
+          $ref: '#/definitions/V4NodeDefinition'
 
-  OrganizationListItem:
+  # Details on existing cluster
+  V4ClusterDetailsResponse:
     type: object
-    required:
-      - id
-      - created
+    description: Response model showing details of a cluster
     properties:
       id:
         type: string
-        description: Organization ID
-      created:
+        description: Unique cluster identifier
+      api_endpoint:
         type: string
-        format: date-time
-        description: Creation date and time of the user
+        description: URI of the Kubernetes API endpoint
+      create_date:
+        type: string
+        description: Date/time of cluster creation
+      owner:
+        type: string
+        description: Name of the organization owning the cluster
+      name:
+        type: string
+        description: Cluster name
+      kubernetes_version:
+        type: string
+        description: Kubernetes version number
+      workers:
+        type: array
+        items:
+          $ref: '#/definitions/V4NodeDefinition'
 
-  OrganizationMembership:
+
+  # Definition of a cluster node
+  V4NodeDefinition:
+    type: object
+    properties:
+      memory:
+        type: object
+        properties:
+          size_gb:
+            type: integer
+            description: RAM size in GB
+      storage:
+        type: object
+        properties:
+          size_gb:
+            type: integer
+            description: Node storage size in GB
+      cpu:
+        type: object
+        properties:
+          cores:
+            type: integer
+            description: Number of CPU cores
+      labels:
+        type: object
+        additionalProperties: true
+
+  # List of clusters
+  V4GetClustersResponse:
+    type: array
+    description: List of sparse cluster objects
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the cluster
+        name:
+          type: string
+          description: User-friendly name of the cluster
+        create_date:
+          type: string
+          description: Date/time of cluster creation
+
+  # List of key pairs
+  V4GetKeyPairsResponse:
+    type: array
+    description: Array of sparse key pair objects
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the key pair
+        description:
+          type: string
+          description: Free text information about the key pair
+        ttl_hours:
+          type: integer
+          description: Expiration time (from creation) in hours
+        create_date:
+          type: string
+          description: Date/time of creation
+
+  # Add key pair request
+  V4AddKeyPairRequest:
     type: object
     required:
-      - user_id
-      - role
+      - description
     properties:
-      user_id:
+      description:
         type: string
-        description: User ID
-      role:
-        type: string
-        description: Role name, e. g. `OWNER`, `MEMBER`
+        description: Free text information about the key pair
+      ttl_hours:
+        type: integer
+        format: int32
+        description: Expiration time (from creation) in hours
 
-  Domain:
+  V4AddKeyPairResponse:
     type: object
     properties:
-      creation_date:
+      id:
         type: string
-        format: date-time
-        description: Creation date and time
-      domain:
+        description: Unique identifier of the key pair
+      description:
         type: string
-        description: Domain name
-      last_validation_attempt_date:
+        description: Free text information about the key pair
+      ttl_hours:
+        type: integer
+        description: Expiration time (from creation) in hours
+      create_date:
         type: string
-        format: date-time
-        description: Last date/time the domain has been tried to validate
-      organization:
+        description: Date/time of creation
+      certificate_authority_data:
         type: string
-        description: The owning organization's ID
-      status:
+        description: PEM-encoded CA certificate of the cluster
+      client_key_data:
         type: string
-        description: The domain's status, either `PENDING`, `VALIDATED` or `FAILED`
-      validation_comment:
+        description: PEM-encoded RSA private key
+      client_certificate_data:
         type: string
-        description: Additional info on the result of the last validation attempt
-      validation_token:
-        type: string
-        description: Credentials for the validation of this domain
+        description: PEM-encoded certificate
