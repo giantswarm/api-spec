@@ -50,42 +50,6 @@ securityDefinitions:
 paths:
 
   /v4/clusters/:
-    get:
-      operationId: getClusters
-      tags:
-        - clusters
-      summary: Get clusters
-      description: |
-        This operation returns a list of all clusters the current user has access to.
-      responses:
-        "200":
-          description: Cluster list
-          schema:
-            $ref: 'definitions.yaml#/definitions/V4GetClustersResponse'
-          examples:
-            application/json:
-              [
-                {
-                    "id": "a7g3k5",
-                    "create_date": "2016-06-01T12:00:00.000Z",
-                    "name": "Production Cluster"
-                },
-                {
-                    "id": "i3d9t6",
-                    "create_date": "2016-07-01T12:00:00.000Z",
-                    "name": "Staging Cluster"
-                }
-              ]
-        default:
-          description: Error
-          schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "UNKNOWN_ERROR",
-                "message": "An unknown error occurred"
-              }
     post:
       operationId: addCluster
       tags:

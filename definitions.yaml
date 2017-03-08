@@ -88,23 +88,6 @@ definitions:
         type: object
         additionalProperties: true
 
-  # List of clusters
-  V4GetClustersResponse:
-    type: array
-    description: List of sparse cluster objects
-    items:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the cluster
-        name:
-          type: string
-          description: User-friendly name of the cluster
-        create_date:
-          type: string
-          description: Date/time of cluster creation
-
   # List of key pairs
   V4GetKeyPairsResponse:
     type: array
