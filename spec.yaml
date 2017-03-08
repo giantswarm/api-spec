@@ -1,13 +1,26 @@
 swagger: "2.0"
 host: api.giantswarm.io
-basePath: /v4
 schemes:
   - https
 info:
   title: The Giant Swarm API v4
-  description: Description to be added here
+  description: |
+    This is the documentation for the Giant Swarm API starting at version `v4`.
+
+    For an introduction to Giant Swarm, refer to the [documentation site](https://docs.giantswarm.io/).
+
+    The Giant Swarm API attempts to behave in a __restful__ way. As a developer, you acess recources using the `GET` method and, for example, delete them using the same path and the `DELETE` method.
+
+    Accessing resources via GET usually returns all information available about a resource, while collections, like for example the list of all clusters you have access to, only contain a selected few attributes of each member item.
+
+    Some requests, like for example the request to create a new cluster, don't return the resource itself. Instead, the response delivers a standard message body, showing a `code` and a `message` part. The `message` contains information for you or a client's end user. The `code` attribute contains some string (example: `RESOURCE_CREATED`) that is supposed to give you details on the state of the operation, in addition to standard HTTP status codes. This message format is also used in the case of errors. We provide a [list of all response codes](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) outside this documentation.
+
+    Feedback on the API as well as this documentation is welcome via `support@giantswarm.io` or on IRC channel [#giantswarm](irc://irc.freenode.org:6667/#giantswarm) on freenode.
+
+    The source of this documentation is available on [GitHub](https://github.com/giantswarm/api-spec).
+
   termsOfService: https://giantswarm.io/terms/
-  version: 4.0.1
+  version: 4.0.0
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -16,774 +29,233 @@ consumes:
 produces:
   - application/json
 tags:
-  - name: tokens
-    description: Access to authorization tokens
-  - name: users
-    description: Access to user resources, settings etc.
-  - name: organizations
-    description: Access to organizations, members, owned clusters, invoices, usage reports etc.
   - name: clusters
-    description: Access to clusters
-  - name: cluster nodes
-    description: Access to worker or master nodes of a cluster
+    description: |
+      Clusters are a central resource of the Giant Swarm API. As a user or team using Giant Swarm, you set up Kubernetes clusters to run your own workoads.
+
+      The API currently provides operations to create and delete clusters, as well as list all available clusters and get details on specific clusters.
   - name: key pairs
-    description: A key pair is a unique combinations of a X.509 certificate and a private key. Key pairs are used to access the Kubernetes API of a cluster, both with `kubectl` and a web browser.
+    description: A key pair is a unique combination of a X.509 certificate and a private key. Key pairs are used to access the Kubernetes API of a cluster, both using `kubectl` and any standard web browser.
     externalDocs:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
-      description: This user guide gives more information on how to use key pairs
-  - name: domains
-    description: Access to domains usable by an organization
-  - name: invoices
-    description: Access to invoices
-  - name: reports
-    description: Access to reports, like the usage report
+      description: "User guide: Accessing Pods and Services from the Outside"
 securityDefinitions:
-  Authorization:
-    description: Currently the only scheme supported. Requires the auth token to be passed via the `Authorization` header with a value of the format `giantswarm <token>`.
+  token_auth:
+    description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
     type: apiKey
     name: Authorization
     in: header
 
 
 paths:
-  /users/:
-    get:
-      operationId: getUsers
-      tags:
-        - users
-      summary: Get list of users
-      description: Fetch list of users. The result depends on the permissions of the user. To find a user account matching a certain email address, the `email` query parameter can be used. Only an exact match will be returned.
-      parameters:
-        - name: email
-          description: Email address to filter by
-          required: false
-          type: string
-          in: query
-      responses:
-        "200":
-          description: Success. The body contains a list of partial user objects. This list may be empty if no users exist or no users match the request parameters.
-          schema:
-            type: array
-            items:
-              $ref: 'definitions.yaml#/definitions/User'
-          examples:
-            application/json:
-              - {"id": "123-abc-456-defgh-789-ijk", "email": "foo@example.com"}
-              - {"id": "123-abc-456-defgh-789-ijl", "email": "bar@example.net"}
-        "400":
-          description: Bad request syntax. A detailed error message will be sent as the response body.
-          schema:
-            $ref: 'definitions.yaml#/definitions/Error'
-        "401":
-          description: Not authorized
-          schema:
-            $ref: 'definitions.yaml#/definitions/Error'
-    post:
-      operationId: addUser
-      tags:
-        - users
-      summary: Create user
-      parameters:
-        - name: user
-          in: body
-          description: User details
-          required: true
-          schema:
-            $ref: 'definitions.yaml#/definitions/NewUser'
-      responses:
-        "201":
-          description: Success
-          headers:
-            Location:
-              type: string
-              description: URI of the created user
-        "401":
-          description: Not authorized
-          schema:
-            $ref: 'definitions.yaml#/definitions/Error'
-        "409":
-          description: Duplicate not created
-          schema:
-            $ref: 'definitions.yaml#/definitions/Error'
 
-  /users/{user_id}/:
-    get:
-      operationId: getUser
-      tags:
-        - users
-      summary: Get user details
-      parameters:
-        - $ref: 'parameters.yaml#/UserIdPathParameter'
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: 'definitions.yaml#/definitions/User'
-          examples:
-            application/json:
-              id: 123-abc-456-defgh-789-ijk
-              email: foo@example.com
-              expiry: "2016-12-05T11:20:34Z"
-        "404":
-          description: Not found
-          schema:
-            $ref: 'definitions.yaml#/definitions/Error'
-    head:
-      operationId: checkUser
-      tags:
-        - users
-      summary: Check user existence
-      description: This method allows to check if a user with the given `user_id` exists and if the current user has access to it.
-      parameters:
-        - $ref: 'parameters.yaml#/UserIdPathParameter'
-      responses:
-        "200":
-          description: Success
-        "404":
-          description: Not found
-    patch:
-      operationId: updateUser
-      tags:
-        - users
-      summary: Update user
-      description: This method allows to modify certain user attributes. The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396).
-      parameters:
-        - $ref: 'parameters.yaml#/UserIdPathParameter'
-        - name: body
-          in: body
-          required: true
-          description: Changes in JSON Merge Patch format
-          schema:
-            $ref: 'definitions.yaml#/definitions/UpdateUser'
-      responses:
-        "204":
-          description: Success
-    delete:
-      operationId: deleteUser
-      tags:
-        - users
-      summary: Delete user
-      parameters:
-        - $ref: 'parameters.yaml#/UserIdPathParameter'
-      responses:
-        "204":
-          description: Success
-
-  /organizations/:
-    get:
-      operationId: getOrganizations
-      tags:
-        - organizations
-      summary: Get list of organizations
-      parameters:
-      - name: name
-        in: query
-        description: Filter organizations by name
-        required: false
-        type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            type: array
-            items:
-              $ref: 'definitions.yaml#/definitions/OrganizationListItem'
-
-  /organizations/{organization_id}/:
-    get:
-      operationId: getOrganization
-      tags:
-        - organizations
-      summary: Get organization details
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: 'definitions.yaml#/definitions/Organization'
-    head:
-      operationId: checkOrganization
-      tags:
-        - organizations
-      summary: Check organization existence
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-      responses:
-        "200":
-          description: Success
-    put:
-      operationId: addOrganization
-      tags:
-        - organizations
-      summary: Create organization
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-      responses:
-        "201":
-          description: Success
-    patch:
-      operationId: updateOrganization
-      tags:
-        - organizations
-      summary: Update organization
-      description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-      responses:
-        "200":
-          description: Success
-    delete:
-      operationId: deleteOrganization
-      tags:
-        - organizations
-      summary: Delete organization
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-      responses:
-        "204":
-          description: Success
-
-  /organizations/{organization_id}/domains/:
-    get:
-      operationId: getDomains
-      tags:
-        - domains
-      summary: Get list of domains
-      description: Returns a list of domains belonging to the organization specified via `organization_id`.
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-      responses:
-        "200":
-          description: Success
-          schema:
-            type: array
-            items:
-              $ref: 'definitions.yaml#/definitions/Domain'
-
-  /organizations/{organization_id}/domains/{domain}/:
-    get:
-      operationId: getDomain
-      tags:
-        - domains
-      summary: Get domain details
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - $ref: 'parameters.yaml#/DomainPathParameter'
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: 'definitions.yaml#/definitions/Domain'
-    head:
-      operationId: checkDomain
-      tags:
-        - domains
-      summary: Check domain existence
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - $ref: 'parameters.yaml#/DomainPathParameter'
-      responses:
-        "200":
-          description: Success
-    put:
-      operationId: addDomain
-      tags:
-        - domains
-      summary: Add domain
-      description: This method allows adding a domain for an organization. After it has been added and validated, a domain (as well as all its sub-domains) can be used for Ingress within any cluster of the organization.
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-      responses:
-        "201":
-          description: Success
-
-    delete:
-      operationId: deleteDomain
-      tags:
-        - domains
-      summary: Delete domain
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - $ref: 'parameters.yaml#/DomainPathParameter'
-      responses:
-        "204":
-          description: Success
-
-  /organizations/{organization_id}/invoices/:
-    get:
-      operationId: getInvoices
-      tags:
-        - invoices
-      summary: Get list of invoices
-      description: Returns a list of invoices for the organization specified via `organization_id`.
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-      responses:
-        "200":
-          description: Success
-
-  /organizations/{organization_id}/invoices/{invoice_number}/:
-    get:
-      operationId: getInvoice
-      tags:
-        - invoices
-      summary: Get invoice details
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - $ref: 'parameters.yaml#/InvoiceNumberPathParameter'
-      responses:
-        "200":
-          description: Success
-    head:
-      operationId: checkInvoice
-      tags:
-        - invoices
-      summary: Check invoice existence
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - $ref: 'parameters.yaml#/InvoiceNumberPathParameter'
-      responses:
-        "200":
-          description: Success
-
-  /organizations/{organization_id}/invoices/{invoice_number}/download/:
-    get:
-      operationId: downloadInvoices
-      tags:
-        - invoices
-      summary: Download invoice document
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - $ref: 'parameters.yaml#/InvoiceNumberPathParameter'
-      produces:
-      - application/pdf
-      responses:
-        "200":
-          description: Success
-    head:
-      operationId: checkInvoiceDownload
-      tags:
-        - invoices
-      summary: Check invoice document existence
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - $ref: 'parameters.yaml#/InvoiceNumberPathParameter'
-      responses:
-        "200":
-          description: Success
-
-  /organizations/{organization_id}/usage-reports/:
-    get:
-      operationId: getUsageReports
-      tags:
-        - reports
-      summary: Get list of reports
-      description: Returns a list of reports for the organization specified via `organization_id`.
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-      responses:
-        "200":
-          description: Success
-
-  /organizations/{organization_id}/usage-reports/{id}/:
-    get:
-      operationId: getUsageReport
-      tags:
-        - reports
-      summary: Get details on usage report
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - name: id
-          in: path
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-    head:
-      operationId: checkUsageReport
-      tags:
-        - reports
-      summary: Check usage report existence and access
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - name: id
-          in: path
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-
-  /organizations/{organization_id}/usage-reports/{id}/download/:
-    get:
-      operationId: downloadUsageReport
-      tags:
-        - reports
-      summary: Download usage report
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - name: id
-          in: path
-          required: true
-          type: string
-      produces:
-      - text/csv
-      responses:
-        "200":
-          description: Success
-    head:
-      operationId: checkUsageReportDownload
-      tags:
-        - reports
-      summary: Check usage report download existence and access
-      parameters:
-        - $ref: 'parameters.yaml#/OrganizationIdPathParameter'
-        - name: id
-          in: path
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-
-  /clusters/:
-    get:
-      operationId: getClusters
-      tags:
-        - clusters
-      summary: Get list of clusters
-      description: Lists all clusters the current user has permissions to know about.
-      responses:
-        "200":
-          description: Success
+  /v4/clusters/:
     post:
       operationId: addCluster
       tags:
         - clusters
       summary: Create cluster
-      responses:
-        "200":
-          description: Success
+      description: |
+        This operation is used to create a new Kubernetes cluster for an organization. The desired configuration can be specified using the __cluster definition format__ (see [external documentation](https://github.com/giantswarm/api-spec/blob/master/details/CLUSTER_DEFINITION.md) for details).
 
-  /clusters/{cluster_id}/:
+        The cluster definition format allows to set a number of optional configuration details, like memory size and number of CPU cores. However, one attribute is __mandatory__ upon creation: The `owner` attribute must carry the name of the organization the cluster will belong to. Note that the acting user must be a member of that organization in order to create a cluster.
+
+        It is *recommended* to also specify the `name` attribute to give the cluster a friendly name, like e. g. "Development Cluster".
+
+        Additional definition attributes can be used. Where attributes are ommitted, default configuration values will be applied. For example, if no `kubernetes_version` is specified, the latest version tested and provided by Giant Swarm is used.
+
+        The `workers` attribute, if present, must contain an array of node definition objects. The number of objects given determines the number of workers created. For example, requesting three worker nodes with default configuration can be achieved by submitting an array of three empty objects:
+
+        ```"workers": [{}, {}, {}]```
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: New cluster definition
+          schema:
+            $ref: 'definitions.yaml#/definitions/V4AddClusterRequest'
+      responses:
+        "201":
+          description: Cluster created
+          headers:
+            Location:
+              type: string
+              description: URI to obtain details on the new cluster using the [getCluster](#operation/getCluster) operation
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "A new cluster has been created with ID 'wqtlq'"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+
+  /v4/clusters/{cluster_id}/:
     get:
       operationId: getCluster
       tags:
         - clusters
+      parameters:
+        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       summary: Get cluster details
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
+      description: |
+        This operation allows to obtain all available details on a particular cluster.
       responses:
         "200":
-          description: Success
-    head:
-      operationId: checkCluster
-      tags:
-        - clusters
-      summary: Check cluster existence
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-      responses:
-        "200":
-          description: Success
+          description: Cluster details
+          schema:
+            $ref: 'definitions.yaml#/definitions/V4ClusterDetailsResponse'
+          examples:
+            application/json:
+              {
+                "id": "wqtlq",
+                "create_date": "2017-03-03T10:50:45.949270905Z",
+                "api_endpoint": "https://api.wqtlq.example.com",
+                "name": "Just a Standard Cluster",
+                "kubernetes_version": "v1.5.2_coreos.0",
+                "owner": "acme",
+                "workers": [
+                  {
+                    "memory": {"size_gb": 2},
+                    "storage": {"size_gb": 20},
+                    "cpu": {"cores": 4},
+                    "labels": {
+                      "beta.kubernetes.io/arch": "amd64",
+                      "beta.kubernetes.io/os": "linux",
+                      "ip": "10.3.11.2",
+                      "kubernetes.io/hostname": "worker-1.x882ofna.k8s.gigantic.io",
+                      "nodetype": "hicpu"
+                    }
+                  },
+                  {
+                    "memory": {"size_gb": 8},
+                    "storage": {"size_gb": 20},
+                    "cpu": {"cores": 2},
+                    "labels": {
+                      "beta.kubernetes.io/arch": "amd64",
+                      "beta.kubernetes.io/os": "linux",
+                      "ip": "10.3.62.2",
+                      "kubernetes.io/hostname": "worker-2.x882ofna.k8s.gigantic.io",
+                      "nodetype": "hiram"
+                    }
+                  }
+                ]
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
     patch:
-      operationId: updateCluster
+      operationId: modifyCluster
       tags:
         - clusters
-      summary: Update cluster
-      description: Update details of a cluster, e. g. the cluster name. The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
       parameters:
         - $ref: 'parameters.yaml#/ClusterIdPathParameter'
+      summary: Modify cluster
+      description: |
+        This operation allows to modify an existing cluster.
+
+        __Note:__ This operation currently requires special permission. Also, currently only the `owner` attribute can be changed.
+
+        The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard. Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
       responses:
-        "204":
-          description: Success
+        "200":
+          description: Cluster modified
+          schema:
+            $ref: 'definitions.yaml#/definitions/V4ClusterDetailsResponse'
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
     delete:
       operationId: deleteCluster
       tags:
         - clusters
-      summary: Delete cluster
       parameters:
         - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-      responses:
-        "204":
-          description: Success
+      summary: Delete cluster
+      description: |
+        This operation allows to delete a cluster.
 
-  /clusters/{cluster_id}/key-pairs/:
+        __Caution:__ Deleting a cluster causes the termination of all workloads running on the cluster. Data stored on the worker nodes will be lost. There is no way to undo this operation.
+
+        The response is sent as soon as the request is validated. At that point, workloads might still be running on the cluster and may be accessible for a little wile, until the cluster is actually deleted.
+      responses:
+        "202":
+          description: Deleting cluster
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_DELETION_STARTED",
+                "message": "The cluster with ID 'wqtlq' is being deleted"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+
+  /v4/clusters/{cluster_id}/key-pairs/:
     get:
       operationId: getKeyPairs
       tags:
         - key pairs
-      summary: Get list of key pairs
+      summary: Get key pairs
+      description: |
+        Returns a list of information on all key pairs of a cluster as an array.
+
+        The individual array items contain metadata on the key pairs, but neither the key nor the certificate. These can only be obtained upon creation, using the [addKeypair](#operation/addKeyPair) operation.
       parameters:
         - $ref: 'parameters.yaml#/ClusterIdPathParameter'
       responses:
         "200":
-          description: Success
+          description: Key pairs
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GetKeyPairsResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
     post:
       operationId: addKeyPair
       tags:
         - key pairs
-      summary: Add key pair
+      summary: Create key pair
       parameters:
         - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-      responses:
-        "200":
-          description: Success
-
-  /clusters/{cluster_id}/key-pairs/{id}/:
-    get:
-      operationId: getKeyPair
-      tags:
-        - key pairs
-      summary: Get  key pair details
-      description: This method returns metadata on a key pair. However it *does not* return the actual certificate and private key data, which can only be accessed on key pair creation.
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: id
-          in: path
+        - name: body
+          in: body
           required: true
-          type: string
-          description: ID of the key pair to retrieve information for
-      responses:
-        "200":
-          description: Success
-    head:
-      operationId: checkKeyPair
-      tags:
-        - key pairs
-      summary: Check key pair existence
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: id
-          in: path
-          required: true
-          type: string
-          description: ID of the key pair
-      responses:
-        "200":
-          description: Success
-    delete:
-      operationId: deleteKeyPair
-      tags:
-        - key pairs
-      summary: Revoke key pair
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: id
-          in: path
-          required: true
-          type: string
-          description: ID of the key pair to revoke
-      responses:
-        "204":
-          description: Success
-
-  /clusters/{cluster_id}/workers/:
-    get:
-      operationId: getWorkers
-      tags:
-        - cluster nodes
-      summary: Get list of worker nodes for a cluster
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-      responses:
-        "200":
-          description: Success
-    post:
-      operationId: addWorker
-      tags:
-        - cluster nodes
-      summary: Add workers to a cluster
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-      responses:
-        "204":
-          description: Success
-
-  /clusters/{cluster_id}/workers/{worker_id}/:
-    get:
-      operationId: getWorker
-      tags:
-        - cluster nodes
-      summary: Get info on a worker node
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: worker_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-    head:
-      operationId: checkWorker
-      tags:
-        - cluster nodes
-      summary: Check worker node existence and access
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: worker_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-    patch:
-      operationId: updateWorker
-      tags:
-        - cluster nodes
-      summary: Update worker node details
-      description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: worker_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "204":
-          description: Success
-    delete:
-      operationId: deleteWorker
-      tags:
-        - cluster nodes
-      summary: Delete a worker node
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: worker_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "204":
-          description: Success
-
-  /clusters/{cluster_id}/masters/:
-    get:
-      operationId: getMasters
-      tags:
-        - cluster nodes
-      summary: Get list of master nodes for a cluster
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-      responses:
-        "200":
-          description: Success
-    post:
-      operationId: addMaster
-      tags:
-        - cluster nodes
-      summary: Add masters to a cluster
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-      responses:
-        "204":
-          description: Success
-
-  /clusters/{cluster_id}/masters/{master_id}/:
-    get:
-      operationId: getMaster
-      tags:
-        - cluster nodes
-      summary: Get info on a master node
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: master_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-    head:
-      operationId: checkMaster
-      tags:
-        - cluster nodes
-      summary: Check master node existence and access
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: master_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-    patch:
-      operationId: updateMaster
-      tags:
-        - cluster nodes
-      summary: Update master node details
-      description: The request body must contain a JSON Merge Patch document as described in [RFC 7396](https://tools.ietf.org/html/rfc7396)
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: master_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "204":
-          description: Success
-    delete:
-      operationId: deleteMaster
-      tags:
-        - cluster nodes
-      summary: Delete a master node
-      parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
-        - name: master_id
-          in: path
-          required: true
-          type: string
-      responses:
-        "204":
-          description: Success
-  /tokens/:
-    get:
-      operationId: getTokens
-      tags:
-        - tokens
-      summary: Get list of tokens
-      description: This methods returns a list of tokens the current user has access to.
-      responses:
-        "200":
-          description: Success
-    post:
-      operationId: addToken
-      tags:
-        - tokens
-      summary: Create token
-      description: This method allows to create a new token to be used for a client session or API access.
-      responses:
-        "201":
-          description: Created
-
-  /tokens/info/:
-    post:
-      operationId: getToken
-      tags:
-        - tokens
-      summary: Get token details
-      description: For security reasons, information on a token is queried using `POST` requests with JSON request body.
-      responses:
-        "200":
-          description: Success
-
-  /tokens/delete/:
-    post:
-      operationId: deleteToken
-      tags:
-        - tokens
-      summary: Delete token
+          description: |
+            While the `ttl_hours` attribute is optional and will be set to a default value when ommitted, the `description` is mandatory.
+          schema:
+            $ref: 'definitions.yaml#/definitions/V4AddKeyPairRequest'
       description: |
-        Deletes a token. In a consequence, this token can no longer be used to authenticate requests.
+        This operation allows to create a new key pair for accessing a specific cluster.
 
-        As a consequence, clients using this token will effectively be logged out.
+        A key pair consists of an unencrypted private RSA key and an X.509 certificate. In addition, when obtaining a key pair for a cluster, the cluster's certificate authority file (CA certificate) is delivered, which is required by TLS clients to establish trust to the cluster.
 
-        For security reasons, deleting a token is done using a `POST` requests with JSON request body.
+        In addition to the credentials itself, a key pair has some metadata like a unique ID, a creation timestamp and a free text `description` that you can use at will, for example to note for whom a key pair has been issued.
+
+        __Note:__ The actual credentials coming with the key pair (key, certificate) can only be accessed once, as the result of the `POST` request that triggers their creation. This restriction exists to minimize the risk of credentials being leaked. If you fail to capture the credentials upon creation, you'll have to repeat the creation request.
       responses:
-        "204":
+        "200":
           description: Success
+          schema:
+            $ref: "definitions.yaml#/definitions/V4AddKeyPairResponse"
+          examples:
+            application/json:
+              {
+                "certificate_authority_data": "-----BEGIN CERTIFICATE-----...-----END CERTIFICATE-----",
+                "client_key_data": "-----BEGIN RSA PRIVATE KEY-----...-----END RSA PRIVATE KEY-----",
+                "client_certificate_data": "-----BEGIN CERTIFICATE-----...-----END CERTIFICATE-----",
+                "create_date": "2016-06-01T12:00:00.000Z",
+                "description": "Key pair description",
+                "id": "02:cc:da:f9:fb:ce:c3:e5:e1:f6:27:d8:43:48:0d:37:4a:ee:b9:67",
+                "ttl_hours": 8640
+              }
