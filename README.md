@@ -1,39 +1,47 @@
 # Giant Swarm API Specification
 
-This repository holds the specification for the Giant Swarm API.
+This repository holds the specification for the Giant Swarm API, starting at version `v4`.
+
+The specs are written in the [OpenAPI v2.0](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md) format, formerly known as Swagger.
+
+The specification YAML files are:
+
+- [`spec.yaml`](https://github.com/giantswarm/api-spec/blob/master/spec.yaml) - main specification file
+- [`definitions.yaml`](https://github.com/giantswarm/api-spec/blob/master/definitions.yaml) - definition of models for request and response bodies
+- [`parameters.yaml`](https://github.com/giantswarm/api-spec/blob/master/parameters.yaml) - definition of parameters used in paths and headers
+- [`responses.yaml`](https://github.com/giantswarm/api-spec/blob/master/responses.yaml) - still unused
+
 
 ## Human-friendly API Documentation
 
-ReDoc renders pretty useful HTML-based documentation. Use this command to launch a server locally, from the root directory of this repository:
+We host a browser-friendly version at http://apispec.g8s.fra-1.giantswarm.io/
 
-```nohighlight
-python -m SimpleHTTPServer 8000
-```
+That documentation is a rendition of the specification of the `master` branch of this repository.
 
-Then open [`http://localhost:8000/redoc/`](http://localhost:8000/redoc/).
+See the [`details`](https://github.com/giantswarm/api-spec/tree/master/details) folder of this repo for additional content about the API.
 
-### Alternatives
+## Specification development
 
-- https://bootprint.knappi.org/ provides a documentation viewer. Paste your `spec.yaml` there and it will generate a simple HTML documentation on one page.
-- http://editor.swagger.io/ allows to edit YAML specs, preview a documentation and generate server and client code.
+As usual, collaboration on this spec is done based on feature branches and pull requests.
+
+For a feature branch pushed to this repository on GitHub, the documentation gets published automatically under `http://apispec.g8s.fra-1.giantswarm.io/<branch-name>/`.
+
+Feature branches shall be merged into `master` only when the API functionality they describe is implemented and available to users of the Giant Swarm API.
 
 ### YAML conventions
+
+Please obey these conventions when editing the spec YAML files:
 
 - Indent using spaces, not tabs
 - 2 spaces per indentation level
 - avoid quotes where possible
 
-## Error response codes
+### Rendering an HTML documentation preview
 
-Error messages and standard responses, like the ones returned after creating a resource via a POST request, use the same standard format:
+Use this command from the root directory of your clone of this repo:
 
-```json
-{
-  "code": "...",
-  "message": "..."
-}
+```nohighlight
+python -m SimpleHTTPServer 8000
 ```
 
-The `code` is a documented, machine readable string identifier. See [RESPONSE_CODES.md](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) for a list of response codes.
-
-The `message` part gives additional information intended for end users, not meant to be machine readable.
+Then open [`http://localhost:8000/redoc/`](http://localhost:8000/redoc/) to access your specs displayed via ReDoc.
