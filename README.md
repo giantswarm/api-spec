@@ -28,6 +28,12 @@ For a feature branch pushed to this repository on GitHub, the documentation gets
 
 Feature branches shall be merged into `master` only when the API functionality they describe is implemented and available to users of the Giant Swarm API.
 
+### Conventions
+
+- Attribute names use only lowercase letters and the underscore as a seperator, like `attribute_name`.
+- Paths/routes have a trailing slash (`/path/` instead of `/path`)
+- Time data is given in the form `"2000-01-01T12:00:00.000Z"`. The number of decimal places for the seconds component may vary.
+
 ### YAML conventions
 
 Please obey these conventions when editing the spec YAML files:
