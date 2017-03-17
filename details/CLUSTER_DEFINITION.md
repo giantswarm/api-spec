@@ -8,7 +8,7 @@ When creating a new cluster, most fields of the cluster definition, e. g. the nu
 
 Currently there is no technical way to obtain information on applied defaults. Please contact Giant Swarm via `support@giantswarm.io` to find out about current default values.
 
-## Example
+## Example 1
 
 The following example contains an entire cluster definition in JSON format, as it may be obtained from the API.
 
@@ -31,7 +31,7 @@ __Note:__ upon cluster creation, some of the attributes shown below MUST NOT be 
                 "beta.kubernetes.io/arch": "amd64",
                 "beta.kubernetes.io/os": "linux",
                 "ip": "10.3.11.2",
-                "kubernetes.io/hostname": "worker-1.x882ofna.k8s.gigantic.io",
+                "kubernetes.io/hostname": "worker-1.wqtlq.example.com",
                 "nodetype": "hicpu"
             }
         },
@@ -43,8 +43,80 @@ __Note:__ upon cluster creation, some of the attributes shown below MUST NOT be 
                 "beta.kubernetes.io/arch": "amd64",
                 "beta.kubernetes.io/os": "linux",
                 "ip": "10.3.62.2",
-                "kubernetes.io/hostname": "worker-2.x882ofna.k8s.gigantic.io",
+                "kubernetes.io/hostname": "worker-2.wqtlq.example.com",
                 "nodetype": "hiram"
+            }
+        }
+    ]
+}
+```
+
+## Example 2: Cluster running on AWS EC2 {#example-aws}
+
+This example here shows a cluster definition in JSON format, as it may be submitted for cluster creation, for a cluster running on AWS:
+
+```json
+{
+    "name": "A Cluster on AWS",
+    "owner": "acme",
+    "aws_resource_tags": {
+      "costcenter": "166380"
+    },
+    "workers": [
+        {
+            "aws_instance_type": "m3.large",
+            "labels": {
+                "nodetype": "standard"
+            }
+        },
+        {
+            "aws_instance_type": "r3.xlarge",
+            "labels": {
+                "nodetype": "big-ram"
+            }
+        }
+    ]
+}
+```
+
+After creation using the definition above, the code below shows the completed cluster information as obtained from the API.
+
+```json
+{
+    "id": "wqtlq",
+    "create_date": "2017-03-03T10:50:45.949270905Z",
+    "api_endpoint": "https://api.wqtlq.example.com",
+    "name": "A Cluster on AWS",
+    "kubernetes_version": "v1.5.2_coreos.0",
+    "owner": "acme",
+    "aws_resource_tags": {
+      "costcenter": "166380"
+    },
+    "workers": [
+        {
+            "aws_instance_type": "m3.large",
+            "memory": {"size_gb": 7.5},
+            "storage": {"size_gb": 32},
+            "cpu": {"cores": 2},
+            "labels": {
+                "beta.kubernetes.io/arch": "amd64",
+                "beta.kubernetes.io/os": "linux",
+                "ip": "10.3.11.2",
+                "kubernetes.io/hostname": "worker-1.wqtlq.example.com",
+                "nodetype": "standard"
+            }
+        },
+        {
+            "aws_instance_type": "r3.xlarge",
+            "memory": {"size_gb": 30.5},
+            "storage": {"size_gb": 80},
+            "cpu": {"cores": 4},
+            "labels": {
+                "beta.kubernetes.io/arch": "amd64",
+                "beta.kubernetes.io/os": "linux",
+                "ip": "10.3.62.2",
+                "kubernetes.io/hostname": "worker-2.wqtlq.example.com",
+                "nodetype": "big-ram"
             }
         }
     ]
