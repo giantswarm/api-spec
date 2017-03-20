@@ -95,12 +95,16 @@ After creation using the definition above, the code below shows the completed cl
     "name": "A Cluster on AWS",
     "kubernetes_version": "v1.5.2_coreos.0",
     "owner": "acme",
-    "aws_resource_tags": {
-      "costcenter": "166380"
+    "aws": {
+      "resource_tags": {
+        "costcenter": "166380"
+      }
     },
     "workers": [
         {
-            "aws_instance_type": "m3.large",
+            "aws": {
+              "instance_type": "m3.large"
+            },
             "memory": {"size_gb": 7.5},
             "storage": {"size_gb": 32},
             "cpu": {"cores": 2},
@@ -113,7 +117,9 @@ After creation using the definition above, the code below shows the completed cl
             }
         },
         {
-            "aws_instance_type": "r3.xlarge",
+            "aws": {
+              "instance_type": "r3.xlarge"
+            },
             "memory": {"size_gb": 30.5},
             "storage": {"size_gb": 80},
             "cpu": {"cores": 4},
