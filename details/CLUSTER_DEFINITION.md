@@ -59,18 +59,24 @@ This example here shows a cluster definition in JSON format, as it may be submit
 {
     "name": "A Cluster on AWS",
     "owner": "acme",
-    "aws_resource_tags": {
-      "costcenter": "166380"
+    "aws": {
+      "resource_tags": {
+        "costcenter": "166380"
+      }
     },
     "workers": [
         {
-            "aws_instance_type": "m3.large",
+            "aws": {
+              "instance_type": "m3.large"
+            },
             "labels": {
                 "nodetype": "standard"
             }
         },
         {
-            "aws_instance_type": "r3.xlarge",
+            "aws": {
+              "instance_type": "r3.xlarge"
+            },
             "labels": {
                 "nodetype": "big-ram"
             }
