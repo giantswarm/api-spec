@@ -1,6 +1,5 @@
 spec-tmp.yaml:
 	# Create concatenated spec file
-	rm -f spec-tmp.yaml
 	cat spec.yaml >> spec-tmp.yaml
 	echo "" >> spec-tmp.yaml
 	cat definitions.yaml >> spec-tmp.yaml
@@ -13,9 +12,9 @@ spec-tmp.yaml:
 validate: spec-tmp.yaml
 	# For local validation
 	docker run --rm -it \
-		-v $(shell pwd):/swagger-api/yaml \
+		-v $(shell pwd):/code/yaml \
 		jimschubert/swagger-codegen-cli generate \
-		--input-spec /swagger-api/yaml/spec-tmp.yaml \
+		--input-spec /code/yaml/spec-tmp.yaml \
 		--lang swagger --output /tmp/
 	# remove temp file
 	rm spec-tmp.yaml
@@ -23,9 +22,9 @@ validate: spec-tmp.yaml
 test: spec-tmp.yaml
 	# For CircleCI (--rm=false required)
 	docker run --rm=false -it \
-		-v $(shell pwd):/swagger-api/yaml \
+		-v $(shell pwd):/code/yaml \
 		jimschubert/swagger-codegen-cli generate \
-		--input-spec /swagger-api/yaml/spec-tmp.yaml \
+		--input-spec /code/yaml/spec-tmp.yaml \
 		--lang swagger --output /tmp/
 	# remove temp file
 	rm -f spec-tmp.yaml
