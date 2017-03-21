@@ -143,8 +143,11 @@ After creation using the definition above, the code below shows the completed cl
 - `name`: User friendly name of the cluster
 - `kubernetes_version`: Kubernetes version of the cluster. The string reported here may also contain additional details and thus may not be machine-interpretable.
 - `owner`: Name of the organization owning the cluster.
+- `aws`: Attributes specific to clusters running on Amazon Web Services (AWS)
+- `aws.resource_tags`: When given, this object's key-value-pairs are applied as resource tags to EC2 resources generated for the cluster (master and worker node instances). As resource tags are contained in the AWS usage report, this can simplify cost allocation.
 - `workers`: Array of worker definition objects. Each array item represents one worker node. In order to create a cluster with three worker nodes, this array MUST have three items, even if all worker share the same configuration.
-- `workers[n].memory`: Memory definition object. This object can currently contain only one attribute `size_gb`, which indicates the RAM size in Gigabytes as an integer.
-- `workers[n].storage`: Storage definition object. Storage here refers to the local disk storage of a worker node. The definition object can currently contain only one attribute `size_gb`, which indicates the local storage size in Gigabytes as an integer.
-- `workers[n].cpu`: CPU definition object. This object may (only) contain the attribute `cores`, indicating the number of CPU cores for the given worker node.
-- `workers[n].labels`: Object representing the worker labels.
+- `workers[n].aws.instance_type`: Name of the EC2 instance type to use for the worker node. For clusters running on AWS, this attribute is required on cluster creation.
+- `workers[n].memory`: Memory definition object. This object can currently contain only one attribute `size_gb`, which indicates the RAM size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
+- `workers[n].storage`: Storage definition object. Storage here refers to the local disk storage of a worker node. The definition object can currently contain only one attribute `size_gb`, which indicates the local storage size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
+- `workers[n].cpu`: CPU definition object. This object may (only) contain the attribute `cores`, indicating the number of CPU cores for the given worker node. For clusters running on AWS, this attribute is ignored on cluster creation.
+- `workers[n].labels`: Object representing the worker labels. For clusters running on AWS, this attribute is ignored on cluster creation.
