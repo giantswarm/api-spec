@@ -9,6 +9,8 @@ test:
         # sanity check
         - docker run -d -p 8000:8000 registry.giantswarm.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-docserver:$CIRCLE_SHA1
         - curl http://localhost:8000 | grep "rebilly.github.io/ReDoc"
+    post:
+        make validate
 
 deployment:
     master:
