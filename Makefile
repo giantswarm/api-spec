@@ -13,7 +13,7 @@ spec-tmp.yaml:
 validate: spec-tmp.yaml
 	# For local validation
 	docker run --rm -it \
-		-v ${PWD}:/swagger-api/yaml \
+		-v $(shell pwd):/swagger-api/yaml \
 		jimschubert/swagger-codegen-cli generate \
 		--input-spec /swagger-api/yaml/spec-tmp.yaml \
 		--lang swagger --output /tmp/
@@ -23,7 +23,7 @@ validate: spec-tmp.yaml
 test: spec-tmp.yaml
 	# For CircleCI (--rm=false required)
 	docker run --rm=false -it \
-		-v ${PWD}:/swagger-api/yaml \
+		-v $(shell pwd):/swagger-api/yaml \
 		jimschubert/swagger-codegen-cli generate \
 		--input-spec /swagger-api/yaml/spec-tmp.yaml \
 		--lang swagger --output /tmp/
