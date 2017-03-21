@@ -28,6 +28,10 @@ definitions:
       kubernetes_version:
         type: string
         description: Kubernetes version number
+      aws:
+        type: object
+        description: Attributes specific to clusters running on Amazon Web Services (AWS)
+        additionalProperties: true
       workers:
         type: array
         items:
@@ -56,6 +60,10 @@ definitions:
       kubernetes_version:
         type: string
         description: Kubernetes version number
+      aws:
+        type: object
+        description: Attributes specific to clusters running on Amazon Web Services (AWS)
+        additionalProperties: true
       workers:
         type: array
         items:
@@ -66,11 +74,18 @@ definitions:
   V4NodeDefinition:
     type: object
     properties:
+      aws:
+        type: object
+        description: Attributes specific to nodes running on Amazon Web Services (AWS)
+        properties:
+          instance_type:
+            type: string
+            description: EC2 instance type name
       memory:
         type: object
         properties:
           size_gb:
-            type: integer
+            type: number
             description: RAM size in GB
       storage:
         type: object
