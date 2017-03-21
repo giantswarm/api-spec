@@ -1,6 +1,6 @@
 validate:
 	# Create concatenated spec file
-	rm spec-tmp.yaml
+	rm -f spec-tmp.yaml
 	cat spec.yaml >> spec-tmp.yaml
 	echo "" >> spec-tmp.yaml
 	cat definitions.yaml >> spec-tmp.yaml
