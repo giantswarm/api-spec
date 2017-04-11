@@ -146,3 +146,12 @@ definitions:
       client_certificate_data:
         type: string
         description: PEM-encoded certificate
+
+  V4PingResponse:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+        description: Ping status

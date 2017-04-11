@@ -259,3 +259,30 @@ paths:
                 "id": "02:cc:da:f9:fb:ce:c3:e5:e1:f6:27:d8:43:48:0d:37:4a:ee:b9:67",
                 "ttl_hours": 8640
               }
+
+  /v4/ping/:
+    get:
+      operationId: ping
+      tags:
+        - ping
+      summary: Ping the API connection
+      description: This operation tests the connection to the API, and performs an internal health check.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "definitions.yaml#/definitions/V4PingResponse"
+          examples:
+            application/json:
+              {
+                "message": "OK"
+              }
+        "500":
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4PingResponse"
+          examples:
+            application/json:
+              {
+                "message": "FAILED"
+              }
