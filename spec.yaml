@@ -266,23 +266,28 @@ paths:
       tags:
         - ping
       summary: Ping the API connection
-      description: This operation tests the connection to the API, and performs an internal health check.
+      description: |
+        This operation tests the connection to the API, and performs an internal health check.
+
+        Will return 200 when everything is running correctly, and 500 when the internal health check fails, with details of the failure in the message.
       responses:
         "200":
           description: OK
           schema:
-            $ref: "definitions.yaml#/definitions/V4PingResponse"
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
-                "message": "OK"
+                "code": "OK",
+                "message": "Everything is OK."
               }
         "500":
           description: Error
           schema:
-            $ref: "definitions.yaml#/definitions/V4PingResponse"
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
-                "message": "FAILED"
+                "code": "FAILED",
+                "message": "The gremlins have gotten in!"
               }
