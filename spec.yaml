@@ -89,10 +89,16 @@ paths:
                 "code": "RESOURCE_CREATED",
                 "message": "A new cluster has been created with ID 'wqtlq'"
               }
-        default:
-          description: Error
+        "401":
+          description: Permission Denied
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided permission rights. Please make sure you are a member of the organization you set in the 'owner' field."
+              }
 
   /v4/clusters/{cluster_id}/:
     get:
@@ -145,10 +151,16 @@ paths:
                   }
                 ]
               }
-        default:
-          description: Error
+        "404":
+          description: Cluster not found
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster could not be found."
+              }
     patch:
       operationId: modifyCluster
       tags:
@@ -167,10 +179,16 @@ paths:
           description: Cluster modified
           schema:
             $ref: 'definitions.yaml#/definitions/V4ClusterDetailsResponse'
-        default:
-          description: Error
+        "404":
+          description: Cluster not found
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster could not be found."
+              }
     delete:
       operationId: deleteCluster
       tags:
@@ -195,10 +213,16 @@ paths:
                 "code": "RESOURCE_DELETION_STARTED",
                 "message": "The cluster with ID 'wqtlq' is being deleted"
               }
-        default:
-          description: Error
+        "404":
+          description: Cluster not found
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster could not be found."
+              }
 
   /v4/clusters/{cluster_id}/key-pairs/:
     get:
