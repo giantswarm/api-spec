@@ -3,9 +3,6 @@ definitions:
   # Generic response model
   V4GenericResponse:
     type: object
-    required:
-      - code
-      - message
     properties:
       message:
         type: string
