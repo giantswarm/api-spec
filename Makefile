@@ -23,6 +23,7 @@ validate: spec-tmp.yaml
 
 test: spec-tmp.yaml
 	# For CircleCI (--rm=false required)
+	yamllint -c ./yamllint/config.yaml ./spec.yaml ./definitions.yaml ./parameters.yaml ./responses.yaml
 	docker run --rm=false -it \
 		-v $(shell pwd):/code/yaml \
 		jimschubert/swagger-codegen-cli generate \
