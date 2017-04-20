@@ -146,3 +146,11 @@ definitions:
       client_certificate_data:
         type: string
         description: PEM-encoded certificate
+
+  # An organization as returned by getOrganizations as an array item
+  V4OrganizationListItem:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique name/identifier of the organization

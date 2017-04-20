@@ -39,6 +39,9 @@ tags:
     externalDocs:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
       description: "User guide: Accessing Pods and Services from the Outside"
+  - name: organizations
+    description: |
+      Organizations are groups of users who own resources like clusters.
 securityDefinitions:
   token_auth:
     description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
@@ -259,3 +262,34 @@ paths:
                 "id": "02:cc:da:f9:fb:ce:c3:e5:e1:f6:27:d8:43:48:0d:37:4a:ee:b9:67",
                 "ttl_hours": 8640
               }
+
+  /v4/organizations/:
+    get:
+      operationId: getOrganizations
+      tags:
+        - organizations
+      summary: Get organizations
+      description: |
+        This operation allows to fetch a list of organizations.
+        The resulting list will contain all organizations the user is allowed
+        to know about. In the case of an admin user, that includes all existing
+        organizations. For a non-admin user, this currently includes all
+        organizations the user is a member of.
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "definitions.yaml#/definitions/V4OrganizationListItem"
+          examples:
+            application/json:
+              [
+                {"id": "acme"},
+                {"id": "giantswarm"},
+                {"id": "testorg"}
+              ]
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
