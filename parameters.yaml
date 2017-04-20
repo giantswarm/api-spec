@@ -1,34 +1,8 @@
-ClusterIdPathParameter:
-  name: cluster_id
-  in: path
-  required: true
-  type: string
-  description: Cluster ID
+parameters:
 
-DomainPathParameter:
-  name: domain
-  in: path
-  required: true
-  type: string
-  description: Domain name
-
-InvoiceNumberPathParameter:
-  name: invoice_number
-  in: path
-  required: true
-  type: string
-  description: Invoice ID
-
-OrganizationIdPathParameter:
-  name: organization_id
-  in: path
-  required: true
-  type: string
-  description: Organization ID
-
-UserIdPathParameter:
-  name: user_id
-  in: path
-  required: true
-  type: string
-  description: Unique user ID
+  ClusterIdPathParameter:
+    name: cluster_id
+    in: path
+    required: true
+    type: string
+    description: Cluster ID

@@ -2,7 +2,14 @@ machine:
     services:
         - docker
 
+dependencies:
+    pre:
+        - sudo apt-get update; sudo apt-get install -y python-pip
+        - sudo pip install yamllint
+
 test:
+    pre:
+        - make test
     override:
         # build the docserver docker image
         - docker build -t registry.giantswarm.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-docserver:$CIRCLE_SHA1 -f docserver/Dockerfile .
