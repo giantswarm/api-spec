@@ -99,6 +99,10 @@ paths:
                 "code": "PERMISSION_DENIED",
                 "message": "The requested resource cannot be accessed using the provided permission rights. Please make sure you are a member of the organization you set in the 'owner' field."
               }
+        default:
+          description: error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/clusters/{cluster_id}/:
     get:
@@ -161,6 +165,10 @@ paths:
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
               }
+        default:
+          description: error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
     patch:
       operationId: modifyCluster
       tags:
@@ -189,6 +197,10 @@ paths:
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
               }
+        default:
+          description: error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
     delete:
       operationId: deleteCluster
       tags:
@@ -223,6 +235,10 @@ paths:
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
               }
+        default:
+          description: error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/clusters/{cluster_id}/key-pairs/:
     get:
@@ -242,7 +258,7 @@ paths:
           schema:
             $ref: "definitions.yaml#/definitions/V4GetKeyPairsResponse"
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
     post:
