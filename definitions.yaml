@@ -4,8 +4,8 @@ definitions:
   V4GenericResponse:
     type: object
     required:
-     - code
-     - message
+      - code
+      - message
     properties:
       message:
         type: string
