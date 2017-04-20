@@ -211,7 +211,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_DELETION_STARTED",
-                "message": "The cluster with ID 'wqtlq' is being deleted"
+                "message": "The cluster with ID 'wqtlq' is being deleted."
               }
         "404":
           description: Cluster not found
