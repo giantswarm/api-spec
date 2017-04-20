@@ -159,7 +159,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The cluster could not be found."
+                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
               }
     patch:
       operationId: modifyCluster
@@ -187,7 +187,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The cluster could not be found."
+                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
               }
     delete:
       operationId: deleteCluster
@@ -221,7 +221,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The cluster could not be found."
+                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
               }
 
   /v4/clusters/{cluster_id}/key-pairs/:
