@@ -42,6 +42,16 @@ Please obey these conventions when editing the spec YAML files:
 - 2 spaces per indentation level
 - avoid quotes where possible
 
+### Validation
+
+Run `make validate` to check the specification YAML integrity.
+
+This requires `yamllint` to be available. To install it, either do `sudo pip install yamllint` or create the following alias:
+
+```
+alias yamllint="docker run --rm -ti -v $(pwd):/workdir giantswarm/yamllint"
+```
+
 ### Rendering an HTML documentation preview
 
 Use this command from the root directory of your clone of this repo:
