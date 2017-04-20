@@ -100,7 +100,7 @@ paths:
       tags:
         - clusters
       parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
+        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
       summary: Get cluster details
       description: |
         This operation allows to obtain all available details on a particular cluster.
@@ -154,7 +154,7 @@ paths:
       tags:
         - clusters
       parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
+        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
       summary: Modify cluster
       description: |
         This operation allows to modify an existing cluster.
@@ -176,7 +176,7 @@ paths:
       tags:
         - clusters
       parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
+        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
       summary: Delete cluster
       description: |
         This operation allows to delete a cluster.
@@ -211,7 +211,7 @@ paths:
 
         The individual array items contain metadata on the key pairs, but neither the key nor the certificate. These can only be obtained upon creation, using the [addKeypair](#operation/addKeyPair) operation.
       parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
+        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
       responses:
         "200":
           description: Key pairs
@@ -227,7 +227,7 @@ paths:
         - key pairs
       summary: Create key pair
       parameters:
-        - $ref: 'parameters.yaml#/ClusterIdPathParameter'
+        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
         - name: body
           in: body
           required: true
