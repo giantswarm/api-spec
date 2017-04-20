@@ -90,7 +90,7 @@ paths:
                 "message": "A new cluster has been created with ID 'wqtlq'"
               }
         "401":
-          description: Permission Denied
+          description: Permission denied
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
           examples:
