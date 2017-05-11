@@ -89,8 +89,18 @@ paths:
                 "code": "RESOURCE_CREATED",
                 "message": "A new cluster has been created with ID 'wqtlq'"
               }
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided permission rights. Please make sure you are a member of the organization you set in the 'owner' field."
+              }
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
@@ -145,8 +155,18 @@ paths:
                   }
                 ]
               }
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
+              }
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
     patch:
@@ -167,8 +187,18 @@ paths:
           description: Cluster modified
           schema:
             $ref: 'definitions.yaml#/definitions/V4ClusterDetailsResponse'
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
+              }
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
     delete:
@@ -193,10 +223,20 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_DELETION_STARTED",
-                "message": "The cluster with ID 'wqtlq' is being deleted"
+                "message": "The cluster with ID 'wqtlq' is being deleted."
+              }
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
               }
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
@@ -218,7 +258,7 @@ paths:
           schema:
             $ref: "definitions.yaml#/definitions/V4GetKeyPairsResponse"
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
     post:

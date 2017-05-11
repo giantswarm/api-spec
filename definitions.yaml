@@ -3,14 +3,13 @@ definitions:
   # Generic response model
   V4GenericResponse:
     type: object
-    required:
-      - code
-      - message
     properties:
       message:
         type: string
+        description: "A human readable message"
       code:
         type: string
+        description: "One of the response codes from: https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md"
 
   # Request to create a new cluster
   V4AddClusterRequest:
