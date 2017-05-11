@@ -16,9 +16,9 @@ spec:
         app: api-spec-docserver-%%SLUG%%
     spec:
       containers:
-      - name: api-spec-docserver-%%SLUG%%
-        image: registry.giantswarm.io/giantswarm/api-spec-docserver:%%DOCKER_TAG%%
+      - name: api-spec-docserver
+        image: registry.giantswarm.io/giantswarm/api-spec-docserver:{{ .BuildInfo.SHA }}
         ports:
         - containerPort: 8000
       imagePullSecrets:
-      - name: circleci-giantswarm-registry
+      - name: giantswarm-registry
