@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: api-spec-docserver
-        image: registry.giantswarm.io/giantswarm/api-spec-docserver:{{ .BuildInfo.SHA }}
+        image: quay.io/giantswarm/api-spec-docserver:{{ .BuildInfo.SHA }}
         ports:
         - containerPort: 8000
       imagePullSecrets:
