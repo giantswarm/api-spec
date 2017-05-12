@@ -28,7 +28,7 @@ deployment:
         commands:
             # set the service name ending to "-master"
             - sed -i "s/%%SLUG%%/master/g" ./docserver/kubernetes/*
-            - ./architect deploy
+            - ./architect deploy --resources-directory-path='./docserver/kubernetes'
     staging:
         # this will apply to all branches not named "master"
         branch: /.*/
