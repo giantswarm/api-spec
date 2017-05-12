@@ -35,4 +35,4 @@ deployment:
         commands:
             # set the service name ending to "-staging"
             - sed -i "s/%%SLUG%%/master/g" ./docserver/kubernetes/*
-            - ./architect deploy
+            - ./architect deploy --resources-directory-path='./docserver/kubernetes'
