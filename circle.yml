@@ -28,11 +28,19 @@ deployment:
         commands:
             # set the service name ending to "-master"
             - sed -i "s/%%SLUG%%/master/g" ./docserver/kubernetes/*
+
+            # use root path for serving
+            - sed -i "s:%%PATH%%:/:g" ./docserver/kubernetes/ingress.yaml
+
             - ./architect deploy --resources-directory-path='./docserver/kubernetes'
     staging:
         # this will apply to all branches not named "master"
         branch: /.*/
         commands:
             # set the service name ending to "-staging"
-            - sed -i "s/%%SLUG%%/master/g" ./docserver/kubernetes/*
+            - sed -i "s/%%SLUG%%/staging/g" ./docserver/kubernetes/*
+
+            # use branch name path for serving
+            - sed -i "s:%%PATH%%:/$CIRCLE_BRANCH/:g" ./docserver/kubernetes/ingress.yaml
+
             - ./architect deploy --resources-directory-path='./docserver/kubernetes'
