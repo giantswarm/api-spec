@@ -17,9 +17,9 @@ test:
         - make test
     override:
         # build the docserver docker image
-        - docker build -t quay.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-docserver:$CIRCLE_SHA1 -f docserver/Dockerfile .
+        - docker build -t quay.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1 -f ./Dockerfile .
         # sanity check
-        - docker run -d -p 8000:8000 quay.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME-docserver:$CIRCLE_SHA1
+        - docker run -d -p 8000:8000 quay.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
         - curl http://localhost:8000 | grep "rebilly.github.io/ReDoc"
 
 deployment:
@@ -27,20 +27,20 @@ deployment:
         branch: master
         commands:
             # set the service name ending to "-master"
-            - sed -i "s/%%SLUG%%/master/g" ./docserver/kubernetes/*
+            - sed -i "s/%%SLUG%%/master/g" ./kubernetes/*
 
             # use root path for serving
-            - sed -i "s:%%PATH%%:/:g" ./docserver/kubernetes/ingress.yaml
+            - sed -i "s:%%PATH%%:/:g" ./kubernetes/ingress.yaml
 
-            - ./architect deploy --resources-directory-path='./docserver/kubernetes'
+            - ./architect deploy
     staging:
         # this will apply to all branches not named "master"
         branch: /.*/
         commands:
             # set the service name ending to "-staging"
-            - sed -i "s/%%SLUG%%/staging/g" ./docserver/kubernetes/*
+            - sed -i "s/%%SLUG%%/staging/g" ./kubernetes/*
 
             # use branch name path for serving
-            - sed -i "s:%%PATH%%:/$CIRCLE_BRANCH/:g" ./docserver/kubernetes/ingress.yaml
+            - sed -i "s:%%PATH%%:/$CIRCLE_BRANCH/:g" ./kubernetes/ingress.yaml
 
-            - ./architect deploy --resources-directory-path='./docserver/kubernetes'
+            - ./architect deploy
