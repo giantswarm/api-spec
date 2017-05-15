@@ -2,10 +2,10 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 
 metadata:
-  name: api-spec-docserver-%%SLUG%%
-  namespace: giantswarm
+  name: api-spec-%%SLUG%%
+  namespace: api-spec
   labels:
-    app: api-spec-docserver-%%SLUG%%
+    app: api-spec-%%SLUG%%
 
 spec:
   replicas: 2
@@ -13,11 +13,11 @@ spec:
   template:
     metadata:
       labels:
-        app: api-spec-docserver-%%SLUG%%
+        app: api-spec-%%SLUG%%
     spec:
       containers:
-      - name: api-spec-docserver
-        image: quay.io/giantswarm/api-spec-docserver:{{ .BuildInfo.SHA }}
+      - name: api-spec
+        image: quay.io/giantswarm/api-spec:{{ .BuildInfo.SHA }}
         ports:
         - containerPort: 8000
       imagePullSecrets:
