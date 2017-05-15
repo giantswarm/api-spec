@@ -57,7 +57,7 @@ alias yamllint="docker run --rm -ti -v $(pwd):/workdir giantswarm/yamllint"
 Use this command from the root directory of your clone of this repo:
 
 ```nohighlight
-python -m SimpleHTTPServer 8000
+make run-server
 ```
 
-Then open [`http://localhost:8000/redoc/`](http://localhost:8000/redoc/) to access your specs displayed via ReDoc.
+Then open [`http://localhost:8000/`](http://localhost:8000/) to access your specs displayed via ReDoc.
