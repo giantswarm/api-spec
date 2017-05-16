@@ -1,4 +1,4 @@
-FROM nginx:1.13.0-alpine
+FROM nginx:1.13-alpine
 RUN rm -r /etc/nginx/conf.d
 ADD docserver/index.html /www/
 ADD *.yaml /www/yaml/
