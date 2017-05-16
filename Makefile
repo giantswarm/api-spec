@@ -32,3 +32,7 @@ test: spec-tmp.yaml
 	# remove temp files
 	rm -f spec-tmp.yaml
 	rm -f spec-tmp.yamle
+
+run-server:
+	docker build -t api-spec-dev -f Dockerfile .
+	docker run -v ${PWD}:/www/yaml -p 8000:8000 api-spec-dev
