@@ -145,3 +145,14 @@ definitions:
       client_certificate_data:
         type: string
         description: PEM-encoded certificate
+
+  # Request to create a new organization
+  V4AddOrganizationRequest:
+    type: object
+    required:
+      - id
+    description: Request model for creating a new organization
+    properties:
+      id:
+        type: string
+        description: A name for the organization

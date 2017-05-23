@@ -39,6 +39,8 @@ tags:
     externalDocs:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
       description: "User guide: Accessing Pods and Services from the Outside"
+  - name: organizations
+    description: Organizations are groups of users who own resources like clusters.
 securityDefinitions:
   token_auth:
     description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
@@ -299,3 +301,36 @@ paths:
                 "id": "02:cc:da:f9:fb:ce:c3:e5:e1:f6:27:d8:43:48:0d:37:4a:ee:b9:67",
                 "ttl_hours": 8640
               }
+
+  /v4/organizations/:
+    post:
+      operationId: addOrganization
+      tags:
+        - organizations
+      summary: Create an organization
+      description: |
+        This operation allows a user to create an organization.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: |
+            An ID for the organization to be created is the only required parameter.
+            This ID can only contain alpha-numeric characters, hyphens, underscores, and dots.
+          schema:
+            $ref: 'definitions.yaml#/definitions/V4AddOrganizationRequest'
+      responses:
+        "201":
+          description: Organization created
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "A new organization has been created with ID 'OrgID'"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
