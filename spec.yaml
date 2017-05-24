@@ -317,6 +317,15 @@ paths:
           description: Organization created
           schema:
             $ref: "definitions.yaml#/definitions/V4Organization"
+          examples:
+            application/json:
+              {
+                "id": "Acme",
+                "members": [
+                  {"email": "user1@example.com"},
+                  {"email": "user2@example.com"}
+                ]
+              }
 
         "409":
           description: Organization already exists
