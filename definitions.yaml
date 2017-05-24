@@ -146,13 +146,23 @@ definitions:
         type: string
         description: PEM-encoded certificate
 
-  # Request to create a new organization
-  V4AddOrganizationRequest:
+  # An organization as returned by getOrganizations as an array item
+  V4Organization:
     type: object
-    required:
-      - id
-    description: Request model for creating a new organization
     properties:
       id:
         type: string
-        description: A name for the organization
+        description: Unique name/identifier of the organization
+      members:
+        type: array
+        description: List of members that belong to this organization
+        items:
+          $ref: '#/definitions/V4OrganizationMember'
+
+  # A user that belongs to an organization
+  V4OrganizationMember:
+    type: object
+    properties:
+      email:
+        type: string
+        description: E-mail address of the user

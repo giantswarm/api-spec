@@ -12,4 +12,6 @@ parameters:
     in: path
     required: true
     type: string
-    description: Organization ID
+    description: |
+        An ID for the organization to be created is the only required parameter.
+        This ID can only contain alpha-numeric characters, hyphens, underscores, and dots.

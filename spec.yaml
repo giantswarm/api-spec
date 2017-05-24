@@ -302,8 +302,8 @@ paths:
                 "ttl_hours": 8640
               }
 
-  /v4/organizations/:
-    post:
+  /v4/organizations/{organization_id}/:
+    put:
       operationId: addOrganization
       tags:
         - organizations
@@ -311,31 +311,27 @@ paths:
       description: |
         This operation allows a user to create an organization.
       parameters:
-        - name: body
-          in: body
-          required: true
-          description: |
-            An ID for the organization to be created is the only required parameter.
-            This ID can only contain alpha-numeric characters, hyphens, underscores, and dots.
-          schema:
-            $ref: 'definitions.yaml#/definitions/V4AddOrganizationRequest'
+        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
       responses:
         "201":
           description: Organization created
+          schema:
+            $ref: "definitions.yaml#/definitions/V4Organization"
+
+        "409":
+          description: Organization already exists
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
-                "code": "RESOURCE_CREATED",
-                "message": "A new organization has been created with ID 'OrgID'"
+                "code": "RESOURCE_ALREADY_EXISTS",
+                "message": "An organization with ID 'OrgID' already exists."
               }
         default:
           description: Error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
-
-  /v4/organizations/{organization_id}/:
     delete:
       operationId: deleteOrganization
       tags:
