@@ -320,7 +320,7 @@ paths:
           examples:
             application/json:
               {
-                "id": "Acme",
+                "id": "acme",
                 "members": [
                   {"email": "user1@example.com"},
                   {"email": "user2@example.com"}
