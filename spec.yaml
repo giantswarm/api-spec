@@ -334,3 +334,29 @@ paths:
           description: Error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
+
+  /v4/organizations/{organization_id}/:
+    delete:
+      operationId: deleteOrganization
+      tags:
+        - organizations
+      summary: Delete an organization
+      description: |
+        This operation allows a user to delete an organization.
+      parameters:
+        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
+      responses:
+        "200":
+          description: Organization deleted
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_DELETED",
+                "message": "The organization with ID 'OrgID' has been deleted."
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
