@@ -335,7 +335,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_ALREADY_EXISTS",
-                "message": "An organization with ID 'OrgID' already exists."
+                "message": "The organization could not be created. (org already exists)"
               }
         default:
           description: Error
@@ -359,7 +359,17 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_DELETED",
-                "message": "The organization with ID 'OrgID' has been deleted."
+                "message": "The organization with ID 'acme' has been deleted."
+              }
+        "401":
+          description: Organization already exists
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must belong to the 'acme' organization)"
               }
         default:
           description: Error
