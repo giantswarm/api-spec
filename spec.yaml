@@ -362,7 +362,7 @@ paths:
                 "message": "The organization with ID 'acme' has been deleted."
               }
         "401":
-          description: Organization already exists
+          description: Permission denied
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
           examples:
