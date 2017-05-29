@@ -371,6 +371,16 @@ paths:
                 "code": "PERMISSION_DENIED",
                 "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must belong to the 'acme' organization)"
               }
+        "404":
+          description: Organization not found
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The organization with id 'acme' could not be found."
+              }
         default:
           description: Error
           schema:
