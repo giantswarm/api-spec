@@ -369,7 +369,7 @@ paths:
             application/json:
               {
                 "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must belong to the 'acme' organization)"
+                "message": "The organization could not be deleted. (unauthorized: you must be a member of 'acme')"
               }
         "404":
           description: Organization not found
@@ -379,7 +379,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The organization with id 'acme' could not be found."
+                "message": "The organization could not be deleted. (not found: the organization with id 'acme' could not be found)"
               }
         default:
           description: Error
