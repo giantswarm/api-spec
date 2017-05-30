@@ -145,3 +145,24 @@ definitions:
       client_certificate_data:
         type: string
         description: PEM-encoded certificate
+
+  # An organization as returned by getOrganizations as an array item
+  V4Organization:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique name/identifier of the organization
+      members:
+        type: array
+        description: List of members that belong to this organization
+        items:
+          $ref: '#/definitions/V4OrganizationMember'
+
+  # A user that belongs to an organization
+  V4OrganizationMember:
+    type: object
+    properties:
+      email:
+        type: string
+        description: E-mail address of the user
