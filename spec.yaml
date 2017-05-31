@@ -347,7 +347,8 @@ paths:
         - organizations
       summary: Delete an organization
       description: |
-        This operation allows a user to delete an organization.
+        This operation allows a user to delete an organization that they are a member of.
+        Admin users can delete any organization.
       parameters:
         - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
       responses:
