@@ -40,8 +40,7 @@ tags:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
       description: "User guide: Accessing Pods and Services from the Outside"
   - name: organizations
-    description: |
-      Organizations are groups of users who own resources like clusters.
+    description: Organizations are groups of users who own resources like clusters.
 securityDefinitions:
   token_auth:
     description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
@@ -92,8 +91,18 @@ paths:
                 "code": "RESOURCE_CREATED",
                 "message": "A new cluster has been created with ID 'wqtlq'"
               }
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided permission rights. Please make sure you are a member of the organization you set in the 'owner' field."
+              }
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
@@ -148,8 +157,18 @@ paths:
                   }
                 ]
               }
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
+              }
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
     patch:
@@ -170,8 +189,18 @@ paths:
           description: Cluster modified
           schema:
             $ref: 'definitions.yaml#/definitions/V4ClusterDetailsResponse'
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
+              }
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
     delete:
@@ -196,10 +225,20 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_DELETION_STARTED",
-                "message": "The cluster with ID 'wqtlq' is being deleted"
+                "message": "The cluster with ID 'wqtlq' is being deleted."
+              }
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
               }
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
@@ -221,7 +260,7 @@ paths:
           schema:
             $ref: "definitions.yaml#/definitions/V4GetKeyPairsResponse"
         default:
-          description: Error
+          description: error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
     post:
@@ -289,6 +328,90 @@ paths:
                 {"id": "giantswarm"},
                 {"id": "testorg"}
               ]
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+
+  /v4/organizations/{organization_id}/:
+    put:
+      operationId: addOrganization
+      tags:
+        - organizations
+      summary: Create an organization
+      description: |
+        This operation allows a user to create an organization.
+      parameters:
+        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
+      responses:
+        "201":
+          description: Organization created
+          schema:
+            $ref: "definitions.yaml#/definitions/V4Organization"
+          examples:
+            application/json:
+              {
+                "id": "acme",
+                "members": [
+                  {"email": "user1@example.com"},
+                  {"email": "user2@example.com"}
+                ]
+              }
+
+        "409":
+          description: Organization already exists
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_ALREADY_EXISTS",
+                "message": "The organization could not be created. (org already exists)"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+    delete:
+      operationId: deleteOrganization
+      tags:
+        - organizations
+      summary: Delete an organization
+      description: |
+        This operation allows a user to delete an organization.
+      parameters:
+        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
+      responses:
+        "200":
+          description: Organization deleted
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_DELETED",
+                "message": "The organization with ID 'acme' has been deleted."
+              }
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The organization could not be deleted. (unauthorized: you must be a member of 'acme')"
+              }
+        "404":
+          description: Organization not found
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The organization could not be deleted. (not found: the organization with id 'acme' could not be found)"
+              }
         default:
           description: Error
           schema:

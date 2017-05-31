@@ -6,9 +6,11 @@ Error messages and standard responses, like after creation of a resource, contai
 - `PERMISSION_DENIED`: Indicates the provided credentials are valid, but the requested resource requires other permissions.
 - `RESOURCE_ALREADY_EXISTS`: Indicates a resource does already exist.
 - `RESOURCE_CREATED`: Indicates a resource has been created.
+- `RESOURCE_DELETION_STARTED`: Indicates a resource will be deleted.
 - `RESOURCE_DELETED`: Indicates a resource has been deleted.
 - `RESOURCE_DELETION_STARTED`: Deleting the resource is in progress.
 - `RESOURCE_NOT_FOUND`: Indicates a resource could not be found.
 - `RESOURCE_UPDATED`: Indicates a resource has been updated.
+- `IMMUTABLE_ATTRIBUTE`: Indicates the provided data structure contains fields you are not allowed to edit.
 - `UNKNOWN_ATTRIBUTE`: Indicates the provided data structure contains unexpected fields.
 - `UNKNOWN_ERROR`: Indicates something went wrong in unpredictable ways.

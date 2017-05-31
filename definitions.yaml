@@ -3,14 +3,13 @@ definitions:
   # Generic response model
   V4GenericResponse:
     type: object
-    required:
-      - code
-      - message
     properties:
       message:
         type: string
+        description: "A human readable message"
       code:
         type: string
+        description: "One of the response codes from: https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md"
 
   # Request to create a new cluster
   V4AddClusterRequest:
@@ -147,6 +146,19 @@ definitions:
         type: string
         description: PEM-encoded certificate
 
+  # a complete organization object
+  V4Organization:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique name/identifier of the organization
+      members:
+        type: array
+        description: List of members that belong to this organization
+        items:
+          $ref: '#/definitions/V4OrganizationMember'
+
   # An organization as returned by getOrganizations as an array item
   V4OrganizationListItem:
     type: object
@@ -154,3 +166,11 @@ definitions:
       id:
         type: string
         description: Unique name/identifier of the organization
+
+  # A user that belongs to an organization
+  V4OrganizationMember:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Email address of the user
