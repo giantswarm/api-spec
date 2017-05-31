@@ -309,11 +309,9 @@ paths:
         - organizations
       summary: Get organizations
       description: |
-        This operation allows to fetch a list of organizations.
-        The resulting list will contain all organizations the user is allowed
-        to know about. In the case of an admin user, that includes all existing
-        organizations. For a non-admin user, this currently includes all
-        organizations the user is a member of.
+        This operation allows to fetch a list of organizations the user is a
+        member of. In the case of an admin user, the result includes all
+        existing organizations.
       responses:
         "200":
           description: Success
