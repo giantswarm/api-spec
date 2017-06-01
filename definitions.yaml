@@ -27,14 +27,6 @@ definitions:
       kubernetes_version:
         type: string
         description: Kubernetes version number
-      aws:
-        type: object
-        description: Attributes specific to clusters running on Amazon Web Services (AWS)
-        properties:
-          resource_tags:
-            type: object
-            description: Tags to be applied to AWS EC2 resources related to this cluster
-            additionalProperties: true
       workers:
         type: array
         items:
@@ -63,14 +55,6 @@ definitions:
       kubernetes_version:
         type: string
         description: Kubernetes version number
-      aws:
-        type: object
-        description: Attributes specific to clusters running on Amazon Web Services (AWS)
-        properties:
-          resource_tags:
-            type: object
-            description: Tags to be applied to AWS EC2 resources related to this cluster
-            additionalProperties: true
       workers:
         type: array
         items:

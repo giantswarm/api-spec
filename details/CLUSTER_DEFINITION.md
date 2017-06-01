@@ -59,11 +59,6 @@ This example here shows a cluster definition in JSON format, as it may be submit
 {
     "name": "A Cluster on AWS",
     "owner": "acme",
-    "aws": {
-      "resource_tags": {
-        "costcenter": "166380"
-      }
-    },
     "workers": [
         {
             "aws": {
@@ -95,11 +90,6 @@ After creation using the definition above, the code below shows the completed cl
     "name": "A Cluster on AWS",
     "kubernetes_version": "v1.5.2_coreos.0",
     "owner": "acme",
-    "aws": {
-      "resource_tags": {
-        "costcenter": "166380"
-      }
-    },
     "workers": [
         {
             "aws": {
@@ -143,8 +133,6 @@ After creation using the definition above, the code below shows the completed cl
 - `name`: User friendly name of the cluster
 - `kubernetes_version`: Kubernetes version of the cluster. The string reported here may also contain additional details and thus may not be machine-interpretable.
 - `owner`: Name of the organization owning the cluster.
-- `aws`: Attributes specific to clusters running on Amazon Web Services (AWS)
-- `aws.resource_tags`: When given, this object's key-value-pairs are applied as resource tags to EC2 resources generated for the cluster (master and worker node instances). As resource tags are contained in the AWS usage report, this can simplify cost allocation.
 - `workers`: Array of worker definition objects. Each array item represents one worker node. In order to create a cluster with three worker nodes, this array MUST have three items, even if all worker share the same configuration.
 - `workers[n].aws.instance_type`: Name of the EC2 instance type to use for the worker node. For clusters running on AWS, this attribute is required on cluster creation.
 - `workers[n].memory`: Memory definition object. This object can currently contain only one attribute `size_gb`, which indicates the RAM size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
