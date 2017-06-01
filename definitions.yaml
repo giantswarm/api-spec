@@ -33,7 +33,7 @@ definitions:
         properties:
           resource_tags:
             type: object
-            description: Tags to be applied to AWS EC2 resources related to this cluster 
+            description: Tags to be applied to AWS EC2 resources related to this cluster
             additionalProperties: true
       workers:
         type: array
@@ -69,7 +69,7 @@ definitions:
         properties:
           resource_tags:
             type: object
-            description: Tags to be applied to AWS EC2 resources related to this cluster 
+            description: Tags to be applied to AWS EC2 resources related to this cluster
             additionalProperties: true
       workers:
         type: array
