@@ -59,6 +59,11 @@ This example here shows a cluster definition in JSON format, as it may be submit
 {
     "name": "A Cluster on AWS",
     "owner": "acme",
+    "aws": {
+      "resource_tags": {
+        "costcenter": "123456"
+      }
+    },
     "workers": [
         {
             "aws": {
@@ -133,6 +138,8 @@ After creation using the definition above, the code below shows the completed cl
 - `name`: User friendly name of the cluster
 - `kubernetes_version`: Kubernetes version of the cluster. The string reported here may also contain additional details and thus may not be machine-interpretable.
 - `owner`: Name of the organization owning the cluster.
+- `aws`: Group of settings specifically related to clusters running on AWS.
+- `aws.resource_tags`: Key-value-pairs which are applied to EC2 resources, like instances, load balancers, etc. Both key and value must be of type string.
 - `workers`: Array of worker definition objects. Each array item represents one worker node. In order to create a cluster with three worker nodes, this array MUST have three items, even if all worker share the same configuration.
 - `workers[n].aws.instance_type`: Name of the EC2 instance type to use for the worker node. For clusters running on AWS, this attribute is required on cluster creation.
 - `workers[n].memory`: Memory definition object. This object can currently contain only one attribute `size_gb`, which indicates the RAM size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
