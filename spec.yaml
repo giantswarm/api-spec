@@ -302,6 +302,35 @@ paths:
                 "ttl_hours": 8640
               }
 
+  /v4/organizations/:
+    get:
+      operationId: getOrganizations
+      tags:
+        - organizations
+      summary: Get organizations
+      description: |
+        This operation allows to fetch a list of organizations the user is a
+        member of. In the case of an admin user, the result includes all
+        existing organizations.
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "definitions.yaml#/definitions/V4OrganizationListItem"
+          examples:
+            application/json:
+              [
+                {"id": "acme"},
+                {"id": "giantswarm"},
+                {"id": "testorg"}
+              ]
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/organizations/{organization_id}/:
     put:
       operationId: addOrganization
