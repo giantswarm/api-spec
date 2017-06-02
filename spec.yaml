@@ -244,7 +244,10 @@ paths:
       description: |
         This operation allows to modify an existing cluster.
 
-        __Note:__ This operation currently requires special permission. Also, currently only the `owner` attribute can be changed.
+        The following attributes can be modified:
+
+        - `owner`: Given that the requesting user has admin permissions, this can be used to change a cluster's ownership.
+        - `workers`: By modifying the array of workers, nodes can be added or removed to scale the cluster's capacity. When adding nodes, the node definition has to conform the specification as detailed in the [cluster creation](#operation/addCluster) operation.
 
         The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard. Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
       responses:
