@@ -17,6 +17,26 @@ info:
 
     Feedback on the API as well as this documentation is welcome via `support@giantswarm.io` or on IRC channel [#giantswarm](irc://irc.freenode.org:6667/#giantswarm) on freenode.
 
+    ## Idempotency
+
+    Idempotency is the concept of giving a guarantee that a request is executed only once, if a few conditions are met.
+    This is currently only supported for [creating clusters](#operation/addCluster), but other operations will likely follow in the future.
+
+    The concept allows you to retry a request for creating a cluster in the case of an error, like a request timeout.
+
+    To enforce idempotency, your request must contain a header (`X-Idempotency-Key`) with a string value that you define yourself.
+    The string must be between 32 and 64 characters long.
+    Only the characters `A-Z`, `a-z`, `0-9` and the hyphen `-` are allowed, however the string must neither start nor end with a hyphen.
+    For example, [UUID version 4](https://en.wikipedia.org/wiki/Universally_unique_identifier) is a useful way to create an idempotency key.
+
+    The API guarantees to execute only the first request under these conditions:
+
+    - All requests are issued by the same user
+    - The time between all requests is shorter than 24 hours
+    - The idempotency key transmitted via the `X-Idempotency-Key` is identical
+
+    ## Source
+
     The source of this documentation is available on [GitHub](https://github.com/giantswarm/api-spec).
 
   termsOfService: https://giantswarm.io/terms/
@@ -76,6 +96,7 @@ paths:
           description: New cluster definition
           schema:
             $ref: 'definitions.yaml#/definitions/V4AddClusterRequest'
+        - $ref: 'parameters.yaml#/parameters/XIdempotencyKeyHeader'
       responses:
         "201":
           description: Cluster created
