@@ -82,7 +82,7 @@ paths:
             application/json:
               {
                 "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. (user must be an admin)"
+                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
               }
         default:
           description: Error
