@@ -1,3 +1,4 @@
+.DS_Store
 spec-tmp.yaml
 spec-tmp.yamle
 kubernetes/secrets.yaml
