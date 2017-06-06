@@ -19,21 +19,20 @@ info:
 
     ## Idempotency
 
-    Idempotency is the concept of giving a guarantee that a request is executed only once, if a few conditions are met.
-    This is currently only supported for [creating clusters](#operation/addCluster), but other operations will likely follow in the future.
+    Idempotency is the concept of making API calls repeatable, while guaranteeing that the state changes associated with the API call are only executed once.
+    Idempotency allows you to simply repeat certain API requests in case of an error.
 
-    The concept allows you to retry a request for creating a cluster in the case of an error, like a request timeout.
+    Currently the only operation supporting idempotency is the [creation of clusters](#operation/addCluster), but other operations will likely follow in the future.
+
+    The concept allows you to retry a request for creating a cluster.
+    By activating idempotency for those requests, you specify that you want exactly one cluster to be created, no matter how often you issue that same request.
 
     To enforce idempotency, your request must contain a header (`X-Idempotency-Key`) with a string value that you define yourself.
     The string must be between 32 and 64 characters long.
     Only the characters `A-Z`, `a-z`, `0-9` and the hyphen `-` are allowed, however the string must neither start nor end with a hyphen.
     For example, [UUID version 4](https://en.wikipedia.org/wiki/Universally_unique_identifier) is a useful way to create an idempotency key.
 
-    The API guarantees to execute only the first request under these conditions:
-
-    - All requests are issued by the same user
-    - The time between all requests is shorter than 24 hours
-    - The idempotency key transmitted via the `X-Idempotency-Key` is identical
+    So, when creating a new cluster via the API, your best choice is to set an idempotency key header with the first request and store it for later re-use until you are sure that the cluster has been created.
 
     ## Source
 
