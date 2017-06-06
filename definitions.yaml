@@ -183,7 +183,7 @@ definitions:
         description: Email address of the user
 
   # One of the users in the array as returned by getUsers
-  V4GetUsersUser:
+  V4UserListItem:
     type: object
     properties:
       email:
