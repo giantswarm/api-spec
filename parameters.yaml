@@ -13,7 +13,7 @@ parameters:
     required: true
     type: string
     description: |
-        An ID for the organization to be created is the only required parameter.
+        An ID for the organization.
         This ID must be unique and match this regular expression: ^[a-z0-9_]{4,30}$
 
   XIdempotencyKeyHeader:
