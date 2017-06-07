@@ -60,6 +60,8 @@ tags:
       description: "User guide: Accessing Pods and Services from the Outside"
   - name: organizations
     description: Organizations are groups of users who own resources like clusters.
+  - name: users
+    description: A user represents a person that should have access to the Giant Swarm API. Users can belong to many groups, and are identified by email address.
 securityDefinitions:
   token_auth:
     description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
@@ -69,6 +71,42 @@ securityDefinitions:
 
 
 paths:
+  /v4/users/:
+    get:
+      operationId: getUsers
+      tags:
+        - users
+      summary: Get users
+      description: |
+        Returns a list of all users in the system. Currently this endpoint is only available to users with admin permissions.
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "definitions.yaml#/definitions/V4UserListItem"
+          examples:
+            application/json:
+              [
+                {"email": "andy@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2019-01-15T00:00:00Z"},
+                {"email": "bob@example.com", "created": "2017-02-15T12:30:00Z", "expiry": "2020-01-15T00:00:00Z"},
+                {"email": "charles@example.com", "created": "2017-03-15T13:00:00Z", "expiry": "2021-01-15T00:00:00Z"}
+              ]
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/clusters/:
     post:

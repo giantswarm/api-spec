@@ -181,3 +181,17 @@ definitions:
       email:
         type: string
         description: Email address of the user
+
+  # One of the users in the array as returned by getUsers
+  V4UserListItem:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Email address of the user
+      created:
+        type: string
+        description: The date and time that this account was created
+      expiry:
+        type: string
+        description: The date and time when this account will expire
