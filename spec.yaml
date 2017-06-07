@@ -452,6 +452,17 @@ paths:
         - organizations
       parameters:
         - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
+        - name: body
+          in: body
+          required: true
+          schema:
+            properties:
+              members:
+                type: array
+                description: List of members that belong to this organization
+                items:
+                  $ref: 'definitions.yaml#/definitions/V4OrganizationMember'
+
       summary: Modify organization
       description: |
         This operation allows you to modify an existing organization. You must be
@@ -474,6 +485,16 @@ paths:
           description: Organization modified
           schema:
             $ref: 'definitions.yaml#/definitions/V4Organization'
+        "400":
+          description: Invalid input
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_INPUT",
+                "message": "The organization could not be modified. (request is invalid for various reasons: 'asdf@' is not a valid email address, 'bob@example.com' does not exist)"
+              }
         "401":
           description: Permission denied
           schema:
@@ -493,16 +514,6 @@ paths:
               {
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The organization could not be modified. (not found: the organization with id 'acme' could not be found)"
-              }
-        "400":
-          description: Bad input
-          schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "INVALID_INPUT",
-                "message": "The organization could not be modified. (request is invalid for various reasons: 'asdf@' is not a valid email address, 'bob@example.com' does not exist)"
               }
         default:
           description: error
