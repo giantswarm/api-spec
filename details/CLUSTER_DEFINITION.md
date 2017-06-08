@@ -65,15 +65,15 @@ This example here shows a cluster definition in JSON format, as it may be submit
               "instance_type": "m3.large"
             },
             "labels": {
-                "nickname": "first node"
+                "nodetype": "standard"
             }
         },
         {
             "aws": {
-              "instance_type": "m3.large"
+              "instance_type": "r3.xlarge"
             },
             "labels": {
-                "nickname": "second node"
+                "nodetype": "big-ram"
             }
         }
     ]
@@ -103,22 +103,22 @@ After creation using the definition above, the code below shows the completed cl
                 "beta.kubernetes.io/os": "linux",
                 "ip": "10.3.11.2",
                 "kubernetes.io/hostname": "worker-1.wqtlq.example.com",
-                "nickname": "first node"
+                "nodetype": "standard"
             }
         },
         {
             "aws": {
-              "instance_type": "m3.large"
+              "instance_type": "r3.xlarge"
             },
-            "memory": {"size_gb": 7.5},
-            "storage": {"size_gb": 32},
-            "cpu": {"cores": 2},
+            "memory": {"size_gb": 30.5},
+            "storage": {"size_gb": 80},
+            "cpu": {"cores": 4},
             "labels": {
                 "beta.kubernetes.io/arch": "amd64",
                 "beta.kubernetes.io/os": "linux",
                 "ip": "10.3.62.2",
                 "kubernetes.io/hostname": "worker-2.wqtlq.example.com",
-                "nickname": "second node"
+                "nodetype": "big-ram"
             }
         }
     ]
@@ -134,7 +134,7 @@ After creation using the definition above, the code below shows the completed cl
 - `kubernetes_version`: Kubernetes version of the cluster. The string reported here may also contain additional details and thus may not be machine-interpretable.
 - `owner`: Name of the organization owning the cluster.
 - `workers`: Array of worker definition objects. Each array item represents one worker node. In order to create a cluster with three worker nodes, this array MUST have three items, even if all worker share the same configuration.
-- `workers[n].aws.instance_type`: Name of the EC2 instance type to use for the worker node. For clusters running on AWS, this attribute is required on cluster creation and must have the same value for all worker nodes of the cluster.
+- `workers[n].aws.instance_type`: Name of the EC2 instance type to use for the worker node. For clusters running on AWS, this attribute is required on cluster creation.
 - `workers[n].memory`: Memory definition object. This object can currently contain only one attribute `size_gb`, which indicates the RAM size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
 - `workers[n].storage`: Storage definition object. Storage here refers to the local disk storage of a worker node. The definition object can currently contain only one attribute `size_gb`, which indicates the local storage size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
 - `workers[n].cpu`: CPU definition object. This object may (only) contain the attribute `cores`, indicating the number of CPU cores for the given worker node. For clusters running on AWS, this attribute is ignored on cluster creation.
