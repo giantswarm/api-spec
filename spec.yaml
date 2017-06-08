@@ -118,7 +118,7 @@ paths:
         This operation allows to fetch a list of clusters.
 
         The result depends on the permissions of the user.
-        A normal user will get in return all the clusters the user has access
+        A normal user will get all the clusters the user has access
         to, via organization membership.
         A user with admin permission will receive a list of all existing
         clusters.
