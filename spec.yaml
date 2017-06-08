@@ -109,6 +109,51 @@ paths:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/clusters/:
+    get:
+      operationId: getClusters
+      tags:
+        - clusters
+      summary: Get clusters
+      description: |
+        This operation allows to fetch a list of clusters.
+
+        The result depends on the permisisons of the user.
+        A normal user will get in return all the clusters the user has access
+        to, via organization membership.
+        A user with admin permission will receive a list of all existing
+        clusters.
+
+        The result array items are sparse representations of the cluster objects.
+        To fetch more details on a cluster, use the [getCluster](#operation/getCluster)
+        operation.
+      parameters:
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "definitions.yaml#/definitions/V4ClusterListItem"
+          examples:
+            application/json:
+              [
+                {
+                  "id": "g8s3o",
+                  "create_date": "2017-06-08T12:31:47.215Z",
+                  "name": "Staging Cluster",
+                  "owner": "acme"
+                },
+                {
+                  "id": "3dkr6",
+                  "create_date": "2017-05-22T13:58:02.024Z",
+                  "name": "Test Cluster",
+                  "owner": "testorg"
+                }
+              ]
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
     post:
       operationId: addCluster
       tags:

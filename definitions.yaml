@@ -6,10 +6,10 @@ definitions:
     properties:
       message:
         type: string
-        description: "A human readable message"
+        description: A human readable message
       code:
         type: string
-        description: "One of the response codes from: https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md"
+        description: A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
 
   # Request to create a new cluster
   V4AddClusterRequest:
@@ -195,3 +195,20 @@ definitions:
       expiry:
         type: string
         description: The date and time when this account will expire
+
+  # A cluster array item, as return by getClusters
+  V4ClusterListItem:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique cluster identifier
+      create_date:
+        type: string
+        description: Date/time of cluster creation
+      name:
+        type: string
+        description: Cluster name
+      owner:
+        type: string
+        description: Name of the organization owning the cluster
