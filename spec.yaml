@@ -115,7 +115,7 @@ paths:
         - clusters
       summary: Get clusters
       description: |
-        This operation allows to fetch a list of clusters.
+        This operation fetches a list of clusters.
 
         The result depends on the permissions of the user.
         A normal user will get all the clusters the user has access
