@@ -408,6 +408,55 @@ paths:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/organizations/{organization_id}/:
+    get:
+      operationId: getOrganization
+      tags:
+        - organizations
+      summary: Get organization details
+      description: |
+        This operation fetches organization details.
+      parameters:
+        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
+      responses:
+        "200":
+          description: Organization details
+          schema:
+            $ref: "definitions.yaml#/definitions/V4Organization"
+          examples:
+            application/json:
+              {
+                "id": "acme",
+                "members": [
+                  {"email": "user1@example.com"},
+                  {"email": "user2@example.com"}
+                ]
+              }
+
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The details of the organization could not be listed. (unauthorized: you must be a member of 'acme')"
+              }
+
+        "404":
+          description: Organization not found
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The organization could not be found. (not found: the organization with id 'acme' could not be found)"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
     put:
       operationId: addOrganization
       tags:
