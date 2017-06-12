@@ -470,7 +470,7 @@ paths:
 
         The following attributes can be modified:
 
-        - `members`: By modifying the array of members, members can be added or removed from the organization
+        - `members`: By modifying the array of members, members can be added to or removed from the organization
 
         The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
         Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
@@ -479,7 +479,7 @@ paths:
         means every member you attempt to add to the organization must actually
         exist in the system. If any member you attempt to add is invalid, the entire
         patch operation will fail, no members will be added or removed, and an error message
-        will explaining which members in your request are invalid.
+        will explain which members in your request are invalid.
       responses:
         "200":
           description: Organization modified
