@@ -493,7 +493,7 @@ paths:
             application/json:
               {
                 "code": "INVALID_INPUT",
-                "message": "The organization could not be modified. (request is invalid for various reasons: 'asdf@' is not a valid email address, 'bob@example.com' does not exist)"
+                "message": "The organization could not be modified. (invalid input: user 'invalid-email' does not exist or is invalid)"
               }
         "401":
           description: Permission denied
