@@ -13,4 +13,5 @@ Error messages and standard responses, like after creation of a resource, contai
 - `RESOURCE_UPDATED`: Indicates a resource has been updated.
 - `IMMUTABLE_ATTRIBUTE`: Indicates the provided data structure contains fields you are not allowed to edit.
 - `UNKNOWN_ATTRIBUTE`: Indicates the provided data structure contains unexpected fields.
+- `INVALID_INPUT`: Indicates that the user provided input that is not valid in some way.
 - `UNKNOWN_ERROR`: Indicates something went wrong in unpredictable ways.
