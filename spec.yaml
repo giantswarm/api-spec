@@ -111,6 +111,8 @@ paths:
   /v4/users/{email}/:
     delete:
       operationId: deleteUser
+      parameters:
+        - $ref: 'parameters.yaml#/parameters/UserEmailPathParameter'
       tags:
         - users
       summary: Delete user
