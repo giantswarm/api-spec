@@ -151,7 +151,6 @@ paths:
           description: Error
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
-  }
 
   /v4/clusters/:
     get:
