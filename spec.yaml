@@ -137,7 +137,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The user with email 'bob@example.com' could not be found."
+                "message": "The user could not be deleted. (not found: user with email 'bob@example.com' could not be found)"
               }
         "401":
           description: Permission denied
