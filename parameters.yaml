@@ -7,6 +7,13 @@ parameters:
     type: string
     description: Cluster ID
 
+  UserEmailPathParameter:
+    name: email
+    in: path
+    required: true
+    type: string
+    description: The user's email address
+
   OrganizationIdPathParameter:
     name: organization_id
     in: path
