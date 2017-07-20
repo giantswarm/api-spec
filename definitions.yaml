@@ -32,6 +32,20 @@ definitions:
         items:
           $ref: '#/definitions/V4NodeDefinition'
 
+  V4ModifyClusterRequest:
+    type: object
+    required: []
+    description: Request body for cluster modification
+    properties:
+      owner:
+        type: string
+        description: Name of the organization owning the cluster
+      workers:
+        type: array
+        description: Worker node array
+        items:
+          $ref: '#/definitions/V4NodeDefinition'
+
   # Details on existing cluster
   V4ClusterDetailsResponse:
     type: object

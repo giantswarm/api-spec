@@ -241,19 +241,92 @@ paths:
       tags:
         - clusters
       parameters:
+        - name: body
+          in: body
+          required: true
+          description: Merge-patch body
+          schema:
+            $ref: 'definitions.yaml#/definitions/V4ModifyClusterRequest'
         - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
       summary: Modify cluster
       description: |
         This operation allows to modify an existing cluster.
 
+        A cluster modification is performed by submitting a `PATCH` request
+        to the cluster resource (as described in the
+        [addCluster](#operation/addCluster) and [getCluster](#operation/getCluster))
+        in form of a [JSON Patch Merge
+        (RFC 7386)](https://tools.ietf.org/html/rfc7386). This means, only the
+        attributes to be modified have to be contained in the request body.
+
         The following attributes can be modified:
 
-        - `owner`: Given that the requesting user has admin permissions, this can be used to change a cluster's ownership.
-        - `workers`: By modifying the array of workers, nodes can be added to increase the cluster's capacity.
-        When adding nodes, the node definition has to conform to the specification as detailed in the [cluster creation](#operation/addCluster) operation.
+        - `owner`: Changing the owner organization name means to change cluster
+        ownership from one organization to another. The user performing the
+        request has to be a member of both organizations.
 
-        The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
-        Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
+        - `workers`: By modifying the array of workers, nodes can be added to
+        increase the cluster's capacity. See details below.
+
+        ### Adding and Removing Worker Nodes (Scaling)
+
+        Adding worker nodes to a cluster or removing worker nodes from a cluster
+        works by submitting the `workers` attribute, which contains a (sparse)
+        array of worker node defintions.
+
+        _Sparse_ here means that all configuration details are optional. In the
+        case that worker nodes are added to a cluster, wherever a configuration
+        detail is missing, defaults will be applied. See
+        [Creating a cluster](#operation/addCluster) for details.
+
+        When modifying the cluster resource, you describe the desired state.
+        For scaling, this means that the worker node array submitted must
+        contain as many elements as the cluster should have worker nodes.
+        If your cluster currently has five nodes and you submit a workers
+        array with four elements, this means that one worker node will be removed.
+        If your submitted workers array has six elements, this means one will
+        be added.
+
+        As an example, this request body could be used to scale a cluster to
+        three worker nodes:
+
+        ```json
+        {
+          "workers": [{}, {}, {}]
+        }
+        ```
+
+        If the scaled cluster had four worker nodes before, one would be removed.
+        If it had two worker nodes before, one with default settings would be
+        added.
+
+        To add a worker with specific configuration to a KVM-based cluster that
+        currently has three nodes, a request body like the following would work:
+
+        ```json
+        {
+          "workers": [
+            {},
+            {},
+            {},
+            {
+              "cpu": {"cores": 4},
+              "memory": {"size_gb": 10},
+              "storage": {"size_gb": 80}
+            }
+          ]
+        }
+        ```
+
+        ### Limitations
+
+        - As of now, existing worker nodes cannot be modified.
+        - When removing nodes (scaling down), it is not possible to determine
+        which nodes will be removed.
+        - On AWS based clusters, all worker nodes must use the same EC2 instance
+        type (`instance_type` node attribute). By not setting an `instance_type`
+        when submitting a PATCH request, you ensure that the right instance type
+        is used automatically.
 
         Note for clusters on AWS: When adding worker nodes to a cluster, they must use the same `instance_type` as the existing workers.
       responses:
