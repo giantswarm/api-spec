@@ -328,7 +328,6 @@ paths:
         when submitting a PATCH request, you ensure that the right instance type
         is used automatically.
 
-        Note for clusters on AWS: When adding worker nodes to a cluster, they must use the same `instance_type` as the existing workers.
       responses:
         "200":
           description: Cluster modified
