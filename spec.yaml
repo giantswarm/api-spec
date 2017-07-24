@@ -300,26 +300,10 @@ paths:
         If it had two worker nodes before, one with default settings would be
         added.
 
-        To add a worker with specific configuration to a KVM-based cluster that
-        currently has three nodes, a request body like the following would work:
-
-        ```json
-        {
-          "workers": [
-            {},
-            {},
-            {},
-            {
-              "cpu": {"cores": 4},
-              "memory": {"size_gb": 10},
-              "storage": {"size_gb": 80}
-            }
-          ]
-        }
-        ```
-
         ### Limitations
 
+        - Adding and removing worker nodes is currently only supported on
+        AWS-based installations, not on KVM-based ones.
         - As of now, existing worker nodes cannot be modified.
         - When removing nodes (scaling down), it is not possible to determine
         which nodes will be removed.
