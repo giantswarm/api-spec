@@ -1,0 +1,2 @@
+name: api-spec-chart
+version: 1.0.0-{{ .SHA }}
