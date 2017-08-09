@@ -1,18 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
+
 metadata:
-  name: api-spec-%%SLUG%%
-  namespace: api-spec
+  name: api-spec
+  namespace: docs
   labels:
-    app: api-spec-%%SLUG%%
+    app: api-spec
+    repo: giantswarm/api-spec
   annotations:
     ingress.kubernetes.io/rewrite-target: /
+
 spec:
   rules:
   - host: api-spec.g8s.fra-1.giantswarm.io
     http:
       paths:
-      - path: "%%PATH%%"
+      - path: /
         backend:
-          serviceName: api-spec-%%SLUG%%
+          serviceName: api-spec
           servicePort: 8000

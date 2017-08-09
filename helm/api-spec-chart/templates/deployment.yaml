@@ -2,10 +2,11 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 
 metadata:
-  name: api-spec-%%SLUG%%
-  namespace: api-spec
+  name: api-spec
+  namespace: docs
   labels:
-    app: api-spec-%%SLUG%%
+    app: api-spec
+    repo: giantswarm/api-spec
 
 spec:
   replicas: 2
@@ -13,12 +14,12 @@ spec:
   template:
     metadata:
       labels:
-        app: api-spec-%%SLUG%%
+        app: api-spec
+        repo: giantswarm/api-spec
     spec:
       containers:
       - name: api-spec
+        # This is a public image, so no pullsecret required
         image: quay.io/giantswarm/api-spec:{{ .SHA }}
         ports:
         - containerPort: 8000
-      imagePullSecrets:
-      - name: giantswarm-registry
