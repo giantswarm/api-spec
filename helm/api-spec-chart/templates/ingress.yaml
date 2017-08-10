@@ -6,7 +6,6 @@ metadata:
   namespace: docs
   labels:
     app: api-spec
-    repo: giantswarm/api-spec
   annotations:
     ingress.kubernetes.io/rewrite-target: /
 

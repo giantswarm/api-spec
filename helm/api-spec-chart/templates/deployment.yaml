@@ -6,7 +6,6 @@ metadata:
   namespace: docs
   labels:
     app: api-spec
-    repo: giantswarm/api-spec
 
 spec:
   replicas: 2
@@ -15,7 +14,6 @@ spec:
     metadata:
       labels:
         app: api-spec
-        repo: giantswarm/api-spec
     spec:
       containers:
         - name: api-spec

@@ -5,7 +5,6 @@ metadata:
   namespace: docs
   labels:
     app: api-spec
-    repo: giantswarm/api-spec
 
 spec:
   type: NodePort
