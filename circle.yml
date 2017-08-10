@@ -26,21 +26,4 @@ deployment:
     master:
         branch: master
         commands:
-            # set the service name ending to "-master"
-            - sed -i "s/%%SLUG%%/master/g" ./kubernetes/*
-
-            # use root path for serving
-            - sed -i "s:%%PATH%%:/:g" ./kubernetes/ingress.yaml
-
-            - ./architect deploy
-    staging:
-        # this will apply to all branches not named "master"
-        branch: /.*/
-        commands:
-            # set the service name ending to "-staging"
-            - sed -i "s/%%SLUG%%/staging/g" ./kubernetes/*
-
-            # use branch name path for serving
-            - sed -i "s:%%PATH%%:/$CIRCLE_BRANCH/:g" ./kubernetes/ingress.yaml
-
             - ./architect deploy
