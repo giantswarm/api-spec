@@ -352,6 +352,8 @@ paths:
 
         The following attributes can be modified:
 
+        - `name`: Rename the cluster to something more fitting.
+
         - `owner`: Changing the owner organization name means to change cluster
         ownership from one organization to another. The user performing the
         request has to be a member of both organizations.

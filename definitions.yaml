@@ -37,6 +37,9 @@ definitions:
     required: []
     description: Request body for cluster modification
     properties:
+      name:
+        type: string
+        description: Name for the cluster
       owner:
         type: string
         description: Name of the organization owning the cluster
