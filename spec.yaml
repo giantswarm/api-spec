@@ -218,7 +218,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_ALREADY_EXISTS",
-                "message": "The user could not be created. (invalid input: email 'bob@example.com' already exists.)"
+                "message": "The user could not be created. (invalid input: email 'bob@example.com' already exists)"
               }
         "401":
           description: Permission denied
