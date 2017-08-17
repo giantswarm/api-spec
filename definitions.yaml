@@ -388,3 +388,16 @@ definitions:
             version:
               type: string
               description: Version number of the component
+
+  V4CreateUserRequest:
+    type: object
+    required:
+      - password
+    description: Request model for creating a new user
+    properties:
+      password:
+        type: string
+        description: A Base64 encoded password
+      expiry:
+        type: string
+        description: The date and time when this account will expire
