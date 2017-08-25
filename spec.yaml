@@ -523,7 +523,7 @@ paths:
           to set up role-based access controls.
 
 
-        - `o`: This will set the certificate's `organization` fields. Use a comma seperated list of values.
+        - `certificate_organizations`: This will set the certificate's `organization` fields. Use a comma seperated list of values.
           The Kubernetes API will use these values as group memberships.
 
         __Note:__ The actual credentials coming with the key pair (key, certificate) can only be accessed once, as the result of the `POST` request that triggers their creation. This restriction exists to minimize the risk of credentials being leaked. If you fail to capture the credentials upon creation, you'll have to repeat the creation request.

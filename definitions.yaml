@@ -130,7 +130,7 @@ definitions:
         cn_prefix:
           type: string
           description: The common name prefix of the certificate subject.
-        o:
+        certificate_organizations:
           type: string
           description: The certificate subject's `organization` fields.
 
