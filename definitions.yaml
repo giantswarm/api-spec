@@ -130,6 +130,12 @@ definitions:
         create_date:
           type: string
           description: Date/time of creation
+        cn_prefix:
+          type: string
+          description: The common name prefix of the certificate subject.
+        certificate_organizations:
+          type: string
+          description: The certificate subject's `organization` fields.
 
   # Add key pair request
   V4AddKeyPairRequest:
@@ -144,6 +150,12 @@ definitions:
         type: integer
         format: int32
         description: Expiration time (from creation) in hours
+      cn_prefix:
+        type: string
+        description: The common name prefix of the certificate subject.
+      o:
+        type: string
+        description: This will set the certificate subject's `organization` fields. Use a comma seperated list of values.
 
   V4AddKeyPairResponse:
     type: object
