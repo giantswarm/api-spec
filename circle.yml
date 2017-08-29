@@ -16,13 +16,7 @@ test:
     pre:
         - make test
     override:
-        # build the docserver docker image
-        - docker build -t quay.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1 -f ./Dockerfile .
-        # sanity check
-        - docker run -d -p 8000:8000 quay.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
-        - curl http://localhost:8000 | grep "rebilly.github.io/ReDoc"
-        - docker login -e doesntmatter -u $QUAY_USERNAME -p $QUAY_PASSWORD quay.io
-        - docker push quay.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
+        - ./architect build
 
 deployment:
     master:
