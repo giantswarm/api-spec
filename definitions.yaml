@@ -130,9 +130,9 @@ definitions:
         create_date:
           type: string
           description: Date/time of creation
-        cn_prefix:
+        common_name:
           type: string
-          description: The common name prefix of the certificate subject.
+          description: The common name of the certificate subject.
         certificate_organizations:
           type: string
           description: The certificate subject's `organization` fields.
