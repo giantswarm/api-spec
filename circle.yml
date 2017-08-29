@@ -21,6 +21,7 @@ test:
         # sanity check
         - docker run -d -p 8000:8000 quay.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
         - curl http://localhost:8000 | grep "rebilly.github.io/ReDoc"
+        - docker push quay.io/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
 
 deployment:
     master:
