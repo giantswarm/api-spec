@@ -28,6 +28,9 @@ consumes:
 produces:
   - application/json
 tags:
+  - name: auth-tokens
+    description: |
+      Auth Tokens are your way of authenticating against this API. You can create one by passing your email and base64 encoded password to the create auth token endpoint.
   - name: clusters
     description: |
       Clusters are a central resource of the Giant Swarm API. As a user or team using Giant Swarm, you set up Kubernetes clusters to run your own workloads.
@@ -131,6 +134,77 @@ paths:
           description: Error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v4/auth-tokens/:
+    post:
+      operationId: createAuthToken
+      tags:
+        - auth-tokens
+      summary: Create Auth Token (Login)
+      description: |
+        Creates a Auth Token for a given user. Must authenticate with email and password.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: Create Auth Token Request
+          schema:
+            $ref: 'definitions.yaml#/definitions/V4CreateAuthTokenRequest'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "definitions.yaml#/definitions/V4CreateAuthTokenResponse"
+          examples:
+            application/json:
+              {
+                "auth-token": "e5239484-2299-41df-b901-d0568db7e3f9"
+              }
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided authentication details. Email or password is not correct."
+              }
+    delete:
+      operationId: deleteAuthToken
+      tags:
+        - auth-tokens
+      summary: Delete Auth Token (Logout)
+      description: |
+        Deletes the Auth Token provided in the Authorization header. This effectively logs you out.
+      parameters:
+        - name: Authorization
+          type: string
+          in: header
+          required: true
+          description: giantswarm AUTH_TOKEN_HERE
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_DELETED",
+                "message": "The Auth Token has been succesfully deleted."
+              }
+
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided authentication details. Email or password is not correct."
+              }
 
   /v4/users/:
     get:
