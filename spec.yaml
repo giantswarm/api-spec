@@ -17,23 +17,6 @@ info:
 
     Feedback on the API as well as this documentation is welcome via `support@giantswarm.io` or on IRC channel [#giantswarm](irc://irc.freenode.org:6667/#giantswarm) on freenode.
 
-    ## Idempotency
-
-    Idempotency is the concept of making API calls repeatable, while guaranteeing that the state changes associated with the API call are only executed once.
-    Idempotency allows you to simply repeat certain API requests in case of an error.
-
-    Currently the only operations supporting idempotency are the [creation](#operation/addCluster) and [deletion](#operation/deleteCluster) of clusters, but other operations will likely follow in the future.
-
-    The concept allows you to retry a request for creating a cluster.
-    By activating idempotency for those requests, you specify that you want exactly one cluster to be created, no matter how often you issue that same request.
-
-    To enforce idempotency, your request must contain a header (`X-Idempotency-Key`) with a string value that you define yourself.
-    The string must be between 32 and 64 characters long.
-    Only the characters `A-Z`, `a-z`, `0-9` and the hyphen `-` are allowed, however the string must neither start nor end with a hyphen.
-    For example, [UUID version 4](https://en.wikipedia.org/wiki/Universally_unique_identifier) is a useful way to create an idempotency key.
-
-    So, when creating a new cluster via the API, your best choice is to set an idempotency key header with the first request and store it for later re-use until you are sure that the cluster has been created.
-
     ## Source
 
     The source of this documentation is available on [GitHub](https://github.com/giantswarm/api-spec).
@@ -222,8 +205,6 @@ paths:
 
         For clusters on AWS, note that all worker nodes must use the same instance type.
 
-        This operation supports [idempotency](#idempotency) via the `X-Idempotency-Key` header.
-
       parameters:
         - name: body
           in: body
@@ -231,7 +212,6 @@ paths:
           description: New cluster definition
           schema:
             $ref: 'definitions.yaml#/definitions/V4AddClusterRequest'
-        - $ref: 'parameters.yaml#/parameters/XIdempotencyKeyHeader'
       responses:
         "201":
           description: Cluster created
@@ -430,7 +410,6 @@ paths:
         - clusters
       parameters:
         - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
-        - $ref: 'parameters.yaml#/parameters/XIdempotencyKeyHeader'
       summary: Delete cluster
       description: |
         This operation allows to delete a cluster.
@@ -439,8 +418,6 @@ paths:
 
         The response is sent as soon as the request is validated.
         At that point, workloads might still be running on the cluster and may be accessible for a little wile, until the cluster is actually deleted.
-
-        This operation supports [idempotency](#idempotency) via the `X-Idempotency-Key` header.
       responses:
         "202":
           description: Deleting cluster

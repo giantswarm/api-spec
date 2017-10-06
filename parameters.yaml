@@ -22,14 +22,3 @@ parameters:
     description: |
         An ID for the organization.
         This ID must be unique and match this regular expression: ^[a-z0-9_]{4,30}$
-
-  XIdempotencyKeyHeader:
-    name: X-Idempotency-Key
-    in: header
-    type: string
-    required: false
-    description: |
-      Idempotency key. If given, the request is guaranteed to be executed only
-      once, even if the same request data including the same idempotency key is
-      submitted multiple times. The value must be between 32 and 64 characters
-      long. Find out more in the [idempotency](#idempotency) section.
