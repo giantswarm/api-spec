@@ -193,7 +193,7 @@ definitions:
         description: Number of pods running
         $ref: '#/definitions/V4MetricsBundle'
       cpu_used:
-        description: CPU usage as a value between 0 and 1
+        description: Number of CPU cores currently used
         $ref: '#/definitions/V4MetricsBundle'
       ram_used:
         description: Memory usage in Bytes
