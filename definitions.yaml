@@ -182,6 +182,74 @@ definitions:
         type: string
         description: PEM-encoded certificate
 
+  # cluster metrics
+  V4GetClusterMetricsResponse:
+    type: object
+    properties:
+      container_count:
+        description: Number of containers running
+        $ref: '#/definitions/V4MetricsBundle'
+      pod_count:
+        description: Number of pods running
+        $ref: '#/definitions/V4MetricsBundle'
+      cpu_used:
+        description: CPU usage as a value between 0 and 1
+        $ref: '#/definitions/V4MetricsBundle'
+      ram_used:
+        description: Memory usage in Bytes
+        $ref: '#/definitions/V4MetricsBundle'
+      node_storage_used:
+        description: Amount of local storage used
+        $ref: '#/definitions/V4MetricsBundle'
+      network_traffic_incoming:
+        description: Incoming data volume per time interval (Rx)
+        $ref: '#/definitions/V4MetricsBundle'
+      network_traffic_outgoing:
+        description: Outgoing data volume per time interval (Tx)
+        $ref: '#/definitions/V4MetricsBundle'
+
+  V4MetricsBundle:
+    type: object
+    properties:
+      unit:
+        description: |
+          The unit used for this metric. Can be `B` (Byte), `B/s` (Byte per
+          Second), or the `null` value for metrics without unit.
+        type: string
+      cluster:
+        description: Cluster-level (aggregated) metrics
+        $ref: '#/definitions/V4ClusterMetric'
+      workers:
+        type: array
+        description: Worker node level metrics, one item per worker node
+        items:
+          $ref: '#/definitions/V4WorkerMetric'
+
+  V4ClusterMetric:
+    type: object
+    required: ["timestamp", "value"]
+    properties:
+      timestamp:
+        description: Time when the given value has been recorded
+        type: string
+      value:
+        description: The value for the metric. Can be an integer or float.
+        type: number
+
+  V4WorkerMetric:
+    type: object
+    required: ["worker_id", "timestamp", "value"]
+    properties:
+      worker_id:
+        description: A string identifying the worker, e. g. the IP address
+        type: string
+      timestamp:
+        description: Time when the given value has been recorded
+        type: string
+      value:
+        description: The value for the metric. Can be an integer or float.
+        type: number
+
   # a complete organization object
   V4Organization:
     type: object
