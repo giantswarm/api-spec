@@ -184,65 +184,45 @@ definitions:
 
   # cluster metrics
   V4GetClusterMetricsResponse:
+    description: Response for the getClusterMetrics operation
     type: object
     properties:
-      container_count:
-        description: Number of containers running
-        $ref: '#/definitions/V4MetricsBundle'
-      pod_count:
-        description: Number of pods running
-        $ref: '#/definitions/V4MetricsBundle'
-      cpu_used:
-        description: Number of CPU cores currently used
-        $ref: '#/definitions/V4MetricsBundle'
-      ram_used:
-        description: Memory usage in Bytes
-        $ref: '#/definitions/V4MetricsBundle'
-      node_storage_used:
-        description: Amount of local storage used
-        $ref: '#/definitions/V4MetricsBundle'
-      network_traffic_incoming:
-        description: Incoming data volume per time interval (Rx)
-        $ref: '#/definitions/V4MetricsBundle'
-      network_traffic_outgoing:
-        description: Outgoing data volume per time interval (Tx)
-        $ref: '#/definitions/V4MetricsBundle'
-
-  V4MetricsBundle:
-    type: object
-    properties:
-      unit:
-        description: |
-          The unit used for this metric. Can be `B` (Byte), `B/s` (Byte per
-          Second), or the `null` value for metrics without unit.
-        type: string
-      cluster:
-        description: Cluster-level (aggregated) metrics
-        $ref: '#/definitions/V4ClusterMetric'
       workers:
+        description: Group of metrics regarding workers
         type: array
-        description: Worker node level metrics, one item per worker node
         items:
-          $ref: '#/definitions/V4WorkerMetric'
+          type: object
+          properties:
+            id:
+              type: string
+            metrics:
+              type: object
+              properties:
+                container_count:
+                  description: Number of containers running
+                  $ref: '#/definitions/V4Metric'
+                pod_count:
+                  description: Number of pods running
+                  $ref: '#/definitions/V4Metric'
+                cpu_used:
+                  description: Number of CPU cores currently used
+                  $ref: '#/definitions/V4Metric'
+                ram_used:
+                  description: Memory usage in Bytes
+                  $ref: '#/definitions/V4Metric'
+                node_storage_used:
+                  description: Amount of local storage used
+                  $ref: '#/definitions/V4Metric'
+                network_traffic_incoming:
+                  description: Incoming data volume per time interval (Rx)
+                  $ref: '#/definitions/V4Metric'
+                network_traffic_outgoing:
+                  description: Outgoing data volume per time interval (Tx)
+                  $ref: '#/definitions/V4Metric'
 
-  V4ClusterMetric:
+  V4Metric:
     type: object
-    required: ["timestamp", "value"]
     properties:
-      timestamp:
-        description: Time when the given value has been recorded
-        type: string
-      value:
-        description: The value for the metric. Can be an integer or float.
-        type: number
-
-  V4WorkerMetric:
-    type: object
-    required: ["worker_id", "timestamp", "value"]
-    properties:
-      worker_id:
-        description: A string identifying the worker, e. g. the IP address
-        type: string
       timestamp:
         description: Time when the given value has been recorded
         type: string

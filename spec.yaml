@@ -530,55 +530,37 @@ paths:
       operationId: getClusterMetrics
       tags:
         - metrics
+        - clusters
       summary: Get cluster metrics
       description: |
-        This operation returns metrics about current resource usage in the cluster.
+        This operation returns metrics about current resource usage in the
+        cluster. Currently, all metrics reported concern worker nodes, hence
+        they are grouped under a `workers` key.
 
-        Metrics are given both on a per-node level and aggregated for the entire
-        cluster. Here is an example for a metric:
+        Here is a shortened example, containing only one metric (`ram_used`)
+        and only one worker node:
 
         ```json
-        "ram_used": {
-          "unit": "B",
-          "cluster": {
-            "timestamp": "2017-10-23T12:56:12.185000",
-            "value": 4205494272
-          },
+        {
           "workers": [
             {
-              "worker_id": "172.17.0.4",
-              "timestamp": "2017-10-23T12:56:12.185000",
-              "value": 4205494272
+              "id": "172.17.0.4",
+              "metrics": {
+                "ram_used": {
+                  "timestamp": "2017-10-23T12:56:12.185000",
+                  "value": 4205494272
+                }
+              }
             }
           ]
         }
         ```
 
-        In the example, the key `ram_used` is the name of the metric. The sub
-        keys are `unit` (the unit of the metric), `cluster` for the
-        cluster-level value and `workers` for the worker-level values. The
-        `workers` part is an array with one entry per worker node. The
-        `worker_id` string allows to identify the worker.
-
-        ### List of metrics
-
-        - `cpu_used`: Number of CPU cores used, as a floating point number. This
-        metric has no unit.
-        - `ram_used`: The amount of memory used in the node/cluster.
-        - `pod_count`: Number of pods running on the node/cluster. This metric
-        has no unit.
-        - `container_count`: Number of containers running in the node or
-        cluster. This metric has no unit.
-        - `node_storage_used`: Amount of worker disk storage used on the
-        node/cluster.
-        - `network_rx`: Incoming network transfer rate.
-        - `network_tx`: Outgoing network transfer rate.
-
         ### Notes
 
         - Metrics are not guaranteed to provide a value. If the underlying
-        backend does not respond fast enough or if a value cannot be procided,
-        both the `value` and `timestamp` key have the `null` value.
+        backend cannot provide a recent value fast enough, both the `value`
+        and `timestamp` key have the `null` value.
 
       parameters:
         - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
