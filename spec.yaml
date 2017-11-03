@@ -558,6 +558,11 @@ paths:
 
         ### Notes
 
+        - The `id` value contained in a worker entry should be treated as an
+        arbitrary string identifier. It _may_ in fact be be an IPv4 address, a
+        fully qualified host name, or any other string that uniquely identifies
+        a worker node in this guest cluster.
+
         - Metrics are not guaranteed to provide a value. If the underlying
         backend cannot provide a recent value fast enough, both the `value`
         and `timestamp` key have the `null` value.
