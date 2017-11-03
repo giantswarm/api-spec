@@ -73,22 +73,23 @@ paths:
 
         ```json
         {
-          "installation_name": "shire",
-          "provider": "aws",
-          "datacenter": "eu-central-1",
-          "workers_per_cluster": {
-            "max": 20,
-            "default": 3
+          "general": {
+            "installation_name": "shire",
+            "provider": "aws",
+            "datacenter": "eu-central-1"
           },
-          "worker_instance_type": {
-            "options": [
-              "m3.medium", "m3.large", "m3.xlarge"
-            ],
-            "default": "m3.large"
-          },
-          "cpu_cores_per_worker": null,
-          "ram_size_gb_per_worker": null,
-          "storage_size_gb_per_worker": null
+          "workers": {
+            "count_per_cluster": {
+              "max": 20,
+              "default": 3
+            },
+            "instance_type": {
+              "options": [
+                "m3.medium", "m3.large", "m3.xlarge"
+              ],
+              "default": "m3.large"
+            }
+          }
         }
         ```
 
@@ -96,28 +97,30 @@ paths:
 
         ```json
         {
-          "installation_name": "isengard",
-          "provider": "kvm",
-          "datacenter": "string",
-          "workers_per_cluster": {
-            "max": 8,
-            "default": 3
+          "general": {
+            "installation_name": "isengard",
+            "provider": "kvm",
+            "datacenter": "string"
           },
-          "worker_instance_type": null,
-          "cpu_cores_per_worker": {
-            "min": 1,
-            "max": 4,
-            "default": 2
-          },
-          "ram_size_gb_per_worker": {
-            "min": 2,
-            "max": 16,
-            "default": 4
-          },
-          "storage_size_gb_per_worker": {
-            "max": 250,
-            "default": 40
-          }
+          "workers": {
+            "count_per_cluster": {
+              "max": 8,
+              "default": 3
+            },
+            "cpu_cores": {
+              "min": 1,
+              "max": 4,
+              "default": 2
+            },
+            "ram_size_gb": {
+              "min": 2,
+              "max": 16,
+              "default": 4
+            },
+            "storage_size_gb": {
+              "max": 250,
+              "default": 40
+            }
         }
         ```
       responses:
