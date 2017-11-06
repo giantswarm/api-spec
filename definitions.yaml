@@ -247,3 +247,37 @@ definitions:
       owner:
         type: string
         description: Name of the organization owning the cluster
+
+  # A cluster array item, as return by getClusters
+  V4ReleaseListItem:
+    type: object
+    properties:
+      version:
+        type: string
+        description: The semantic version number
+      timestamp:
+        type: string
+        description: Date and time of the release creation
+      description:
+        type: string
+        description: |
+          Human-friendly description of the changes compared to the
+          prior version
+      deprecated:
+        type: boolean
+        description: |
+          If true, the version is no longer available for new clusters and
+          cluster upgrades.
+      components:
+        description: |
+          List of components and their version contained in the release
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the component
+            version:
+              type: string
+              description: Version number of the component
