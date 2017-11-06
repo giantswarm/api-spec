@@ -100,7 +100,8 @@ paths:
         - users
       summary: Delete user
       description: |
-        Deletes a users in the system. Currently this endpoint is only available to users with admin permissions.
+        Deletes a users in the system. Currently this endpoint is only available
+        to users with admin permissions.
       responses:
         "200":
           description: User deleted

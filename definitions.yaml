@@ -9,7 +9,8 @@ definitions:
         description: A human readable message
       code:
         type: string
-        description: A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
+        description: |
+          A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
 
   # Request to create a new cluster
   V4AddClusterRequest:
@@ -84,11 +85,14 @@ definitions:
     properties:
       aws:
         type: object
-        description: Attributes specific to nodes running on Amazon Web Services (AWS)
+        description: |
+          Attributes specific to nodes running on Amazon Web Services (AWS)
         properties:
           instance_type:
             type: string
-            description: EC2 instance type name. Must be the same for all worker nodes of a cluster.
+            description: |
+              EC2 instance type name. Must be the same for all worker nodes
+              of a cluster.
       memory:
         type: object
         properties:
@@ -155,7 +159,9 @@ definitions:
         description: The common name prefix of the certificate subject.
       certificate_organizations:
         type: string
-        description: This will set the certificate subject's `organization` fields. Use a comma seperated list of values.
+        description: |
+          This will set the certificate subject's `organization` fields.
+          Use a comma seperated list of values.
 
   V4AddKeyPairResponse:
     type: object
