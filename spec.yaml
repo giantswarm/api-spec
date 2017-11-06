@@ -792,27 +792,31 @@ paths:
                   "components": [
                     {
                       "name": "kubernetes",
-                      "version": "1.5.8"
+                      "version": "1.5.8",
+                      "description": "Security fixes"
                     },
                     {
                       "name": "calico",
-                      "version": "0.9.1"
+                      "version": "0.9.1",
+                      "description": "Security fixes"
                     }
                   ],
                   "deprecated": true
                 },
                 {
-                  "version": "2.8.3",
+                  "version": "2.8.4",
                   "timestamp": "2017-11-11T12:24:56.59969Z",
                   "description": "Minor update of calico, fixing a bug.",
                   "components": [
                     {
                       "name": "kubernetes",
-                      "version": "1.7.3"
+                      "version": "1.7.3",
+                      "description": null
                     },
                     {
                       "name": "calico",
-                      "version": "1.1.0"
+                      "version": "1.1.1",
+                      "description": "Bugfix"
                     }
                   ],
                   "deprecated": false

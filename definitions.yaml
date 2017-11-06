@@ -274,6 +274,7 @@ definitions:
         type: array
         items:
           type: object
+          required: ["name", "version"]
           properties:
             name:
               type: string
@@ -281,3 +282,8 @@ definitions:
             version:
               type: string
               description: Version number of the component
+            description:
+              type: string
+              description: |
+                Human-readable information on the change of this component,
+                if applicable
