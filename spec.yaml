@@ -789,16 +789,24 @@ paths:
                   "version": "1.14.9",
                   "timestamp": "2017-09-21T08:14:03.37759Z",
                   "description": "Minor updates of kubernetes and calico, both for security fixes.",
-                  "components": [
+                  "changelog": [
                     {
-                      "name": "kubernetes",
-                      "version": "1.5.8",
+                      "component": "kubernetes",
                       "description": "Security fixes"
                     },
                     {
-                      "name": "calico",
-                      "version": "0.9.1",
+                      "component": "calico",
                       "description": "Security fixes"
+                    }
+                  ],
+                  "components": [
+                    {
+                      "name": "kubernetes",
+                      "version": "1.5.8"
+                    },
+                    {
+                      "name": "calico",
+                      "version": "0.9.1"
                     }
                   ],
                   "deprecated": true
@@ -807,16 +815,20 @@ paths:
                   "version": "2.8.4",
                   "timestamp": "2017-11-11T12:24:56.59969Z",
                   "description": "Minor update of calico, fixing a bug.",
+                  "changelog": [
+                    {
+                      "component": "calico",
+                      "description": "Bugfix"
+                    }
+                  ],
                   "components": [
                     {
                       "name": "kubernetes",
-                      "version": "1.7.3",
-                      "description": null
+                      "version": "1.7.3"
                     },
                     {
                       "name": "calico",
-                      "version": "1.1.1",
-                      "description": "Bugfix"
+                      "version": "1.1.1"
                     }
                   ],
                   "deprecated": false
