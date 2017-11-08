@@ -46,7 +46,17 @@ tags:
   - name: users
     description: A user represents a person that should have access to the Giant Swarm API. Users can belong to many groups, and are identified by email address.
   - name: releases
-    description: A release is a software bundle that constitutes a cluster
+    description: |
+      A release is a software bundle that constitutes a cluster.
+
+      Releases are identified by their
+      [semantic version number](http://semver.org/) in the `MAJOR.MINOR.PATCH`
+      format.
+
+      A release provides _components_, like for example kubernetes. For each
+      release the contained components are listed. Changes in components are
+      detailed in the _changelog_ of a release.
+
 securityDefinitions:
   token_auth:
     description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
@@ -788,7 +798,6 @@ paths:
                 {
                   "version": "1.14.9",
                   "timestamp": "2017-09-21T08:14:03.37759Z",
-                  "description": "Minor updates of kubernetes and calico, both for security fixes.",
                   "changelog": [
                     {
                       "component": "kubernetes",
@@ -809,12 +818,11 @@ paths:
                       "version": "0.9.1"
                     }
                   ],
-                  "deprecated": true
+                  "active": false
                 },
                 {
                   "version": "2.8.4",
                   "timestamp": "2017-11-11T12:24:56.59969Z",
-                  "description": "Minor update of calico, fixing a bug.",
                   "changelog": [
                     {
                       "component": "calico",
@@ -831,6 +839,6 @@ paths:
                       "version": "1.1.1"
                     }
                   ],
-                  "deprecated": false
+                  "active": true
                 }
               ]

@@ -251,6 +251,7 @@ definitions:
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:
     type: object
+    required: ["version", "timestamp", "changelog", "components"]
     properties:
       version:
         type: string
@@ -258,16 +259,28 @@ definitions:
       timestamp:
         type: string
         description: Date and time of the release creation
-      description:
-        type: string
-        description: |
-          Human-friendly description of the changes compared to the
-          prior version
-      deprecated:
+      active:
         type: boolean
         description: |
-          If true, the version is no longer available for new clusters and
-          cluster upgrades.
+          If true, the version is available for new clusters and cluster
+          upgrades. Older versions become unavailable and thus have the
+          value `false` here.
+      changelog:
+        description: |
+          Structured list of changes in this release, in comparison to the
+          previous version, with respect to the contained components.
+        type: array
+        items:
+          type: object
+          properties:
+            component:
+              type: string
+              description: |
+                If the changed item was a component, this attribute is the
+                name of the component.
+            description:
+              type: string
+              description: Human-friendly description of the change
       components:
         description: |
           List of components and their version contained in the release
@@ -282,8 +295,3 @@ definitions:
             version:
               type: string
               description: Version number of the component
-            description:
-              type: string
-              description: |
-                Human-readable information on the change of this component,
-                if applicable
