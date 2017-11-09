@@ -16,7 +16,7 @@ The specification YAML files are:
 
 ## Human-friendly API Documentation
 
-We host a browser-friendly version at http://apispec.g8s.fra-1.giantswarm.io/
+We host a browser-friendly version at https://docs.giantswarm.io/api/
 
 That documentation is a rendition of the specification of the `master` branch of this repository.
 
