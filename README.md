@@ -26,8 +26,6 @@ See the [`details`](https://github.com/giantswarm/api-spec/tree/master/details) 
 
 As usual, collaboration on this spec is done based on feature branches and pull requests.
 
-For a feature branch pushed to this repository on GitHub, the documentation gets published automatically under `http://apispec.g8s.fra-1.giantswarm.io/<branch-name>/`.
-
 Feature branches shall be merged into `master` only when the API functionality they describe is implemented and available to users of the Giant Swarm API.
 
 ### Conventions
