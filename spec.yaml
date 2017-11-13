@@ -338,6 +338,10 @@ paths:
         ownership from one organization to another. The user performing the
         request has to be a member of both organizations.
 
+        - `release_version`: By changing this attribute you can upgrade a
+        cluster to a newer
+        [release](https://docs.giantswarm.io/api/#tag/releases).
+
         - `workers`: By modifying the array of workers, nodes can be added to
         increase the cluster's capacity. See details below.
 
