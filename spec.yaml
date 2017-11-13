@@ -189,17 +189,32 @@ paths:
         - clusters
       summary: Create cluster
       description: |
-        This operation is used to create a new Kubernetes cluster for an organization. The desired configuration can be specified using the __cluster definition format__ (see [external documentation](https://github.com/giantswarm/api-spec/blob/master/details/CLUSTER_DEFINITION.md) for details).
+        This operation is used to create a new Kubernetes cluster for an
+        organization. The desired configuration can be specified using the
+        __cluster definition format__ (see
+        [external documentation](https://github.com/giantswarm/api-spec/blob/master/details/CLUSTER_DEFINITION.md)
+        for details).
 
-        The cluster definition format allows to set a number of optional configuration details, like memory size and number of CPU cores. However, one attribute is __mandatory__ upon creation: The `owner` attribute must carry the name of the organization the cluster will belong to. Note that the acting user must be a member of that organization in order to create a cluster.
+        The cluster definition format allows to set a number of optional
+        configuration details, like memory size and number of CPU cores.
+        However, one attribute is __mandatory__ upon creation: The `owner`
+        attribute must carry the name of the organization the cluster will
+        belong to. Note that the acting user must be a member of that
+        organization in order to create a cluster.
 
-        It is *recommended* to also specify the `name` attribute to give the cluster a friendly name, like e. g. "Development Cluster".
+        It is *recommended* to also specify the `name` attribute to give the
+        cluster a friendly name, like e. g. "Development Cluster".
 
-        Additional definition attributes can be used. Where attributes are ommitted, default configuration values will be applied. For example, if no `kubernetes_version` is specified, the latest version tested and provided by Giant Swarm is used.
+        Additional definition attributes can be used. Where attributes are
+        ommitted, default configuration values will be applied. For example, if
+        no `release_version` is specified, the most recent version is used.
 
-        The `workers` attribute, if present, must contain an array of node definition objects.
-        The number of objects given determines the number of workers created.
-        For example, requesting three worker nodes with default configuration can be achieved by submitting an array of three empty objects:
+        The `workers` attribute, if present, must contain an array of node
+        definition objects. The number of objects given determines the number
+        of workers created.
+
+        For example, requesting three worker nodes with default configuration
+        can be achieved by submitting an array of three empty objects:
 
         ```"workers": [{}, {}, {}]```
 
