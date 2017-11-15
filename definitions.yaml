@@ -9,7 +9,8 @@ definitions:
         description: A human readable message
       code:
         type: string
-        description: A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
+        description: |
+          A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
 
   # Request to create a new cluster
   V4AddClusterRequest:
@@ -84,11 +85,14 @@ definitions:
     properties:
       aws:
         type: object
-        description: Attributes specific to nodes running on Amazon Web Services (AWS)
+        description: |
+          Attributes specific to nodes running on Amazon Web Services (AWS)
         properties:
           instance_type:
             type: string
-            description: EC2 instance type name. Must be the same for all worker nodes of a cluster.
+            description: |
+              EC2 instance type name. Must be the same for all worker nodes
+              of a cluster.
       memory:
         type: object
         properties:
@@ -155,7 +159,9 @@ definitions:
         description: The common name prefix of the certificate subject.
       certificate_organizations:
         type: string
-        description: This will set the certificate subject's `organization` fields. Use a comma seperated list of values.
+        description: |
+          This will set the certificate subject's `organization` fields.
+          Use a comma seperated list of values.
 
   V4AddKeyPairResponse:
     type: object
@@ -241,3 +247,51 @@ definitions:
       owner:
         type: string
         description: Name of the organization owning the cluster
+
+  # A cluster array item, as return by getClusters
+  V4ReleaseListItem:
+    type: object
+    required: ["version", "timestamp", "changelog", "components"]
+    properties:
+      version:
+        type: string
+        description: The semantic version number
+      timestamp:
+        type: string
+        description: Date and time of the release creation
+      active:
+        type: boolean
+        description: |
+          If true, the version is available for new clusters and cluster
+          upgrades. Older versions become unavailable and thus have the
+          value `false` here.
+      changelog:
+        description: |
+          Structured list of changes in this release, in comparison to the
+          previous version, with respect to the contained components.
+        type: array
+        items:
+          type: object
+          properties:
+            component:
+              type: string
+              description: |
+                If the changed item was a component, this attribute is the
+                name of the component.
+            description:
+              type: string
+              description: Human-friendly description of the change
+      components:
+        description: |
+          List of components and their version contained in the release
+        type: array
+        items:
+          type: object
+          required: ["name", "version"]
+          properties:
+            name:
+              type: string
+              description: Name of the component
+            version:
+              type: string
+              description: Version number of the component
