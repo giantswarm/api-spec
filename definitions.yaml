@@ -77,9 +77,14 @@ definitions:
       name:
         type: string
         description: Cluster name
+      release_version:
+        type: string
+        description: |
+          The [release](https://docs.giantswarm.io/api/#tag/releases) version
+          currently running this cluster.
       kubernetes_version:
         type: string
-        description: Kubernetes version number
+        description: Deprecated. Will be removed in a future API version.
       workers:
         type: array
         items:

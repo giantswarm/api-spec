@@ -292,7 +292,8 @@ paths:
                 "create_date": "2017-03-03T10:50:45.949270905Z",
                 "api_endpoint": "https://api.wqtlq.example.com",
                 "name": "Just a Standard Cluster",
-                "kubernetes_version": "v1.5.2_coreos.0",
+                "release_version": "2.5.16",
+                "kubernetes_version": "",
                 "owner": "acme",
                 "workers": [
                   {
