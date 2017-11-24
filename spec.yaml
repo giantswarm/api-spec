@@ -483,8 +483,6 @@ paths:
 
         ### Limitations
 
-        - Adding and removing worker nodes is currently only supported on
-        AWS-based installations, not on KVM-based ones.
         - As of now, existing worker nodes cannot be modified.
         - When removing nodes (scaling down), it is not possible to determine
         which nodes will be removed.
