@@ -247,7 +247,6 @@ paths:
         The result array items are sparse representations of the cluster objects.
         To fetch more details on a cluster, use the [getCluster](#operation/getCluster)
         operation.
-      parameters:
       responses:
         "200":
           description: Success
