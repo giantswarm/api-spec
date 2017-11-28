@@ -200,7 +200,7 @@ paths:
       description: |
         Creates a users in the system. Currently this endpoint is only available to users with admin permissions.
       responses:
-        "200":
+        "201":
           description: User created
           schema:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
