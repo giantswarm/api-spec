@@ -183,6 +183,58 @@ paths:
             $ref: "definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/users/{email}/:
+    put:
+      operationId: createUser
+      parameters:
+        - $ref: 'parameters.yaml#/parameters/UserEmailPathParameter'
+
+        - name: body
+          in: body
+          required: true
+          description: Merge-patch body
+          schema:
+            $ref: 'definitions.yaml#/definitions/V4CreateUserRequest'
+      tags:
+        - users
+      summary: Create user
+      description: |
+        Creates a users in the system. Currently this endpoint is only available to users with admin permissions.
+      responses:
+        "200":
+          description: User created
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "The user with email 'bob@example.com' has been created."
+              }
+        "400":
+          description: User already exists
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_ALREADY_EXISTS",
+                "message": "The user could not be created. (invalid input: email 'bob@example.com' already exists)"
+              }
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+
     delete:
       operationId: deleteUser
       parameters:
