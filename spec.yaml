@@ -191,7 +191,7 @@ paths:
         - name: body
           in: body
           required: true
-          description: Merge-patch body
+          description: User account details
           schema:
             $ref: 'definitions.yaml#/definitions/V4CreateUserRequest'
       tags:
