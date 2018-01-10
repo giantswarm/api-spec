@@ -42,6 +42,11 @@ test: lint
 		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
 		--input-spec /code/yaml/spec-tmp.yaml \
 		--lang swagger --output /tmp/
+	docker run --rm=false -it \
+		-v $(shell pwd):/code/yaml \
+		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
+		--input-spec /code/yaml/spec-tmp.yaml \
+		--lang javascript --output /tmp/
 	# remove temp files
 	rm -f spec-tmp.yaml
 	rm -f spec-tmp.yamle
