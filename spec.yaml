@@ -60,12 +60,14 @@ tags:
       detailed in the _changelog_ of a release.
 
 securityDefinitions:
-  token_auth:
+  AuthorizationHeaderToken:
     description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
     type: apiKey
     name: Authorization
     in: header
 
+security:
+  - AuthorizationHeaderToken: []
 
 paths:
   /v4/info/:
