@@ -6,8 +6,8 @@ spec-tmp.yaml:
 	echo "" >> spec-tmp.yaml
 	cat parameters.yaml >> spec-tmp.yaml
 	# fix references
-	sed -ie 's/definitions\.yaml//g' spec-tmp.yaml
-	sed -ie 's/parameters\.yaml//g' spec-tmp.yaml
+	sed -ie 's:\./definitions\.yaml::g' spec-tmp.yaml
+	sed -ie 's:\./parameters\.yaml::g' spec-tmp.yaml
 
 validate: spec-tmp.yaml
 	# For local validation
