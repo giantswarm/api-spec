@@ -132,6 +132,9 @@ definitions:
       owner:
         type: string
         description: Name of the organization owning the cluster
+      release_version:
+        type: string
+        description: Release version to use after an upgrade
       workers:
         type: array
         description: Worker node array
