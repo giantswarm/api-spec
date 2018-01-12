@@ -1,7 +1,4 @@
 swagger: "2.0"
-host: api.giantswarm.io
-schemes:
-  - https
 info:
   title: The Giant Swarm API v4
   description: |
