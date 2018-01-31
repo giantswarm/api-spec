@@ -734,6 +734,24 @@ paths:
         backend cannot provide a recent value fast enough, both the `value`
         and `timestamp` key have the `null` value.
 
+        ### Metrics provided for worker nodes
+
+        - `container_count`: Number of containers running
+        - `pod_count`: Number of pods running
+        - `cpu_used`: Number of CPU cores currently used
+        - `ram_free`: Free memory in bytes
+        - `ram_available`: Memory available for new applications, in bytes
+        - `ram_cached`: Memory used for file caches, in bytes
+        - `ram_buffers`: Memory used for kernel buffers, in bytes
+        - `ram_mapped`: Memory used by mapped files, in bytes
+        - `node_storage_used`: Amount of local storage used in bytes
+        - `network_rx`: Incoming data volume (Rx) in bytes per second
+        - `network_tx`: Outgoing data volume (Tx) in bytes per second
+        - `resource_cpu_requests`: Sum of CPU requeszs for containers
+        - `resource_cpu_limits`: Sum of CPU limits for containers
+        - `resource_ram_requests`: Sum of memory requests for containers
+        - `resource_ram_limits`: Sum of memory limits for containers
+
       responses:
         "200":
           description: Metrics

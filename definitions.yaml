@@ -306,49 +306,34 @@ definitions:
         type: object
         properties:
           container_count:
-            description: Number of containers running
             $ref: '#/definitions/V4Metric'
           pod_count:
-            description: Number of pods running
             $ref: '#/definitions/V4Metric'
           cpu_used:
-            description: Number of CPU cores currently used
             $ref: '#/definitions/V4Metric'
           ram_free:
-            description: Free memory in bytes
             $ref: '#/definitions/V4Metric'
           ram_available:
-            description: Memory available for new applications, in bytes
             $ref: '#/definitions/V4Metric'
           ram_cached:
-            description: Memory used for file caches, in bytes
             $ref: '#/definitions/V4Metric'
           ram_buffers:
-            description: Memory used for kernel buffers, in bytes
             $ref: '#/definitions/V4Metric'
           ram_mapped:
-            description: Memory used by mapped files, in bytes
             $ref: '#/definitions/V4Metric'
           node_storage_used:
-            description: Amount of local storage used in bytes
             $ref: '#/definitions/V4Metric'
           network_rx:
-            description: Incoming data volume (Rx) in bytes per second
             $ref: '#/definitions/V4Metric'
           network_tx:
-            description: Outgoing data volume (Tx) in bytes per second
             $ref: '#/definitions/V4Metric'
           resource_cpu_requests:
-            description: Sum of CPU requeszs for containers
             $ref: '#/definitions/V4Metric'
           resource_cpu_limits:
-            description: Sum of CPU limits for containers
             $ref: '#/definitions/V4Metric'
           resource_ram_requests:
-            description: Sum of memory requests for containers
             $ref: '#/definitions/V4Metric'
           resource_ram_limits:
-            description: Sum of memory limits for containers
             $ref: '#/definitions/V4Metric'
 
   V4Metric:
