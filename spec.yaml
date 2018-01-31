@@ -693,6 +693,8 @@ paths:
         - metrics
         - clusters
       summary: Get cluster metrics
+      parameters:
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
       description: |
         This operation returns metrics about current resource usage in the
         cluster. Currently, all metrics reported concern worker nodes, hence
@@ -732,17 +734,15 @@ paths:
         backend cannot provide a recent value fast enough, both the `value`
         and `timestamp` key have the `null` value.
 
-      parameters:
-        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
       responses:
         "200":
           description: Metrics
           schema:
-            $ref: "definitions.yaml#/definitions/V4GetClusterMetricsResponse"
+            $ref: "./definitions.yaml#/definitions/V4GetClusterMetricsResponse"
         default:
           description: error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
 
   /v4/organizations/:
