@@ -16,7 +16,7 @@ The specification YAML files are:
 
 ## Human-friendly API Documentation
 
-We host a browser-friendly version at http://apispec.g8s.fra-1.giantswarm.io/
+We host a browser-friendly version at https://docs.giantswarm.io/api/
 
 That documentation is a rendition of the specification of the `master` branch of this repository.
 
@@ -25,8 +25,6 @@ See the [`details`](https://github.com/giantswarm/api-spec/tree/master/details) 
 ## Specification development
 
 As usual, collaboration on this spec is done based on feature branches and pull requests.
-
-For a feature branch pushed to this repository on GitHub, the documentation gets published automatically under `http://apispec.g8s.fra-1.giantswarm.io/<branch-name>/`.
 
 Feature branches shall be merged into `master` only when the API functionality they describe is implemented and available to users of the Giant Swarm API.
 
