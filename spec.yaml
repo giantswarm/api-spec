@@ -6,7 +6,7 @@ info:
 
     For an introduction to Giant Swarm, refer to the [documentation site](https://docs.giantswarm.io/).
 
-    The Giant Swarm API attempts to behave in a __restful__ way. As a developer, you acess recources using the `GET` method and, for example, delete them using the same path and the `DELETE` method.
+    The Giant Swarm API attempts to behave in a __restful__ way. As a developer, you access resources using the `GET` method and, for example, delete them using the same path and the `DELETE` method.
 
     Accessing resources via GET usually returns all information available about a resource, while collections, like for example the list of all clusters you have access to, only contain a selected few attributes of each member item.
 
@@ -30,7 +30,7 @@ produces:
 tags:
   - name: clusters
     description: |
-      Clusters are a central resource of the Giant Swarm API. As a user or team using Giant Swarm, you set up Kubernetes clusters to run your own workoads.
+      Clusters are a central resource of the Giant Swarm API. As a user or team using Giant Swarm, you set up Kubernetes clusters to run your own workloads.
 
       The API currently provides operations to create and delete clusters, as well as list all available clusters and get details on specific clusters.
   - name: info
@@ -52,7 +52,7 @@ tags:
       [semantic version number](http://semver.org/) in the `MAJOR.MINOR.PATCH`
       format.
 
-      A release provides _components_, like for example kubernetes. For each
+      A release provides _components_, like for example Kubernetes. For each
       release the contained components are listed. Changes in components are
       detailed in the _changelog_ of a release.
 
@@ -348,7 +348,7 @@ paths:
         cluster a friendly name, like e. g. "Development Cluster".
 
         Additional definition attributes can be used. Where attributes are
-        ommitted, default configuration values will be applied. For example, if
+        omitted, default configuration values will be applied. For example, if
         no `release_version` is specified, the most recent version is used.
 
         The `workers` attribute, if present, must contain an array of node
@@ -638,7 +638,7 @@ paths:
           in: body
           required: true
           description: |
-            While the `ttl_hours` attribute is optional and will be set to a default value when ommitted, the `description` is mandatory.
+            While the `ttl_hours` attribute is optional and will be set to a default value when omitted, the `description` is mandatory.
           schema:
             $ref: "./definitions.yaml#/definitions/V4AddKeyPairRequest"
       description: |
@@ -664,7 +664,7 @@ paths:
           to set up role-based access controls.
 
 
-        - `certificate_organizations`: This will set the certificate's `organization` fields. Use a comma seperated list of values.
+        - `certificate_organizations`: This will set the certificate's `organization` fields. Use a comma separated list of values.
           The Kubernetes API will use these values as group memberships.
 
         __Note:__ The actual credentials coming with the key pair (key, certificate) can only be accessed once, as the result of the `POST` request that triggers their creation. This restriction exists to minimize the risk of credentials being leaked. If you fail to capture the credentials upon creation, you'll have to repeat the creation request.
