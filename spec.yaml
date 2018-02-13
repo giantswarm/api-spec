@@ -55,7 +55,8 @@ tags:
       A release provides _components_, like for example Kubernetes. For each
       release the contained components are listed. Changes in components are
       detailed in the _changelog_ of a release.
-
+  - name: metrics
+    description: Metrics data like resource usage
 securityDefinitions:
   AuthorizationHeaderToken:
     description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
@@ -684,6 +685,83 @@ paths:
                 "id": "02:cc:da:f9:fb:ce:c3:e5:e1:f6:27:d8:43:48:0d:37:4a:ee:b9:67",
                 "ttl_hours": 8640
               }
+
+  /v4/clusters/{cluster_id}/metrics/:
+    get:
+      operationId: getClusterMetrics
+      tags:
+        - metrics
+        - clusters
+      summary: Get cluster metrics
+      parameters:
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
+      description: |
+        This operation returns metrics about current resource usage in the
+        cluster. Currently, all metrics reported concern worker nodes, hence
+        they are grouped under a `workers` key.
+
+        Here is a shortened example, containing only one metric (`ram_used`)
+        and only one worker node:
+
+        ```json
+        {
+          "workers": [
+            {
+              "id": "172.17.0.4",
+              "metrics": {
+                "ram_used": {
+                  "timestamp": "2017-10-23T12:56:12.185000",
+                  "value": 4205494272
+                },
+                "cpu_used": {
+                  "timestamp": "2017-10-23T12:56:12.029000",
+                  "value": 0.1255365799999
+                }
+              }
+            }
+          ]
+        }
+        ```
+
+        ### Notes
+
+        - The `id` value contained in a worker entry should be treated as an
+        arbitrary string identifier. It _may_ in fact be be an IPv4 address, a
+        fully qualified host name, or any other string that uniquely identifies
+        a worker node in this guest cluster.
+
+        - Metrics are not guaranteed to provide a value. If the underlying
+        backend cannot provide a recent value fast enough, both the `value`
+        and `timestamp` key have the `null` value.
+
+        ### Metrics provided for worker nodes
+
+        - `container_count`: Number of containers running
+        - `pod_count`: Number of pods running
+        - `cpu_used`: Number of CPU cores currently used
+        - `ram_free`: Free memory in bytes
+        - `ram_available`: Memory available for new applications, in bytes
+        - `ram_cached`: Memory used for file caches, in bytes
+        - `ram_buffers`: Memory used for kernel buffers, in bytes
+        - `ram_mapped`: Memory used by mapped files, in bytes
+        - `node_storage_used`: Amount of local storage used in bytes
+        - `network_rx`: Incoming data volume (Rx) in bytes per second
+        - `network_tx`: Outgoing data volume (Tx) in bytes per second
+        - `resource_cpu_requests`: Sum of CPU requeszs for containers
+        - `resource_cpu_limits`: Sum of CPU limits for containers
+        - `resource_ram_requests`: Sum of memory requests for containers
+        - `resource_ram_limits`: Sum of memory limits for containers
+
+      responses:
+        "200":
+          description: Metrics
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetClusterMetricsResponse"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
 
   /v4/organizations/:
     get:

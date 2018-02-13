@@ -1,4 +1,4 @@
-PHONY: lint
+PHONY: lint spec-tmp.yaml
 
 SWAGGER_VERSION=2.2.3
 
@@ -19,17 +19,30 @@ lint: spec-tmp.yaml
 
 # Validate the swagger/OAI spec
 validate: spec-tmp.yaml lint
+	@echo "Generating swagger representation"
 	docker run --rm -it \
 		-v $(shell pwd):/code/yaml \
 		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
 		--input-spec /code/yaml/spec-tmp.yaml \
 		--lang swagger --output /tmp/
+
+	@echo "Generating static HTML documentation"
 	docker run --rm -it \
 		-v $(shell pwd):/code/yaml \
+		-v $(shell pwd)/html:/code/html \
 		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
 		--input-spec /code/yaml/spec-tmp.yaml \
-		--lang javascript --output /tmp/
-		# remove temp files
+		--lang html --output /code/html
+
+	@echo "Generating JavaScript client code for test purposes"
+	docker run --rm -it \
+		-v $(shell pwd):/code/yaml \
+		-v $(shell pwd)/javascript:/code/javascript \
+		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
+		--input-spec /code/yaml/spec-tmp.yaml \
+		--lang javascript --output /code/javascript
+
+	# remove temp files
 	rm -f spec-tmp.yaml
 	rm -f spec-tmp.yamle
 
@@ -57,4 +70,4 @@ run-server:
 	docker run -v ${PWD}:/www/yaml -p 8000:8000 api-spec-dev
 
 clean:
-	rm spec-tmp.yaml*
+	rm -rf spec-tmp.yaml* javascript html dynamic-html

@@ -284,6 +284,68 @@ definitions:
         type: string
         description: PEM-encoded certificate
 
+  # cluster metrics
+  V4GetClusterMetricsResponse:
+    description: Response for the getClusterMetrics operation
+    type: object
+    properties:
+      workers:
+        description: Group of metrics regarding workers
+        type: array
+        items:
+          $ref: '#/definitions/V4NodeMetrics'
+
+  V4NodeMetrics:
+    type: object
+    properties:
+      id:
+        description: String identifying the node
+        type: string
+      metrics:
+        description: Container object for all metrics available for the node
+        type: object
+        properties:
+          container_count:
+            $ref: '#/definitions/V4Metric'
+          pod_count:
+            $ref: '#/definitions/V4Metric'
+          cpu_used:
+            $ref: '#/definitions/V4Metric'
+          ram_free:
+            $ref: '#/definitions/V4Metric'
+          ram_available:
+            $ref: '#/definitions/V4Metric'
+          ram_cached:
+            $ref: '#/definitions/V4Metric'
+          ram_buffers:
+            $ref: '#/definitions/V4Metric'
+          ram_mapped:
+            $ref: '#/definitions/V4Metric'
+          node_storage_used:
+            $ref: '#/definitions/V4Metric'
+          network_rx:
+            $ref: '#/definitions/V4Metric'
+          network_tx:
+            $ref: '#/definitions/V4Metric'
+          resource_cpu_requests:
+            $ref: '#/definitions/V4Metric'
+          resource_cpu_limits:
+            $ref: '#/definitions/V4Metric'
+          resource_ram_requests:
+            $ref: '#/definitions/V4Metric'
+          resource_ram_limits:
+            $ref: '#/definitions/V4Metric'
+
+  V4Metric:
+    type: object
+    properties:
+      timestamp:
+        description: Time when the given value has been recorded
+        type: string
+      value:
+        description: The value for the metric. Can be an integer or float.
+        type: number
+
   # a complete organization object
   V4Organization:
     type: object
