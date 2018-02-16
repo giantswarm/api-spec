@@ -152,6 +152,16 @@ definitions:
             description: |
               EC2 instance type name. Must be the same for all worker nodes
               of a cluster.
+      azure:
+        type: object
+        description: |
+          Attributes specific to nodes running on Microsoft Azure
+        properties:
+          vm_size:
+            type: string
+            description: |
+              Azure Virtual Machine size. Must be the same for all worker nodes
+              of a cluster.
       memory:
         type: object
         properties:
