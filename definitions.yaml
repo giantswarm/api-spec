@@ -55,43 +55,6 @@ definitions:
               default:
                 description: The instance type used in new cluster, if not specified
                 type: string
-          cpu_cores:
-            description: CPU cores per worker node. Only available for KVM clusters.
-            type: object
-            properties:
-              min:
-                description: Minimum number of CPU cores allowed in a worker node.
-                type: number
-              max:
-                description: Maximum number of CPU cores allowed in a worker node.
-                type: number
-              default:
-                description: Default number of CPU cores provided in a worker node.
-                type: number
-          ram_size_gb:
-            description: RAM amount per worker node, in GB. Only available for KVM clusters.
-            type: object
-            properties:
-              min:
-                description: Minimum amount of RAM allowed in a worker node.
-                type: number
-              max:
-                description: Maximum amount of RAM allowed in a worker node.
-                type: number
-              default:
-                description: Default amount of RAM provided in a worker node.
-                type: number
-          storage_size_gb:
-            description: Local storage per worker node, in GB. Only available for KVM clusters.
-            type: object
-            properties:
-              max:
-                description: Maximum amount of storage allowed in a worker node.
-                type: number
-              default:
-                description: Default amount of storage provided in a worker node.
-                type: number
-
 
   # Request to create a new cluster
   V4AddClusterRequest:

@@ -119,20 +119,7 @@ paths:
               "max": 8,
               "default": 3
             },
-            "cpu_cores": {
-              "min": 1,
-              "max": 4,
-              "default": 2
-            },
-            "ram_size_gb": {
-              "min": 2,
-              "max": 16,
-              "default": 4
-            },
-            "storage_size_gb": {
-              "max": 250,
-              "default": 40
-            }
+          }
         }
         ```
       responses:
