@@ -441,12 +441,12 @@ paths:
                 "port_mappings": [
                   {
                     "ingress_port": 30010,
-                    "loadbalancer_port": 30020,
+                    "load_balancer_port": 30020,
                     "protocol": "http"
                   },
                   {
                     "ingress_port": 30011,
-                    "loadbalancer_port": 30021,
+                    "load_balancer_port": 30021,
                     "protocol": "https"
                   },
                 ]
