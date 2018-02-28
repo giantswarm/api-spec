@@ -437,6 +437,18 @@ paths:
                       "nodetype": "hiram"
                     }
                   }
+                ],
+                "port_mappings": [
+                  {
+                    "ingressPort": 30010,
+                    "lbPort": 30020,
+                    "protocol": "http"
+                  },
+                  {
+                    "ingressPort": 30011,
+                    "lbPort": 30021,
+                    "protocol": "https"
+                  },
                 ]
               }
         "404":
