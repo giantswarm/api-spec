@@ -147,11 +147,11 @@ definitions:
   V4PortMappingDefinition:
     type: object
     properties:
-      ingressPort:
+      ingress_port:
         description:
           The port on this cluster's ingress.
         type: integer
-      lbPort:
+      load_balancer_port:
         description: |
           The port on the load balancer that is mapped to this cluster's ingress.
         type: integer

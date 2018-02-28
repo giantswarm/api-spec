@@ -440,13 +440,13 @@ paths:
                 ],
                 "port_mappings": [
                   {
-                    "ingressPort": 30010,
-                    "lbPort": 30020,
+                    "ingress_port": 30010,
+                    "loadbalancer_port": 30020,
                     "protocol": "http"
                   },
                   {
-                    "ingressPort": 30011,
-                    "lbPort": 30021,
+                    "ingress_port": 30011,
+                    "loadbalancer_port": 30021,
                     "protocol": "https"
                   },
                 ]
