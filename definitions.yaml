@@ -139,7 +139,7 @@ definitions:
       port_mappings:
         type: array
         description: |
-          Reveals the ports on the load balancer that are mapped to this cluster's ingress
+          Reveals the ports on the host cluster that are mapped to this guest cluster's ingress
           and which protocol that port supports. Only shown and relevant on our on-prem KVM clusters.
         items:
           $ref: '#/definitions/V4PortMappingDefinition'
@@ -147,9 +147,9 @@ definitions:
   V4PortMappingDefinition:
     type: object
     properties:
-      load_balancer_port:
+      port:
         description: |
-          The port on the load balancer that is mapped to this cluster's ingress.
+          The port on the host cluster that will forward traffic to the guest cluster
         type: integer
       protocol:
         description: |
