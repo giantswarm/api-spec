@@ -24,7 +24,7 @@ definitions:
             description: Unique name of the installation
             type: string
           provider:
-            description: The technical provider used in this installation. Either "kvm" or "aws".
+            description: The technical provider used in this installation. Either "kvm", "aws", or "azure".
             type: string
           datacenter:
             description: Identifier of the datacenter or cloud provider region, e. g. "eu-west-1"
@@ -45,6 +45,18 @@ definitions:
                 type: number
           instance_type:
             description: Instance types to be used for worker nodes. Only available for AWS clusters.
+            type: object
+            properties:
+              options:
+                description: List of available instance types
+                type: array
+                items:
+                  type: string
+              default:
+                description: The instance type used in new cluster, if not specified
+                type: string
+          vm_size:
+            description: Azure Virtual Machine size to be used for worker nodes. Only available for Azure clusters.
             type: object
             properties:
               options:
