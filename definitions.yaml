@@ -24,7 +24,7 @@ definitions:
             description: Unique name of the installation
             type: string
           provider:
-            description: The technical provider used in this installation. Either "kvm", "aws" or "azure".
+            description: The technical provider used in this installation. Either "kvm", "aws", or "azure".
             type: string
           datacenter:
             description: Identifier of the datacenter or cloud provider region, e. g. "eu-west-1"
