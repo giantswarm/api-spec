@@ -437,7 +437,19 @@ paths:
                       "nodetype": "hiram"
                     }
                   }
-                ]
+                ],
+                "kvm": {
+                  "port_mappings": [
+                    {
+                      "port": 30020,
+                      "protocol": "http"
+                    },
+                    {
+                      "port": 30021,
+                      "protocol": "https"
+                    },
+                  ]
+                }
               }
         "404":
           description: Cluster not found
