@@ -136,13 +136,17 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/V4NodeDefinition'
-      port_mappings:
-        type: array
-        description: |
-          Reveals the ports on the host cluster that are mapped to this guest cluster's ingress
-          and which protocol that port supports. Only shown and relevant on our on-prem KVM clusters.
-        items:
-          $ref: '#/definitions/V4PortMappingDefinition'
+      kvm:
+        type: object
+        description: Attributes specific to clusters running on KVM (on-prem) installations.
+        properties:
+          port_mappings:
+            type: array
+            description: |
+              Reveals the ports on the host cluster that are mapped to this guest cluster's ingress
+              and which protocol that port supports. Only shown and relevant on our on-prem KVM clusters.
+            items:
+              $ref: '#/definitions/V4PortMappingDefinition'
 
   V4PortMappingDefinition:
     type: object
