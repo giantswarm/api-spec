@@ -504,6 +504,9 @@ definitions:
       owner:
         type: string
         description: Name of the organization owning the cluster
+      release:
+        type: string
+        description: The semantic version number of this cluster
 
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:
