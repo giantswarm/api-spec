@@ -504,7 +504,7 @@ definitions:
       owner:
         type: string
         description: Name of the organization owning the cluster
-      release:
+      release_version:
         type: string
         description: The semantic version number of this cluster
 
