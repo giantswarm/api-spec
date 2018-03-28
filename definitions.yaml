@@ -24,7 +24,7 @@ definitions:
             description: Unique name of the installation
             type: string
           provider:
-            description: The technical provider used in this installation. Either "kvm" or "aws".
+            description: The technical provider used in this installation. Either "kvm", "aws", or "azure".
             type: string
           datacenter:
             description: Identifier of the datacenter or cloud provider region, e. g. "eu-west-1"
@@ -55,43 +55,18 @@ definitions:
               default:
                 description: The instance type used in new cluster, if not specified
                 type: string
-          cpu_cores:
-            description: CPU cores per worker node. Only available for KVM clusters.
+          vm_size:
+            description: Azure Virtual Machine size to be used for worker nodes. Only available for Azure clusters.
             type: object
             properties:
-              min:
-                description: Minimum number of CPU cores allowed in a worker node.
-                type: number
-              max:
-                description: Maximum number of CPU cores allowed in a worker node.
-                type: number
+              options:
+                description: List of available instance types
+                type: array
+                items:
+                  type: string
               default:
-                description: Default number of CPU cores provided in a worker node.
-                type: number
-          ram_size_gb:
-            description: RAM amount per worker node, in GB. Only available for KVM clusters.
-            type: object
-            properties:
-              min:
-                description: Minimum amount of RAM allowed in a worker node.
-                type: number
-              max:
-                description: Maximum amount of RAM allowed in a worker node.
-                type: number
-              default:
-                description: Default amount of RAM provided in a worker node.
-                type: number
-          storage_size_gb:
-            description: Local storage per worker node, in GB. Only available for KVM clusters.
-            type: object
-            properties:
-              max:
-                description: Maximum amount of storage allowed in a worker node.
-                type: number
-              default:
-                description: Default amount of storage provided in a worker node.
-                type: number
-
+                description: The instance type used in new cluster, if not specified
+                type: string
 
   # Request to create a new cluster
   V4AddClusterRequest:
@@ -132,6 +107,9 @@ definitions:
       owner:
         type: string
         description: Name of the organization owning the cluster
+      release_version:
+        type: string
+        description: Release version to use after an upgrade
       workers:
         type: array
         description: Worker node array
@@ -170,7 +148,26 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/V4NodeDefinition'
-
+      kvm:
+        type: object
+        description: Attributes specific to clusters running on KVM (on-prem) installations.
+        properties:
+          port_mappings:
+            type: array
+            description: |
+              Reveals the ports on the host cluster that are mapped to this guest cluster's ingress
+              and which protocol that port supports. Only shown and relevant on our on-prem KVM clusters.
+            items:
+              type: object
+              properties:
+                port:
+                  description: |
+                    The port on the host cluster that will forward traffic to the guest cluster
+                  type: integer
+                protocol:
+                  description: |
+                    The protocol this port mapping is made for.
+                  type: string
 
   # Definition of a cluster node
   V4NodeDefinition:
@@ -185,6 +182,16 @@ definitions:
             type: string
             description: |
               EC2 instance type name. Must be the same for all worker nodes
+              of a cluster.
+      azure:
+        type: object
+        description: |
+          Attributes specific to nodes running on Microsoft Azure
+        properties:
+          vm_size:
+            type: string
+            description: |
+              Azure Virtual Machine size. Must be the same for all worker nodes
               of a cluster.
       memory:
         type: object
@@ -281,6 +288,163 @@ definitions:
         type: string
         description: PEM-encoded certificate
 
+  # cluster metrics
+  V4GetClusterMetricsResponse:
+    description: Response for the getClusterMetrics operation
+    type: object
+    properties:
+      workers:
+        description: Group of metrics regarding workers
+        type: array
+        items:
+          $ref: '#/definitions/V4NodeMetrics'
+
+  V4NodeMetrics:
+    type: object
+    properties:
+      id:
+        description: String identifying the node
+        type: string
+      metrics:
+        description: Container object for all metrics available for the node
+        type: object
+        properties:
+          container_count:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          pod_count:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          cpu_used:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          ram_free:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          ram_available:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          ram_cached:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          ram_buffers:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          ram_mapped:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          node_storage_used:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          network_rx:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          network_tx:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          resource_cpu_requests:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          resource_cpu_limits:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          resource_ram_requests:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+          resource_ram_limits:
+            type: object
+            properties:
+              timestamp:
+                description: Time when the given value has been recorded
+                type: string
+              value:
+                description: The value for the metric. Can be an integer or float.
+                type: number
+
   # a complete organization object
   V4Organization:
     type: object
@@ -340,6 +504,9 @@ definitions:
       owner:
         type: string
         description: Name of the organization owning the cluster
+      release_version:
+        type: string
+        description: The semantic version number of this cluster
 
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:
@@ -388,3 +555,16 @@ definitions:
             version:
               type: string
               description: Version number of the component
+
+  V4CreateUserRequest:
+    type: object
+    required:
+      - password
+    description: Request model for creating a new user
+    properties:
+      password:
+        type: string
+        description: A Base64 encoded password
+      expiry:
+        type: string
+        description: The date and time when this account will expire

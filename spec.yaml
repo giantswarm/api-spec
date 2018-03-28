@@ -1,7 +1,4 @@
 swagger: "2.0"
-host: api.giantswarm.io
-schemes:
-  - https
 info:
   title: The Giant Swarm API v4
   description: |
@@ -9,7 +6,7 @@ info:
 
     For an introduction to Giant Swarm, refer to the [documentation site](https://docs.giantswarm.io/).
 
-    The Giant Swarm API attempts to behave in a __restful__ way. As a developer, you acess recources using the `GET` method and, for example, delete them using the same path and the `DELETE` method.
+    The Giant Swarm API attempts to behave in a __restful__ way. As a developer, you access resources using the `GET` method and, for example, delete them using the same path and the `DELETE` method.
 
     Accessing resources via GET usually returns all information available about a resource, while collections, like for example the list of all clusters you have access to, only contain a selected few attributes of each member item.
 
@@ -33,7 +30,7 @@ produces:
 tags:
   - name: clusters
     description: |
-      Clusters are a central resource of the Giant Swarm API. As a user or team using Giant Swarm, you set up Kubernetes clusters to run your own workoads.
+      Clusters are a central resource of the Giant Swarm API. As a user or team using Giant Swarm, you set up Kubernetes clusters to run your own workloads.
 
       The API currently provides operations to create and delete clusters, as well as list all available clusters and get details on specific clusters.
   - name: info
@@ -55,17 +52,20 @@ tags:
       [semantic version number](http://semver.org/) in the `MAJOR.MINOR.PATCH`
       format.
 
-      A release provides _components_, like for example kubernetes. For each
+      A release provides _components_, like for example Kubernetes. For each
       release the contained components are listed. Changes in components are
       detailed in the _changelog_ of a release.
-
+  - name: metrics
+    description: Metrics data like resource usage
 securityDefinitions:
-  token_auth:
+  AuthorizationHeaderToken:
     description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
     type: apiKey
     name: Authorization
     in: header
 
+security:
+  - AuthorizationHeaderToken: []
 
 paths:
   /v4/info/:
@@ -119,31 +119,18 @@ paths:
               "max": 8,
               "default": 3
             },
-            "cpu_cores": {
-              "min": 1,
-              "max": 4,
-              "default": 2
-            },
-            "ram_size_gb": {
-              "min": 2,
-              "max": 16,
-              "default": 4
-            },
-            "storage_size_gb": {
-              "max": 250,
-              "default": 40
-            }
+          }
         }
         ```
       responses:
         "200":
           description: Information
           schema:
-            $ref: "definitions.yaml#/definitions/V4InfoResponse"
+            $ref: "./definitions.yaml#/definitions/V4InfoResponse"
         default:
           description: Error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/users/:
     get:
@@ -159,7 +146,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "definitions.yaml#/definitions/V4UserListItem"
+              $ref: "./definitions.yaml#/definitions/V4UserListItem"
           examples:
             application/json:
               [
@@ -170,7 +157,7 @@ paths:
         "401":
           description: Permission denied
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -180,13 +167,65 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/users/{email}/:
+    put:
+      operationId: createUser
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/UserEmailPathParameter"
+
+        - name: body
+          in: body
+          required: true
+          description: User account details
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4CreateUserRequest"
+      tags:
+        - users
+      summary: Create user
+      description: |
+        Creates a users in the system. Currently this endpoint is only available to users with admin permissions.
+      responses:
+        "201":
+          description: User created
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "The user with email 'bob@example.com' has been created."
+              }
+        "400":
+          description: User already exists
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_ALREADY_EXISTS",
+                "message": "The user could not be created. (invalid input: email 'bob@example.com' already exists)"
+              }
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
     delete:
       operationId: deleteUser
       parameters:
-        - $ref: 'parameters.yaml#/parameters/UserEmailPathParameter'
+        - $ref: "./parameters.yaml#/parameters/UserEmailPathParameter"
       tags:
         - users
       summary: Delete user
@@ -197,7 +236,7 @@ paths:
         "200":
           description: User deleted
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -207,7 +246,7 @@ paths:
         "404":
           description: User not found
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -217,7 +256,7 @@ paths:
         "401":
           description: Permission denied
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -227,7 +266,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/clusters/:
     get:
@@ -247,14 +286,13 @@ paths:
         The result array items are sparse representations of the cluster objects.
         To fetch more details on a cluster, use the [getCluster](#operation/getCluster)
         operation.
-      parameters:
       responses:
         "200":
           description: Success
           schema:
             type: array
             items:
-              $ref: "definitions.yaml#/definitions/V4ClusterListItem"
+              $ref: "./definitions.yaml#/definitions/V4ClusterListItem"
           examples:
             application/json:
               [
@@ -274,7 +312,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     post:
       operationId: addCluster
       tags:
@@ -298,7 +336,7 @@ paths:
         cluster a friendly name, like e. g. "Development Cluster".
 
         Additional definition attributes can be used. Where attributes are
-        ommitted, default configuration values will be applied. For example, if
+        omitted, default configuration values will be applied. For example, if
         no `release_version` is specified, the most recent version is used.
 
         The `workers` attribute, if present, must contain an array of node
@@ -318,7 +356,7 @@ paths:
           required: true
           description: New cluster definition
           schema:
-            $ref: 'definitions.yaml#/definitions/V4AddClusterRequest'
+            $ref: "./definitions.yaml#/definitions/V4AddClusterRequest"
       responses:
         "201":
           description: Cluster created
@@ -327,7 +365,7 @@ paths:
               type: string
               description: URI to obtain details on the new cluster using the [getCluster](#operation/getCluster) operation
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -337,7 +375,7 @@ paths:
         "401":
           description: Permission denied
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -347,7 +385,7 @@ paths:
         default:
           description: error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/clusters/{cluster_id}/:
     get:
@@ -355,7 +393,7 @@ paths:
       tags:
         - clusters
       parameters:
-        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       summary: Get cluster details
       description: |
         This operation allows to obtain all available details on a particular cluster.
@@ -363,7 +401,7 @@ paths:
         "200":
           description: Cluster details
           schema:
-            $ref: 'definitions.yaml#/definitions/V4ClusterDetailsResponse'
+            $ref: "./definitions.yaml#/definitions/V4ClusterDetailsResponse"
           examples:
             application/json:
               {
@@ -399,12 +437,24 @@ paths:
                       "nodetype": "hiram"
                     }
                   }
-                ]
+                ],
+                "kvm": {
+                  "port_mappings": [
+                    {
+                      "port": 30020,
+                      "protocol": "http"
+                    },
+                    {
+                      "port": 30021,
+                      "protocol": "https"
+                    },
+                  ]
+                }
               }
         "404":
           description: Cluster not found
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -414,7 +464,7 @@ paths:
         default:
           description: error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     patch:
       operationId: modifyCluster
       tags:
@@ -425,8 +475,8 @@ paths:
           required: true
           description: Merge-patch body
           schema:
-            $ref: 'definitions.yaml#/definitions/V4ModifyClusterRequest'
-        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
+            $ref: "./definitions.yaml#/definitions/V4ModifyClusterRequest"
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       summary: Modify cluster
       description: |
         This operation allows to modify an existing cluster.
@@ -445,6 +495,10 @@ paths:
         - `owner`: Changing the owner organization name means to change cluster
         ownership from one organization to another. The user performing the
         request has to be a member of both organizations.
+
+        - `release_version`: By changing this attribute you can upgrade a
+        cluster to a newer
+        [release](https://docs.giantswarm.io/api/#tag/releases).
 
         - `workers`: By modifying the array of workers, nodes can be added to
         increase the cluster's capacity. See details below.
@@ -495,11 +549,11 @@ paths:
         "200":
           description: Cluster modified
           schema:
-            $ref: 'definitions.yaml#/definitions/V4ClusterDetailsResponse'
+            $ref: "./definitions.yaml#/definitions/V4ClusterDetailsResponse"
         "404":
           description: Cluster not found
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -509,13 +563,13 @@ paths:
         default:
           description: error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     delete:
       operationId: deleteCluster
       tags:
         - clusters
       parameters:
-        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       summary: Delete cluster
       description: |
         This operation allows to delete a cluster.
@@ -528,7 +582,7 @@ paths:
         "202":
           description: Deleting cluster
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -538,7 +592,7 @@ paths:
         "404":
           description: Cluster not found
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -548,7 +602,7 @@ paths:
         default:
           description: error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/clusters/{cluster_id}/key-pairs/:
     get:
@@ -561,30 +615,30 @@ paths:
 
         The individual array items contain metadata on the key pairs, but neither the key nor the certificate. These can only be obtained upon creation, using the [addKeypair](#operation/addKeyPair) operation.
       parameters:
-        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       responses:
         "200":
           description: Key pairs
           schema:
-            $ref: "definitions.yaml#/definitions/V4GetKeyPairsResponse"
+            $ref: "./definitions.yaml#/definitions/V4GetKeyPairsResponse"
         default:
           description: error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     post:
       operationId: addKeyPair
       tags:
         - key pairs
       summary: Create key pair
       parameters:
-        - $ref: 'parameters.yaml#/parameters/ClusterIdPathParameter'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
         - name: body
           in: body
           required: true
           description: |
-            While the `ttl_hours` attribute is optional and will be set to a default value when ommitted, the `description` is mandatory.
+            While the `ttl_hours` attribute is optional and will be set to a default value when omitted, the `description` is mandatory.
           schema:
-            $ref: 'definitions.yaml#/definitions/V4AddKeyPairRequest'
+            $ref: "./definitions.yaml#/definitions/V4AddKeyPairRequest"
       description: |
         This operation allows to create a new key pair for accessing a specific cluster.
 
@@ -608,7 +662,7 @@ paths:
           to set up role-based access controls.
 
 
-        - `certificate_organizations`: This will set the certificate's `organization` fields. Use a comma seperated list of values.
+        - `certificate_organizations`: This will set the certificate's `organization` fields. Use a comma separated list of values.
           The Kubernetes API will use these values as group memberships.
 
         __Note:__ The actual credentials coming with the key pair (key, certificate) can only be accessed once, as the result of the `POST` request that triggers their creation. This restriction exists to minimize the risk of credentials being leaked. If you fail to capture the credentials upon creation, you'll have to repeat the creation request.
@@ -616,7 +670,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "definitions.yaml#/definitions/V4AddKeyPairResponse"
+            $ref: "./definitions.yaml#/definitions/V4AddKeyPairResponse"
           examples:
             application/json:
               {
@@ -628,6 +682,83 @@ paths:
                 "id": "02:cc:da:f9:fb:ce:c3:e5:e1:f6:27:d8:43:48:0d:37:4a:ee:b9:67",
                 "ttl_hours": 8640
               }
+
+  /v4/clusters/{cluster_id}/metrics/:
+    get:
+      operationId: getClusterMetrics
+      tags:
+        - metrics
+        - clusters
+      summary: Get cluster metrics
+      parameters:
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
+      description: |
+        This operation returns metrics about current resource usage in the
+        cluster. Currently, all metrics reported concern worker nodes, hence
+        they are grouped under a `workers` key.
+
+        Here is a shortened example, containing only one metric (`ram_used`)
+        and only one worker node:
+
+        ```json
+        {
+          "workers": [
+            {
+              "id": "172.17.0.4",
+              "metrics": {
+                "ram_used": {
+                  "timestamp": "2017-10-23T12:56:12.185000",
+                  "value": 4205494272
+                },
+                "cpu_used": {
+                  "timestamp": "2017-10-23T12:56:12.029000",
+                  "value": 0.1255365799999
+                }
+              }
+            }
+          ]
+        }
+        ```
+
+        ### Notes
+
+        - The `id` value contained in a worker entry should be treated as an
+        arbitrary string identifier. It _may_ in fact be be an IPv4 address, a
+        fully qualified host name, or any other string that uniquely identifies
+        a worker node in this guest cluster.
+
+        - Metrics are not guaranteed to provide a value. If the underlying
+        backend cannot provide a recent value fast enough, both the `value`
+        and `timestamp` key have the `null` value.
+
+        ### Metrics provided for worker nodes
+
+        - `container_count`: Number of containers running
+        - `pod_count`: Number of pods running
+        - `cpu_used`: Number of CPU cores currently used
+        - `ram_free`: Free memory in bytes
+        - `ram_available`: Memory available for new applications, in bytes
+        - `ram_cached`: Memory used for file caches, in bytes
+        - `ram_buffers`: Memory used for kernel buffers, in bytes
+        - `ram_mapped`: Memory used by mapped files, in bytes
+        - `node_storage_used`: Amount of local storage used in bytes
+        - `network_rx`: Incoming data volume (Rx) in bytes per second
+        - `network_tx`: Outgoing data volume (Tx) in bytes per second
+        - `resource_cpu_requests`: Sum of CPU requeszs for containers
+        - `resource_cpu_limits`: Sum of CPU limits for containers
+        - `resource_ram_requests`: Sum of memory requests for containers
+        - `resource_ram_limits`: Sum of memory limits for containers
+
+      responses:
+        "200":
+          description: Metrics
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetClusterMetricsResponse"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
 
   /v4/organizations/:
     get:
@@ -645,7 +776,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "definitions.yaml#/definitions/V4OrganizationListItem"
+              $ref: "./definitions.yaml#/definitions/V4OrganizationListItem"
           examples:
             application/json:
               [
@@ -656,7 +787,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/organizations/{organization_id}/:
     get:
@@ -667,12 +798,12 @@ paths:
       description: |
         This operation fetches organization details.
       parameters:
-        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
+        - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
       responses:
         "200":
           description: Organization details
           schema:
-            $ref: "definitions.yaml#/definitions/V4Organization"
+            $ref: "./definitions.yaml#/definitions/V4Organization"
           examples:
             application/json:
               {
@@ -686,7 +817,7 @@ paths:
         "401":
           description: Permission denied
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -697,7 +828,7 @@ paths:
         "404":
           description: Organization not found
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -707,7 +838,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     put:
       operationId: addOrganization
       tags:
@@ -716,12 +847,12 @@ paths:
       description: |
         This operation allows a user to create an organization.
       parameters:
-        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
+        - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
       responses:
         "201":
           description: Organization created
           schema:
-            $ref: "definitions.yaml#/definitions/V4Organization"
+            $ref: "./definitions.yaml#/definitions/V4Organization"
           examples:
             application/json:
               {
@@ -735,7 +866,7 @@ paths:
         "409":
           description: Organization already exists
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -745,13 +876,13 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     patch:
       operationId: modifyOrganization
       tags:
         - organizations
       parameters:
-        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
+        - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
         - name: body
           in: body
           required: true
@@ -762,7 +893,7 @@ paths:
                 type: array
                 description: List of members that belong to this organization
                 items:
-                  $ref: 'definitions.yaml#/definitions/V4OrganizationMember'
+                  $ref: "./definitions.yaml#/definitions/V4OrganizationMember"
 
       summary: Modify organization
       description: |
@@ -785,11 +916,11 @@ paths:
         "200":
           description: Organization modified
           schema:
-            $ref: 'definitions.yaml#/definitions/V4Organization'
+            $ref: "./definitions.yaml#/definitions/V4Organization"
         "400":
           description: Invalid input
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -799,7 +930,7 @@ paths:
         "401":
           description: Permission denied
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -809,7 +940,7 @@ paths:
         "404":
           description: Organization not found
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -819,7 +950,7 @@ paths:
         default:
           description: error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     delete:
       operationId: deleteOrganization
       tags:
@@ -829,12 +960,12 @@ paths:
         This operation allows a user to delete an organization that they are a member of.
         Admin users can delete any organization.
       parameters:
-        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
+        - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
       responses:
         "200":
           description: Organization deleted
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -844,7 +975,7 @@ paths:
         "401":
           description: Permission denied
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -854,7 +985,7 @@ paths:
         "404":
           description: Organization not found
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
@@ -864,7 +995,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/releases/:
     get:
@@ -876,15 +1007,13 @@ paths:
         Lists all releases available for new clusters or for upgrading existing
         clusters. Might also serve as an archive to obtain details on older
         releases.
-      parameters:
-        - $ref: 'parameters.yaml#/parameters/OrganizationIdPathParameter'
       responses:
         "200":
           description: Releases list
           schema:
             type: array
             items:
-              $ref: "definitions.yaml#/definitions/V4ReleaseListItem"
+              $ref: "./definitions.yaml#/definitions/V4ReleaseListItem"
           examples:
             application/json:
               [
