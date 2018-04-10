@@ -581,7 +581,7 @@ definitions:
         type: string
       aws:
         type: object
-        description: Credentials specific to an AWS
+        description: Credentials specific to an AWS account
         required:
           - account_id
           - access_key_id
