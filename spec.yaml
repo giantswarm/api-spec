@@ -1004,8 +1004,8 @@ paths:
         - organizations
       summary: Set credentials
       description: |
-        Add a set of credentials to the organization allowing to create and
-        operate clusters within a cloud provider account/subscription.
+        Add a set of credentials to the organization allowing the creation and
+        operation of clusters within a cloud provider account/subscription.
 
         Credentials in an organization are immutable. An organization can only
         have one set of credentials.
