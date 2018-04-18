@@ -1025,12 +1025,11 @@ paths:
           "aws": [
             {
               "purpose": "aws-operator",
-              "role_arn": "arn:aws:iam::123456789012:role/GiantSwarmAWSOperator",
-              "external_id": "base-64-encoded-string"
+              "role_arn": "arn:aws:iam::123456789012:role/GiantSwarmAWSOperator"
             },
             {
-              "purpose": "staff",
-              "role_arn": "arn:aws:iam::123456789012:role/GiantSwarmStaff"
+              "purpose": "admin",
+              "role_arn": "arn:aws:iam::123456789012:role/GiantSwarmAdmin"
             }
           ]
         }

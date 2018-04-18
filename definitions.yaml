@@ -588,10 +588,7 @@ definitions:
           properties:
             purpose:
               type: string
-              description: Purpose of the role. Either `aws-operator` (for the software operating clusters) or `staff` (for Giant Swarm team members).
+              description: Purpose of the role. Either `aws-operator` (for the software operating clusters) or `admin` (for Giant Swarm staff).
             role_arn:
               type: string
               description: The Amazon Resource Name (ARN) of the role created for the purpose
-            external_id:
-              type: string
-              description: The "external ID" required for assuming the role. Only when `purpose` is `aws-operator`.
