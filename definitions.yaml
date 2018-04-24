@@ -578,17 +578,22 @@ definitions:
       provider:
         type: string
       aws:
-        type: array
+        type: object
         description: Credentials specific to an AWS account
-        items:
-          type: object
-          required:
-            - purpose
-            - role_arn
-          properties:
-            purpose:
-              type: string
-              description: Purpose of the role. Either `aws-operator` (for the software operating clusters) or `admin` (for Giant Swarm staff).
-            role_arn:
-              type: string
-              description: The Amazon Resource Name (ARN) of the role created for the purpose
+        required:
+          - roles
+        properties:
+          roles:
+            type: array
+            items:
+              type: object
+              required:
+                - purpose
+                - arn
+              properties:
+                purpose:
+                  type: string
+                  description: Purpose of the role. Either `aws-operator` (for the software operating clusters) or `admin` (for Giant Swarm staff).
+                role_arn:
+                  type: string
+                  description: The Amazon Resource Name (ARN) of the role created for the purpose

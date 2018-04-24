@@ -1022,16 +1022,18 @@ paths:
         ```json
         {
           "provider": "aws",
-          "aws": [
-            {
-              "purpose": "aws-operator",
-              "role_arn": "arn:aws:iam::123456789012:role/GiantSwarmAWSOperator"
-            },
-            {
-              "purpose": "admin",
-              "role_arn": "arn:aws:iam::123456789012:role/GiantSwarmAdmin"
-            }
-          ]
+          "aws": {
+            "roles": [
+              {
+                "purpose": "aws-operator",
+                "arn": "arn:aws:iam::123456789012:role/GiantSwarmAWSOperator"
+              },
+              {
+                "purpose": "admin",
+                "arn": "arn:aws:iam::123456789012:role/GiantSwarmAdmin"
+              }
+            ]
+          }
         }
         ```
 
