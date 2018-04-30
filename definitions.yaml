@@ -584,16 +584,15 @@ definitions:
           - roles
         properties:
           roles:
-            type: array
-            items:
-              type: object
-              required:
-                - purpose
-                - arn
-              properties:
-                purpose:
-                  type: string
-                  description: Purpose of the role. Either `aws-operator` (for the software operating clusters) or `admin` (for Giant Swarm staff).
-                role_arn:
-                  type: string
-                  description: The Amazon Resource Name (ARN) of the role created for the purpose
+            type: object
+            descriptions: IAM roles to assume by certain entities
+            required:
+              - awsoperator
+              - admin
+            properties:
+              admin:
+                type: string
+                description: ARN of the IAM role to assume by Giant Swarm support staff
+              awsoperator:
+                type: string
+                description: ARN of the IAM role to assume by the software operating clusters
