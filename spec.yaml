@@ -169,6 +169,37 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
+  /v4/user/:
+    get:
+      operationId: getUser
+      tags:
+        - users
+      summary: Get current user
+      description: |
+        Returns details about the currently authenticated user
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4UserListItem"
+          examples:
+            application/json:
+              {"email": "andy@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2019-01-15T00:00:00Z"}
+        "401":
+          description: Permission denied
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "PERMISSION_DENIED",
+                "message": "The requested resource cannot be accessed using the provided permission rights."
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/users/{email}/:
     get:
       operationId: getUser
@@ -197,37 +228,6 @@ paths:
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The user could not be found. (not found: user with email 'bob@example.com' could not be found)"
               }
-        "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights."
-              }
-        default:
-          description: Error
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-
-  /v4/user/:
-    get:
-      operationId: getUser
-      tags:
-        - users
-      summary: Get user
-      description: |
-        Returns details about the currently authenticated user
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4UserListItem"
-          examples:
-            application/json:
-              {"email": "andy@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2019-01-15T00:00:00Z"}
         "401":
           description: Permission denied
           schema:
