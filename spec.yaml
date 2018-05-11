@@ -171,7 +171,7 @@ paths:
 
   /v4/user/:
     get:
-      operationId: getUser
+      operationId: getCurrentUser
       tags:
         - users
       summary: Get current user
