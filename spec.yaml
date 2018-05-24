@@ -176,7 +176,7 @@ paths:
         - auth-tokens
       summary: Delete Auth Token (Logout)
       description: |
-        Deletes the Auth Token provided in the Authorization header. This effectively logs you out.
+        Deletes the authentication token provided in the Authorization header. This effectively logs you out.
       parameters:
         - name: Authorization
           type: string
@@ -192,7 +192,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_DELETED",
-                "message": "The Auth Token has been succesfully deleted."
+                "message": "The authentication token has been succesfully deleted."
               }
 
         "401":
