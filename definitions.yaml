@@ -504,9 +504,6 @@ definitions:
       owner:
         type: string
         description: Name of the organization owning the cluster
-      release_version:
-        type: string
-        description: The semantic version number of this cluster
 
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:
@@ -568,3 +565,22 @@ definitions:
       expiry:
         type: string
         description: The date and time when this account will expire
+
+  # A request for an auth token
+  V4CreateAuthTokenRequest:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Your email address
+      password_base64:
+        type: string
+        description: Your password as a base64 encoded string
+
+  # A response to a successful auth token request
+  V4CreateAuthTokenResponse:
+    type: object
+    properties:
+      auth-token:
+        type: string
+        description: The newly created API token
