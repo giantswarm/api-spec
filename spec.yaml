@@ -158,7 +158,7 @@ paths:
           examples:
             application/json:
               {
-                "auth-token": "e5239484-2299-41df-b901-d0568db7e3f9"
+                "auth_token": "e5239484-2299-41df-b901-d0568db7e3f9"
               }
         "401":
           description: Permission denied
