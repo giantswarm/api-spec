@@ -584,6 +584,6 @@ definitions:
   V4CreateAuthTokenResponse:
     type: object
     properties:
-      auth-token:
+      auth_token:
         type: string
         description: The newly created API token
