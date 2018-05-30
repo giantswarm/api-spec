@@ -596,3 +596,22 @@ definitions:
               awsoperator:
                 type: string
                 description: ARN of the IAM role to assume by the software operating clusters
+
+  # A request for an auth token
+  V4CreateAuthTokenRequest:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Your email address
+      password_base64:
+        type: string
+        description: Your password as a base64 encoded string
+
+  # A response to a successful auth token request
+  V4CreateAuthTokenResponse:
+    type: object
+    properties:
+      auth_token:
+        type: string
+        description: The newly created API token
