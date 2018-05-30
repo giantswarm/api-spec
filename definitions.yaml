@@ -569,6 +569,34 @@ definitions:
         type: string
         description: The date and time when this account will expire
 
+  V4AddCredentialsRequest:
+    type: object
+    required:
+      - provider
+    description: Request model for adding a set of credentials
+    properties:
+      provider:
+        type: string
+      aws:
+        type: object
+        description: Credentials specific to an AWS account
+        required:
+          - roles
+        properties:
+          roles:
+            type: object
+            descriptions: IAM roles to assume by certain entities
+            required:
+              - awsoperator
+              - admin
+            properties:
+              admin:
+                type: string
+                description: ARN of the IAM role to assume by Giant Swarm support staff
+              awsoperator:
+                type: string
+                description: ARN of the IAM role to assume by the software operating clusters
+
   # A request for an auth token
   V4CreateAuthTokenRequest:
     type: object
