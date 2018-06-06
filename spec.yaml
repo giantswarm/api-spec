@@ -995,6 +995,11 @@ paths:
         This operation allows a user to create an organization.
       parameters:
         - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4Organization"
       responses:
         "201":
           description: Organization created
