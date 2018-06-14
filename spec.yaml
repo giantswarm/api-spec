@@ -30,7 +30,7 @@ produces:
 tags:
   - name: auth-tokens
     description: |
-      Auth Tokens are your way of authenticating against this API. You can create one by passing your email and base64 encoded password to the create auth token endpoint.
+      Auth Tokens are your way of authenticating against this API. You can create one by passing your email and base64 encoded password to the create auth token endpoint. The auth token never expires, in case you want to invalidate it you need to delete it (logout).
   - name: clusters
     description: |
       Clusters are a central resource of the Giant Swarm API. As a user or team using Giant Swarm, you set up Kubernetes clusters to run your own workloads.
