@@ -198,13 +198,13 @@ definitions:
         properties:
           size_gb:
             type: number
-            description: RAM size in GB
+            description: RAM size in GB. Can be an integer or float.
       storage:
         type: object
         properties:
           size_gb:
-            type: integer
-            description: Node storage size in GB
+            type: number
+            description: Node storage size in GB. Can be an integer or float.
       cpu:
         type: object
         properties:
