@@ -169,6 +169,12 @@ paths:
           description: Create Auth Token Request
           schema:
             $ref: 'definitions.yaml#/definitions/V4CreateAuthTokenRequest'
+          x-examples:
+            application/json:
+              {
+                "email": "developer@example.com",
+                "password_base64": "cGFzc3dvcmQ="
+              }
       responses:
         "200":
           description: Success
@@ -340,13 +346,18 @@ paths:
       operationId: createUser
       parameters:
         - $ref: "./parameters.yaml#/parameters/UserEmailPathParameter"
-
         - name: body
           in: body
           required: true
           description: User account details
           schema:
             $ref: "./definitions.yaml#/definitions/V4CreateUserRequest"
+          x-examples:
+            application/json:
+              {
+                "password": "cGFzc3dvcmQ=",
+                "expiry": "2020-01-01T12:00:00.000Z"
+              }
       tags:
         - users
       summary: Create user
@@ -523,6 +534,14 @@ paths:
           description: New cluster definition
           schema:
             $ref: "./definitions.yaml#/definitions/V4AddClusterRequest"
+          x-examples:
+            application/json:
+              {
+                "owner": "myteam",
+                "release_version": "1.4.2",
+                "name": "Example cluster with 3 default worker nodes",
+                "workers": [{}, {}, {}]
+              }
       responses:
         "201":
           description: Cluster created
@@ -642,6 +661,11 @@ paths:
           description: Merge-patch body
           schema:
             $ref: "./definitions.yaml#/definitions/V4ModifyClusterRequest"
+          x-examples:
+            application/merge-patch+json:
+              {
+                "name": "New cluster name"
+              }
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       summary: Modify cluster
       description: |
@@ -805,6 +829,13 @@ paths:
             While the `ttl_hours` attribute is optional and will be set to a default value when omitted, the `description` is mandatory.
           schema:
             $ref: "./definitions.yaml#/definitions/V4AddKeyPairRequest"
+          x-examples:
+            application/json:
+              {
+                "description": "Admin key pair lasting twelve hours",
+                "ttl_hours": 12,
+                "certificate_organizations": "system:masters"
+              }
       description: |
         This operation allows to create a new key pair for accessing a specific cluster.
 
@@ -942,6 +973,15 @@ paths:
           required: true
           schema:
             $ref: "./definitions.yaml#/definitions/V4Organization"
+          x-examples:
+            application/json:
+              {
+                "id": "string",
+                "members": [
+                  {"email": "myself@example.com"},
+                  {"email": "colleague@example.com"}
+                ]
+              }
       responses:
         "201":
           description: Organization created
@@ -988,6 +1028,11 @@ paths:
                 description: List of members that belong to this organization
                 items:
                   $ref: "./definitions.yaml#/definitions/V4OrganizationMember"
+          x-examples:
+            application/merge-patch+json:
+              {
+                "members": [{"email": "myself@example.com"}]
+              }
 
       summary: Modify organization
       description: |
@@ -1125,7 +1170,6 @@ paths:
         }
         ```
 
-
       parameters:
         - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
         - name: body
@@ -1133,6 +1177,18 @@ paths:
           required: true
           schema:
             $ref: "./definitions.yaml#/definitions/V4AddCredentialsRequest"
+          x-examples:
+            application/json:
+              {
+                "provider": "aws",
+                "aws": {
+                  "roles": {
+                    "admin": "arn:aws:iam::123456789012:role/GiantSwarmAdmin",
+                    "awsoperator": "arn:aws:iam::123456789012:role/GiantSwarmAWSOperator"
+                  }
+                }
+              }
+          
       responses:
         "201":
           description: Credentials created
