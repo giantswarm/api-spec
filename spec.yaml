@@ -61,7 +61,7 @@ tags:
 securityDefinitions:
   AuthorizationHeaderToken:
     description: |
-      Clients authenticate by passing an auth token via the `Authorization` 
+      Clients authenticate by passing an auth token via the `Authorization`
       header with a value of the format `giantswarm <token>`. Auth tokens can be
       obtained using the [createAuthToken](#operation/createAuthToken)
       operation.
