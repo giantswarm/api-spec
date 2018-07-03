@@ -28,7 +28,7 @@ consumes:
 produces:
   - application/json
 tags:
-  - name: auth-tokens
+  - name: auth tokens
     description: |
       Auth Tokens are your way of authenticating against this API. You can create one by passing your email and base64 encoded password to the create auth token endpoint. The auth token never expires, in case you want to invalidate it you need to delete it (logout).
   - name: clusters
@@ -128,6 +128,27 @@ paths:
           description: Information
           schema:
             $ref: "./definitions.yaml#/definitions/V4InfoResponse"
+          examples:
+            application/json:
+              {
+                "general": {
+                  "installation_name": "shire",
+                  "provider": "aws",
+                  "datacenter": "eu-central-1"
+                },
+                "workers": {
+                  "count_per_cluster": {
+                    "max": 20,
+                    "default": 3
+                  },
+                  "instance_type": {
+                    "options": [
+                      "m3.medium", "m3.large", "m3.xlarge"
+                    ],
+                    "default": "m3.large"
+                  }
+                }
+              }
         default:
           description: Error
           schema:
@@ -137,7 +158,7 @@ paths:
     post:
       operationId: createAuthToken
       tags:
-        - auth-tokens
+        - auth tokens
       summary: Create Auth Token (Login)
       description: |
         Creates a Auth Token for a given user. Must authenticate with email and password.
@@ -148,6 +169,12 @@ paths:
           description: Create Auth Token Request
           schema:
             $ref: 'definitions.yaml#/definitions/V4CreateAuthTokenRequest'
+          x-examples:
+            application/json:
+              {
+                "email": "developer@example.com",
+                "password_base64": "cGFzc3dvcmQ="
+              }
       responses:
         "200":
           description: Success
@@ -171,7 +198,7 @@ paths:
     delete:
       operationId: deleteAuthToken
       tags:
-        - auth-tokens
+        - auth tokens
       summary: Delete Auth Token (Logout)
       description: |
         Deletes the authentication token provided in the Authorization header. This effectively logs you out.
@@ -319,13 +346,18 @@ paths:
       operationId: createUser
       parameters:
         - $ref: "./parameters.yaml#/parameters/UserEmailPathParameter"
-
         - name: body
           in: body
           required: true
           description: User account details
           schema:
             $ref: "./definitions.yaml#/definitions/V4CreateUserRequest"
+          x-examples:
+            application/json:
+              {
+                "password": "cGFzc3dvcmQ=",
+                "expiry": "2020-01-01T12:00:00.000Z"
+              }
       tags:
         - users
       summary: Create user
@@ -502,6 +534,14 @@ paths:
           description: New cluster definition
           schema:
             $ref: "./definitions.yaml#/definitions/V4AddClusterRequest"
+          x-examples:
+            application/json:
+              {
+                "owner": "myteam",
+                "release_version": "1.4.2",
+                "name": "Example cluster with 3 default worker nodes",
+                "workers": [{}, {}, {}]
+              }
       responses:
         "201":
           description: Cluster created
@@ -559,8 +599,8 @@ paths:
                 "owner": "acme",
                 "workers": [
                   {
-                    "memory": {"size_gb": 2},
-                    "storage": {"size_gb": 20},
+                    "memory": {"size_gb": 2.0},
+                    "storage": {"size_gb": 20.0},
                     "cpu": {"cores": 4},
                     "labels": {
                       "beta.kubernetes.io/arch": "amd64",
@@ -571,8 +611,8 @@ paths:
                     }
                   },
                   {
-                    "memory": {"size_gb": 8},
-                    "storage": {"size_gb": 20},
+                    "memory": {"size_gb": 8.0},
+                    "storage": {"size_gb": 20.0},
                     "cpu": {"cores": 2},
                     "labels": {
                       "beta.kubernetes.io/arch": "amd64",
@@ -621,6 +661,11 @@ paths:
           description: Merge-patch body
           schema:
             $ref: "./definitions.yaml#/definitions/V4ModifyClusterRequest"
+          x-examples:
+            application/merge-patch+json:
+              {
+                "name": "New cluster name"
+              }
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       summary: Modify cluster
       description: |
@@ -784,6 +829,13 @@ paths:
             While the `ttl_hours` attribute is optional and will be set to a default value when omitted, the `description` is mandatory.
           schema:
             $ref: "./definitions.yaml#/definitions/V4AddKeyPairRequest"
+          x-examples:
+            application/json:
+              {
+                "description": "Admin key pair lasting twelve hours",
+                "ttl_hours": 12,
+                "certificate_organizations": "system:masters"
+              }
       description: |
         This operation allows to create a new key pair for accessing a specific cluster.
 
@@ -921,6 +973,15 @@ paths:
           required: true
           schema:
             $ref: "./definitions.yaml#/definitions/V4Organization"
+          x-examples:
+            application/json:
+              {
+                "id": "string",
+                "members": [
+                  {"email": "myself@example.com"},
+                  {"email": "colleague@example.com"}
+                ]
+              }
       responses:
         "201":
           description: Organization created
@@ -967,6 +1028,11 @@ paths:
                 description: List of members that belong to this organization
                 items:
                   $ref: "./definitions.yaml#/definitions/V4OrganizationMember"
+          x-examples:
+            application/merge-patch+json:
+              {
+                "members": [{"email": "myself@example.com"}]
+              }
 
       summary: Modify organization
       description: |
@@ -1104,7 +1170,6 @@ paths:
         }
         ```
 
-
       parameters:
         - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
         - name: body
@@ -1112,6 +1177,17 @@ paths:
           required: true
           schema:
             $ref: "./definitions.yaml#/definitions/V4AddCredentialsRequest"
+          x-examples:
+            application/json:
+              {
+                "provider": "aws",
+                "aws": {
+                  "roles": {
+                    "admin": "arn:aws:iam::123456789012:role/GiantSwarmAdmin",
+                    "awsoperator": "arn:aws:iam::123456789012:role/GiantSwarmAWSOperator"
+                  }
+                }
+              }
       responses:
         "201":
           description: Credentials created
