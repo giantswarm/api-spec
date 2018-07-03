@@ -60,7 +60,11 @@ tags:
       detailed in the _changelog_ of a release.
 securityDefinitions:
   AuthorizationHeaderToken:
-    description: Currently the only supported authentication scheme is passing an auth token via the `Authorization` header with a value of the format `giantswarm <token>`.
+    description: |
+      Clients authenticate by passing an auth token via the `Authorization`
+      header with a value of the format `giantswarm <token>`. Auth tokens can be
+      obtained using the [createAuthToken](#operation/createAuthToken)
+      operation.
     type: apiKey
     name: Authorization
     in: header
