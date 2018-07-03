@@ -128,6 +128,27 @@ paths:
           description: Information
           schema:
             $ref: "./definitions.yaml#/definitions/V4InfoResponse"
+          examples:
+            application/json:
+              {
+                "general": {
+                  "installation_name": "shire",
+                  "provider": "aws",
+                  "datacenter": "eu-central-1"
+                },
+                "workers": {
+                  "count_per_cluster": {
+                    "max": 20,
+                    "default": 3
+                  },
+                  "instance_type": {
+                    "options": [
+                      "m3.medium", "m3.large", "m3.xlarge"
+                    ],
+                    "default": "m3.large"
+                  }
+                }
+              }
         default:
           description: Error
           schema:
