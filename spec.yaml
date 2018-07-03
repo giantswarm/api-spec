@@ -599,8 +599,8 @@ paths:
                 "owner": "acme",
                 "workers": [
                   {
-                    "memory": {"size_gb": 2},
-                    "storage": {"size_gb": 20},
+                    "memory": {"size_gb": 2.0},
+                    "storage": {"size_gb": 20.0},
                     "cpu": {"cores": 4},
                     "labels": {
                       "beta.kubernetes.io/arch": "amd64",
@@ -611,8 +611,8 @@ paths:
                     }
                   },
                   {
-                    "memory": {"size_gb": 8},
-                    "storage": {"size_gb": 20},
+                    "memory": {"size_gb": 8.0},
+                    "storage": {"size_gb": 20.0},
                     "cpu": {"cores": 2},
                     "labels": {
                       "beta.kubernetes.io/arch": "amd64",
