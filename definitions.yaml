@@ -256,7 +256,7 @@ definitions:
         description: Expiration time (from creation) in hours
       cn_prefix:
         type: string
-        description: The common name prefix of the certificate subject.
+        description: The common name prefix of the certificate subject. This only allows characters that are usable in domain names (`a-z`, `0-9`, and `.-`, where `.-` must not occur at the start nor end).
       certificate_organizations:
         type: string
         description: |
