@@ -855,9 +855,9 @@ paths:
 
           `clusterdomain` is specific to your cluster and is not editable.
 
-          The `cn_prefix` however
-          is editable. When left blank it will default to the email address of the Giant Swarm user
-          that is performing the create key pair request.
+          The `cn_prefix` however is editable. When left blank it will default
+          to the email address of the Giant Swarm user that is performing the
+          create key pair request.
 
           The common name is used as the username for requests to the Kubernetes API. This allows you
           to set up role-based access controls.
