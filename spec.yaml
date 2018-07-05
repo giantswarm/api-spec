@@ -481,19 +481,27 @@ paths:
                   "id": "g8s3o",
                   "create_date": "2017-06-08T12:31:47.215Z",
                   "name": "Staging Cluster",
-                  "owner": "acme"
+                  "owner": "acme",
+                  "release_version": "1.2.4"
                 },
                 {
                   "id": "3dkr6",
                   "create_date": "2017-05-22T13:58:02.024Z",
                   "name": "Test Cluster",
-                  "owner": "testorg"
+                  "owner": "testorg",
+                  "release_version": "1.2.3"
                 }
               ]
         default:
           description: Error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "MACHINE_READABLE_ERROR_CODE",
+                "message": "Here we will provide information for humans."
+              }
     post:
       operationId: addCluster
       tags:
