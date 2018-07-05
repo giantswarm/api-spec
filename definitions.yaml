@@ -596,6 +596,33 @@ definitions:
               awsoperator:
                 type: string
                 description: ARN of the IAM role to assume by the software operating clusters
+      azure:
+        type: object
+        description: Credentials specific to an Azure service principal
+        required:
+          - credential
+        properties:
+          credential:
+            type: object
+            descriptions: Service principal credential
+            required:
+              - clientID
+              - secretID
+              - subscriptionID
+              - tenantID
+            properties:
+              clientID:
+                type: string
+                description: Client ID of the service principal
+              secretID:
+                type: string
+                description: Secret key of the service principal
+              subscriptionID:
+                type: string
+                description: Azure subscription ID
+              tenantID:
+                type: string
+                description: Tenant ID of the Azure subscription
 
   # A request for an auth token
   V4CreateAuthTokenRequest:
