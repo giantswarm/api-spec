@@ -325,16 +325,15 @@ paths:
     get:
       operationId: getUser
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/UserEmailPathParameter"
       tags:
         - users
       summary: Get user
       description: |
         Returns details about a specific user
-      parameters:
-        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
-        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
-        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
       responses:
         "200":
           description: Success
