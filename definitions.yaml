@@ -606,21 +606,21 @@ definitions:
             type: object
             descriptions: Service principal credential
             required:
-              - clientID
-              - secretID
-              - subscriptionID
-              - tenantID
+              - client_id
+              - secret_key
+              - subscription_id
+              - tenant_id
             properties:
-              clientID:
+              client_id:
                 type: string
                 description: Client ID of the service principal
-              secretID:
+              secret_key:
                 type: string
                 description: Secret key of the service principal
-              subscriptionID:
+              subscription_id:
                 type: string
                 description: Azure subscription ID
-              tenantID:
+              tenant_id:
                 type: string
                 description: Tenant ID of the Azure subscription
 
