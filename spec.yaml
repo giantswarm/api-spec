@@ -127,6 +127,10 @@ paths:
           }
         }
         ```
+      parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
       responses:
         "200":
           description: Information
@@ -167,6 +171,9 @@ paths:
       description: |
         Creates a Auth Token for a given user. Must authenticate with email and password.
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - name: body
           in: body
           required: true
@@ -207,6 +214,9 @@ paths:
       description: |
         Deletes the authentication token provided in the Authorization header. This effectively logs you out.
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - name: Authorization
           type: string
           in: header
@@ -243,6 +253,10 @@ paths:
       summary: Get users
       description: |
         Returns a list of all users in the system. Currently this endpoint is only available to users with admin permissions.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
       responses:
         "200":
           description: Success
@@ -280,6 +294,10 @@ paths:
       summary: Get current user
       description: |
         Returns details about the currently authenticated user
+      parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
       responses:
         "200":
           description: Success
@@ -307,6 +325,9 @@ paths:
     get:
       operationId: getUser
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/UserEmailPathParameter"
       tags:
         - users
@@ -349,6 +370,9 @@ paths:
     put:
       operationId: createUser
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/UserEmailPathParameter"
         - name: body
           in: body
@@ -406,6 +430,9 @@ paths:
     delete:
       operationId: deleteUser
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/UserEmailPathParameter"
       tags:
         - users
@@ -467,6 +494,10 @@ paths:
         The result array items are sparse representations of the cluster objects.
         To fetch more details on a cluster, use the [getCluster](#operation/getCluster)
         operation.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
       responses:
         "200":
           description: Success
@@ -532,6 +563,9 @@ paths:
         For clusters on AWS, note that all worker nodes must use the same instance type.
 
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - name: body
           in: body
           required: true
@@ -582,6 +616,9 @@ paths:
       tags:
         - clusters
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       summary: Get cluster details
       description: |
@@ -659,6 +696,9 @@ paths:
       tags:
         - clusters
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - name: body
           in: body
           required: true
@@ -763,6 +803,9 @@ paths:
       tags:
         - clusters
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       summary: Delete cluster
       description: |
@@ -809,6 +852,9 @@ paths:
 
         The individual array items contain metadata on the key pairs, but neither the key nor the certificate. These can only be obtained upon creation, using the [addKeypair](#operation/addKeyPair) operation.
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       responses:
         "200":
@@ -825,6 +871,9 @@ paths:
         - key pairs
       summary: Create key pair
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
         - name: body
           in: body
@@ -894,6 +943,10 @@ paths:
         This operation allows to fetch a list of organizations the user is a
         member of. In the case of an admin user, the result includes all
         existing organizations.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
       responses:
         "200":
           description: Success
@@ -922,6 +975,9 @@ paths:
       description: |
         This operation fetches organization details.
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
       responses:
         "200":
@@ -971,6 +1027,9 @@ paths:
       description: |
         This operation allows a user to create an organization.
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
         - name: body
           in: body
@@ -1020,6 +1079,9 @@ paths:
       tags:
         - organizations
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
         - name: body
           in: body
@@ -1103,6 +1165,9 @@ paths:
         This operation allows a user to delete an organization that they are a member of.
         Admin users can delete any organization.
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
       responses:
         "200":
@@ -1190,6 +1255,9 @@ paths:
         ```
 
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
         - name: body
           in: body
@@ -1247,6 +1315,10 @@ paths:
         Lists all releases available for new clusters or for upgrading existing
         clusters. Might also serve as an archive to obtain details on older
         releases.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
       responses:
         "200":
           description: Releases list
