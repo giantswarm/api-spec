@@ -183,22 +183,15 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "definitions.yaml#/definitions/V4CreateAuthTokenResponse"
+            $ref: "./definitions.yaml#/definitions/V4CreateAuthTokenResponse"
           examples:
             application/json:
               {
                 "auth_token": "e5239484-2299-41df-b901-d0568db7e3f9"
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided authentication details. Email or password is not correct."
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+
     delete:
       operationId: deleteAuthToken
       tags:
@@ -216,24 +209,15 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
                 "code": "RESOURCE_DELETED",
                 "message": "The authentication token has been succesfully deleted."
               }
-
         "401":
-          description: Permission denied
-          schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided authentication details. Email or password is not correct."
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
 
   /v4/users/:
     get:
@@ -258,15 +242,7 @@ paths:
                 {"email": "charles@example.com", "created": "2017-03-15T13:00:00Z", "expiry": "2021-01-15T00:00:00Z"}
               ]
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -289,15 +265,7 @@ paths:
             application/json:
               {"email": "andy@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2019-01-15T00:00:00Z"}
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights."
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -332,15 +300,7 @@ paths:
                 "message": "The user could not be found. (not found: user with email 'bob@example.com' could not be found)"
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights."
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -389,15 +349,7 @@ paths:
                 "message": "The user could not be created. (invalid input: email 'bob@example.com' already exists)"
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -424,6 +376,8 @@ paths:
                 "code": "RESOURCE_DELETED",
                 "message": "The user with email 'bob@example.com' has been deleted."
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: User not found
           schema:
@@ -433,16 +387,6 @@ paths:
               {
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The user could not be deleted. (not found: user with email 'bob@example.com' could not be found)"
-              }
-        "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
               }
         default:
           description: Error
@@ -562,15 +506,7 @@ paths:
                 "message": "A new cluster has been created with ID 'wqtlq'"
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. Please make sure you are a member of the organization you set in the 'owner' field."
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: error
           schema:
@@ -937,18 +873,8 @@ paths:
                   {"email": "user2@example.com"}
                 ]
               }
-
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The details of the organization could not be listed. (unauthorized: you must be a member of 'acme')"
-              }
-
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Organization not found
           schema:
@@ -1000,7 +926,8 @@ paths:
                   {"email": "user2@example.com"}
                 ]
               }
-
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "409":
           description: Organization already exists
           schema:
@@ -1071,15 +998,7 @@ paths:
                 "message": "The organization could not be modified. (invalid input: user 'invalid-email' does not exist or is invalid)"
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The organization could not be modified. (unauthorized: you must be a member of 'acme')"
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Organization not found
           schema:
@@ -1116,15 +1035,7 @@ paths:
                 "message": "The organization with ID 'acme' has been deleted."
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The organization could not be deleted. (unauthorized: you must be a member of 'acme')"
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Organization not found
           schema:
@@ -1207,6 +1118,8 @@ paths:
                 "code": "RESOURCE_CREATED",
                 "message": "A new set of credentials has been created with ID '5d9h4'"
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "409":
           description: Conflict
           schema:
@@ -1289,3 +1202,5 @@ paths:
                   "active": true
                 }
               ]
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
