@@ -324,8 +324,6 @@ paths:
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The user could not be found. (not found: user with email 'bob@example.com' could not be found)"
               }
-        "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
