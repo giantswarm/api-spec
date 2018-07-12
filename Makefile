@@ -1,3 +1,4 @@
+PWD := $(shell pwd)
 PHONY: lint spec-tmp.yaml
 
 SWAGGER_VERSION=2.2.3
@@ -15,7 +16,12 @@ spec-tmp.yaml:
 
 # YAML linting
 lint: spec-tmp.yaml
-	yamllint -c ./yamllint/config.yaml ./spec.yaml ./definitions.yaml ./parameters.yaml ./responses.yaml
+	docker run --rm -ti \
+		-v $(PWD):/workdir \
+		-w /workdir \
+		giantswarm/yamllint \
+		-c ./yamllint/config.yaml \
+		./spec.yaml ./definitions.yaml ./parameters.yaml ./responses.yaml
 
 # Validate the swagger/OAI spec
 validate: spec-tmp.yaml lint
