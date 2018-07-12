@@ -153,6 +153,8 @@ paths:
                   }
                 }
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -289,6 +291,8 @@ paths:
           examples:
             application/json:
               {"email": "andy@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2019-01-15T00:00:00Z"}
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: User not found
           schema:
@@ -434,6 +438,8 @@ paths:
                   "owner": "testorg"
                 }
               ]
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -576,6 +582,8 @@ paths:
                   ]
                 }
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Cluster not found
           schema:
@@ -680,6 +688,8 @@ paths:
           description: Cluster modified
           schema:
             $ref: "./definitions.yaml#/definitions/V4ClusterDetailsResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Cluster not found
           schema:
@@ -719,6 +729,8 @@ paths:
                 "code": "RESOURCE_DELETION_STARTED",
                 "message": "The cluster with ID 'wqtlq' is being deleted."
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Cluster not found
           schema:
@@ -751,6 +763,8 @@ paths:
           description: Key pairs
           schema:
             $ref: "./definitions.yaml#/definitions/V4GetKeyPairsResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: error
           schema:
@@ -819,6 +833,8 @@ paths:
                 "id": "02:cc:da:f9:fb:ce:c3:e5:e1:f6:27:d8:43:48:0d:37:4a:ee:b9:67",
                 "ttl_hours": 8640
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
 
   /v4/organizations/:
     get:
@@ -844,6 +860,8 @@ paths:
                 {"id": "giantswarm"},
                 {"id": "testorg"}
               ]
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
