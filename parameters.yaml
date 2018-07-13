@@ -1,5 +1,12 @@
 parameters:
 
+  RequiredGiantSwarmAuthorizationHeader:
+    name: Authorization
+    type: string
+    in: header
+    required: true
+    description: As described in the [authentication](#section/Authentication) section
+
   ClusterIdPathParameter:
     name: cluster_id
     in: path
