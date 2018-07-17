@@ -569,14 +569,6 @@ definitions:
         type: string
         description: The date and time when this account will expire
 
-  V4ModifyCurrentUserRequest:
-    type: object
-    description: Request model for modifying your own profile
-    properties:
-      email:
-        type: string
-        description: Set the new email address you would like to have.
-
   V4ModifyUserRequest:
     type: object
     description: Request model for modifying a specific user as an admin
@@ -586,7 +578,7 @@ definitions:
         description: Set the new email address you would like the user to have.
       expiry:
         type: string
-        description: Set the new expiry date you would like the user to have.
+        description: Set the new expiry date you would like the user to have. (Only editable by admins)
 
   V4AddCredentialsRequest:
     type: object
