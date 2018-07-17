@@ -128,6 +128,7 @@ paths:
         }
         ```
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -157,6 +158,8 @@ paths:
                   }
                 }
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -190,22 +193,15 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "definitions.yaml#/definitions/V4CreateAuthTokenResponse"
+            $ref: "./definitions.yaml#/definitions/V4CreateAuthTokenResponse"
           examples:
             application/json:
               {
                 "auth_token": "e5239484-2299-41df-b901-d0568db7e3f9"
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided authentication details. Email or password is not correct."
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+
     delete:
       operationId: deleteAuthToken
       tags:
@@ -214,36 +210,23 @@ paths:
       description: |
         Deletes the authentication token provided in the Authorization header. This effectively logs you out.
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - name: Authorization
-          type: string
-          in: header
-          required: true
-          description: giantswarm AUTH_TOKEN_HERE
       responses:
         "200":
           description: Success
           schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
                 "code": "RESOURCE_DELETED",
                 "message": "The authentication token has been succesfully deleted."
               }
-
         "401":
-          description: Permission denied
-          schema:
-            $ref: "definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided authentication details. Email or password is not correct."
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
 
   /v4/users/:
     get:
@@ -254,6 +237,7 @@ paths:
       description: |
         Returns a list of all users in the system. Currently this endpoint is only available to users with admin permissions.
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -272,15 +256,7 @@ paths:
                 {"email": "charles@example.com", "created": "2017-03-15T13:00:00Z", "expiry": "2021-01-15T00:00:00Z"}
               ]
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -295,6 +271,7 @@ paths:
       description: |
         Returns details about the currently authenticated user
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -307,15 +284,7 @@ paths:
             application/json:
               {"email": "andy@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2019-01-15T00:00:00Z"}
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights."
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -325,6 +294,7 @@ paths:
     get:
       operationId: getUser
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -342,6 +312,8 @@ paths:
           examples:
             application/json:
               {"email": "andy@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2019-01-15T00:00:00Z"}
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: User not found
           schema:
@@ -352,16 +324,6 @@ paths:
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The user could not be found. (not found: user with email 'bob@example.com' could not be found)"
               }
-        "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights."
-              }
         default:
           description: Error
           schema:
@@ -370,6 +332,7 @@ paths:
     put:
       operationId: createUser
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -413,15 +376,7 @@ paths:
                 "message": "The user could not be created. (invalid input: email 'bob@example.com' already exists)"
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -430,6 +385,7 @@ paths:
     delete:
       operationId: deleteUser
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -451,6 +407,8 @@ paths:
                 "code": "RESOURCE_DELETED",
                 "message": "The user with email 'bob@example.com' has been deleted."
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: User not found
           schema:
@@ -460,16 +418,6 @@ paths:
               {
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The user could not be deleted. (not found: user with email 'bob@example.com' could not be found)"
-              }
-        "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. (unauthorized: accessor must be admin)"
               }
         default:
           description: Error
@@ -495,6 +443,7 @@ paths:
         To fetch more details on a cluster, use the [getCluster](#operation/getCluster)
         operation.
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -521,6 +470,8 @@ paths:
                   "owner": "testorg"
                 }
               ]
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -563,6 +514,7 @@ paths:
         For clusters on AWS, note that all worker nodes must use the same instance type.
 
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -596,15 +548,7 @@ paths:
                 "message": "A new cluster has been created with ID 'wqtlq'"
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The requested resource cannot be accessed using the provided permission rights. Please make sure you are a member of the organization you set in the 'owner' field."
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: error
           schema:
@@ -616,6 +560,7 @@ paths:
       tags:
         - clusters
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -677,6 +622,8 @@ paths:
                   ]
                 }
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Cluster not found
           schema:
@@ -696,6 +643,7 @@ paths:
       tags:
         - clusters
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -784,6 +732,8 @@ paths:
           description: Cluster modified
           schema:
             $ref: "./definitions.yaml#/definitions/V4ClusterDetailsResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Cluster not found
           schema:
@@ -803,6 +753,7 @@ paths:
       tags:
         - clusters
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -826,6 +777,8 @@ paths:
                 "code": "RESOURCE_DELETION_STARTED",
                 "message": "The cluster with ID 'wqtlq' is being deleted."
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Cluster not found
           schema:
@@ -852,6 +805,7 @@ paths:
 
         The individual array items contain metadata on the key pairs, but neither the key nor the certificate. These can only be obtained upon creation, using the [addKeypair](#operation/addKeyPair) operation.
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -861,6 +815,8 @@ paths:
           description: Key pairs
           schema:
             $ref: "./definitions.yaml#/definitions/V4GetKeyPairsResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: error
           schema:
@@ -871,6 +827,7 @@ paths:
         - key pairs
       summary: Create key pair
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -932,6 +889,8 @@ paths:
                 "id": "02:cc:da:f9:fb:ce:c3:e5:e1:f6:27:d8:43:48:0d:37:4a:ee:b9:67",
                 "ttl_hours": 8640
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
 
   /v4/organizations/:
     get:
@@ -944,6 +903,7 @@ paths:
         member of. In the case of an admin user, the result includes all
         existing organizations.
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -961,6 +921,8 @@ paths:
                 {"id": "giantswarm"},
                 {"id": "testorg"}
               ]
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
           description: Error
           schema:
@@ -975,6 +937,7 @@ paths:
       description: |
         This operation fetches organization details.
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -993,18 +956,8 @@ paths:
                   {"email": "user2@example.com"}
                 ]
               }
-
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The details of the organization could not be listed. (unauthorized: you must be a member of 'acme')"
-              }
-
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Organization not found
           schema:
@@ -1027,6 +980,7 @@ paths:
       description: |
         This operation allows a user to create an organization.
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1059,7 +1013,8 @@ paths:
                   {"email": "user2@example.com"}
                 ]
               }
-
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "409":
           description: Organization already exists
           schema:
@@ -1079,6 +1034,7 @@ paths:
       tags:
         - organizations
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1133,15 +1089,7 @@ paths:
                 "message": "The organization could not be modified. (invalid input: user 'invalid-email' does not exist or is invalid)"
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The organization could not be modified. (unauthorized: you must be a member of 'acme')"
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Organization not found
           schema:
@@ -1165,6 +1113,7 @@ paths:
         This operation allows a user to delete an organization that they are a member of.
         Admin users can delete any organization.
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1181,15 +1130,7 @@ paths:
                 "message": "The organization with ID 'acme' has been deleted."
               }
         "401":
-          description: Permission denied
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "PERMISSION_DENIED",
-                "message": "The organization could not be deleted. (unauthorized: you must be a member of 'acme')"
-              }
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
           description: Organization not found
           schema:
@@ -1255,6 +1196,7 @@ paths:
         ```
 
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1290,6 +1232,8 @@ paths:
                 "code": "RESOURCE_CREATED",
                 "message": "A new set of credentials has been created with ID '5d9h4'"
               }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
         "409":
           description: Conflict
           schema:
@@ -1316,6 +1260,7 @@ paths:
         clusters. Might also serve as an archive to obtain details on older
         releases.
       parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1376,3 +1321,5 @@ paths:
                   "active": true
                 }
               ]
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
