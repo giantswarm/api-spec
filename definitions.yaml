@@ -571,14 +571,14 @@ definitions:
 
   V4ModifyUserRequest:
     type: object
-    description: Request model for modifying a specific user as an admin
+    description: Request model for modifying a specific user
     properties:
       email:
         type: string
-        description: Set the new email address you would like the user to have.
+        description: New email address
       expiry:
         type: string
-        description: Set the new expiry date you would like the user to have. (Only editable by admins)
+        description: New expiry date. (Only editable by admins)
 
   V4AddCredentialsRequest:
     type: object

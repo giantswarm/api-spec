@@ -412,7 +412,11 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4UserListItem"
           examples:
             application/json:
-              {"email": "edited-email@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2037-01-15T00:00:00Z"}
+              {
+                "email": "edited-email@example.com",
+                "created": "2017-01-15T12:00:00Z",
+                "expiry": "2037-01-15T00:00:00Z"
+              }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
