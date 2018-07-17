@@ -580,6 +580,19 @@ definitions:
         type: string
         description: New expiry date. (Only editable by admins)
 
+  V4ModifyUserPassword:
+    type: object
+    required:
+      - new_password_base64
+    description: Request model for modifying a user's password
+    properties:
+      current_password_base64:
+        type: string
+        description: Current password encoded in Base64. Not required for admins
+      new_password_base64:
+        type: string
+        description: New password encoded in Base64
+
   V4AddCredentialsRequest:
     type: object
     required:
