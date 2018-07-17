@@ -289,6 +289,45 @@ paths:
           description: Error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    patch:
+      operationId: modifyCurrentUser
+      tags:
+        - users
+      summary: Modify current user
+      description: |
+        This operation allows you to change details of your own account. Currently only the 'email' field can be edited.
+        If you are an admin looking to edit other accounts, take a look at the Modify User endpoint.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - name: body
+          in: body
+          required: true
+          description: User account details
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4ModifyCurrentUserRequest"
+          x-examples:
+            application/json:
+              {
+                "email": "edited-email@example.com"
+              }
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4UserListItem"
+          examples:
+            application/json:
+              {"email": "edited-email@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2019-01-15T00:00:00Z"}
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
 
   /v4/users/{email}/:
     get:
@@ -381,6 +420,45 @@ paths:
           description: Error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    patch:
+      operationId: modifyUser
+      tags:
+        - users
+      summary: Modify user
+      description: |
+        This operation allows you to change details of a given user. This endpoint is only available to admins.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - name: body
+          in: body
+          required: true
+          description: User account details
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4ModifyUserRequest"
+          x-examples:
+            application/json:
+              {
+                "email": "edited-email@example.com",
+                "expiry": "2037-01-15T00:00:00Z"
+              }
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4UserListItem"
+          examples:
+            application/json:
+              {"email": "edited-email@example.com", "created": "2017-01-15T12:00:00Z", "expiry": "2037-01-15T00:00:00Z"}
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
 
     delete:
       operationId: deleteUser
