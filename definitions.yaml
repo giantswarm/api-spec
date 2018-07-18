@@ -580,7 +580,7 @@ definitions:
         type: string
         description: New expiry date. (Only editable by admins)
 
-  V4ModifyUserPassword:
+  V4ModifyUserPasswordRequest:
     type: object
     required:
       - new_password_base64
