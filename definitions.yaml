@@ -569,6 +569,17 @@ definitions:
         type: string
         description: The date and time when this account will expire
 
+  V4ModifyUserRequest:
+    type: object
+    description: Request model for modifying a specific user
+    properties:
+      email:
+        type: string
+        description: New email address
+      expiry:
+        type: string
+        description: New expiry date. (Only editable by admins)
+
   V4AddCredentialsRequest:
     type: object
     required:
