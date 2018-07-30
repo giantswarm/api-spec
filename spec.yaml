@@ -482,7 +482,7 @@ paths:
           required: true
           description: Modify password request
           schema:
-            $ref: "./definitions.yaml#/definitions/V4ModifyUserPassword"
+            $ref: "./definitions.yaml#/definitions/V4ModifyUserPasswordRequest"
           x-examples:
             application/json:
               {
