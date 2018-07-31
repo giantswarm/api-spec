@@ -182,7 +182,7 @@ paths:
           required: true
           description: Create Auth Token Request
           schema:
-            $ref: 'definitions.yaml#/definitions/V4CreateAuthTokenRequest'
+            $ref: "./definitions.yaml#/definitions/V4CreateAuthTokenRequest"
           x-examples:
             application/json:
               {
