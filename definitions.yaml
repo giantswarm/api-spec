@@ -747,4 +747,3 @@ definitions:
       status:
         type: string
         description: The status of the invitation. Either 'pending', 'accepted', or 'expired'
-

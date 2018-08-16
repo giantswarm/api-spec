@@ -242,10 +242,10 @@ paths:
           x-examples:
             application/json:
               {
-                  email: "another-developer@giantswarm.io",
-                  organizations: ["giantswarm"],
-                  send_email: true,
-                  account_expiry_days: 30,
+                account_expiry_days: 30,
+                email: "another-developer@giantswarm.io",
+                organizations: ["giantswarm"],
+                send_email: true,
               }
       responses:
         "200":
