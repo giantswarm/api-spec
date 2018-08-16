@@ -172,7 +172,7 @@ paths:
         - invitations
       summary: Get invitations
       description: |
-        Returns a list of invitations that are either pending or have been accepted.
+        Returns a list of invitations that are either pending, expired, or have been accepted.
         Both admins and users see the full list of invitations.
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
@@ -260,8 +260,7 @@ paths:
                 "email": "another-developer@giantswarm.io",
                 "invitation_accept_link": "http://happa-base-uri/signup/TeeChMCmgWym1uic",
                 "invited_by": "developer@giantswarm.io",
-                "organizations": ["giantswarm"],
-                "status": "pending"
+                "organizations": ["giantswarm"]
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"

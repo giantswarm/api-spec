@@ -670,7 +670,7 @@ definitions:
   # The list of all invitations.
   V4InvitationsResponse:
     type: array
-    description: List of members that belong to this organization
+    description: List of all invitations in the system
     items:
       $ref: '#/definitions/V4Invitation'
 
@@ -719,7 +719,7 @@ definitions:
           type: string
       send_email:
         type: boolean
-        description: Wether or not to send the invitee an email. Defaults to true
+        description: Whether or not to send the invitee an email. Defaults to true
 
   V4CreateInvitationResponse:
     type: object
@@ -729,7 +729,7 @@ definitions:
         description: The number of days after which the account should expire
       created:
         type: string
-        description: Date/Time that the invitation was accepted
+        description: Date/Time that the invitation was created
       email:
         type: string
         description: Email of the invitee
@@ -744,6 +744,3 @@ definitions:
         description: List of organizations that the invitee will be added to
         items:
           type: string
-      status:
-        type: string
-        description: The status of the invitation. Either 'pending', 'accepted', or 'expired'
