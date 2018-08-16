@@ -666,3 +666,85 @@ definitions:
       auth_token:
         type: string
         description: The newly created API token
+
+  # The list of all invitations.
+  V4InvitationsResponse:
+    type: array
+    description: List of members that belong to this organization
+    items:
+      $ref: '#/definitions/V4Invitation'
+
+  V4Invitation:
+    type: object
+    properties:
+      accepted:
+        type: string
+        description: Date/Time that the invitation was accepted
+      account_expiry_days:
+        type: integer
+        description: The number of days after which the account should expire
+      created:
+        type: string
+        description: Date/Time that the invitation was created
+      email:
+        type: string
+        description: Email of the invitee
+      invited_by:
+        type: string
+        description: Email of the person that created the invitation
+      organizations:
+        type: array
+        description: List of organizations that the invitee will be added to
+        items:
+          type: string
+      status:
+        type: string
+        description: The status of the invitation. Either 'pending', 'accepted', or 'expired'
+
+  V4CreateInvitationRequest:
+    type: object
+    required:
+      - email
+    properties:
+      account_expiry_days:
+        type: integer
+        description: The number of days after which the account should expire. Defaults to '0', which means never expire
+      email:
+        type: string
+        description: The email of the person you want to invite
+      organizations:
+        type: array
+        description: List of organizations that the invitee will be added to
+        items:
+          type: string
+      send_email:
+        type: boolean
+        description: Wether or not to send the invitee an email. Defaults to true
+
+  V4CreateInvitationResponse:
+    type: object
+    properties:
+      account_expiry_days:
+        type: integer
+        description: The number of days after which the account should expire
+      created:
+        type: string
+        description: Date/Time that the invitation was accepted
+      email:
+        type: string
+        description: Email of the invitee
+      invitation_accept_link:
+        type: string
+        description: A link that can be used to accept the invitation.
+      invited_by:
+        type: string
+        description: Email of the person that created the invitation
+      organizations:
+        type: array
+        description: List of organizations that the invitee will be added to
+        items:
+          type: string
+      status:
+        type: string
+        description: The status of the invitation. Either 'pending', 'accepted', or 'expired'
+
