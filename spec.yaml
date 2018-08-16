@@ -223,7 +223,7 @@ paths:
         will include the invitation_accept_link, which will never be shown again.
         The link is also not stored and should only be shared with the intended recipient.
 
-        The recipient will be sent a email with a link they can click to accept
+        The recipient will be sent an email with a link they can click to accept
         the invitation by default. You can set send_email to false to disable this.
 
         Only admins may invite users to organizations that they are not a member of.
