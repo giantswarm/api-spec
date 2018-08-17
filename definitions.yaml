@@ -680,9 +680,6 @@ definitions:
       accepted:
         type: string
         description: Date/Time that the invitation was accepted
-      account_expiry_days:
-        type: integer
-        description: The number of days after which the account should expire
       created:
         type: string
         description: Date/Time that the invitation was created
@@ -706,9 +703,6 @@ definitions:
     required:
       - email
     properties:
-      account_expiry_days:
-        type: integer
-        description: The number of days after which the account should expire. Defaults to '0', which means never expire
       email:
         type: string
         description: The email of the person you want to invite
@@ -724,9 +718,6 @@ definitions:
   V4CreateInvitationResponse:
     type: object
     properties:
-      account_expiry_days:
-        type: integer
-        description: The number of days after which the account should expire
       created:
         type: string
         description: Date/Time that the invitation was created

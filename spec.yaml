@@ -189,7 +189,6 @@ paths:
               [
                 {
                   "accepted": "",
-                  "account_expiry_days": 1000,
                   "created": "2018-08-02T12:21:55.467700",
                   "email": "bob@giantswarm.io",
                   "invited_by": "developer@giantswarm.io",
@@ -198,7 +197,6 @@ paths:
                 },
                 {
                   "accepted": "2018-08-03T13:32:23.000000",
-                  "account_expiry_days": 1000,
                   "created": "2018-08-02T12:21:55.467700",
                   "email": "charles@giantswarm.io",
                   "invited_by": "developer@giantswarm.io",
@@ -242,7 +240,6 @@ paths:
           x-examples:
             application/json:
               {
-                account_expiry_days: 30,
                 email: "another-developer@giantswarm.io",
                 organizations: ["giantswarm"],
                 send_email: true,
@@ -255,7 +252,6 @@ paths:
           examples:
             application/json:
               {
-                "account_expiry_days": 1000,
                 "created": "2018-08-02T12:21:55.467700",
                 "email": "another-developer@giantswarm.io",
                 "invitation_accept_link": "http://happa-base-uri/signup/TeeChMCmgWym1uic",
