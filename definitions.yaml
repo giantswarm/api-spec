@@ -683,6 +683,9 @@ definitions:
       created:
         type: string
         description: Date/Time that the invitation was created
+      expiry:
+        type: string
+        description: Date/Time that the invitation will expire
       email:
         type: string
         description: Email of the invitee

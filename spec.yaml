@@ -188,21 +188,32 @@ paths:
             application/json:
               [
                 {
-                  "accepted": "",
+                  "accepted": null,
                   "created": "2018-08-02T12:21:55.467700",
                   "email": "bob@giantswarm.io",
+                  "expiry": "2018-08-05T12:21:55.467700",
                   "invited_by": "developer@giantswarm.io",
                   "organizations": ["giantswarm"],
                   "status": "pending"
                 },
                 {
+                  "accepted": null,
+                  "created": "2018-07-02T12:21:55.467700",
+                  "email": "dan@giantswarm.io",
+                  "expiry": "2018-07-05T12:21:55.467700",
+                  "invited_by": "developer@giantswarm.io",
+                  "organizations": ["giantswarm"],
+                  "status": "expired"
+                }
+                {
                   "accepted": "2018-08-03T13:32:23.000000",
                   "created": "2018-08-02T12:21:55.467700",
                   "email": "charles@giantswarm.io",
+                  "expiry": "2018-08-05T12:21:55.467700",
                   "invited_by": "developer@giantswarm.io",
                   "organizations": ["giantswarm"],
                   "status": "accepted"
-                }
+                },
               ]
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
