@@ -259,7 +259,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "./definitions.yaml#/definitions/V4CreateInvitationResponse"
+            $ref: "./definitions.yaml#/definitions/V4Invitation"
           examples:
             application/json:
               {

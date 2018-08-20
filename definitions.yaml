@@ -683,12 +683,12 @@ definitions:
       created:
         type: string
         description: Date/Time that the invitation was created
-      expiry:
-        type: string
-        description: Date/Time that the invitation will expire
       email:
         type: string
         description: Email of the invitee
+      expiry:
+        type: string
+        description: Date/Time that the invitation will expire
       invited_by:
         type: string
         description: Email of the person that created the invitation
@@ -717,24 +717,3 @@ definitions:
       send_email:
         type: boolean
         description: Whether or not to send the invitee an email. Defaults to true
-
-  V4CreateInvitationResponse:
-    type: object
-    properties:
-      created:
-        type: string
-        description: Date/Time that the invitation was created
-      email:
-        type: string
-        description: Email of the invitee
-      invitation_accept_link:
-        type: string
-        description: A link that can be used to accept the invitation.
-      invited_by:
-        type: string
-        description: Email of the person that created the invitation
-      organizations:
-        type: array
-        description: List of organizations that the invitee will be added to
-        items:
-          type: string
