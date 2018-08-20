@@ -204,7 +204,7 @@ paths:
                   "invited_by": "developer@giantswarm.io",
                   "organizations": ["giantswarm"],
                   "status": "expired"
-                }
+                },
                 {
                   "accepted": "2018-08-03T13:32:23.000000",
                   "created": "2018-08-02T12:21:55.467700",
