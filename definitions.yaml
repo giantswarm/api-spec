@@ -694,6 +694,16 @@ definitions:
                 type: string
                 description: Tenant ID of the Azure subscription
 
+  # response model for a list of credentials
+  V4GetCredentialsResponse:
+    type: array
+    description: |
+      List of credential sets for an organization. As of now, this can contain
+      either zero or one items.
+    items:
+      $ref: '#/definitions/V4GetCredentialResponse'
+ 
+
   # A request for an auth token
   V4CreateAuthTokenRequest:
     type: object

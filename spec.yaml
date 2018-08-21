@@ -1247,6 +1247,46 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/organizations/{organization_id}/credentials/:
+    get:
+      operationId: getCredentials
+      tags:
+        - organizations
+      summary:
+        - Get credentials
+      description: |
+        Returns credentials for an organization, if available.
+        For more information on credentials,
+        see [Set credentials](#operation/addCredentials).
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: './parameters.yaml#/parameters/OrganizationIdPathParameter'
+      responses:
+        "200":
+          description: Credentials
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetCredentialsResponse"
+          examples:
+            application/json:
+              [
+                {
+                  "id": "a1b2c3",
+                  "provider": "azure",
+                  "azure": {
+                    "credential": {
+                      "client_id": "c93bf55e-5bf7-4966-ad2b-e6f6e7721d50",
+                      "subscription_id": "b388b7c7-4479-4040-9ac5-1e13edd6b1cd",
+                      "tenant_id": "3dd2e94a-92ba-434c-99be-32bb65864a99"
+                    }
+                  }
+                }
+              ]
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     post:
       operationId: addCredentials
       tags:
