@@ -1389,7 +1389,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
-  /v4/organizations/{organization_id}/credentials/{credentials_id/}:
+  /v4/organizations/{organization_id}/credentials/{credentials_id}/:
     get:
       operationId: getCredential
       tags:
