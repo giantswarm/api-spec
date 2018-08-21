@@ -98,7 +98,6 @@ definitions:
 
   V4ModifyClusterRequest:
     type: object
-    required: []
     description: Request body for cluster modification
     properties:
       name:
