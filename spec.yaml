@@ -1267,7 +1267,7 @@ paths:
         "200":
           description: Credentials
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GetCredentialsResponse"
+            $ref: './definitions.yaml#/definitions/V4GetCredentialsResponse'
           examples:
             application/json:
               [
@@ -1286,7 +1286,7 @@ paths:
         default:
           description: error
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+            $ref: './definitions.yaml#/definitions/V4GenericResponse'
     post:
       operationId: addCredentials
       tags:
@@ -1340,12 +1340,12 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/OrganizationIdPathParameter'
         - name: body
           in: body
           required: true
           schema:
-            $ref: "./definitions.yaml#/definitions/V4AddCredentialsRequest"
+            $ref: './definitions.yaml#/definitions/V4AddCredentialsRequest'
           x-examples:
             application/json:
               {
@@ -1365,7 +1365,7 @@ paths:
               type: string
               description: URI of the new credentials resource
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+            $ref: './definitions.yaml#/definitions/V4GenericResponse'
           examples:
             application/json:
               {
@@ -1373,11 +1373,11 @@ paths:
                 "message": "A new set of credentials has been created with ID '5d9h4'"
               }
         "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
+          $ref: './responses.yaml#/responses/V4Generic401Response'
         "409":
           description: Conflict
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+            $ref: './definitions.yaml#/definitions/V4GenericResponse'
           examples:
             application/json:
               {
@@ -1387,7 +1387,7 @@ paths:
         default:
           description: error
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+            $ref: './definitions.yaml#/definitions/V4GenericResponse'
 
   /v4/organizations/{organization_id}/credentials/{credentials_id}/:
     get:
