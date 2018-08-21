@@ -20,8 +20,7 @@ parameters:
     in: path
     required: true
     type: string
-    description: |
-      Unique ID of a credential set
+    description: Unique ID of a credential set
 
   UserEmailPathParameter:
     name: email

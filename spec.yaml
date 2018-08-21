@@ -1251,8 +1251,7 @@ paths:
       operationId: getCredentials
       tags:
         - organizations
-      summary:
-        - Get credentials
+      summary: Get credentials
       description: |
         Returns credentials for an organization, if available.
         For more information on credentials,
@@ -1394,8 +1393,7 @@ paths:
       operationId: getCredential
       tags:
         - organizations
-      summary:
-        - Get credential details
+      summary: Get credential details
       description: |
         Returns details for a particular set of credentials, identified by its
         ID. The returned data does not contain any secrets (i. e.
