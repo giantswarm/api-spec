@@ -12,7 +12,7 @@ definitions:
         description: |
           A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
 
-  # Info resposne
+  # Info response
   V4InfoResponse:
     type: object
     properties:
