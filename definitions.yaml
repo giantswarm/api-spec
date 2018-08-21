@@ -612,7 +612,7 @@ definitions:
         properties:
           roles:
             type: object
-            descriptions: IAM roles to assume by certain entities
+            description: IAM roles to assume by certain entities
             required:
               - awsoperator
               - admin
@@ -631,7 +631,7 @@ definitions:
         properties:
           credential:
             type: object
-            descriptions: Service principal credential
+            description: Service principal credential
             required:
               - client_id
               - secret_key
@@ -667,7 +667,7 @@ definitions:
         properties:
           roles:
             type: object
-            descriptions: IAM roles to assume by certain entities
+            description: IAM roles to assume by certain entities
             properties:
               admin:
                 type: string
@@ -681,7 +681,7 @@ definitions:
         properties:
           credential:
             type: object
-            descriptions: Service principal credential
+            description: Service principal credential
             properties:
               client_id:
                 type: string
