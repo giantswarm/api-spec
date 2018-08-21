@@ -702,7 +702,6 @@ definitions:
       either zero or one items.
     items:
       $ref: '#/definitions/V4GetCredentialResponse'
- 
 
   # A request for an auth token
   V4CreateAuthTokenRequest:
