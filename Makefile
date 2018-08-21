@@ -25,20 +25,21 @@ lint: spec-tmp.yaml
 
 # Validate the swagger/OAI spec
 validate: spec-tmp.yaml lint
+	
+	# Useful to ensure gsclientgen client generation works
+	@echo "Validating with go-swagger"
+	docker run --rm -it \
+	  -v ${PWD}:/workdir \
+		-w /workdir \
+		quay.io/goswagger/swagger:0.16.0 \
+			validate spec-tmp.yaml
+
 	@echo "Generating swagger representation"
 	docker run --rm -it \
 		-v $(shell pwd):/code/yaml \
 		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
 		--input-spec /code/yaml/spec-tmp.yaml \
 		--lang swagger --output /tmp/
-
-	@echo "Generating static HTML documentation"
-	docker run --rm -it \
-		-v $(shell pwd):/code/yaml \
-		-v $(shell pwd)/html:/code/html \
-		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
-		--input-spec /code/yaml/spec-tmp.yaml \
-		--lang html --output /code/html
 
 	@echo "Generating JavaScript client code for test purposes"
 	docker run --rm -it \
