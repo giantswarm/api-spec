@@ -682,6 +682,7 @@ paths:
                 "release_version": "2.5.16",
                 "kubernetes_version": "",
                 "owner": "acme",
+                "credentials_id": "a1b2c",
                 "workers": [
                   {
                     "memory": {"size_gb": 2.0},

@@ -136,6 +136,9 @@ definitions:
       name:
         type: string
         description: Cluster name
+      credentials_id:
+        type: string
+        description: ID of the credentials used to operate the cluster (only on AWS and Azure)
       release_version:
         type: string
         description: |
