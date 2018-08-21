@@ -1376,6 +1376,7 @@ paths:
           examples:
             application/json:
               {
+                "id": "a1b2c3",
                 "provider": "azure",
                 "azure": {
                   "credential": {

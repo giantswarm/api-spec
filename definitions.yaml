@@ -656,6 +656,9 @@ definitions:
     type: object
     description: Response model for getting details on a set of credentials
     properties:
+      id:
+        type: string
+        description: Unique ID of the credentials
       provider:
         type: string
         description: Either 'aws' or 'azure'
