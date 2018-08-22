@@ -135,7 +135,7 @@ definitions:
       name:
         type: string
         description: Cluster name
-      credentials_id:
+      credential_id:
         type: string
         description: |
           ID of the credentials used to operate the cluster (only on AWS and

@@ -16,7 +16,7 @@ parameters:
     description: Cluster ID
 
   CredentialsIdPathParameter:
-    name: credentials_id
+    name: credential_id
     in: path
     required: true
     type: string

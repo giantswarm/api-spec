@@ -682,7 +682,7 @@ paths:
                 "release_version": "2.5.16",
                 "kubernetes_version": "",
                 "owner": "acme",
-                "credentials_id": "a1b2c",
+                "credential_id": "a1b2c",
                 "workers": [
                   {
                     "memory": {"size_gb": 2.0},
@@ -1425,7 +1425,7 @@ paths:
           schema:
             $ref: './definitions.yaml#/definitions/V4GenericResponse'
 
-  /v4/organizations/{organization_id}/credentials/{credentials_id}/:
+  /v4/organizations/{organization_id}/credentials/{credential_id}/:
     get:
       operationId: getCredential
       tags:
