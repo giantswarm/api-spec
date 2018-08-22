@@ -674,7 +674,7 @@ definitions:
                 description: ARN of the IAM role Giant Swarm support staff will use
               awsoperator:
                 type: string
-                description: ARN of the IAM role assumed by the software operating clusters
+                description: ARN of the IAM role assumed by the software operating the clusters
       azure:
         type: object
         description: Credentials specific to an Azure service principal
