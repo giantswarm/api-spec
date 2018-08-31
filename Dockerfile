@@ -1,27 +1,18 @@
-FROM node:10 as builder
+FROM node:8-slim as builder
 
-WORKDIR /
-RUN git clone --depth 1 https://github.com/Rebilly/ReDoc.git
+RUN npm -v
+RUN npm install redoc
 
-WORKDIR /ReDoc/cli
-RUN npm install -g
-RUN npm run
-RUN find / -type f -name "redoc-cli"
-RUN which redoc-cli
-
-ADD *.yaml /ReDoc/cli/
-RUN redoc-cli bundle spec.yaml
+ADD *.yaml /
+RUN npx redoc-cli bundle spec.yaml
 RUN ls -la
 
 FROM nginx:stable-alpine
 RUN rm -r /etc/nginx/conf.d
-#ADD docserver/index.html /www/
-#ADD *.yaml /www/yaml/
-
-#RUN mkdir /www/js
-#ADD https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js /www/js/redoc.min.js
-#RUN chmod 0644 /www/js/redoc.min.js
-
 ADD docserver/nginx.conf /etc/nginx/
+
+COPY --from=builder /redoc-static.html /www/index.html
+RUN chmod 0644 /www/*
+
 
 EXPOSE 8000
