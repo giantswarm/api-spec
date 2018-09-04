@@ -65,8 +65,8 @@ This example here shows a cluster definition in JSON format, as it may be submit
         {
             "aws": {
                 "instance_type": "m3.large"
-                "docker_volume_size": {"size_gb": 100},
             },
+            "docker_volume_size": {"size_gb": 100},
             "labels": {
                 "nickname": "first node"
             }
@@ -74,8 +74,8 @@ This example here shows a cluster definition in JSON format, as it may be submit
         {
             "aws": {
                 "instance_type": "m3.large"
-                "docker_volume_size": {"size_gb": 100},
             },
+            "docker_volume_size": {"size_gb": 100},
             "labels": {
                 "nickname": "second node"
             }
