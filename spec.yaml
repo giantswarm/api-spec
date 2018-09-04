@@ -680,7 +680,6 @@ paths:
                 "api_endpoint": "https://api.wqtlq.example.com",
                 "name": "Just a Standard Cluster",
                 "release_version": "2.5.16",
-                "kubernetes_version": "",
                 "owner": "acme",
                 "workers": [
                   {
