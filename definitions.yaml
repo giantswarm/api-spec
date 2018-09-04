@@ -225,7 +225,7 @@ definitions:
             type: number
             description: |
               Size of the docker volume attached to the node in GB. This volume
-              is being used by docker to fetch images. Must be the same for 
+              is being used by docker to fetch images. Must be the same for
               all worker nodes of a cluster.
       cpu:
         type: object
