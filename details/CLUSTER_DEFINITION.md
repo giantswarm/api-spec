@@ -26,7 +26,9 @@ __Note:__ upon cluster creation, some of the attributes shown below MUST NOT be 
         {
             "memory": {"size_gb": 2},
             "storage": {"size_gb": 20},
-            "docker_volume_size": {"size_gb": 100},
+            "volumes": {
+                "docker": {"size_gb": 100}
+            },
             "cpu": {"cores": 4},
             "labels": {
                 "beta.kubernetes.io/arch": "amd64",
@@ -39,7 +41,9 @@ __Note:__ upon cluster creation, some of the attributes shown below MUST NOT be 
         {
             "memory": {"size_gb": 8},
             "storage": {"size_gb": 20},
-            "docker_volume_size": {"size_gb": 100},
+            "volumes": {
+                "docker": {"size_gb": 100}
+            },
             "cpu": {"cores": 2},
             "labels": {
                 "beta.kubernetes.io/arch": "amd64",
@@ -66,7 +70,9 @@ This example here shows a cluster definition in JSON format, as it may be submit
             "aws": {
                 "instance_type": "m3.large"
             },
-            "docker_volume_size": {"size_gb": 100},
+            "volumes": {
+                "docker": {"size_gb": 100}
+            },
             "labels": {
                 "nickname": "first node"
             }
@@ -75,7 +81,9 @@ This example here shows a cluster definition in JSON format, as it may be submit
             "aws": {
                 "instance_type": "m3.large"
             },
-            "docker_volume_size": {"size_gb": 100},
+            "volumes": {
+                "docker": {"size_gb": 100}
+            },
             "labels": {
                 "nickname": "second node"
             }
@@ -101,7 +109,9 @@ After creation using the definition above, the code below shows the completed cl
             },
             "memory": {"size_gb": 7.5},
             "storage": {"size_gb": 32},
-            "docker_volume_size": {"size_gb": 100},
+            "volumes": {
+                "docker": {"size_gb": 100}
+            },
             "cpu": {"cores": 2},
             "labels": {
                 "beta.kubernetes.io/arch": "amd64",
@@ -117,7 +127,9 @@ After creation using the definition above, the code below shows the completed cl
             },
             "memory": {"size_gb": 7.5},
             "storage": {"size_gb": 32},
-            "docker_volume_size": {"size_gb": 100},
+            "volumes": {
+                "docker": {"size_gb": 100}
+            },
             "cpu": {"cores": 2},
             "labels": {
                 "beta.kubernetes.io/arch": "amd64",
@@ -143,6 +155,7 @@ After creation using the definition above, the code below shows the completed cl
 - `workers[n].aws.instance_type`: Name of the EC2 instance type to use for the worker node. For clusters running on AWS, this attribute is required on cluster creation and must have the same value for all worker nodes of the cluster.
 - `workers[n].memory`: Memory definition object. This object can currently contain only one attribute `size_gb`, which indicates the RAM size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
 - `workers[n].storage`: Storage definition object. Storage here refers to the local disk storage of a worker node. The definition object can currently contain only one attribute `size_gb`, which indicates the local storage size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
-- `workers[n].docker_volume_size`: Docker volume size definition object. This refers to the size of the disk attached to the node where docker images are stored. This volume is usually attached to `/var/lib/docker` and the docker daemon uses this location for storing images. The definition object can currently contain only one attribute `size_gb`, which indicates the docker volume size in Gigabytes as an integer. 
+- `workers[n].volumes`: Volumes definition object. The volumes are ephemeral storage that is attached to each worker node. 
+- `workers[n].volumes[n].docker`: Docker volume size definition object. This refers to the size of the disk attached to the node where docker images are stored. This volume is usually attached to `/var/lib/docker` and the docker daemon uses this location for storing images. The definition object can currently contain only one attribute `size_gb`, which indicates the docker volume size in Gigabytes as an integer. 
 - `workers[n].cpu`: CPU definition object. This object may (only) contain the attribute `cores`, indicating the number of CPU cores for the given worker node. For clusters running on AWS, this attribute is ignored on cluster creation.
 - `workers[n].labels`: Object representing the worker labels. For clusters running on AWS, this attribute is ignored on cluster creation.

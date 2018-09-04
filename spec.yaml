@@ -106,10 +106,14 @@ paths:
               ],
               "default": "m3.large"
             },
-            "docker_volume_size": {
-              "min": 10,
-              "max": 10000,
-              "default": 100
+            "volumes": {
+              "docker": {
+                "size_gb": {
+                  "min": 10,
+                  "max": 10000,
+                  "default": 100
+                }
+              }
             }
           }
         }
@@ -129,10 +133,14 @@ paths:
               "max": 8,
               "default": 3
             },
-            "docker_volume_size": {
-              "min": 10,
-              "max": 10000,
-              "default": 100
+            "volumes": {
+              "docker": {
+                "size_gb": {
+                  "min": 10,
+                  "max": 10000,
+                  "default": 100
+                }
+              }
             }
           }
         }
@@ -166,10 +174,14 @@ paths:
                     ],
                     "default": "m3.large"
                   },
-                  "docker_volume_size": {
-                    "min": 10,
-                    "max": 10000,
-                    "default": 100
+                  "volumes": {
+                    "docker": {
+                      "size_gb": {
+                        "min": 10,
+                        "max": 10000,
+                        "default": 100
+                      }
+                    }
                   }
                 }
               }
@@ -838,10 +850,9 @@ paths:
         - When removing nodes (scaling down), it is not possible to determine
         which nodes will be removed.
         - On AWS based clusters, all worker nodes must use the same EC2 instance
-        type (`instance_type` node attribute) and docker volume size
-        (`docker_volume_size` node attribute). By not setting an `instance_type`
-        when submitting a PATCH request, you ensure that the right instance type
-        is used automatically.
+        type (`instance_type` node attribute) and docker volume (`volumes` node
+        attribute). By not setting an `instance_type` when submitting a PATCH
+        request, you ensure that the right instance type is used automatically.
 
       responses:
         "200":

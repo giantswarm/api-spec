@@ -55,19 +55,27 @@ definitions:
               default:
                 description: The instance type used in new cluster, if not specified
                 type: string
-          docker_volume_size:
-            description: Size of the docker volume attached to the node. This volume is used to store docker images.
+          volumes:
+            description: Information related to volumes on worker nodes
             type: object
             properties:
-              min:
-                description: Minimum size of the docker volume
-                type: number
-              max:
-                description: Maximum size of the docker volume
-                type: number
-              default:
-                description: Default size of the docker volume, if not specified
-                type: number
+              docker:
+                description: Information about the docker volume attached to the worker node. This volume is used to store docker images.
+                type: object
+                properties:
+                  size_gb:
+                    description: Size of the docker volume.
+                    type: object
+                    properties:
+                      min:
+                        description: Minimum size of the docker volume
+                        type: number
+                      max:
+                        description: Maximum size of the docker volume
+                        type: number
+                      default:
+                        description: Default size of the docker volume, if not specified
+                        type: number
           vm_size:
             description: Azure Virtual Machine size to be used for worker nodes. Only available for Azure clusters.
             type: object
@@ -218,15 +226,21 @@ definitions:
           size_gb:
             type: number
             description: Node storage size in GB. Can be an integer or float.
-      docker_volume_size:
+      volumes:
+        description: Configuration for volumes that are attached to worker nodes.
         type: object
         properties:
-          size_gb:
-            type: number
+          docker:
             description: |
-              Size of the docker volume attached to the node in GB. This volume
-              is being used by docker to fetch images. Must be the same for
-              all worker nodes of a cluster.
+              Volume for the docker daemon. Usually mounted at `/var/lib/docker`
+              The docker images are stored in this volume.
+            type: object
+            properties:
+              size_gb:
+                type: number
+                description: |
+                  Size of the docker volume attached to the node in GB. Must be
+                  the same for all worker nodes of a cluster.
       cpu:
         type: object
         properties:
