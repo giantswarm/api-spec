@@ -225,7 +225,11 @@ definitions:
         properties:
           size_gb:
             type: number
-            description: Node storage size in GB. Can be an integer or float.
+            description: |
+              Node storage size in GB. Can be an integer or float (deprecated).
+              This has been superseded by the volumes configuration. While this
+              option is deprecated it will be used as the docker volume size
+              but only if the docker volume size isn't defined itself.
       volumes:
         description: Configuration for volumes that are attached to worker nodes.
         type: object
