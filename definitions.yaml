@@ -80,7 +80,11 @@ definitions:
                         description: Default size of the docker volume, if not specified
                         type: number
               kubelet:
-                description: Information about the kubelet volume attached to the worker node. This volume is used to store files for the kubelet (volume mounts etc)
+                description: |
+                  Information about the kubelet volume attached to the worker node. This
+                  volume is used to store files for the kubelet (volume mounts etc.).
+                  If you plan to use `emptyDir` volumes it makes sense to increase the
+                  size of this volume.
                 type: object
                 properties:
                   size_gb:
@@ -260,9 +264,10 @@ definitions:
                   the same for all worker nodes of a cluster.
           kubelet:
             description: |
-              Volume for the kubelet. Usually mounted at `/var/lib/kubelet`
+              Volume for the kubelet. Usually mounted at `/var/lib/kubelet`.
               This volume is used to store files for the kubelet (volume mounts
-              etc.)
+              etc.). If you plan to use `emptyDir` volumes it makes sense to 
+              increase the size of this volume.
             type: object
             properties:
               size_gb:
