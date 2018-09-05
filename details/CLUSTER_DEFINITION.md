@@ -20,8 +20,8 @@ __Note:__ upon cluster creation, some of the attributes shown below MUST NOT be 
     "create_date": "2017-03-03T10:50:45.949270905Z",
     "api_endpoint": "https://api.wqtlq.example.com",
     "name": "Just a Standard Cluster",
-    "kubernetes_version": "v1.5.2_coreos.0",
     "owner": "acme",
+    "release_version": "1.0.0",
     "workers": [
         {
             "memory": {"size_gb": 2},
@@ -98,8 +98,8 @@ After creation using the definition above, the code below shows the completed cl
     "create_date": "2017-03-03T10:50:45.949270905Z",
     "api_endpoint": "https://api.wqtlq.example.com",
     "name": "A Cluster on AWS",
-    "kubernetes_version": "v1.5.2_coreos.0",
     "owner": "acme",
+    "release_version": "1.0.0",
     "workers": [
         {
             "aws": {
@@ -144,8 +144,8 @@ After creation using the definition above, the code below shows the completed cl
 - `id`: Identifier of the cluster, unique with the system.
 - `create_date`: Date and time when the cluster has been created.
 - `api_endpoint`: URI to access the Kubernetes API of the cluster.
+- `release_version`: The [release](https://docs.giantswarm.io/api/#tag/releases) version of the cluster
 - `name`: User friendly name of the cluster
-- `kubernetes_version`: Kubernetes version of the cluster. The string reported here may also contain additional details and thus may not be machine-interpretable.
 - `owner`: Name of the organization owning the cluster.
 - `workers`: Array of worker definition objects. Each array item represents one worker node. In order to create a cluster with three worker nodes, this array MUST have three items, even if all worker share the same configuration.
 - `workers[n].aws.instance_type`: Name of the EC2 instance type to use for the worker node. For clusters running on AWS, this attribute is required on cluster creation and must have the same value for all worker nodes of the cluster.

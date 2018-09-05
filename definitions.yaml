@@ -107,11 +107,6 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
-      kubernetes_version:
-        type: string
-        description: |
-          Kubernetes version number (deprecated). Doesn't have any effect.
-          This attribute is going to be removed in future API versions.
       workers:
         type: array
         items:
@@ -162,9 +157,6 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           currently running this cluster.
-      kubernetes_version:
-        type: string
-        description: Deprecated. Will be removed in a future API version.
       workers:
         type: array
         items:
