@@ -60,7 +60,10 @@ definitions:
             type: object
             properties:
               docker:
-                description: Information about the docker volume attached to the worker node. This volume is used to store docker images.
+                description: |
+                  Information about the docker volume attached to the worker node. 
+                  This volume is used to store docker images and the overlay filesystem
+                  of the containers.
                 type: object
                 properties:
                   size_gb:
@@ -228,8 +231,9 @@ definitions:
         properties:
           docker:
             description: |
-              Volume for the docker daemon. Usually mounted at `/var/lib/docker`
-              The docker images are stored in this volume.
+              Volume for the docker daemon. Usually mounted at `/var/lib/docker`.
+              The docker images and overlay filesystems of containers are stored
+              in this volume.
             type: object
             properties:
               size_gb:
