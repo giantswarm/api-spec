@@ -113,6 +113,13 @@ paths:
                   "max": 10000,
                   "default": 100
                 }
+              },
+              "kubelet": {
+                "size_gb": {
+                  "min": 5,
+                  "max": 10000,
+                  "default": 10
+                }
               }
             }
           }
@@ -139,6 +146,13 @@ paths:
                   "min": 10,
                   "max": 10000,
                   "default": 100
+                }
+              },
+              "kubelet": {
+                "size_gb": {
+                  "min": 5,
+                  "max": 10000,
+                  "default": 10
                 }
               }
             }
@@ -180,6 +194,13 @@ paths:
                         "min": 10,
                         "max": 10000,
                         "default": 100
+                      }
+                    },
+                    "kubelet": {
+                      "size_gb": {
+                        "min": 5,
+                        "max": 10000,
+                        "default": 10
                       }
                     }
                   }
@@ -638,7 +659,7 @@ paths:
         ```"workers": [{}, {}, {}]```
 
         For clusters on AWS, note that all worker nodes must use the same instance type
-        and docker volume size.
+        and docker/kubelet volume size.
 
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
@@ -847,8 +868,8 @@ paths:
         - When removing nodes (scaling down), it is not possible to determine
         which nodes will be removed.
         - On AWS based clusters, all worker nodes must use the same EC2 instance
-        type (`instance_type` node attribute) and docker volume (`volumes` node
-        attribute). By not setting an `instance_type` when submitting a PATCH
+        type (`instance_type` node attribute) and docker/kubelet volume (`volumes`
+        node attribute). By not setting an `instance_type` when submitting a PATCH
         request, you ensure that the right instance type is used automatically.
 
       responses:

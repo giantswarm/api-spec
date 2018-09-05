@@ -26,7 +26,8 @@ __Note:__ upon cluster creation, some of the attributes shown below MUST NOT be 
         {
             "memory": {"size_gb": 2},
             "volumes": {
-                "docker": {"size_gb": 100}
+                "docker": {"size_gb": 100},
+                "kubelet": {"size_gb": 10}
             },
             "cpu": {"cores": 4},
             "labels": {
@@ -69,7 +70,8 @@ This example here shows a cluster definition in JSON format, as it may be submit
                 "instance_type": "m3.large"
             },
             "volumes": {
-                "docker": {"size_gb": 100}
+                "docker": {"size_gb": 100},
+                "kubelet": {"size_gb": 10}
             },
             "labels": {
                 "nickname": "first node"
@@ -107,7 +109,8 @@ After creation using the definition above, the code below shows the completed cl
             },
             "memory": {"size_gb": 7.5},
             "volumes": {
-                "docker": {"size_gb": 100}
+                "docker": {"size_gb": 100},
+                "kubelet": {"size_gb": 10}
             },
             "cpu": {"cores": 2},
             "labels": {
@@ -152,5 +155,6 @@ After creation using the definition above, the code below shows the completed cl
 - `workers[n].memory`: Memory definition object. This object can currently contain only one attribute `size_gb`, which indicates the RAM size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
 - `workers[n].volumes`: Volumes definition object. The volumes are ephemeral storage that is attached to each worker node. 
 - `workers[n].volumes.docker`: Docker volume size definition object. This refers to the size of the disk attached to the node where docker images and overlay filesystems of the containers are stored. This volume is usually attached to `/var/lib/docker` and the docker daemon uses this location for storing images. The definition object can currently contain only one attribute `size_gb`, which indicates the docker volume size in Gigabytes as an integer. 
+- `workers[n].volumes.kubelet`: kubelet volume size definition object. This refers to the size of the disk attached to the node where the kubelet stores its files and creates volume mounts. This volume is usually attached to `/var/lib/kubelet` and the kubelet uses this location for eg emptyDir volumes. The definition object can currently contain only one attribute `size_gb`, which indicates the kubelet volume size in Gigabytes as an integer. 
 - `workers[n].cpu`: CPU definition object. This object may (only) contain the attribute `cores`, indicating the number of CPU cores for the given worker node. For clusters running on AWS, this attribute is ignored on cluster creation.
 - `workers[n].labels`: Object representing the worker labels. For clusters running on AWS, this attribute is ignored on cluster creation.

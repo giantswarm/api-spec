@@ -79,6 +79,23 @@ definitions:
                       default:
                         description: Default size of the docker volume, if not specified
                         type: number
+              kubelet:
+                description: Information about the kubelet volume attached to the worker node. This volume is used to store files for the kubelet (volume mounts etc)
+                type: object
+                properties:
+                  size_gb:
+                    description: Size of the kubelet volume.
+                    type: object
+                    properties:
+                      min:
+                        description: Minimum size of the kubelet volume
+                        type: number
+                      max:
+                        description: Maximum size of the kubelet volume
+                        type: number
+                      default:
+                        description: Default size of the kubelet volume, if not specified
+                        type: number
           vm_size:
             description: Azure Virtual Machine size to be used for worker nodes. Only available for Azure clusters.
             type: object
@@ -240,6 +257,18 @@ definitions:
                 type: number
                 description: |
                   Size of the docker volume attached to the node in GB. Must be
+                  the same for all worker nodes of a cluster.
+          kubelet:
+            description: |
+              Volume for the kubelet. Usually mounted at `/var/lib/kubelet`
+              This volume is used to store files for the kubelet (volume mounts
+              etc.)
+            type: object
+            properties:
+              size_gb:
+                type: number
+                description: |
+                  Size of the kubelet volume attached to the node in GB. Must be
                   the same for all worker nodes of a cluster.
       cpu:
         type: object
