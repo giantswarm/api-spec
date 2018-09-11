@@ -1,12 +1,18 @@
-FROM nginx:1.14-alpine
+FROM node:8-slim as builder
+
+RUN npm -v
+RUN npm install redoc
+
+ADD *.yaml /
+RUN npx redoc-cli bundle spec.yaml
+RUN ls -la
+
+FROM nginx:stable-alpine
 RUN rm -r /etc/nginx/conf.d
-ADD docserver/index.html /www/
-ADD *.yaml /www/yaml/
-
-RUN mkdir /www/js
-ADD https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js /www/js/redoc.min.js
-RUN chmod 0644 /www/js/redoc.min.js
-
 ADD docserver/nginx.conf /etc/nginx/
+
+COPY --from=builder /redoc-static.html /www/index.html
+RUN chmod 0644 /www/*
+
 
 EXPOSE 8000
