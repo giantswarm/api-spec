@@ -61,7 +61,7 @@ definitions:
             properties:
               docker:
                 description: |
-                  Information about the docker volume attached to the worker node. 
+                  Information about the docker volume attached to the worker node.
                   This volume is used to store docker images and the overlay filesystem
                   of the containers.
                 type: object
@@ -266,7 +266,7 @@ definitions:
             description: |
               Volume for the kubelet. Usually mounted at `/var/lib/kubelet`.
               This volume is used to store files for the kubelet (volume mounts
-              etc.). If you plan to use `emptyDir` volumes it makes sense to 
+              etc.). If you plan to use `emptyDir` volumes it makes sense to
               increase the size of this volume.
             type: object
             properties:
