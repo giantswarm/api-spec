@@ -61,7 +61,7 @@ definitions:
             properties:
               docker:
                 description: |
-                  Information about the docker volume attached to the worker node. 
+                  Information about the docker volume attached to the worker node.
                   This volume is used to store docker images and the overlay filesystem
                   of the containers.
                 type: object
