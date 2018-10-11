@@ -97,7 +97,7 @@ paths:
           },
           "workers": {
             "count_per_cluster": {
-              "max": 20,
+              "max": -1,
               "default": 3
             },
             "instance_type": {
