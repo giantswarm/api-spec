@@ -658,3 +658,59 @@ definitions:
       auth_token:
         type: string
         description: The newly created API token
+
+  V4AppCatalogResponse:
+    type: array
+    items:
+      $ref: '#/definitions/V4AppCatalogItem'
+
+  V4AppCatalogItem:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Unique identifier for this app
+      title:
+        type: string
+        description: User friendly name of this app
+      description:
+        type: string
+        description: A description of what this app this
+      logo_url:
+        type: string
+        description: A url pointing to an image that can be used as an icon or logo for this app
+      screenshots:
+        type: array
+        items:
+          type: object
+          properties:
+            url:
+              type: string
+              description: A url pointing to a screenshot of the app
+            caption:
+              type: string
+              description: A caption describing the screenshot
+      versions:
+        type: array
+        items:
+          type: object
+          properties:
+            version:
+              type: string
+              description: Version number
+            changelog:
+              description: |
+                Structured list of changes in this release, in comparison to the
+                previous version, with respect to the contained components.
+              type: array
+              items:
+                type: object
+                properties:
+                  component:
+                    type: string
+                    description: |
+                      If the changed item was a component, this attribute is the
+                      name of the component.
+                  description:
+                    type: string
+                    description: Human-friendly description of the change

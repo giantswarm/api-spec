@@ -165,6 +165,35 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
+  /v4/info/app-catalog/:
+    get:
+      operationId: getAppCatalog
+      tags:
+        - info
+      summary: Get the app catalog
+      description: |
+        Returns a list of applications that can be installed on tenant clusters.
+
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+      responses:
+        "200":
+          description: App Catalog
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4AppCatalogResponse"
+          examples:
+            application/json:
+              []
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/auth-tokens/:
     post:
       operationId: createAuthToken
