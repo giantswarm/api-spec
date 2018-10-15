@@ -203,8 +203,8 @@ paths:
                       "version": "",
                       "changelog": [
                         {
-                        "component": "",
-                        "description": ""
+                          "component": "",
+                          "description": ""
                         }
                       ],
                     }
