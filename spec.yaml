@@ -186,7 +186,31 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4AppCatalogResponse"
           examples:
             application/json:
-              []
+              [
+                {
+                  "name": "prometheus",
+                  "title": "Prometheus Monitoring Stack",
+                  "description": "",
+                  "logo_url": "",
+                  "screenshots": [
+                    {
+                      "url": "",
+                      "caption": ""
+                    },
+                  ],
+                  "versions": [
+                    {
+                      "version": "",
+                      "changelog": [
+                        {
+                        "component": "",
+                        "description": ""
+                        }
+                      ],
+                    }
+                  ]
+                }
+              ]
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
