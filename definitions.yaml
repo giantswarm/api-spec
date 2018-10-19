@@ -12,7 +12,7 @@ definitions:
         description: |
           A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
 
-  # Info resposne
+  # Info response
   V4InfoResponse:
     type: object
     properties:
@@ -93,7 +93,6 @@ definitions:
 
   V4ModifyClusterRequest:
     type: object
-    required: []
     description: Request body for cluster modification
     properties:
       name:
@@ -131,6 +130,11 @@ definitions:
       name:
         type: string
         description: Cluster name
+      credential_id:
+        type: string
+        description: |
+          ID of the credentials used to operate the cluster (only on AWS and
+          Azure). See [Set credentials](#operation/addCredentials) for details.
       release_version:
         type: string
         description: |
@@ -601,7 +605,7 @@ definitions:
         properties:
           roles:
             type: object
-            descriptions: IAM roles to assume by certain entities
+            description: IAM roles to assume by certain entities
             required:
               - awsoperator
               - admin
@@ -620,7 +624,7 @@ definitions:
         properties:
           credential:
             type: object
-            descriptions: Service principal credential
+            description: Service principal credential
             required:
               - client_id
               - secret_key
@@ -639,6 +643,57 @@ definitions:
               tenant_id:
                 type: string
                 description: Tenant ID of the Azure subscription
+
+  V4GetCredentialResponse:
+    type: object
+    description: Response model for getting details on a set of credentials
+    properties:
+      id:
+        type: string
+        description: Unique ID of the credentials
+      provider:
+        type: string
+        description: Either 'aws' or 'azure'
+      aws:
+        type: object
+        description: Credentials specific to an AWS account
+        properties:
+          roles:
+            type: object
+            description: IAM roles to assume by certain entities
+            properties:
+              admin:
+                type: string
+                description: ARN of the IAM role Giant Swarm support staff will use
+              awsoperator:
+                type: string
+                description: ARN of the IAM role assumed by the software operating the clusters
+      azure:
+        type: object
+        description: Credentials specific to an Azure service principal
+        properties:
+          credential:
+            type: object
+            description: Service principal credential
+            properties:
+              client_id:
+                type: string
+                description: Client ID of the service principal
+              subscription_id:
+                type: string
+                description: Azure subscription ID
+              tenant_id:
+                type: string
+                description: Tenant ID of the Azure subscription
+
+  # response model for a list of credentials
+  V4GetCredentialsResponse:
+    type: array
+    description: |
+      List of credential sets for an organization. As of now, this can contain
+      either zero or one items.
+    items:
+      $ref: '#/definitions/V4GetCredentialResponse'
 
   # A request for an auth token
   V4CreateAuthTokenRequest:

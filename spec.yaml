@@ -681,6 +681,7 @@ paths:
                 "name": "Just a Standard Cluster",
                 "release_version": "2.5.16",
                 "owner": "acme",
+                "credential_id": "a1b2c",
                 "workers": [
                   {
                     "memory": {"size_gb": 2.0},
@@ -1245,6 +1246,82 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/organizations/{organization_id}/credentials/:
+    get:
+      operationId: getCredentials
+      tags:
+        - organizations
+      summary: Get credentials
+      description: |
+        Returns credentials for an organization, if available.
+        For more information on credentials,
+        see [Set credentials](#operation/addCredentials).
+
+        Here is another paragraph.
+
+        ### Example response body for AWS
+
+        ```json
+        [
+          {
+            "id": "a1b2c3",
+            "provider": "aws",
+            "aws": {
+              "roles": {
+                "admin": "arn:aws:iam::123456789012:role/GiantSwarmAdmin",
+                "awsoperator": "arn:aws:iam::123456789012:role/GiantSwarmAWSOperator"
+              }
+            }
+          }
+        ]
+        ```
+
+        ### Example response body for Azure
+
+        ```json
+        [
+          {
+            "id": "a1b2c3",
+            "provider": "azure",
+            "azure": {
+              "credential": {
+                "client_id": "c93bf55e-5bf7-4966-ad2b-e6f6e7721d50",
+                "subscription_id": "b388b7c7-4479-4040-9ac5-1e13edd6b1cd",
+                "tenant_id": "3dd2e94a-92ba-434c-99be-32bb65864a99"
+              }
+            }
+          }
+        ]
+        ```
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: './parameters.yaml#/parameters/OrganizationIdPathParameter'
+      responses:
+        "200":
+          description: Credentials
+          schema:
+            $ref: './definitions.yaml#/definitions/V4GetCredentialsResponse'
+          examples:
+            application/json:
+              [
+                {
+                  "id": "a1b2c3",
+                  "provider": "azure",
+                  "azure": {
+                    "credential": {
+                      "client_id": "c93bf55e-5bf7-4966-ad2b-e6f6e7721d50",
+                      "subscription_id": "b388b7c7-4479-4040-9ac5-1e13edd6b1cd",
+                      "tenant_id": "3dd2e94a-92ba-434c-99be-32bb65864a99"
+                    }
+                  }
+                }
+              ]
+        default:
+          description: error
+          schema:
+            $ref: './definitions.yaml#/definitions/V4GenericResponse'
     post:
       operationId: addCredentials
       tags:
@@ -1298,12 +1375,12 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/OrganizationIdPathParameter'
         - name: body
           in: body
           required: true
           schema:
-            $ref: "./definitions.yaml#/definitions/V4AddCredentialsRequest"
+            $ref: './definitions.yaml#/definitions/V4AddCredentialsRequest'
           x-examples:
             application/json:
               {
@@ -1323,7 +1400,7 @@ paths:
               type: string
               description: URI of the new credentials resource
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+            $ref: './definitions.yaml#/definitions/V4GenericResponse'
           examples:
             application/json:
               {
@@ -1331,16 +1408,89 @@ paths:
                 "message": "A new set of credentials has been created with ID '5d9h4'"
               }
         "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
+          $ref: './responses.yaml#/responses/V4Generic401Response'
         "409":
           description: Conflict
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+            $ref: './definitions.yaml#/definitions/V4GenericResponse'
           examples:
             application/json:
               {
                 "code": "RESOURCE_ALREADY_EXISTS",
                 "message": "The organisation already has a set of credentials"
+              }
+        default:
+          description: error
+          schema:
+            $ref: './definitions.yaml#/definitions/V4GenericResponse'
+
+  /v4/organizations/{organization_id}/credentials/{credential_id}/:
+    get:
+      operationId: getCredential
+      tags:
+        - organizations
+      summary: Get credential details
+      description: |
+        Returns details for a particular set of credentials, identified by its
+        ID. The returned data does not contain any secrets (i. e.
+        passphrase, secret key). For more information on credentials, see
+        [Set credentials](#operation/addCredentials).
+
+        ### Example response body for AWS
+
+        ```json
+        {
+          "id": "a1b2c3",
+          "provider": "aws",
+          "aws": {
+            "roles": {
+              "admin": "arn:aws:iam::123456789012:role/GiantSwarmAdmin",
+              "awsoperator": "arn:aws:iam::123456789012:role/GiantSwarmAWSOperator"
+            }
+          }
+        }
+        ```
+
+        ### Example response body for Azure
+
+        ```json
+        {
+          "id": "a1b2c3",
+          "provider": "azure",
+          "azure": {
+            "credential": {
+              "client_id": "c93bf55e-5bf7-4966-ad2b-e6f6e7721d50",
+              "subscription_id": "b388b7c7-4479-4040-9ac5-1e13edd6b1cd",
+              "tenant_id": "3dd2e94a-92ba-434c-99be-32bb65864a99"
+            }
+          }
+        }
+        ```
+
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: './parameters.yaml#/parameters/OrganizationIdPathParameter'
+        - $ref: './parameters.yaml#/parameters/CredentialsIdPathParameter'
+      responses:
+        "200":
+          description: Credentials details
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetCredentialResponse"
+          examples:
+            application/json:
+              {
+                "id": "a1b2c3",
+                "provider": "azure",
+                "azure": {
+                  "credential": {
+                    "client_id": "c93bf55e-5bf7-4966-ad2b-e6f6e7721d50",
+                    "subscription_id": "b388b7c7-4479-4040-9ac5-1e13edd6b1cd",
+                    "tenant_id": "3dd2e94a-92ba-434c-99be-32bb65864a99"
+                  }
+                }
               }
         default:
           description: error

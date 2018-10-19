@@ -5,7 +5,8 @@ parameters:
     type: string
     in: header
     required: true
-    description: As described in the [authentication](#section/Authentication) section
+    description: |
+      As described in the [authentication](#section/Authentication) section
 
   ClusterIdPathParameter:
     name: cluster_id
@@ -13,6 +14,13 @@ parameters:
     required: true
     type: string
     description: Cluster ID
+
+  CredentialsIdPathParameter:
+    name: credential_id
+    in: path
+    required: true
+    type: string
+    description: Unique ID of a credential set
 
   UserEmailPathParameter:
     name: email

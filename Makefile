@@ -29,7 +29,7 @@ validate: spec-tmp.yaml lint
 	# Useful to ensure gsclientgen client generation works
 	@echo "Validating with go-swagger"
 	docker run --rm -it \
-	  -v ${PWD}:/workdir \
+		-v ${PWD}:/workdir \
 		-w /workdir \
 		quay.io/goswagger/swagger:0.16.0 \
 			validate spec-tmp.yaml
