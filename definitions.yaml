@@ -29,6 +29,68 @@ definitions:
           datacenter:
             description: Identifier of the datacenter or cloud provider region, e. g. "eu-west-1"
             type: string
+          availability_zones:
+            type: object
+            description: Number of availability zones that the cluster can be spread across.
+            properties:
+              max:
+                description: Maximum number of availability zones in this region.
+                type: number
+              default:
+                description: Default number of availability zones for a cluster.
+                type: number
+      network:
+        description: Information related to networking in the clusters
+        type: object
+        properties:
+          ranges:
+            description: IP ranges that can be used by clusters
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  description: Name of the IP range (eg production or default)
+                  type: string
+                pods:
+                  description: IP ranges for pods
+                  type: object
+                  properties:
+                    cidr_blocks:
+                      description: List of CIDRs that will be used by pods
+                      type: array
+                      items:
+                        type: string
+                services:
+                  description: IP ranges for services in Kubernetes
+                  type: object
+                  properties:
+                    cidr_blocks:
+                      description: List of CIDRs that will be used by services in Kubernetes
+                      type: array
+                      items:
+                        type: string
+                docker:
+                  description: IP ranges for docker
+                  type: object
+                  properties:
+                    cidr_blocks:
+                      description: List of CIDRs that will be used by docker on the nodes
+                      type: array
+                      items:
+                        type: string
+                clusters:
+                  description: IP ranges for clusters.
+                  type: object
+                  properties:
+                    cidr_blocks:
+                      description: List of CIDRs that are available to create clusters.
+                      type: array
+                      items:
+                        type: string
+                    cidr_mask:
+                      description: Mask that is used to cut slices of the cidr_blocks for an individual cluster.
+                      type: number
       workers:
         description: Information related to worker nodes
         type: object
@@ -86,6 +148,9 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
+      availability_zones:
+        description: Number of availability zones a cluster should be spread across.
+        type: number
       workers:
         type: array
         items:
@@ -140,6 +205,9 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           currently running this cluster.
+      availability_zones:
+        description: Number of availability zones a cluster is spread across.
+        type: number
       workers:
         type: array
         items:
