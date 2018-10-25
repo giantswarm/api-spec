@@ -911,7 +911,7 @@ paths:
         ### Limitations
 
         - As of now, existing worker nodes cannot be modified.
-        - The number of availability zones can not be changed afterwards.
+        - The number of availability zones cannot be modified afterwards.
         - When removing nodes (scaling down), it is not possible to determine
         which nodes will be removed.
         - On AWS based clusters, all worker nodes must use the same EC2 instance
