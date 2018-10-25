@@ -34,7 +34,7 @@ definitions:
             description: Number of availability zones which a cluster can be spread across.
             properties:
               max:
-                description: Maximum number of availability zones in this region.
+                description: Number of availability zones in the region of this installation.
                 type: number
               default:
                 description: Default number of availability zones for a cluster.
