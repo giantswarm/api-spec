@@ -31,7 +31,7 @@ definitions:
             type: string
           availability_zones:
             type: object
-            description: Number of availability zones that the cluster can be spread across.
+            description: Number of availability zones which a cluster can be spread across.
             properties:
               max:
                 description: Maximum number of availability zones in this region.
