@@ -50,7 +50,7 @@ definitions:
               type: object
               properties:
                 name:
-                  description: Name of the IP range (eg production or default)
+                  description: Name of the IP range (e. g.  "production" or "default")
                   type: string
                 pods:
                   description: IP ranges for pods
