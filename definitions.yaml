@@ -39,58 +39,6 @@ definitions:
               default:
                 description: Default number of availability zones for a cluster.
                 type: number
-      network:
-        description: Information related to networking in the clusters
-        type: object
-        properties:
-          ranges:
-            description: IP ranges that can be used by clusters
-            type: array
-            items:
-              type: object
-              properties:
-                name:
-                  description: Name of the IP range (e. g.  "production" or "default")
-                  type: string
-                pods:
-                  description: IP ranges for pods
-                  type: object
-                  properties:
-                    cidr_blocks:
-                      description: List of CIDRs that will be used by pods
-                      type: array
-                      items:
-                        type: string
-                services:
-                  description: IP ranges for services in Kubernetes
-                  type: object
-                  properties:
-                    cidr_blocks:
-                      description: List of CIDR blocks that will be used by services in Kubernetes
-                      type: array
-                      items:
-                        type: string
-                docker:
-                  description: IP ranges for docker
-                  type: object
-                  properties:
-                    cidr_blocks:
-                      description: List of CIDRs that will be used by docker on the nodes
-                      type: array
-                      items:
-                        type: string
-                clusters:
-                  description: IP ranges for clusters.
-                  type: object
-                  properties:
-                    cidr_blocks:
-                      description: List of CIDRs that are available to create clusters.
-                      type: array
-                      items:
-                        type: string
-                    cidr_mask:
-                      description: Mask that is used to cut slices of the cidr_blocks for an individual cluster.
-                      type: number
       workers:
         description: Information related to worker nodes
         type: object

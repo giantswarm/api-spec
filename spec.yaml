@@ -99,24 +99,6 @@ paths:
               "default": 1,
             }
           },
-          "network": {
-            "ranges": [{
-              "name": "default",
-              "pods": {
-                "cidr_blocks": ["192.168.0.0/16"]
-              },
-              "services": {
-                "cidr_blocks": ["172.31.0.0/16"]
-              },
-              "docker": {
-                "cidr_blocks": ["172.17.0.1/16"]
-              },
-              "clusters": {
-                "cidr_blocks": ["10.1.0.0/16"],
-                "cidr_mask": 24
-              }
-            }],
-          },
           "workers": {
             "count_per_cluster": {
               "max": null,
@@ -144,24 +126,6 @@ paths:
               "max": 1,
               "default": 1,
             }
-          },
-          "network": {
-            "ranges": [{
-              "name": "default",
-              "pods": {
-                "cidr_blocks": ["192.168.0.0/16"]
-              },
-              "services": {
-                "cidr_blocks": ["172.31.0.0/16"]
-              },
-              "docker": {
-                "cidr_blocks": ["172.17.0.1/16"]
-              },
-              "clusters": {
-                "cidr_blocks": ["10.1.0.0/16"],
-                "cidr_mask": 24
-              }
-            }],
           },
           "workers": {
             "count_per_cluster": {
@@ -192,24 +156,6 @@ paths:
                     "max": 3,
                     "default": 1
                   }
-                },
-                "network": {
-                  "ranges": [{
-                    "name": "default",
-                    "pods": {
-                      "cidr_blocks": ["192.168.0.0/16"]
-                    },
-                    "services": {
-                      "cidr_blocks": ["172.31.0.0/16"]
-                    },
-                    "docker": {
-                      "cidr_blocks": ["172.17.0.1/16"]
-                    },
-                    "clusters": {
-                      "cidr_blocks": ["10.1.0.0/16"],
-                      "cidr_mask": 24
-                    }
-                  }],
                 },
                 "workers": {
                   "count_per_cluster": {
