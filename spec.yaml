@@ -623,19 +623,21 @@ paths:
 
         IP range example:
 
-        If a cluster gets a `/22` (1022 hosts). And the cluster should be
+        If a cluster gets a `/22` (1022 hosts) and the cluster should be
         spawned across 3 availability zones. The range will then be split up
         into four `/24` (254 hosts) that can be given to four different
-        availability zones. One range will be stay unused because ranges can
-        only be split binary. Each of the `/24` will then be split into two
-        `/25` (126 hosts) for public and private subnets. The private subnet is
-        used for nodes and internal loadbalancer (only if you create them
-        within Kubernetes). The public subnet will be used by the public
-        loadbalancers. Your cluster comes with two public loadbalancers already.
-        One for the Kubernetes API and one for Ingress.
+        availability zones. One range will be stay unused because network
+        addresses must be powers of two. See [CIDR addressing](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
+        Each of the `/24` will then be split into two `/25` (126 hosts) for
+        public and private subnets. The private subnet is used for nodes and
+        internal loadbalancer (only if you create them within Kubernetes). The
+        public subnet will be used by the public loadbalancers. Tenant cluster
+        come with two public loadbalancers by default. One for the Kubernetes API
+        and one for Ingress.
 
         __Note:__ AWS ELBs can take up to 8 IP addresses due to the way how
-        they scale.
+        they scale. In addition to this, every AWS subnet has four first
+        addresses (.1-.4) reserved for internal use.
 
         The `workers` attribute, if present, must contain an array of node
         definition objects. The number of objects given determines the number
