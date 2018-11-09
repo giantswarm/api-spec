@@ -15,10 +15,14 @@ definitions:
   # Info response
   V4InfoResponse:
     type: object
+    required:
+      - general
     properties:
       general:
         description: General information
         type: object
+        required:
+          - availability_zones
         properties:
           installation_name:
             description: Unique name of the installation
@@ -32,6 +36,9 @@ definitions:
           availability_zones:
             type: object
             description: Number of availability zones which a cluster can be spread across.
+            required:
+              - max
+              - default
             properties:
               max:
                 description: Number of availability zones in the region of this installation.
