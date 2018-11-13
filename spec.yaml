@@ -622,7 +622,7 @@ paths:
         The number of `availability_zones` affects the total number of nodes
         that can be created in the cluster. The number of availability zones
         splits the IP range that can be used for the cluster in multiple smaller
-        ip ranges. The [getInfo](#operation/getInfo) endpoint provides more
+        IP ranges. The [getInfo](#operation/getInfo) endpoint provides more
         details about the cluster ip range.
 
         IP range example:
