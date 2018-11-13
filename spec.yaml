@@ -628,7 +628,7 @@ paths:
         IP range example:
 
         If a cluster gets a `/22` range (1022 hosts) and the cluster should be
-        spawned across 3 availability zones. The range will then be split up
+        spawned across 3 availability zones, the range will then be split up
         into four `/24` (254 hosts) that can be assigned to four different
         availability zones. One range will stay unused because network
         addresses must be powers of two. See [CIDR addressing](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
