@@ -623,7 +623,7 @@ paths:
         that can be created in the cluster. The number of availability zones
         splits the IP range that can be used for the cluster in multiple smaller
         IP ranges. The [getInfo](#operation/getInfo) endpoint provides more
-        details about the cluster ip range.
+        details about the cluster IP range.
 
         IP range example:
 
