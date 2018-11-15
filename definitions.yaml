@@ -104,7 +104,7 @@ definitions:
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
       availability_zones:
-        description: Number of availability zones a cluster should be spread across.
+        description: Number of availability zones a cluster should be spread across. The default is provided via the [info](#operation/getInfo) endpoint.
         type: integer
       workers:
         type: array
