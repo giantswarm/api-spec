@@ -15,10 +15,14 @@ definitions:
   # Info response
   V4InfoResponse:
     type: object
+    required:
+      - general
     properties:
       general:
         description: General information
         type: object
+        required:
+          - availability_zones
         properties:
           installation_name:
             description: Unique name of the installation
@@ -29,6 +33,19 @@ definitions:
           datacenter:
             description: Identifier of the datacenter or cloud provider region, e. g. "eu-west-1"
             type: string
+          availability_zones:
+            type: object
+            description: Number of availability zones which a cluster can be spread across.
+            required:
+              - max
+              - default
+            properties:
+              max:
+                description: Number of availability zones in the region of this installation.
+                type: integer
+              default:
+                description: Default number of availability zones for a cluster.
+                type: integer
       workers:
         description: Information related to worker nodes
         type: object
@@ -86,6 +103,9 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
+      availability_zones:
+        description: Number of availability zones a cluster should be spread across. The default is provided via the [info](#operation/getInfo) endpoint.
+        type: integer
       workers:
         type: array
         items:
@@ -140,6 +160,9 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           currently running this cluster.
+      availability_zones:
+        description: Number of availability zones a cluster is spread across.
+        type: integer
       workers:
         type: array
         items:

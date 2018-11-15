@@ -97,7 +97,11 @@ paths:
           "general": {
             "installation_name": "shire",
             "provider": "aws",
-            "datacenter": "eu-central-1"
+            "datacenter": "eu-central-1",
+            "availability_zones": {
+              "max": 3,
+              "default": 1,
+            }
           },
           "workers": {
             "count_per_cluster": {
@@ -121,7 +125,11 @@ paths:
           "general": {
             "installation_name": "isengard",
             "provider": "kvm",
-            "datacenter": "string"
+            "datacenter": "string",
+            "availability_zones": {
+              "max": 1,
+              "default": 1,
+            }
           },
           "workers": {
             "count_per_cluster": {
@@ -147,7 +155,11 @@ paths:
                 "general": {
                   "installation_name": "shire",
                   "provider": "aws",
-                  "datacenter": "eu-central-1"
+                  "datacenter": "eu-central-1",
+                  "availability_zones": {
+                    "max": 3,
+                    "default": 1
+                  }
                 },
                 "workers": {
                   "count_per_cluster": {
@@ -564,13 +576,15 @@ paths:
                   "id": "g8s3o",
                   "create_date": "2017-06-08T12:31:47.215Z",
                   "name": "Staging Cluster",
-                  "owner": "acme"
+                  "owner": "acme",
+                  "availability_zones": 2
                 },
                 {
                   "id": "3dkr6",
                   "create_date": "2017-05-22T13:58:02.024Z",
                   "name": "Test Cluster",
-                  "owner": "testorg"
+                  "owner": "testorg",
+                  "availability_zones": 1
                 }
               ]
         "401":
@@ -605,6 +619,30 @@ paths:
         omitted, default configuration values will be applied. For example, if
         no `release_version` is specified, the most recent version is used.
 
+        The number of `availability_zones` affects the total number of nodes
+        that can be created in the cluster. The number of availability zones
+        splits the IP range that can be used for the cluster in multiple smaller
+        IP ranges. The [getInfo](#operation/getInfo) endpoint provides more
+        details about the cluster IP range.
+
+        IP range example:
+
+        If a cluster gets a `/22` range (1022 hosts) and the cluster should be
+        spawned across 3 availability zones, the range will then be split up
+        into four `/24` (254 hosts) that can be assigned to four different
+        availability zones. One range will stay unused because network
+        addresses must be powers of two. See [CIDR addressing](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
+        Each of the `/24` will then be split into two `/25` (126 hosts) for
+        public and private subnets. The private subnet is used for nodes and
+        internal loadbalancer (only if you create them within Kubernetes). The
+        public subnet will be used by the public loadbalancers. Tenant cluster
+        come with two public loadbalancers by default. One for the Kubernetes API
+        and one for Ingress.
+
+        __Note:__ AWS ELBs can take up to 8 IP addresses due to the way how
+        they scale. In addition to this, every AWS subnet has four first
+        addresses (.1-.4) reserved for internal use.
+
         The `workers` attribute, if present, must contain an array of node
         definition objects. The number of objects given determines the number
         of workers created.
@@ -633,6 +671,7 @@ paths:
                 "owner": "myteam",
                 "release_version": "1.4.2",
                 "name": "Example cluster with 3 default worker nodes",
+                "availability_zones": 2,
                 "workers": [{}, {}, {}]
               }
       responses:
@@ -686,6 +725,7 @@ paths:
                 "release_version": "2.5.16",
                 "owner": "acme",
                 "credential_id": "a1b2c",
+                "availability_zones": 1,
                 "workers": [
                   {
                     "memory": {"size_gb": 2.0},
@@ -823,6 +863,7 @@ paths:
         ### Limitations
 
         - As of now, existing worker nodes cannot be modified.
+        - The number of availability zones cannot be modified afterwards.
         - When removing nodes (scaling down), it is not possible to determine
         which nodes will be removed.
         - On AWS based clusters, all worker nodes must use the same EC2 instance
