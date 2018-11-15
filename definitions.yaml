@@ -42,10 +42,10 @@ definitions:
             properties:
               max:
                 description: Number of availability zones in the region of this installation.
-                type: number
+                type: integer
               default:
                 description: Default number of availability zones for a cluster.
-                type: number
+                type: integer
       workers:
         description: Information related to worker nodes
         type: object
@@ -105,7 +105,7 @@ definitions:
           to use in the new cluster
       availability_zones:
         description: Number of availability zones a cluster should be spread across.
-        type: number
+        type: integer
       workers:
         type: array
         items:
@@ -162,7 +162,7 @@ definitions:
           currently running this cluster.
       availability_zones:
         description: Number of availability zones a cluster is spread across.
-        type: number
+        type: integer
       workers:
         type: array
         items:
