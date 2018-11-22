@@ -63,12 +63,12 @@ securityDefinitions:
     description: |
       Clients authenticate by passing an auth token via the `Authorization`
       header with the format
-      
+
       ```
       Authorization: giantswarm <token>
       ````
-      
-      Auth tokens can be obtained using the 
+
+      Auth tokens can be obtained using the
       [createAuthToken](#operation/createAuthToken) operation.
 
       For Giant Swarm staff who are authenticating using SSO,
