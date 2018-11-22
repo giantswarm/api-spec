@@ -577,14 +577,14 @@ paths:
                   "create_date": "2017-06-08T12:31:47.215Z",
                   "name": "Staging Cluster",
                   "owner": "acme",
-                  "availability_zones": 2
+                  "availability_zones": ["eu-west-1a", "eu-west-1c"]
                 },
                 {
                   "id": "3dkr6",
                   "create_date": "2017-05-22T13:58:02.024Z",
                   "name": "Test Cluster",
                   "owner": "testorg",
-                  "availability_zones": 1
+                  "availability_zones": ["eu-west-1b"]
                 }
               ]
         "401":
@@ -725,7 +725,7 @@ paths:
                 "release_version": "2.5.16",
                 "owner": "acme",
                 "credential_id": "a1b2c",
-                "availability_zones": 1,
+                "availability_zones": ["fire-zone-1"],
                 "workers": [
                   {
                     "memory": {"size_gb": 2.0},
