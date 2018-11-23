@@ -161,8 +161,11 @@ definitions:
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           currently running this cluster.
       availability_zones:
-        description: Number of availability zones a cluster is spread across.
-        type: integer
+        description: List of availability zones a cluster is spread across.
+        type: array
+        items:
+          description: Name of the availability zone
+          type: string
       workers:
         type: array
         items:
