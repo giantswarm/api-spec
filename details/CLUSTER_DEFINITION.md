@@ -21,6 +21,7 @@ __Note:__ upon cluster creation, some of the attributes shown below MUST NOT be 
     "api_endpoint": "https://api.wqtlq.example.com",
     "name": "Just a Standard Cluster",
     "owner": "acme",
+    "availability_zones": ["fire-zone-1"],
     "release_version": "1.0.0",
     "workers": [
         {
@@ -59,6 +60,7 @@ This example here shows a cluster definition in JSON format, as it may be submit
 {
     "name": "A Cluster on AWS",
     "owner": "acme",
+    "availability_zones": 2,
     "workers": [
         {
             "aws": {
@@ -89,6 +91,7 @@ After creation using the definition above, the code below shows the completed cl
     "api_endpoint": "https://api.wqtlq.example.com",
     "name": "A Cluster on AWS",
     "owner": "acme",
+    "availability_zones": ["eu-central-1a", "eu-central-1b"],
     "release_version": "1.0.0",
     "workers": [
         {
@@ -133,6 +136,7 @@ After creation using the definition above, the code below shows the completed cl
 - `release_version`: The [release](https://docs.giantswarm.io/api/#tag/releases) version of the cluster
 - `name`: User friendly name of the cluster
 - `owner`: Name of the organization owning the cluster.
+- `availability_zones`: Upon creation this is an integer that defines in how many availability zones a cluster should be launched. If the cluster object is retrieved from the API it will contain an array of strings with the actual names of the availability zones.
 - `workers`: Array of worker definition objects. Each array item represents one worker node. In order to create a cluster with three worker nodes, this array MUST have three items, even if all worker share the same configuration.
 - `workers[n].aws.instance_type`: Name of the EC2 instance type to use for the worker node. For clusters running on AWS, this attribute is required on cluster creation and must have the same value for all worker nodes of the cluster.
 - `workers[n].memory`: Memory definition object. This object can currently contain only one attribute `size_gb`, which indicates the RAM size in Gigabytes as an integer. For clusters running on AWS, this attribute is ignored on cluster creation.
