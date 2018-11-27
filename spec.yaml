@@ -62,9 +62,14 @@ securityDefinitions:
   AuthorizationHeaderToken:
     description: |
       Clients authenticate by passing an auth token via the `Authorization`
-      header with a value of the format `giantswarm <token>`. Auth tokens can be
-      obtained using the [createAuthToken](#operation/createAuthToken)
-      operation.
+      header with the format
+
+      ```
+      Authorization: giantswarm <token>
+      ````
+
+      Auth tokens can be obtained using the
+      [createAuthToken](#operation/createAuthToken) operation.
 
       For Giant Swarm staff who are authenticating using SSO,
       pass the auth token via the `Authorization` header with a value of the
