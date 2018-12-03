@@ -106,6 +106,20 @@ definitions:
       availability_zones:
         description: Number of availability zones a cluster should be spread across. The default is provided via the [info](#operation/getInfo) endpoint.
         type: integer
+      scaling:
+        type: object
+        description: |
+          Attributes specific to cluster node scaling. To have full control of
+          cluster scaling, min and max can be set to the same value.
+        properties:
+          min:
+            type: integer
+            description: |
+              The minimum number of cluster nodes
+          max:
+            type: integer
+            description: |
+              The maximum number of cluster nodes
       workers:
         type: array
         items:
@@ -166,6 +180,25 @@ definitions:
         items:
           description: Name of the availability zone
           type: string
+      scaling:
+        type: object
+        description: |
+          Attributes specific to cluster node scaling. To have full control of
+          cluster scaling, min and max can be set to the same value.
+        properties:
+          current:
+            type: integer
+            description: |
+              The current number of cluster nodes. Most insightful when min and
+              max define a range in which the autoscaler operates autonomously.
+          min:
+            type: integer
+            description: |
+              The minimum number of cluster nodes
+          max:
+            type: integer
+            description: |
+              The maximum number of cluster nodes
       workers:
         type: array
         items:
@@ -221,20 +254,6 @@ definitions:
           size_gb:
             type: number
             description: RAM size in GB. Can be an integer or float.
-      scaling:
-        type: object
-        description: |
-          Attributes specific to cluster node scaling. To have full control of
-          cluster scaling, min and max can be set to the same value.
-        properties:
-          min:
-            type: integer
-            description: |
-              The minimum number of cluster nodes in this node pool
-          max:
-            type: integer
-            description: |
-              The maximum number of cluster nodes in this node pool
       storage:
         type: object
         properties:
