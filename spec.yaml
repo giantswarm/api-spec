@@ -675,6 +675,7 @@ paths:
                 "release_version": "1.4.2",
                 "name": "Example cluster with 3 default worker nodes",
                 "availability_zones": 2,
+                "scaling": { "min": 3, "max": 3 },
                 "workers": [{}, {}, {}]
               }
       responses:
