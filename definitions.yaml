@@ -246,7 +246,7 @@ definitions:
         description: |
           AWS specific status information. Only given in AWS installations.
         properties:
-          availabilityZones:
+          availability_zones:
             type: array
             items:
               type: object
@@ -284,10 +284,10 @@ definitions:
                 List of cluster conditions describing a cluster's state
                 transitions.
               properties:
-                lastHeartbeatTime:
+                last_heartbeat_time:
                   type: string
                   description: Last time the condition was checked and verified
-                lastTransitionTime:
+                last_transition_time:
                   type: string
                   description: |
                     Last time the condition transitioned from one state to
@@ -315,10 +315,10 @@ definitions:
             items:
               type: object
               properties:
-                lastHeartbeatTime:
+                last_heartbeat_time:
                   type: string
                   description: Last time the node was checked and verified
-                lastTransitionTime:
+                last_transition_time:
                   type: string
                   description: |
                     Last time the node transitioned from one state to another
@@ -335,10 +335,10 @@ definitions:
             items:
               type: object
               properties:
-                lastHeartbeatTime:
+                last_heartbeat_time:
                   type: string
                   description: Last time the version was checked and verified
-                lastTransitionTime:
+                last_transition_time:
                   type: string
                   description: |
                     Last time the version transitioned from one state to another

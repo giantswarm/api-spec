@@ -1062,7 +1062,7 @@ paths:
             application/json:
               {
                 "aws": {
-                  "availabilityZones": [
+                  "availability_zones": [
                     {
                       "name": "eu-central-1a",
                       "subnet": {
@@ -1079,8 +1079,8 @@ paths:
                 "cluster": {
                   "conditions": [
                     {
-                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
-                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "last_heartbeat_time": "2018-12-04 11:35:13 UTC",
+                      "last_transition_time": "2018-12-03 23:28:56 UTC",
                       "status": "True",
                       "type": "Created"
                     }
@@ -1090,34 +1090,34 @@ paths:
                   },
                   "nodes": [
                     {
-                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
-                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "last_heartbeat_time": "2018-12-04 11:35:13 UTC",
+                      "last_transition_time": "2018-12-03 23:28:56 UTC",
                       "name": "ip-10-1-1-111.eu-central-1.compute.internal",
                       "version": "4.4.0"
                     },
                     {
-                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
-                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "last_heartbeat_time": "2018-12-04 11:35:13 UTC",
+                      "last_transition_time": "2018-12-03 23:28:56 UTC",
                       "name": "ip-10-1-1-48.eu-central-1.compute.internal",
                       "version": "4.4.0"
                     },
                     {
-                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
-                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "last_heartbeat_time": "2018-12-04 11:35:13 UTC",
+                      "last_transition_time": "2018-12-03 23:28:56 UTC",
                       "name": "ip-10-1-1-56.eu-central-1.compute.internal",
                       "version": "4.4.0"
                     },
                     {
-                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
-                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "last_heartbeat_time": "2018-12-04 11:35:13 UTC",
+                      "last_transition_time": "2018-12-03 23:28:56 UTC",
                       "name": "ip-10-1-1-95.eu-central-1.compute.internal",
                       "version": "4.4.0"
                     }
                   ],
                   "versions": [
                     {
-                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
-                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "last_heartbeat_time": "2018-12-04 11:35:13 UTC",
+                      "last_transition_time": "2018-12-03 23:28:56 UTC",
                       "semver": "4.4.0"
                     }
                   ]
