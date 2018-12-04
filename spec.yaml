@@ -1051,9 +1051,9 @@ paths:
         This endpoint passes through the status content of the Kubernetes resources representing
         a cluster in the according custom resource. That is, depending on the provider:
 
-        - TODO: add link to file describe awsconfigs.provider.giantswarm.io
-        - TODO: add link to file describe azureconfigs.provider.giantswarm.io
-        - TODO: add link to file describe kvmconfigs.provider.giantswarm.io
+        - [awsconfig.provider.giantswarm.io](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AWSConfig)
+        - [azureconfig.provider.giantswarm.io](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AzureConfig)
+        - [kvmconfig.provider.giantswarm.io](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#KVMConfig)
 
         Note that structure and style differ from the rest of the v4 API. Also note that
         the structure depends on the release version and changes can be expected frequently.
