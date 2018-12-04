@@ -1039,6 +1039,97 @@ paths:
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
 
+  /v4/clusters/{cluster_id}/status/:
+    get:
+      operationId: getClusterStatus
+      tags:
+        - clusters
+      summary: Get cluster status
+      description: |
+        Returns an object about a cluster's current state.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: Cluster status
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetClusterStatusResponse"
+          examples:
+            application/json:
+              {
+                "aws": {
+                  "availabilityZones": [
+                    {
+                      "name": "eu-central-1a",
+                      "subnet": {
+                        "private": {
+                          "cidr": "10.1.1.0/25"
+                        },
+                        "public": {
+                          "cidr": "10.1.1.128/25"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "cluster": {
+                  "conditions": [
+                    {
+                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
+                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "status": "True",
+                      "type": "Created"
+                    }
+                  ],
+                  "network": {
+                    "cidr": "10.1.1.0/24"
+                  },
+                  "nodes": [
+                    {
+                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
+                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "name": "ip-10-1-1-111.eu-central-1.compute.internal",
+                      "version": "4.4.0"
+                    },
+                    {
+                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
+                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "name": "ip-10-1-1-48.eu-central-1.compute.internal",
+                      "version": "4.4.0"
+                    },
+                    {
+                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
+                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "name": "ip-10-1-1-56.eu-central-1.compute.internal",
+                      "version": "4.4.0"
+                    },
+                    {
+                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
+                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "name": "ip-10-1-1-95.eu-central-1.compute.internal",
+                      "version": "4.4.0"
+                    }
+                  ],
+                  "versions": [
+                    {
+                      "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
+                      "lastTransitionTime": "2018-12-03 23:28:56 UTC",
+                      "semver": "4.4.0"
+                    }
+                  ]
+                }
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/organizations/:
     get:
       operationId: getOrganizations

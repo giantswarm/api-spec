@@ -237,6 +237,114 @@ definitions:
         type: object
         additionalProperties: true
 
+  V4GetClusterStatusResponse:
+    type: object
+    description: Object about a cluster's current state
+    properties:
+      aws:
+        type: object
+        description: |
+          AWS specific status information. Only given in AWS installations.
+        properties:
+          availabilityZones:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the randomly selected availability zone
+                subnet:
+                  type: object
+                  properties:
+                    private:
+                      type: object
+                      properties:
+                        cidr:
+                          type: string
+                          description: |
+                            Private subnet CIDR allocated for this availability
+                            zone
+                    public:
+                      type: object
+                      properties:
+                        cidr:
+                          type: string
+                          description: |
+                            Public subnet CIDR allocated for this availability
+                            zone
+      cluster:
+        type: object
+        properties:
+          conditions:
+            type: array
+            items:
+              type: object
+              description: TODO
+              properties:
+                lastHeartbeatTime:
+                  type: string
+                  description: Last time the condition was checked and verified
+                lastTransitionTime:
+                  type: string
+                  description: |
+                    Last time the condition transitioned from one state to
+                    another
+                status:
+                  type: string
+                  description: |
+                    Status of the condition. One of True, False, or Unknown.
+                type:
+                  type: string
+                  description: |
+                    Condition type describing what kind of condition this is
+                    about
+          network:
+            type: object
+            properties:
+              cidr:
+                type: string
+                description: |
+                  The whole network CIDR for the cluster. Divided into multiple
+                  of selected availability zones.
+          nodes:
+            type: array
+            items:
+              type: object
+              properties:
+                lastHeartbeatTime:
+                  type: string
+                  description: Last time the node was checked and verified
+                lastTransitionTime:
+                  type: string
+                  description: |
+                    Last time the node transitioned from one state to another
+                name:
+                  type: string
+                  description: Kubernetes node name
+                version:
+                  type: string
+                  description: |
+                    Version of the Giant Swarm specific provider operator
+                    reconciling this node
+          versions:
+            type: array
+            items:
+              type: object
+              properties:
+                lastHeartbeatTime:
+                  type: string
+                  description: Last time the version was checked and verified
+                lastTransitionTime:
+                  type: string
+                  description: |
+                    Last time the version transitioned from one state to another
+                semver:
+                  type: string
+                  description: |
+                    Version of the Giant Swarm specific provider operator
+                    reconciling this node
+
   # List of key pairs
   V4GetKeyPairsResponse:
     type: array
