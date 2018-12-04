@@ -330,6 +330,43 @@ definitions:
                   description: |
                     Version of the Giant Swarm specific provider operator
                     reconciling this node
+          resources:
+            type: array
+            items:
+              type: object
+              properties:
+                conditions:
+                  type: array
+                  items:
+                    type: object
+                    description: |
+                      List of resource conditions describing a resource's state
+                      transitions.
+                    properties:
+                      lastHeartbeatTime:
+                        type: string
+                        description: |
+                          Last time the condition was checked and verified
+                      lastTransitionTime:
+                        type: string
+                        description: |
+                          Last time the condition transitioned from one state to
+                          another
+                      status:
+                        type: string
+                        description: |
+                          Status of the condition. One of True, False, or
+                          Unknown.
+                      type:
+                        type: string
+                        description: |
+                          Condition type describing what kind of condition this
+                          is about. May be anything a specific resource
+                          implements.
+                name:
+                  type: string
+                  description: |
+                    Name of the resource managing this status condition
           versions:
             type: array
             items:

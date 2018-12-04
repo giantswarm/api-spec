@@ -1114,6 +1114,7 @@ paths:
                       "version": "4.4.0"
                     }
                   ],
+                  "resources": null,
                   "versions": [
                     {
                       "lastHeartbeatTime": "2018-12-04 11:35:13 UTC",
