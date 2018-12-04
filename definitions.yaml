@@ -280,7 +280,9 @@ definitions:
             type: array
             items:
               type: object
-              description: TODO
+              description: |
+                List of cluster conditions describing a cluster's state
+                transitions.
               properties:
                 lastHeartbeatTime:
                   type: string
@@ -298,7 +300,8 @@ definitions:
                   type: string
                   description: |
                     Condition type describing what kind of condition this is
-                    about
+                    about. One of Creating, Created, Updating, Updated, or
+                    Deleting.
           network:
             type: object
             properties:
