@@ -248,6 +248,7 @@ definitions:
         properties:
           availabilityZones:
             type: array
+            description: List of availability zones used by tenant cluster.
             items:
               type: object
               properties:
