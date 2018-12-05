@@ -309,7 +309,7 @@ definitions:
                 type: string
                 description: |
                   The whole network CIDR for the cluster. Divided into multiple
-                  of selected availability zones.
+                  subnets for public and private networks in selected availability zones.
           nodes:
             type: array
             items:
