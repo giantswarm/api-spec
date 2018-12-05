@@ -253,7 +253,7 @@ definitions:
               properties:
                 name:
                   type: string
-                  description: Name of the randomly selected availability zone
+                  description: Name of the availability zone
                 subnet:
                   type: object
                   properties:
