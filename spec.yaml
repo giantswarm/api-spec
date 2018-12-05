@@ -1048,8 +1048,8 @@ paths:
       description: |
         Returns an object about a cluster's current state and past status transitions.
 
-        This endpoint passes through the status content of the Kubernetes resources representing
-        a cluster in the according custom resource. That is, depending on the provider:
+        This endpoint exposes the status content of the Kubernetes resources representing
+        a cluster in the corresponding custom resource. That is, depending on the provider:
 
         - [awsconfig.provider.giantswarm.io](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AWSConfig)
         - [azureconfig.provider.giantswarm.io](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AzureConfig)
