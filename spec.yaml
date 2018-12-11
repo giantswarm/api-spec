@@ -655,7 +655,7 @@ paths:
         worker node definition object.
 
         A cluster can be scaled at any time after creation. The initial size,
-        the number of worker nodes, is optionally determined via the 
+        the number of worker nodes, is optionally determined via the
         `scaling` attribute. If not given, the scaling settings will be
         `{"min": 3, "max": 3}`, which fixates the size at three nodes.
 
