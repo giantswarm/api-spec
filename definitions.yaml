@@ -110,7 +110,7 @@ definitions:
         type: object
         description: |
           Attributes specific to cluster node scaling. To have full control of
-          cluster scaling, min and max can be set to the same value.
+          the cluster size, min and max can be set to the same value.
         properties:
           min:
             type: integer
@@ -142,7 +142,7 @@ definitions:
         type: object
         description: |
           Attributes specific to cluster node scaling. To have full control of
-          cluster scaling, min and max can be set to the same value.
+          the cluster size, min and max can be set to the same value.
         properties:
           min:
             type: integer
