@@ -829,6 +829,10 @@ paths:
         cluster to a newer
         [release](https://docs.giantswarm.io/api/#tag/releases).
 
+        - `scaling`: Adjust the cluster node limits to make use of auto scaling
+        or to have full control over the node count. The latter can be
+        achieved by setting min and max to the same values.
+
         - `workers`: By modifying the array of workers, nodes can be added to
         increase the cluster's capacity. See details below.
 

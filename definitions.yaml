@@ -138,6 +138,20 @@ definitions:
       release_version:
         type: string
         description: Release version to use after an upgrade
+      scaling:
+        type: object
+        description: |
+          Attributes specific to cluster node scaling. To have full control of
+          cluster scaling, min and max can be set to the same value.
+        properties:
+          min:
+            type: integer
+            description: |
+              The minimum number of cluster nodes
+          max:
+            type: integer
+            description: |
+              The maximum number of cluster nodes
       workers:
         type: array
         description: Worker node array
