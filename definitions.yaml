@@ -152,11 +152,6 @@ definitions:
             type: integer
             description: |
               The maximum number of cluster nodes
-      workers:
-        type: array
-        description: Worker node array
-        items:
-          $ref: '#/definitions/V4NodeDefinition'
 
   # Details on existing cluster
   V4ClusterDetailsResponse:

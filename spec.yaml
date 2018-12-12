@@ -646,16 +646,18 @@ paths:
         they scale. In addition to this, every AWS subnet has four first
         addresses (.1-.4) reserved for internal use.
 
-        The `workers` attribute, if present, must contain an array of node
-        definition objects. The number of objects given determines the number
-        of workers created.
+        The `workers` attribute, if present, is expected to contain an array
+        with exactly one worker node definition object. If not available, or
+        when the array is empty, defaults will be applied. Check out the
+        [getInfo](#operation/getInfo) operation for more info about defaults.
 
-        For example, requesting three worker nodes with default configuration
-        can be achieved by submitting an array of three empty objects:
+        All worker nodes will have the same specification derived from the first
+        worker node definition object.
 
-        ```"workers": [{}, {}, {}]```
-
-        For clusters on AWS, note that all worker nodes must use the same instance type.
+        A cluster can be scaled at any time after creation. The initial size,
+        the number of worker nodes, is optionally determined via the
+        `scaling` attribute. If not given, the scaling settings will be
+        `{"min": 3, "max": 3}`, which fixates the size at three nodes.
 
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
@@ -676,7 +678,7 @@ paths:
                 "name": "Example cluster with 3 default worker nodes",
                 "availability_zones": 2,
                 "scaling": {"min": 3, "max": 3},
-                "workers": [{}, {}, {}]
+                "workers": [{"aws": {"instance_type": "m5.xlarge"}}]
               }
       responses:
         "201":
@@ -833,51 +835,12 @@ paths:
         or to have full control over the node count. The latter can be
         achieved by setting min and max to the same values.
 
-        - `workers`: By modifying the array of workers, nodes can be added to
-        increase the cluster's capacity. See details below.
-
-        ### Adding and Removing Worker Nodes (Scaling)
-
-        Adding worker nodes to a cluster or removing worker nodes from a cluster
-        works by submitting the `workers` attribute, which contains a (sparse)
-        array of worker node defintions.
-
-        _Sparse_ here means that all configuration details are optional. In the
-        case that worker nodes are added to a cluster, wherever a configuration
-        detail is missing, defaults will be applied. See
-        [Creating a cluster](#operation/addCluster) for details.
-
-        When modifying the cluster resource, you describe the desired state.
-        For scaling, this means that the worker node array submitted must
-        contain as many elements as the cluster should have worker nodes.
-        If your cluster currently has five nodes and you submit a workers
-        array with four elements, this means that one worker node will be removed.
-        If your submitted workers array has six elements, this means one will
-        be added.
-
-        As an example, this request body could be used to scale a cluster to
-        three worker nodes:
-
-        ```json
-        {
-          "workers": [{}, {}, {}]
-        }
-        ```
-
-        If the scaled cluster had four worker nodes before, one would be removed.
-        If it had two worker nodes before, one with default settings would be
-        added.
-
         ### Limitations
 
         - As of now, existing worker nodes cannot be modified.
-        - The number of availability zones cannot be modified afterwards.
+        - The number of availability zones cannot be modified.
         - When removing nodes (scaling down), it is not possible to determine
         which nodes will be removed.
-        - On AWS based clusters, all worker nodes must use the same EC2 instance
-        type (`instance_type` node attribute). By not setting an `instance_type`
-        when submitting a PATCH request, you ensure that the right instance type
-        is used automatically.
 
       responses:
         "200":
