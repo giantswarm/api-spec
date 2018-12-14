@@ -122,6 +122,9 @@ definitions:
               The maximum number of cluster nodes
       workers:
         type: array
+        description: |
+          Worker node definition. If present, the first item of the array is
+          expected to contain the specification for all worker nodes.
         items:
           $ref: '#/definitions/V4NodeDefinition'
 
@@ -152,6 +155,11 @@ definitions:
             type: integer
             description: |
               The maximum number of cluster nodes
+      workers:
+        type: array
+        description: Worker node array (deprecated)
+        items:
+          $ref: '#/definitions/V4NodeDefinition'
 
   # Details on existing cluster
   V4ClusterDetailsResponse:
@@ -190,6 +198,7 @@ definitions:
           description: Name of the availability zone
           type: string
       workers:
+        description: Information about worker nodes in the cluster (deprecated)
         type: array
         items:
           $ref: '#/definitions/V4NodeDefinition'
