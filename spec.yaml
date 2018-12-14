@@ -560,8 +560,9 @@ paths:
         clusters.
 
         The result array items are sparse representations of the cluster objects.
-        To fetch more details on a cluster, use the [getCluster](#operation/getCluster)
-        operation.
+        To fetch more details on a cluster, use the
+        [getCluster](#operation/getCluster) and
+        [getClusterStatus](#operation/getClusterStatus) operations.
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
