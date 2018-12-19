@@ -269,6 +269,11 @@ definitions:
         type: object
         additionalProperties: true
 
+  V4GetClusterStatusResponse:
+    type: object
+    description: Object about a cluster's current state
+    additionalProperties: true
+
   # List of key pairs
   V4GetKeyPairsResponse:
     type: array
