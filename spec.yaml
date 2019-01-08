@@ -667,10 +667,10 @@ paths:
         within the limits defined by the `scaling` setting. This setting can
         also be modified any time later in the cluster lifecycle.
 
-        By setting both the minimum and maximum to the same vale, autoscaling is
-        effectively disabled. This is also the default behaviour when no initial
-        cluster size is given, or when clusters are upgraded from releases
-        before 6.2.0.
+        By setting both the minimum and maximum to the same value, autoscaling
+        is effectively disabled. This is also the default behaviour when no
+        initial cluster size is given, or when clusters are upgraded from
+        releases before 6.2.0.
 
         Until autoscaling is available on providers other than AWS, for Azure
         and KVM (on-premises) the `min` and `max` scaling value must be
