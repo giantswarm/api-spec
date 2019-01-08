@@ -662,7 +662,7 @@ paths:
         The API allows to define the cluster size on creation using the
         `scaling` attribute, setting a minimum and maximum worker node count.
 
-        For releases starting from 6.2.0 (on AWS), the cluster size is controled
+        For releases starting from 6.2.0 (on AWS), the cluster size is controlled
         by the [Kubernetes Autoscaler](https://github.com/kubernetes/autoscaler)
         within the limits defined by the `scaling` setting. This setting can
         also be modified any time later in the cluster lifecycle.
@@ -678,7 +678,7 @@ paths:
         before 6.2.0 on AWS.
 
         ### Backward compatibility note
-        
+
         Before the introduction of autoscaling and the `scaling` attribute, the
         number of worker nodes could be determined via the number of items
         contained in the `workers` array. This behaviour will be still accepted
