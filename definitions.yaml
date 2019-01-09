@@ -191,6 +191,20 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           currently running this cluster.
+      scaling:
+        type: object
+        description: |
+          Attributes specific to cluster node scaling as set during cluster
+          creation or cluster scaling.
+        properties:
+          min:
+            type: integer
+            description: |
+              The minimum number of cluster nodes as configured
+          max:
+            type: integer
+            description: |
+              The maximum number of cluster nodes as configured
       availability_zones:
         description: List of availability zones a cluster is spread across.
         type: array
