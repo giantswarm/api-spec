@@ -240,7 +240,129 @@ definitions:
   V4GetClusterStatusResponse:
     type: object
     description: Object about a cluster's current state
-    additionalProperties: true
+    properties:
+      aws:
+        type: object
+        properties:
+          availabilityZones:
+            type: array
+            description: Array of availability zones used for this cluster.
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the availability zone.
+                subnet:
+                  type: object
+                  description: Subnets associated with this availability zone.
+                  properties:
+                    private:
+                      type: object
+                      description: Private subnet.
+                      properties:
+                        cidr:
+                          type: string
+                          description: Private subnet CIDR.
+                    public:
+                      type: object
+                      description: Public subnet.
+                      properties:
+                        cidr:
+                          type: string
+                          description: Public subnet CIDR.
+      cluster:
+        type: object
+        properties:
+          conditions:
+            type: array
+            description: |
+              Conditions is a list of status information expressing the current
+              conditional state of a guest cluster. This may reflect the status
+              of the guest cluster being updating or being up to date.
+            items:
+              type: object
+              properties:
+                lastTransitionTime:
+                  type: string
+                  description: |
+                    lastTransitionTime is the last time the condition
+                    transitioned from one status to another.
+                status:
+                  type: string
+                type:
+                  type: string
+                  description: Type of cluster condition entry.
+          network:
+            type: object
+            properties:
+              cidr:
+                type: string
+                description: Allocated cluster network CIDR.
+          nodes:
+            type: array
+            description:
+            items:
+              type: object
+              properties:
+                lastTransitionTime:
+                  type: string
+                  description: |
+                    lastTransitionTime is the last time the node status
+                    transitioned from one status to another.
+                name:
+                  type: string
+                  description: Node name.
+                version:
+                  type: string
+                  description: Operator version that this node is using.
+          resources:
+            type: array
+            description: |
+              Resource is structure holding arbitrary conditions of operatorkit
+              resource implementations. Imagine an operator implements an
+              instance resource. This resource may operates sequentially but
+              has to operate based on a certain system state it manages. So it
+              tracks the status as needed here specific to its own
+              implementation and means in order to fulfil its premise.
+            items:
+              type: object
+              properties:
+                conditions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      lastTransitionTime:
+                        type: string
+                        description: |
+                          lastTransitionTime is the last time the condition
+                          transitioned from one status to another.
+                      status:
+                        type: string
+                      type:
+                        type: string
+                        description: Type of cluster condition entry.
+          scaling:
+            type: object
+            description: |
+              Expresses the current status of desired number of worker nodes in
+              guest cluster.
+            properties:
+              desiredCapacity:
+                type: integer
+          versions:
+            type: array
+            description: Guest cluster release version history.
+            items:
+              type: object
+              properties:
+                lastTransitionTime:
+                  type: string
+                  description: Time when cluster transitioned to this release.
+                semver:
+                  type: string
+                  description: Release version.
 
   # List of key pairs
   V4GetKeyPairsResponse:
