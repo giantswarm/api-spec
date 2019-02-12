@@ -106,8 +106,26 @@ definitions:
       availability_zones:
         description: Number of availability zones a cluster should be spread across. The default is provided via the [info](#operation/getInfo) endpoint.
         type: integer
+      scaling:
+        type: object
+        description: |
+          Attributes specific to cluster node scaling. To have full control of
+          the cluster size, min and max can be set to the same value. If only
+          `min` or only `max` is specified, `min` and `max` will be set equally.
+        properties:
+          min:
+            type: integer
+            description: |
+              The minimum number of cluster nodes
+          max:
+            type: integer
+            description: |
+              The maximum number of cluster nodes
       workers:
         type: array
+        description: |
+          Worker node definition. If present, the first item of the array is
+          expected to contain the specification for all worker nodes.
         items:
           $ref: '#/definitions/V4NodeDefinition'
 
@@ -124,9 +142,23 @@ definitions:
       release_version:
         type: string
         description: Release version to use after an upgrade
+      scaling:
+        type: object
+        description: |
+          Attributes specific to cluster node scaling. To have full control of
+          the cluster size, min and max can be set to the same value.
+        properties:
+          min:
+            type: integer
+            description: |
+              The minimum number of cluster nodes
+          max:
+            type: integer
+            description: |
+              The maximum number of cluster nodes
       workers:
         type: array
-        description: Worker node array
+        description: Worker node array (deprecated)
         items:
           $ref: '#/definitions/V4NodeDefinition'
 
@@ -160,6 +192,20 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           currently running this cluster.
+      scaling:
+        type: object
+        description: |
+          Attributes specific to cluster node scaling as set during cluster
+          creation or cluster scaling.
+        properties:
+          min:
+            type: integer
+            description: |
+              The minimum number of cluster nodes as configured
+          max:
+            type: integer
+            description: |
+              The maximum number of cluster nodes as configured
       availability_zones:
         description: List of availability zones a cluster is spread across.
         type: array
@@ -167,6 +213,7 @@ definitions:
           description: Name of the availability zone
           type: string
       workers:
+        description: Information about worker nodes in the cluster (deprecated)
         type: array
         items:
           $ref: '#/definitions/V4NodeDefinition'
