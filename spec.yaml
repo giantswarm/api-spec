@@ -1337,6 +1337,16 @@ paths:
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The organization could not be deleted. (not found: the organization with id 'acme' could not be found)"
               }
+        "409":
+          description: Organization has credentials
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "FAILURE",
+                "message": "This organization can not be deleted while it has credentials attached to it - please contact Giant Swarm support for help."
+              }
         default:
           description: Error
           schema:
