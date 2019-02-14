@@ -1345,7 +1345,7 @@ paths:
             application/json:
               {
                 "code": "FAILURE",
-                "message": "This organization can not be deleted while it has credentials attached to it - please contact Giant Swarm support for help."
+                "message": "The organization cannot be deleted while it has credentials attached to it.  Please contact Giant Swarm support for help."
               }
         default:
           description: Error
