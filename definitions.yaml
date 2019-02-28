@@ -103,6 +103,9 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
+      region:
+        description: Region where tenant cluster should be created. The default is the same region where Giant Swarm control plane is running.
+        type: string
       availability_zones:
         description: Number of availability zones a cluster should be spread across. The default is provided via the [info](#operation/getInfo) endpoint.
         type: integer
@@ -206,6 +209,9 @@ definitions:
             type: integer
             description: |
               The maximum number of cluster nodes as configured
+      region:
+        type: string
+        description: Region where this cluster is running at.
       availability_zones:
         description: List of availability zones a cluster is spread across.
         type: array
