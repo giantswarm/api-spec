@@ -1079,7 +1079,7 @@ paths:
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       responses:
         "200":
-          description: Success
+          description: Node pools list
           schema:
             $ref: "./definitions.yaml#/definitions/V4GetNodePoolsResponse"
         "401":
@@ -1139,18 +1139,75 @@ paths:
         on AWS.
 
       responses:
-        "200":
-          description: Success
+        "201":
+          description: Node pool created
+          headers:
+            Location:
+              type: string
+              description: URI of the new node pool resource
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolResponse"
           examples:
             application/json:
               {
-                "code": "RESOURCE_CREATED",
-                "message": "A new node pool has been created with ID 'z7t'"
+                "id": "a1b",
+                "name": "My general purpose node pool",
+                "availability_zones": ["eu-central-1a", "eu-central-1c"],
+                "scaling": {"min": 3, "max": 10},
+                "node_spec": {
+                  "aws": {
+                    "instance_type": "m4.2xlarge"
+                  },
+                  "labels": {
+                    "purpose": "general"
+                  }
+                }
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
+
+  /v4/clusters/{cluster_id}/nodepools/{nodepool_id}/:
+    get:
+      operationId: getNodePool
+      tags:
+        - node pools
+      summary: Get node pool details
+      description: |
+        Returns all available details on a specific node pool
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
+        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/NodePoolIdPathParameter"
+      responses:
+        "200":
+          description: Node pool details
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolResponse"
+          examples:
+            application/json:
+              {
+                "id": "a3k",
+                "name": "Node pool name",
+                "availability_zones": ["europe-central-1a"],
+                "scaling": {"min": 3, "max": 5},
+                "node_spec": {
+                  "aws": {
+                    "instance_type": "m4.large"
+                  },
+                  "labels": {
+                    "TODO": "replace with realistic labels"
+                  }
+                }
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/clusters/{cluster_id}/status/:
     get:
