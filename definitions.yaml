@@ -103,21 +103,6 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
-      scaling:
-        type: object
-        description: |
-          Attributes specific to cluster node scaling. To have full control of
-          the cluster size, min and max can be set to the same value. If only
-          `min` or only `max` is specified, `min` and `max` will be set equally.
-        properties:
-          min:
-            type: integer
-            description: |
-              The minimum number of cluster nodes
-          max:
-            type: integer
-            description: |
-              The maximum number of cluster nodes
       workers:
         type: array
         description: |
