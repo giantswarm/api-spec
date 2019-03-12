@@ -1067,10 +1067,6 @@ paths:
       summary: Get node pools
       description: |
         Returns a list of node pools from a given cluster.
-
-        TODO: Specify how much information should be contained in the list,
-        and what has to be fetched via the node pool details or node pools
-        status endpoints.
       parameters:
         - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
