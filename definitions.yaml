@@ -283,7 +283,7 @@ definitions:
       labels:
         type: object
         additionalProperties: true
-  
+
   V4GetClusterStatusResponse:
     type: object
     description: Object about a cluster's current state
@@ -375,7 +375,7 @@ definitions:
       name:
         description: Node pool name
         type: string
-  
+
   # Add node pool
   V4AddNodePoolRequest:
     description: |
@@ -408,7 +408,7 @@ definitions:
         description: Worker node specification
         type: object
         $ref: '#/definitions/V4AddNodePoolRequestNodeSpec'
-  
+
   # Specification of a node in a node pool to be created
   V4AddNodePoolRequestNodeSpec:
     type: object
