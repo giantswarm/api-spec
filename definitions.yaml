@@ -362,17 +362,6 @@ definitions:
         type: string
         description: PEM-encoded certificate
 
-  # cluster metrics
-  V4GetClusterMetricsResponse:
-    description: Response for the getClusterMetrics operation
-    type: object
-    properties:
-      workers:
-        description: Group of metrics regarding workers
-        type: array
-        items:
-          $ref: '#/definitions/V4NodeMetrics'
-
   # a complete organization object
   V4Organization:
     type: object
