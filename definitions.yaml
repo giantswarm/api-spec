@@ -167,11 +167,6 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           currently running this cluster.
-      workers:
-        description: Information about worker nodes in the cluster (deprecated)
-        type: array
-        items:
-          $ref: '#/definitions/V4NodeDefinition'
       kvm:
         type: object
         description: Attributes specific to clusters running on KVM (on-prem) installations.
