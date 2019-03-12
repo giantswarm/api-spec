@@ -1051,6 +1051,36 @@ paths:
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
 
+  /v4/clusters/{cluster_id}/nodepools/:
+    get:
+      operationId: getNodePools
+      tags:
+        - node pools
+      summary: Get node pools
+      description: |
+        Returns a list of node pools from a given cluster.
+
+        TODO: Specify how much information should be contained in the list,
+        and what has to be fetched via the node pool details or node pools
+        status endpoints.
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
+        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolsResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/clusters/{cluster_id}/status/:
     get:
       operationId: getClusterStatus
