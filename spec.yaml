@@ -43,6 +43,13 @@ tags:
     externalDocs:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
       description: "User guide: Accessing Pods and Services from the Outside"
+  - name: node pools
+    description: |
+      As of release `TODO: set version`, worker nodes in tenant clusters
+      are grouped in node pools. All nodes in a node pool share the same
+      configuration and scaling is controlled on a pool level. This allows
+      to fulfill a variety of different workload requirements within the same
+      cluster.
   - name: organizations
     description: Organizations are groups of users who own resources like clusters.
   - name: users
@@ -1056,6 +1063,7 @@ paths:
       operationId: getNodePools
       tags:
         - node pools
+        - clusters
       summary: Get node pools
       description: |
         Returns a list of node pools from a given cluster.
@@ -1080,6 +1088,69 @@ paths:
           description: error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    post:
+      operationId: addNodePool
+      tags:
+        - node pools
+        - clusters
+      summary: Create node pool
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - name: body
+          in: body
+          required: false
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4AddNodePoolRequest"
+          x-examples:
+            application/json:
+              {
+                "name": "My general purpose node pool",
+                "availability_zones": 2,
+                "scaling": {"min": 3, "max": 10},
+                "node_spec": {
+                  "aws": {
+                    "instance_type": "m4.2xlarge"
+                  },
+                  "labels": {
+                    "purpose": "general"
+                  }
+                }
+              }
+      description: |
+        This allows to add a
+        [node pool](https://docs.giantswarm.io/api/#tag/releases)
+        to a cluster.
+
+        Some, but not all, node pool configuration can be changed after
+        creation. The following settings will have a permanent effect:
+
+        - `instance_type` (AWS only)
+        - `vm_size` (Azure only)
+        - `memory`, `storage`, and `cpu` (KVM only)
+        - `availability_zones`
+
+        ### Limitations
+
+        Having multiple node pools in a cluster is currently only supported
+        on AWS.
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "A new node pool has been created with ID 'z7t'"
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
 
   /v4/clusters/{cluster_id}/status/:
     get:
