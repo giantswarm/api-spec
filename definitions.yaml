@@ -364,17 +364,9 @@ definitions:
 
   # List of node pools
   V4GetNodePoolsResponse:
-    description: |
-      Response for the getNodePools operation
-      TODO: add more properties
-    type: object
-    properties:
-      id:
-        description: Node pool identifier
-        type: string
-      name:
-        description: Node pool name
-        type: string
+    type: array
+    items:
+      $ref: '#/definitions/V4GetNodePoolResponse'
 
   # Add node pool
   V4AddNodePoolRequest:
@@ -427,6 +419,94 @@ definitions:
           Node labels to be set for all nodes of a node pool
         type: object
         additionalProperties: true
+
+  # Specification of a node in a node pool after creation
+  V4GetNodePoolResponseNodeSpec:
+    type: object
+    properties:
+      aws:
+        type: object
+        description: |
+          Attributes specific to the AWS provider
+        properties:
+          instance_type:
+            type: string
+            description: |
+              EC2 instance type used by all nodes
+      azure:
+        type: object
+        description: |
+          Attributes specific to the Azure provider
+        properties:
+          vm_size:
+            description: |
+              Azure Virtual Machine size used by all nodes
+            type: string
+      kvm:
+        type: object
+        description: |
+          Attributes specific to the KVM provider
+        properties:
+          cpu:
+            description: CPU settings for all nodes
+            type: object
+            properties:
+              cores:
+                type: integer
+                description: Number of CPU cores
+          memory:
+            description: Memory (RAM) settings for all nodes
+            type: object
+            properties:
+              size_gb:
+                type: number
+                description: RAM size in GB. Can be an integer or float.
+          storage:
+            description: Storage settings for all nodes
+            type: object
+            properties:
+              size_gb:
+                type: number
+                description: |
+                  Node storage size in GB. Can be an integer or float.
+      labels:
+        description: |
+          Node labels set to all nodes in the pool
+        type: object
+        additionalProperties: true
+
+  V4GetNodePoolResponse:
+    type: object
+    properties:
+      id:
+        description: Node pool identifier. Unique within a tenant cluster.
+        type: string
+      name:
+        description: Node pool name
+        type: string
+      availability_zones:
+        description: |
+          Names of the availability zones used by the nodes of this pool.
+        type: array
+        items:
+          description: Name of the availability zone
+          type: string
+      scaling:
+        description: |
+          If `min` and `max` differ, the node pool is scaled automatically.
+          If both have the same value, the cluster size is pinned.
+        type: object
+        properties:
+          min:
+            description: Minimum number of nodes in the pool
+            type: integer
+          max:
+            description: Maximum number of nodes in the pool
+            type: integer
+      node_spec:
+        description: Worker node specification
+        type: object
+        $ref: '#/definitions/V4GetNodePoolResponseNodeSpec'
 
   # a complete organization object
   V4Organization:
