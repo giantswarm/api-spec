@@ -362,6 +362,20 @@ definitions:
         type: string
         description: PEM-encoded certificate
 
+  # List of node pools
+  V4GetNodePoolsResponse:
+    description: |
+      Response for the getNodePools operation
+      TODO: add more properties
+    type: object
+    properties:
+      id:
+        description: Node pool identifier
+        type: string
+      name:
+        description: Node pool name
+        type: string
+
   # cluster metrics
   V4GetClusterMetricsResponse:
     description: Response for the getClusterMetrics operation
