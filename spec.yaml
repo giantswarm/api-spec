@@ -797,33 +797,6 @@ paths:
                 "release_version": "2.5.16",
                 "owner": "acme",
                 "credential_id": "a1b2c",
-                "availability_zones": ["fire-zone-1"],
-                "workers": [
-                  {
-                    "memory": {"size_gb": 2.0},
-                    "storage": {"size_gb": 20.0},
-                    "cpu": {"cores": 4},
-                    "labels": {
-                      "beta.kubernetes.io/arch": "amd64",
-                      "beta.kubernetes.io/os": "linux",
-                      "ip": "10.3.11.2",
-                      "kubernetes.io/hostname": "worker-1.x882ofna.k8s.gigantic.io",
-                      "nodetype": "hicpu"
-                    }
-                  },
-                  {
-                    "memory": {"size_gb": 8.0},
-                    "storage": {"size_gb": 20.0},
-                    "cpu": {"cores": 2},
-                    "labels": {
-                      "beta.kubernetes.io/arch": "amd64",
-                      "beta.kubernetes.io/os": "linux",
-                      "ip": "10.3.62.2",
-                      "kubernetes.io/hostname": "worker-2.x882ofna.k8s.gigantic.io",
-                      "nodetype": "hiram"
-                    }
-                  }
-                ],
                 "kvm": {
                   "port_mappings": [
                     {
