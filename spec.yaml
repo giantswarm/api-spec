@@ -650,36 +650,42 @@ paths:
 
         ### Availability Zones (AWS only)
 
-        The number of `availability_zones` affects the total number of nodes
-        that can be created in the cluster. The number of availability zones
-        splits the IP range that can be used for the cluster in multiple smaller
-        IP ranges. The [getInfo](#operation/getInfo) endpoint provides more
-        details about the cluster IP range.
+        On AWS, you can distribute the nodes of a node pool over several
+        availability zones to increase the cluster's resilience.
+        
+        As a side effect, this impacts the maximum number of nodes a node pool
+        can have. The more availability zones are used, the fewer nodes are
+        possible. You can work around this by creating more node pools.
 
-        __IP range example:__
+        #### Details
 
-        If a cluster gets a `/22` range (1022 hosts) and the cluster should be
-        spawned across 3 availability zones, the range will then be split up
-        into four `/24` (254 hosts) that can be assigned to four different
-        availability zones. One range will stay unused because network
-        addresses must be powers of two. See [CIDR addressing](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
-        Each of the `/24` will then be split into two `/25` (126 hosts) for
-        public and private subnets. The private subnet is used for nodes and
-        internal loadbalancer (only if you create them within Kubernetes). The
-        public subnet will be used by the public loadbalancers. Tenant cluster
-        come with two public loadbalancers by default. One for the Kubernetes API
-        and one for Ingress.
+        Each node pool is assigned a `/22` IP address range, which allows for
+        1022 IP addresses.
+        
+        If using, for example, three availability zones, the range will
+        be split into four `/24` ranges of 254 addresses each. Each of
+        the three availability zones is assigned one of these `/24` ranges.
+
+        Each of the `/24` address ranges then gets split into two `/25` with
+        126 hosts ) for public and private subnets. The private subnet is used
+        for nodes and internal load balancers (only if you create them within
+        Kubernetes). The public subnet will be used by public load balancers.
+
+        TODO: update this
+        
+        > Tenant cluster come with two public loadbalancers by default. One 
+        > for the Kubernetes API and one for Ingress.
 
         __Note:__ AWS ELBs can take up to 8 IP addresses due to the way how
-        they scale. In addition to this, every AWS subnet has four first
-        addresses (.1-.4) reserved for internal use.
+        they scale. In addition to this, every AWS subnet has the first four
+        addresses (.1 to .4) reserved for internal use.
 
         ### Initial node pool size and autoscaling
 
         The API allows to define the size of node pools on creation using the
         `scaling` attribute, setting a minimum and maximum node count.
 
-        For releases starting from 6.2.0 (on AWS), the cluster size is controlled
+        For releases starting from 6.2.0 (on AWS), the pool size is controlled
         by the [Kubernetes Autoscaler](https://github.com/kubernetes/autoscaler)
         within the limits defined by the `scaling` setting. This setting can
         also be modified any time later in the node pool lifecycle.
@@ -692,13 +698,6 @@ paths:
         Until autoscaling is available on providers other than AWS, for Azure
         and KVM (on-premises) the `min` and `max` scaling value **must** be
         identical.
-
-        ### TODOs for node pools
-
-        - Mention that scaling is done via the node pool starting with the
-        introduction of node pools
-        - Mention that clusters will be created with 1 default node pool if the
-        request does not contain specific node pool info
 
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
