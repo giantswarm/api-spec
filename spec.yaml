@@ -652,7 +652,7 @@ paths:
 
         On AWS, you can distribute the nodes of a node pool over several
         availability zones to increase the cluster's resilience.
-        
+
         As a side effect, this impacts the maximum number of nodes a node pool
         can have. The more availability zones are used, the fewer nodes are
         possible. You can work around this by creating more node pools.
@@ -661,7 +661,7 @@ paths:
 
         Each node pool is assigned a `/22` IP address range, which allows for
         1022 IP addresses.
-        
+
         If using, for example, three availability zones, the range will
         be split into four `/24` ranges of 254 addresses each. Each of
         the three availability zones is assigned one of these `/24` ranges.
@@ -672,8 +672,8 @@ paths:
         Kubernetes). The public subnet will be used by public load balancers.
 
         TODO: update this
-        
-        > Tenant cluster come with two public loadbalancers by default. One 
+
+        > Tenant cluster come with two public loadbalancers by default. One
         > for the Kubernetes API and one for Ingress.
 
         __Note:__ AWS ELBs can take up to 8 IP addresses due to the way how
