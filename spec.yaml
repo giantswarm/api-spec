@@ -622,7 +622,7 @@ paths:
         configuration details, like node pool configuration, with node
         specification depending on the provider (EC2 instance type or Azure
         VM size, memory size and number of CPU cores).
-        
+
         One attribute is __mandatory__ upon creation: The `owner`
         attribute must carry the name of the organization the cluster will
         belong to. Note that the acting user must be a member of that
@@ -644,7 +644,7 @@ paths:
         entire lifetime of a cluster, given that the cluster must have at least
         one node pool. See
         [node pools](https://docs.giantswarm.io/api/#tag/nodepools) for details.
-        
+
         On Azure and KVM, clusters are currently restricted to have exactly one
         node pool.
 
