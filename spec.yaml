@@ -43,7 +43,7 @@ tags:
     externalDocs:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
       description: "User guide: Accessing Pods and Services from the Outside"
-  - name: node pools
+  - name: nodepools
     description: |
       As of release `TODO: set version`, worker nodes in tenant clusters
       are grouped in node pools. All nodes in a node pool share the same
@@ -1093,7 +1093,7 @@ paths:
     get:
       operationId: getNodePools
       tags:
-        - node pools
+        - nodepools
         - clusters
       summary: Get node pools
       description: |
@@ -1118,7 +1118,7 @@ paths:
     post:
       operationId: addNodePool
       tags:
-        - node pools
+        - nodepools
         - clusters
       summary: Create node pool
       parameters:
@@ -1149,7 +1149,7 @@ paths:
               }
       description: |
         This allows to add a
-        [node pool](https://docs.giantswarm.io/api/#tag/releases)
+        [node pool](https://docs.giantswarm.io/api/#tag/nodepools)
         to a cluster.
 
         Some, but not all, node pool configuration can be changed after
@@ -1197,7 +1197,7 @@ paths:
     get:
       operationId: getNodePool
       tags:
-        - node pools
+        - nodepools
       summary: Get node pool details
       description: |
         Returns all available details on a specific node pool
