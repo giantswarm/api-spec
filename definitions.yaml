@@ -103,6 +103,11 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
+      nodepools:
+        description: Specification of node pools to be created
+        type: array
+        items:
+          $ref: '#/definitions/V4AddNodePoolRequest'
 
   V4ModifyClusterRequest:
     type: object
