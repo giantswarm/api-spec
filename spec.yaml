@@ -619,24 +619,34 @@ paths:
         ### Cluster definition
 
         The cluster definition format allows to set a number of optional
-        configuration details, like memory size and number of CPU cores.
-        However, one attribute is __mandatory__ upon creation: The `owner`
+        configuration details, like node pool configuration, with node
+        specification depending on the provider (EC2 instance type or Azure
+        VM size, memory size and number of CPU cores).
+        
+        One attribute is __mandatory__ upon creation: The `owner`
         attribute must carry the name of the organization the cluster will
         belong to. Note that the acting user must be a member of that
         organization in order to create a cluster.
 
-        It is *recommended* to also specify the `name` attribute to give the
-        cluster a friendly name, like e. g. "Development Cluster".
+        For all other attributes, defaults will be applied if the attribute
+        is not set. Check out the [getInfo](#operation/getInfo) operation for
+        more info about defaults. If no `release_version` is set, the latest
+        release version available for the provider will be used.
 
-        Additional definition attributes can be used. Where attributes are
-        omitted, default configuration values will be applied. For example, if
-        no `release_version` is specified, the most recent version is used.
+        ### Node pools
 
-        The specification of worker nodes, for example the instance type on AWS,
-        can be provided via the `workers` array. Here, the first item of the
-        array is used as a specification for all worker nodes. For any missing
-        specification attribute, defaults are assumed. Check out the
-        [getInfo](#operation/getInfo) operation for more info about defaults.
+        Worker nodes are grouped into node pools of nodes sharing the same
+        configuration. When creating a cluster without submitting the
+        `nodepools` attribute, or with its value being an empty array, one node
+        pool with default configuraiton will be created.
+
+        On AWS, node pools can be created, deleted and modified during the
+        entire lifetime of a cluster, given that the cluster must have at least
+        one node pool. See
+        [node pools](https://docs.giantswarm.io/api/#tag/nodepools) for details.
+        
+        On Azure and KVM, clusters are currently restricted to have exactly one
+        node pool.
 
         ### Availability Zones (AWS only)
 
@@ -664,35 +674,31 @@ paths:
         they scale. In addition to this, every AWS subnet has four first
         addresses (.1-.4) reserved for internal use.
 
-        ### Initial cluster size and autoscaling
+        ### Initial node pool size and autoscaling
 
-        The API allows to define the cluster size on creation using the
-        `scaling` attribute, setting a minimum and maximum worker node count.
+        The API allows to define the size of node pools on creation using the
+        `scaling` attribute, setting a minimum and maximum node count.
 
         For releases starting from 6.2.0 (on AWS), the cluster size is controlled
         by the [Kubernetes Autoscaler](https://github.com/kubernetes/autoscaler)
         within the limits defined by the `scaling` setting. This setting can
-        also be modified any time later in the cluster lifecycle.
+        also be modified any time later in the node pool lifecycle.
 
         By setting both the minimum and maximum to the same value, autoscaling
         is effectively disabled. This is also the default behaviour when no
-        initial cluster size is given, or when clusters are upgraded from
+        initial node pool size is given, or when clusters are upgraded from
         releases before 6.2.0.
 
         Until autoscaling is available on providers other than AWS, for Azure
-        and KVM (on-premises) the `min` and `max` scaling value must be
-        identical. The same is true for tenant clusters using a release
-        before 6.2.0 on AWS.
+        and KVM (on-premises) the `min` and `max` scaling value **must** be
+        identical.
 
-        ### Backward compatibility note
+        ### TODOs for node pools
 
-        Before the introduction of autoscaling and the `scaling` attribute, the
-        number of worker nodes could be determined via the number of items
-        contained in the `workers` array. This behaviour will be still accepted
-        for a transition period, but only if the `scaling` attribute is _not_
-        provided in the request. In this case, a `workers` array length of 5,
-        for example, will be translated to a scaling where both `min` and `max`
-        are set to 5, which effectively turns off autoscaling.
+        - Mention that scaling is done via the node pool starting with the
+        introduction of node pools
+        - Mention that clusters will be created with 1 default node pool if the
+        request does not contain specific node pool info
 
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
@@ -714,6 +720,36 @@ paths:
                 "availability_zones": 2,
                 "scaling": {"min": 3, "max": 3},
                 "workers": [{"aws": {"instance_type": "m5.xlarge"}}]
+                "release_version": "7.1.0",
+                "name": "Example cluster with 2 node pools",
+                "nodepools": [
+                  {
+                    "name": "General purpose",
+                    "availability_zones": 2,
+                    "scaling": {"min": 3, "max": 30},
+                    "node_spec": {
+                      "aws": {
+                        "instance_type": "m4.2xlarge"
+                      },
+                      "labels": {
+                        "purpose": "general"
+                      }
+                    }
+                  },
+                  {
+                    "name": "Database",
+                    "availability_zones": 3,
+                    "scaling": {"min": 3, "max": 3},
+                    "node_spec": {
+                      "aws": {
+                        "instance_type": "r4.4xlarge"
+                      },
+                      "labels": {
+                        "purpose": "database"
+                      }
+                    }
+                  }
+                ]
               }
       responses:
         "201":
