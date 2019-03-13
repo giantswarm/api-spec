@@ -782,11 +782,6 @@ paths:
       description: |
         This operation allows to obtain most available details on a particular
         cluster.
-
-        __Deprecation note:__ The `workers` attribute will be removed by
-        from this operation's response in the near future. Please use the
-        [getClusterStatus](#operation/getClusterStatus) operation instead to
-        get up-to-date details on the workers nodes in a cluster.
       responses:
         "200":
           description: Cluster details
