@@ -611,10 +611,7 @@ paths:
       summary: Create cluster
       description: |
         This operation is used to create a new Kubernetes cluster for an
-        organization. The desired configuration can be specified using the
-        __cluster definition format__ (see
-        [external documentation](https://github.com/giantswarm/api-spec/blob/master/details/CLUSTER_DEFINITION.md)
-        for details).
+        organization.
 
         ### Cluster definition
 
