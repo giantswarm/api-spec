@@ -122,25 +122,27 @@ definitions:
       release_version:
         type: string
         description: Release version to use after an upgrade
+  
+  V4ModifyNodePoolRequest:
+    type: object
+    description: Request body for node pool modification
+    properties:
+      name:
+        type: string
+        description: New name of the node pool
       scaling:
-        type: object
         description: |
-          Attributes specific to cluster node scaling. To have full control of
-          the cluster size, min and max can be set to the same value.
+          Attributes specific to node pool scaling. To have full control of
+          the cluster size, min and max can be set to the same value. If only
+          `min` or only `max` is specified, `min` and `max` will be set equally.
+        type: object
         properties:
           min:
+            description: Minimum number of nodes in the pool
             type: integer
-            description: |
-              The minimum number of cluster nodes
           max:
+            description: Maximum number of nodes in the pool
             type: integer
-            description: |
-              The maximum number of cluster nodes
-      workers:
-        type: array
-        description: Worker node array (deprecated)
-        items:
-          $ref: '#/definitions/V4NodeDefinition'
 
   # Details on existing cluster
   V4ClusterDetailsResponse:
@@ -193,53 +195,12 @@ definitions:
                     The protocol this port mapping is made for.
                   type: string
 
-  # Definition of a cluster node
-  V4NodeDefinition:
-    type: object
-    properties:
-      aws:
-        type: object
-        description: |
-          Attributes specific to nodes running on Amazon Web Services (AWS)
-        properties:
-          instance_type:
-            type: string
-            description: |
-              EC2 instance type name. Must be the same for all worker nodes
-              of a cluster.
-      azure:
-        type: object
-        description: |
-          Attributes specific to nodes running on Microsoft Azure
-        properties:
-          vm_size:
-            type: string
-            description: |
-              Azure Virtual Machine size. Must be the same for all worker nodes
-              of a cluster.
-      memory:
-        type: object
-        properties:
-          size_gb:
-            type: number
-            description: RAM size in GB. Can be an integer or float.
-      storage:
-        type: object
-        properties:
-          size_gb:
-            type: number
-            description: Node storage size in GB. Can be an integer or float.
-      cpu:
-        type: object
-        properties:
-          cores:
-            type: integer
-            description: Number of CPU cores
-      labels:
-        type: object
-        additionalProperties: true
-
   V4GetClusterStatusResponse:
+    type: object
+    description: Object about a cluster's current state
+    additionalProperties: true
+  
+  V4GetNodePoolStatusResponse:
     type: object
     description: Object about a cluster's current state
     additionalProperties: true
@@ -369,11 +330,42 @@ definitions:
             type: string
             description: |
               EC2 instance type to use for all nodes in the node pool
-      labels:
-        description: |
-          Node labels to be set for all nodes of a node pool
+      azure:
         type: object
-        additionalProperties: true
+        description: |
+          Attributes specific to the Azure provider
+        properties:
+          vm_size:
+            type: string
+            description: |
+              Azure VM size to use for worker nodes instances
+      kvm:
+        type: object
+        description: |
+          Attributes specific to the KVM provider
+        properties:
+          cpu:
+            description: CPU settings for all nodes
+            type: object
+            properties:
+              cores:
+                type: integer
+                description: Number of CPU cores
+          memory:
+            description: Memory (RAM) settings for all nodes
+            type: object
+            properties:
+              size_gb:
+                type: number
+                description: RAM size in GB. Can be an integer or float.
+          storage:
+            description: Storage settings for all nodes
+            type: object
+            properties:
+              size_gb:
+                type: number
+                description: |
+                  Node storage size in GB. Can be an integer or float.
 
   # Specification of a node in a node pool after creation
   V4GetNodePoolResponseNodeSpec:

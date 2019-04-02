@@ -635,66 +635,17 @@ paths:
         Worker nodes are grouped into node pools of nodes sharing the same
         configuration. When creating a cluster without submitting the
         `nodepools` attribute, or with its value being an empty array, one node
-        pool with default configuraiton will be created.
+        pool with default configuration will be created.
 
         On AWS, node pools can be created, deleted and modified during the
-        entire lifetime of a cluster, given that the cluster must have at least
-        one node pool. See
-        [node pools](https://docs.giantswarm.io/api/#tag/nodepools) for details.
+        entire lifetime of a cluster.
+        
+        See
+        [node pools](#tag/nodepools) and 
+        [Create node pool](#operation/addNodePool) for details.
 
-        On Azure and KVM, clusters are currently restricted to have exactly one
-        node pool.
-
-        ### Availability Zones (AWS only)
-
-        On AWS, you can distribute the nodes of a node pool over several
-        availability zones to increase the cluster's resilience.
-
-        As a side effect, this impacts the maximum number of nodes a node pool
-        can have. The more availability zones are used, the fewer nodes are
-        possible. You can work around this by creating more node pools.
-
-        #### Details
-
-        Each node pool is assigned a `/22` IP address range, which allows for
-        1022 IP addresses.
-
-        If using, for example, three availability zones, the range will
-        be split into four `/24` ranges of 254 addresses each. Each of
-        the three availability zones is assigned one of these `/24` ranges.
-
-        Each of the `/24` address ranges then gets split into two `/25` with
-        126 hosts ) for public and private subnets. The private subnet is used
-        for nodes and internal load balancers (only if you create them within
-        Kubernetes). The public subnet will be used by public load balancers.
-
-        TODO: update this
-
-        > Tenant cluster come with two public loadbalancers by default. One
-        > for the Kubernetes API and one for Ingress.
-
-        __Note:__ AWS ELBs can take up to 8 IP addresses due to the way how
-        they scale. In addition to this, every AWS subnet has the first four
-        addresses (.1 to .4) reserved for internal use.
-
-        ### Initial node pool size and autoscaling
-
-        The API allows to define the size of node pools on creation using the
-        `scaling` attribute, setting a minimum and maximum node count.
-
-        For releases starting from 6.2.0 (on AWS), the pool size is controlled
-        by the [Kubernetes Autoscaler](https://github.com/kubernetes/autoscaler)
-        within the limits defined by the `scaling` setting. This setting can
-        also be modified any time later in the node pool lifecycle.
-
-        By setting both the minimum and maximum to the same value, autoscaling
-        is effectively disabled. This is also the default behaviour when no
-        initial node pool size is given, or when clusters are upgraded from
-        releases before 6.2.0.
-
-        Until autoscaling is available on providers other than AWS, for Azure
-        and KVM (on-premises) the `min` and `max` scaling value **must** be
-        identical.
+        On Azure and KVM, clusters are currently restricted to have either
+        exactly one node pool or none.
 
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
@@ -867,27 +818,6 @@ paths:
         cluster to a newer
         [release](https://docs.giantswarm.io/api/#tag/releases).
 
-        - `scaling`: Adjust the cluster node limits to make use of auto scaling
-        or to have full control over the node count. The latter can be
-        achieved by setting `min` and `max` to the same values. Note that
-        setting `min` and `max` to different values (effectively enabling
-        autoscaling) is only available on AWS with releases from 6.2.0.
-
-        - `workers` (deprecated): For backward compatibility reasons, it is
-        possible to provide this attribute as an array, where the number of
-        items contained in the array determines the intended number of worker
-        nodes in the cluster. The item count will be applied as both `min` and
-        `max` value of the scaling limits, effectively disabling autoscaling.
-        This requires the `scaling` attribute must not be present in the same
-        request.
-
-        ### Limitations
-
-        - As of now, existing worker nodes cannot be modified.
-        - The number of availability zones cannot be modified.
-        - When removing nodes (scaling down), it is not possible to determine
-        which nodes will be removed.
-
       responses:
         "200":
           description: Cluster modified
@@ -903,7 +833,10 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The cluster with ID 'wqtlq' could not be found, or perhaps you do not have access to it. Please make sure the cluster ID is correct, and that you are a member of the organization that it belongs to."
+                "message": "The cluster with ID 'wqtlq' could not be found, or
+                  perhaps you do not have access to it. Please make sure the
+                  cluster ID is correct, and that you are a member of the
+                  organization that it belongs to."
               }
         default:
           description: error
@@ -1119,15 +1052,67 @@ paths:
         Some, but not all, node pool configuration can be changed after
         creation. The following settings will have a permanent effect:
 
+        - `availability_zones` (AWS only)
         - `instance_type` (AWS only)
-        - `vm_size` (Azure only)
         - `memory`, `storage`, and `cpu` (KVM only)
-        - `availability_zones`
+        - `vm_size` (Azure only)
+
+        ### Availability Zones (AWS only)
+
+        On AWS, you can distribute the nodes of a node pool over several
+        availability zones to increase the cluster's resilience.
+
+        As a side effect, this impacts the maximum number of nodes a node pool
+        can have. The more availability zones are used, the fewer nodes are
+        possible. You can work around this by creating more node pools.
+
+        #### Details
+
+        Each node pool is assigned a `/22` IP address range, which allows for
+        1022 IP addresses.
+
+        If using, for example, three availability zones, the range will
+        be split into four `/24` ranges of 254 addresses each. Each of
+        the three availability zones is assigned one of these `/24` ranges.
+
+        Each of the `/24` address ranges then gets split into two `/25` with
+        126 hosts ) for public and private subnets. The private subnet is used
+        for nodes and internal load balancers (only if you create them within
+        Kubernetes). The public subnet will be used by public load balancers.
+
+        TODO: update this
+
+        > Tenant cluster come with two public loadbalancers by default. One
+        > for the Kubernetes API and one for Ingress.
+
+        __Note:__ AWS ELBs can take up to 8 IP addresses due to the way how
+        they scale. In addition to this, every AWS subnet has the first four
+        addresses (.1 to .4) reserved for internal use.
+
+        ### Initial node pool size and autoscaling
+
+        The API allows to define the size of node pools on creation using the
+        `scaling` attribute, setting a minimum and maximum node count.
+
+        On AWS, the pool size is controlled
+        by the [Kubernetes Autoscaler](https://github.com/kubernetes/autoscaler)
+        within the limits defined by the `scaling` setting. This setting can
+        also be modified any time later in the node pool lifecycle.
+
+        By setting both the minimum and maximum to the same value, autoscaling
+        is effectively disabled. This is also the default behaviour when no
+        initial node pool size is given, or when clusters are upgraded from
+        releases before 6.2.0.
+
+        Until autoscaling is available on providers other than AWS, for Azure
+        and KVM (on-premises) the `min` and `max` scaling value **must** be
+        identical.
 
         ### Limitations
 
-        Having multiple node pools in a cluster is currently only supported
+        - Having multiple node pools in a cluster is currently only supported
         on AWS.
+        - `scaling.min` and `scaling.max` must be identical on Azure and KVM.
 
       responses:
         "201":
@@ -1199,6 +1184,130 @@ paths:
           description: error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    patch:
+      operationId: modifyNodePool
+      tags:
+        - nodepools
+      summary: Modify node pool
+      description: |
+        Allows to rename a nod pool or change its scaling settings.
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
+        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/NodePoolIdPathParameter"
+        - name: body
+          in: body
+          required: true
+          description: Merge-patch body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4ModifyNodePoolRequest"
+          x-examples:
+            application/merge-patch+json:
+              {
+                "scaling": {
+                  "min": 5,
+                  "max": 30
+                }
+              }
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolResponse"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    delete:
+      operationId: deleteNodePool
+      tags:
+        - nodepools
+      summary: Delete node pool
+      description: |
+        Deletes a node pool.
+
+        Nodes in the pool will first be cordoned and drained. Note that it is
+        your responsibililty to make sure that workloads using the node pool can
+        be scheduled elsewhere. We recommend to double check the available
+        capacity of remaining node pools, as well as any node selectors and
+        affinities. Also you can do the draining yourself to observe the
+        outcome. Use
+
+        ```
+        kubectl cordon nodes -l giantswarm.nodepool_id=<nodepool_id>
+        kubectl drain nodes -l giantswarm.nodepool_id=<nodepool_id> ...
+        ```
+
+        TODO: adapt the command for correct label syntax
+      resposes:
+        "202":
+          description: Deleting node pool
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_DELETION_STARTED",
+                "message": "The cluster with ID 'wqtlq' is being deleted."
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Node pool not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The node pool with ID 'wqt' could not be found, or 
+                perhaps you do not have access to it. Please make sure the 
+                node pool ID is correct, and that you have access to the cluster
+                it belongs to."
+              }
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v4/clusters/{cluster_id}/nodepools/{nodepool_id}/status/:
+    get:
+      operationId: getNodePoolStatus
+      tags:
+        - nodepools
+      summary: Get node pool status
+      description: |
+        Returns information on a node pool and the nodes in it.
+
+        This endpoint exposes the status content of the Kubernetes resources representing
+        a node pool in the corresponding custom resource. That is, depending on the provider:
+
+        TODO: link to resources, as we do in `getClusterStatus`
+
+        Note that structure and style differ from the rest of the v4 API. Also note that
+        the structure depends on the release version and changes can be expected frequently.
+
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: Cluster status
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolStatusResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
 
   /v4/clusters/{cluster_id}/status/:
     get:
