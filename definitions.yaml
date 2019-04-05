@@ -25,14 +25,14 @@ definitions:
           description: A URL to a logo representing this catalog.
           type: string
         name:
-          description: An url friendly identifier for the catalog.
+          description: A URL friendly identifier for the catalog.
           type: string
         storage:
           description: Contains information on where to find the full catalog, and what type of catalog it is.
           type: object
           properties:
             URL:
-              description: An URL where clients can download the full catalog.
+              description: A URL where clients can download the full catalog.
               type: string
             type:
               description: The format of this catalog. (Currently only helm is supported.)
