@@ -12,6 +12,33 @@ definitions:
         description: |
           A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
 
+  # App Catalogs Response
+  V4AppCatalogsResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        description:
+          description: A description of the catalog.
+          type: string
+        name:
+          description: An url friendly identifier for the catalog.
+          type: string
+        storage:
+          description: Contains information on where to find the full catalog, and what type of catalog it is.
+          type: object
+          properties:
+            URL:
+              description: An URL where clients can download the full catalog.
+              type: string
+            type:
+              description: The format of this catalog. (Currently only helm is supported.)
+              type: string
+        title:
+          description: A display friendly title for this catalog.
+          type: string
+
+
   # Info response
   V4InfoResponse:
     type: object

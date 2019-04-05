@@ -82,6 +82,56 @@ security:
   - AuthorizationHeaderToken: []
 
 paths:
+  /v4/appcatalogs/:
+    get:
+      operationId: getAppCatalogs
+      tags:
+        - App Katalog
+      summary: Get a list of app catalogs configured on your installation.
+      description: |
+        Returns an array of app catalog objects, which contain further metadata,
+        including a URL to fetch the full index of each catalog.
+
+
+        ### Example
+        ```json
+          [
+            {
+              "description": "Giant Swarm's Sample Catalog with a few apps to test things out.",
+              "name": "sample-catalog",
+              "storage": {
+                "URL": "https://giantswarm.github.com/sample-catalog/",
+                "type": "helm"
+              },
+              "title": "Sample Catalog"
+            }
+          ]
+        ```
+      responses:
+        "200":
+          description: Information
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4AppCatalogsResponse"
+          examples:
+            application/json:
+              [
+                {
+                  "description": "Giant Swarm's Sample Catalog with a few apps to test things out.",
+                  "name": "sample-catalog",
+                  "storage": {
+                    "URL": "https://giantswarm.github.com/sample-catalog/",
+                    "type": "helm"
+                  },
+                  "title": "Sample Catalog"
+                }
+              ]
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/info/:
     get:
       operationId: getInfo
