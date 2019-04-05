@@ -18,28 +18,31 @@ definitions:
     items:
       type: object
       properties:
-        description:
-          description: A description of the catalog.
-          type: string
-        logoURL:
-          description: A URL to a logo representing this catalog.
-          type: string
-        name:
-          description: A URL friendly identifier for the catalog.
-          type: string
-        storage:
-          description: Contains information on where to find the full catalog, and what type of catalog it is.
-          type: object
-          properties:
-            URL:
-              description: A URL where clients can download the full catalog.
-              type: string
-            type:
-              description: The format of this catalog. (Currently only helm is supported.)
-              type: string
-        title:
-          description: A display friendly title for this catalog.
-          type: string
+        metadata:
+          name:
+            description: A URL friendly identifier for the catalog.
+            type: string
+        spec:
+          title:
+            description: A display friendly title for this catalog.
+            type: string
+          description:
+            description: A description of the catalog.
+            type: string
+          logoURL:
+            description: A URL to a logo representing this catalog.
+            type: string
+          storage:
+            description: Contains information on where to find the full catalog, and what type of catalog it is.
+            type: object
+            properties:
+              URL:
+                description: A URL where clients can download the full catalog.
+                type: string
+              type:
+                description: The format of this catalog. (Currently only helm is supported.)
+                type: string
+
 
 
   # Info response
