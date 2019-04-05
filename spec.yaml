@@ -86,7 +86,7 @@ paths:
     get:
       operationId: getAppCatalogs
       tags:
-        - App Katalog
+        - app katalog
       summary: Get a list of app catalogs configured on your installation.
       description: |
         Returns an array of app catalog objects, which contains further metadata,
