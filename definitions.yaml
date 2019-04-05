@@ -21,6 +21,9 @@ definitions:
         description:
           description: A description of the catalog.
           type: string
+        logoURL:
+          description: A URL to a logo representing this catalog.
+          type: string
         name:
           description: An url friendly identifier for the catalog.
           type: string

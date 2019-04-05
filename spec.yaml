@@ -98,6 +98,7 @@ paths:
           [
             {
               "description": "Giant Swarm's Sample Catalog with a few apps to test things out.",
+              "logoURL": "https://s.giantswarm.io/app-katalog/1/images/sample-catalog.png",
               "name": "sample-catalog",
               "storage": {
                 "URL": "https://giantswarm.github.com/sample-catalog/",
