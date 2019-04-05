@@ -60,5 +60,5 @@ Use this command from the root directory of your clone of this repo:
 make run-server
 ```
 
-Then open [`http://localhost:8000/`](http://localhost:8000/) to access your specs displayed via ReDoc.
+Then open [`http://localhost:8080/`](http://localhost:8080/) to access your specs displayed via ReDoc.
 
