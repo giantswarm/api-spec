@@ -1088,6 +1088,14 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
+  /v4/clusters/{cluster_id}/apps/:
+    get:
+      operationId: getClusterApps
+      tags:
+        - app katalog
+        - cluster
+      summary: Get cluster apps
+
   /v4/organizations/:
     get:
       operationId: getOrganizations
