@@ -43,8 +43,6 @@ definitions:
                 description: The format of this catalog. (Currently only helm is supported.)
                 type: string
 
-
-
   # Info response
   V4InfoResponse:
     type: object
