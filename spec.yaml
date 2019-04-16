@@ -566,9 +566,10 @@ paths:
         A user with admin permission will receive a list of all existing
         clusters.
 
-        The result array items are sparse representations of the cluster objects.
-        To fetch more details on a cluster, use the
-        [getCluster](#operation/getCluster) and
+        The result array items are sparse representations of the cluster
+        objects. To fetch more details on a cluster, use the
+        [getCluster](#operation/getCluster),
+        [getNodePools](#operation/getNodePools), and
         [getClusterStatus](#operation/getClusterStatus) operations.
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
@@ -639,9 +640,9 @@ paths:
 
         On AWS, node pools can be created, deleted and modified during the
         entire lifetime of a cluster.
-        
+
         See
-        [node pools](#tag/nodepools) and 
+        [node pools](#tag/nodepools) and
         [Create node pool](#operation/addNodePool) for details.
 
         On Azure and KVM, clusters are currently restricted to have either
@@ -1263,8 +1264,8 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The node pool with ID 'wqt' could not be found, or 
-                perhaps you do not have access to it. Please make sure the 
+                "message": "The node pool with ID 'wqt' could not be found, or
+                perhaps you do not have access to it. Please make sure the
                 node pool ID is correct, and that you have access to the cluster
                 it belongs to."
               }
