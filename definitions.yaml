@@ -144,6 +144,20 @@ definitions:
       release_version:
         type: string
         description: Release version to use after an upgrade
+      scaling:
+        type: object
+        description: |
+          Allows to modify scaling settings for KVM and Azure. Not available on
+          AWS. Both min and max are expected to have the same value.
+        properties:
+          min:
+            type: integer
+            description: |
+              Minimum number of cluster nodes
+          max:
+            type: integer
+            description: |
+              Maximum number of cluster nodes
 
   V4ModifyNodePoolRequest:
     type: object
