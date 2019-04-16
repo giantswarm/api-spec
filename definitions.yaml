@@ -210,6 +210,20 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           currently running this cluster.
+      scaling:
+        type: object
+        description: |
+          Attributes specific to cluster node scaling as set during cluster
+          creation or cluster scaling.
+        properties:
+          min:
+            type: integer
+            description: |
+              Minimum number of cluster nodes as configured
+          max:
+            type: integer
+            description: |
+              Maximum number of cluster nodes as configured
       kvm:
         type: object
         description: Attributes specific to clusters running on KVM (on-prem) installations.
