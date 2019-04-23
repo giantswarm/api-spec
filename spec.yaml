@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  title: The Giant Swarm API v4
+  title: The Giant Swarm API
   description: |
-    This is the documentation for the Giant Swarm API starting at version `v4`.
+    This is the documentation for the Giant Swarm API.
 
     For an introduction to Giant Swarm, refer to the [documentation site](https://docs.giantswarm.io/).
 
@@ -19,7 +19,7 @@ info:
     The source of this documentation is available on [GitHub](https://github.com/giantswarm/api-spec).
 
   termsOfService: https://giantswarm.io/terms/
-  version: 4.0.0
+  version: 5.0.0
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -33,9 +33,13 @@ tags:
       Auth Tokens are your way of authenticating against this API. You can create one by passing your email and base64 encoded password to the create auth token endpoint. The auth token never expires, in case you want to invalidate it you need to delete it (logout).
   - name: clusters
     description: |
-      Clusters are a central resource of the Giant Swarm API. As a user or team using Giant Swarm, you set up Kubernetes clusters to run your own workloads.
+      Clusters are a central resource of the Giant Swarm API. As a team using
+      Giant Swarm, you set up Kubernetes clusters to run your own workloads.
 
-      The API currently provides operations to create and delete clusters, as well as list all available clusters and get details on specific clusters.
+      Some cluster-related API operations are provider specific. Please pay
+      special attention to provider tags <span class="badge aws">AWS</span>
+      <span class="badge azure">Azure</span> <span class="badge kvm">KVM</span>
+      to find additional information regarding provider compatibility.
   - name: info
     description: Information about the Giant Swarm installation
   - name: key pairs
@@ -45,11 +49,13 @@ tags:
       description: "User guide: Accessing Pods and Services from the Outside"
   - name: nodepools
     description: |
-      As of release `TODO: set version`, worker nodes in tenant clusters
-      are grouped in node pools. All nodes in a node pool share the same
-      configuration and scaling is controlled on a pool level. This allows
-      to fulfill a variety of different workload requirements within the same
-      cluster.
+      This concept is introduced with v5 of this API and is currently only
+      available on AWS.
+      
+      Worker nodes in tenant clusters are grouped in node pools. All nodes in a
+      node pool share the same configuration and scaling is controlled on a pool
+      level. This allows to fulfill a variety of different workload requirements
+      within the same cluster.
   - name: organizations
     description: Organizations are groups of users who own resources like clusters.
   - name: users
@@ -560,6 +566,12 @@ paths:
       description: |
         This operation fetches a list of clusters.
 
+        __Providers__:
+        <span class="badge aws">AWS</span>
+        <span class="badge azure">Azure</span>
+        <span class="badge kvm">KVM</span>
+        &ndash; All providers supported
+
         The result depends on the permissions of the user.
         A normal user will get all the clusters the user has access
         to, via organization membership.
@@ -567,10 +579,12 @@ paths:
         clusters.
 
         The result array items are sparse representations of the cluster
-        objects. To fetch more details on a cluster, use the
-        [getCluster](#operation/getCluster),
-        [getNodePools](#operation/getNodePools), and
-        [getClusterStatus](#operation/getClusterStatus) operations.
+        objects. To fetch more details on a cluster, use the following
+        operations:
+
+        - [getCluster](#operation/getCluster) or [getClusterV5](#operation/getClusterV5) for cluster details
+        - [getNodePools](#operation/getNodePools) for node pool details
+        - [getClusterStatus](#operation/getClusterStatus) operations.
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
@@ -590,13 +604,15 @@ paths:
                   "id": "g8s3o",
                   "create_date": "2017-06-08T12:31:47.215Z",
                   "name": "Staging Cluster",
-                  "owner": "acme"
+                  "owner": "acme",
+                  "release_version": "7.0.1"
                 },
                 {
                   "id": "3dkr6",
                   "create_date": "2017-05-22T13:58:02.024Z",
                   "name": "Test Cluster",
-                  "owner": "testorg"
+                  "owner": "testorg",
+                  "release_version": "7.1.0"
                 }
               ]
         "401":
@@ -609,17 +625,25 @@ paths:
       operationId: addCluster
       tags:
         - clusters
-      summary: Create cluster
+      summary: Create cluster (v4)
       description: |
-        This operation is used to create a new Kubernetes cluster for an
-        organization.
+        This operation is used to create a new Kubernetes cluster or
+        "tenant cluster".
+
+        __Providers__:
+        <span class="badge azure">Azure</span>
+        <span class="badge kvm">KVM</span>
+        <span class="badge aws">AWS*</span>
+        &ndash; AWS support ends with release version `TODO`. For AWS clusters using
+        release `TODO` and higher, please refer to the
+        [v5 equivalent](#operation/addClusterV5).
 
         ### Cluster definition
 
         The cluster definition format allows to set a number of optional
-        configuration details, like node pool configuration, with node
-        specification depending on the provider (EC2 instance type or Azure
-        VM size, memory size and number of CPU cores).
+        configuration details, like worker node configuration, with node
+        specification depending on the provider (e. g. on <span class="badge azure">Azure</span> the 
+        VM size, or on <span class="badge kvm">KVM</span> the memory size and number of CPU cores).
 
         One attribute is __mandatory__ upon creation: The `owner`
         attribute must carry the name of the organization the cluster will
@@ -630,23 +654,6 @@ paths:
         is not set. Check out the [getInfo](#operation/getInfo) operation for
         more info about defaults. If no `release_version` is set, the latest
         release version available for the provider will be used.
-
-        ### Node pools
-
-        Worker nodes are grouped into node pools of nodes sharing the same
-        configuration. When creating a cluster without submitting the
-        `nodepools` attribute, or with its value being an empty array, one node
-        pool with default configuration will be created.
-
-        On AWS, node pools can be created, deleted and modified during the
-        entire lifetime of a cluster.
-
-        See
-        [node pools](#tag/nodepools) and
-        [Create node pool](#operation/addNodePool) for details.
-
-        On Azure and KVM, clusters are currently restricted to have either
-        exactly one node pool or none.
 
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
@@ -727,10 +734,17 @@ paths:
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
-      summary: Get cluster details
+      summary: Get cluster details (v4)
       description: |
-        This operation allows to obtain most available details on a particular
-        cluster.
+        This operation allows to obtain basic details on a particular cluster.
+
+        __Providers__:
+        <span class="badge azure">Azure</span>
+        <span class="badge kvm">KVM</span>
+        <span class="badge aws">AWS*</span>
+        &ndash; AWS support ends with release version `TODO`. For AWS clusters
+        using release `TODO` and higher, please refer to the
+        [v5 equivalent](#operation/getClusterV5).
       responses:
         "200":
           description: Cluster details
@@ -796,9 +810,17 @@ paths:
                 "name": "New cluster name"
               }
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
-      summary: Modify cluster
+      summary: Modify cluster (v4)
       description: |
         This operation allows to modify an existing cluster.
+
+        __Providers__:
+        <span class="badge azure">Azure</span>
+        <span class="badge kvm">KVM</span>
+        <span class="badge aws">AWS*</span>
+        &ndash; AWS support ends with release version `TODO`. For AWS clusters
+        using release `TODO` and higher, please refer to the
+        [v5 equivalent](#operation/modifyClusterV5).
 
         A cluster modification is performed by submitting a `PATCH` request
         to the cluster resource (as described in the
@@ -855,9 +877,18 @@ paths:
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       summary: Delete cluster
       description: |
-        This operation allows to delete a cluster.
+        This operation triggers deleting a cluster with all resources attached to it.
 
-        __Caution:__ Deleting a cluster causes the termination of all workloads running on the cluster. Data stored on the worker nodes will be lost. There is no way to undo this operation.
+        __Providers__:
+        <span class="badge azure">Azure</span>
+        <span class="badge kvm">KVM</span>
+        <span class="badge aws">AWS</span>
+        &ndash; All providers supported.
+
+        Deleting a cluster causes the termination of all workloads running on
+        the cluster. Data stored on the worker nodes will be lost. On AWS, node
+        pools belonging to the cluster are deleted, too. There is no way to undo
+        this operation.
 
         The response is sent as soon as the request is validated.
         At that point, workloads might still be running on the cluster and may be accessible for a little wile, until the cluster is actually deleted.
@@ -987,329 +1018,6 @@ paths:
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
 
-  /v4/clusters/{cluster_id}/nodepools/:
-    get:
-      operationId: getNodePools
-      tags:
-        - nodepools
-        - clusters
-      summary: Get node pools
-      description: |
-        Returns a list of node pools from a given cluster.
-      parameters:
-        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
-        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
-        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
-        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
-      responses:
-        "200":
-          description: Node pools list
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GetNodePoolsResponse"
-        "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
-        default:
-          description: error
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-    post:
-      operationId: addNodePool
-      tags:
-        - nodepools
-        - clusters
-      summary: Create node pool
-      parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
-        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
-        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
-        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
-        - name: body
-          in: body
-          required: false
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4AddNodePoolRequest"
-          x-examples:
-            application/json:
-              {
-                "name": "My general purpose node pool",
-                "availability_zones": 2,
-                "scaling": {"min": 3, "max": 10},
-                "node_spec": {
-                  "aws": {
-                    "instance_type": "m4.2xlarge"
-                  },
-                  "labels": {
-                    "purpose": "general"
-                  }
-                }
-              }
-      description: |
-        This allows to add a
-        [node pool](https://docs.giantswarm.io/api/#tag/nodepools)
-        to a cluster.
-
-        Some, but not all, node pool configuration can be changed after
-        creation. The following settings will have a permanent effect:
-
-        - `availability_zones` (AWS only)
-        - `instance_type` (AWS only)
-        - `memory`, `storage`, and `cpu` (KVM only)
-        - `vm_size` (Azure only)
-
-        ### Availability Zones (AWS only)
-
-        On AWS, you can distribute the nodes of a node pool over several
-        availability zones to increase the cluster's resilience.
-
-        As a side effect, this impacts the maximum number of nodes a node pool
-        can have. The more availability zones are used, the fewer nodes are
-        possible. You can work around this by creating more node pools.
-
-        #### Details
-
-        Each node pool is assigned a `/22` IP address range, which allows for
-        1022 IP addresses.
-
-        If using, for example, three availability zones, the range will
-        be split into four `/24` ranges of 254 addresses each. Each of
-        the three availability zones is assigned one of these `/24` ranges.
-
-        Each of the `/24` address ranges then gets split into two `/25` with
-        126 hosts ) for public and private subnets. The private subnet is used
-        for nodes and internal load balancers (only if you create them within
-        Kubernetes). The public subnet will be used by public load balancers.
-
-        TODO: update this
-
-        > Tenant cluster come with two public loadbalancers by default. One
-        > for the Kubernetes API and one for Ingress.
-
-        __Note:__ AWS ELBs can take up to 8 IP addresses due to the way how
-        they scale. In addition to this, every AWS subnet has the first four
-        addresses (.1 to .4) reserved for internal use.
-
-        ### Initial node pool size and autoscaling
-
-        The API allows to define the size of node pools on creation using the
-        `scaling` attribute, setting a minimum and maximum node count.
-
-        On AWS, the pool size is controlled
-        by the [Kubernetes Autoscaler](https://github.com/kubernetes/autoscaler)
-        within the limits defined by the `scaling` setting. This setting can
-        also be modified any time later in the node pool lifecycle.
-
-        By setting both the minimum and maximum to the same value, autoscaling
-        is effectively disabled. This is also the default behaviour when no
-        initial node pool size is given, or when clusters are upgraded from
-        releases before 6.2.0.
-
-        Until autoscaling is available on providers other than AWS, for Azure
-        and KVM (on-premises) the `min` and `max` scaling value **must** be
-        identical.
-
-        ### Limitations
-
-        - Having multiple node pools in a cluster is currently only supported
-        on AWS.
-        - `scaling.min` and `scaling.max` must be identical on Azure and KVM.
-
-      responses:
-        "201":
-          description: Node pool created
-          headers:
-            Location:
-              type: string
-              description: URI of the new node pool resource
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GetNodePoolResponse"
-          examples:
-            application/json:
-              {
-                "id": "a1b",
-                "name": "My general purpose node pool",
-                "availability_zones": ["eu-central-1a", "eu-central-1c"],
-                "scaling": {"min": 3, "max": 10},
-                "node_spec": {
-                  "aws": {
-                    "instance_type": "m4.2xlarge"
-                  },
-                  "labels": {
-                    "purpose": "general"
-                  }
-                }
-              }
-        "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
-
-  /v4/clusters/{cluster_id}/nodepools/{nodepool_id}/:
-    get:
-      operationId: getNodePool
-      tags:
-        - nodepools
-      summary: Get node pool details
-      description: |
-        Returns all available details on a specific node pool
-      parameters:
-        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
-        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
-        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
-        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
-        - $ref: "./parameters.yaml#/parameters/NodePoolIdPathParameter"
-      responses:
-        "200":
-          description: Node pool details
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GetNodePoolResponse"
-          examples:
-            application/json:
-              {
-                "id": "a3k",
-                "name": "Node pool name",
-                "availability_zones": ["europe-central-1a"],
-                "scaling": {"min": 3, "max": 5},
-                "node_spec": {
-                  "aws": {
-                    "instance_type": "m4.large"
-                  },
-                  "labels": {
-                    "TODO": "replace with realistic labels"
-                  }
-                }
-              }
-        "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
-        default:
-          description: error
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-    patch:
-      operationId: modifyNodePool
-      tags:
-        - nodepools
-      summary: Modify node pool
-      description: |
-        Allows to rename a nod pool or change its scaling settings.
-      parameters:
-        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
-        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
-        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
-        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
-        - $ref: "./parameters.yaml#/parameters/NodePoolIdPathParameter"
-        - name: body
-          in: body
-          required: true
-          description: Merge-patch body
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4ModifyNodePoolRequest"
-          x-examples:
-            application/merge-patch+json:
-              {
-                "scaling": {
-                  "min": 5,
-                  "max": 30
-                }
-              }
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GetNodePoolResponse"
-        default:
-          description: error
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-    delete:
-      operationId: deleteNodePool
-      tags:
-        - nodepools
-      summary: Delete node pool
-      description: |
-        Deletes a node pool.
-
-        Nodes in the pool will first be cordoned and drained. Note that it is
-        your responsibililty to make sure that workloads using the node pool can
-        be scheduled elsewhere. We recommend to double check the available
-        capacity of remaining node pools, as well as any node selectors and
-        affinities. Also you can do the draining yourself to observe the
-        outcome. Use
-
-        ```
-        kubectl cordon nodes -l giantswarm.nodepool_id=<nodepool_id>
-        kubectl drain nodes -l giantswarm.nodepool_id=<nodepool_id> ...
-        ```
-
-        TODO: adapt the command for correct label syntax
-      resposes:
-        "202":
-          description: Deleting node pool
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "RESOURCE_DELETION_STARTED",
-                "message": "The cluster with ID 'wqtlq' is being deleted."
-              }
-        "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
-        "404":
-          description: Node pool not found
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "RESOURCE_NOT_FOUND",
-                "message": "The node pool with ID 'wqt' could not be found, or
-                perhaps you do not have access to it. Please make sure the
-                node pool ID is correct, and that you have access to the cluster
-                it belongs to."
-              }
-        default:
-          description: error
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-
-  /v4/clusters/{cluster_id}/nodepools/{nodepool_id}/status/:
-    get:
-      operationId: getNodePoolStatus
-      tags:
-        - nodepools
-      summary: Get node pool status
-      description: |
-        Returns information on a node pool and the nodes in it.
-
-        This endpoint exposes the status content of the Kubernetes resources representing
-        a node pool in the corresponding custom resource. That is, depending on the provider:
-
-        TODO: link to resources, as we do in `getClusterStatus`
-
-        Note that structure and style differ from the rest of the v4 API. Also note that
-        the structure depends on the release version and changes can be expected frequently.
-
-      parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
-        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
-        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
-        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
-      responses:
-        "200":
-          description: Cluster status
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GetNodePoolStatusResponse"
-        "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
-        default:
-          description: error
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-
-
   /v4/clusters/{cluster_id}/status/:
     get:
       operationId: getClusterStatus
@@ -1319,12 +1027,18 @@ paths:
       description: |
         Returns an object about a cluster's current state and past status transitions.
 
+        __Providers__:
+        <span class="badge azure">Azure</span>
+        <span class="badge kvm">KVM</span>
+        <span class="badge aws">AWS</span>
+        &ndash; All providers supported.
+
         This endpoint exposes the status content of the Kubernetes resources representing
         a cluster in the corresponding custom resource. That is, depending on the provider:
 
-        - [awsconfig.provider.giantswarm.io](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AWSConfig)
-        - [azureconfig.provider.giantswarm.io](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AzureConfig)
-        - [kvmconfig.provider.giantswarm.io](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#KVMConfig)
+        - [`awsconfig.provider.giantswarm.io`](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AWSConfig)
+        - [`azureconfig.provider.giantswarm.io`](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AzureConfig)
+        - [`kvmconfig.provider.giantswarm.io`](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#KVMConfig)
 
         Note that structure and style differ from the rest of the v4 API. Also note that
         the structure depends on the release version and changes can be expected frequently.
@@ -1937,3 +1651,375 @@ paths:
               ]
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
+
+  /v5/clusters/:
+    post:
+      operationId: addClusterV5
+      tags:
+        - clusters
+      summary: Create cluster (v5)
+      description: |
+        Allows to create most recent clusters on AWS installations.
+
+        __Providers__:
+        <span class="badge aws">AWS*</span>
+        <br />Only supports release `TODO` and higher. For other providers,
+        please refer to the [v4 equivalent](#operation/addCluster).
+
+        ### Node pools
+
+        In the v5 API, worker nodes are grouped into pools of worker nodes
+        sharing the same configuration.
+        
+        When creating a cluster without submitting the `nodepools` attribute,
+        or with its value being an empty array, one node pool with default
+        configuration will be created.
+
+        TODO: verify if we really want to create a default node pool in all cases!
+
+        Node pools can be created, deleted and modified during the entire
+        lifetime of a cluster.
+
+        See
+        [node pools](#tag/nodepools) and
+        [Create node pool](#operation/addNodePool) for details.
+
+  /v5/clusters/{cluster_id}/:
+    get:
+      operationId: getClusterV5
+      tags:
+        - clusters
+      summary: Get cluster details (v5)
+      description: |
+        Allows to retrieve cluster details on AWS installations.
+
+        For KVM and Azure please refer to the v4 equivalent.
+    patch:
+      operationId: modifyClusterV5
+      tags:
+        - clusters
+      summary: Modify cluster (v5)
+      description: |
+        Allows to change cluster properties on AWS installations.
+
+        For KVM and Azure please refer to the v4 equivalent.
+
+  /v5/clusters/{cluster_id}/nodepools/:
+    get:
+      operationId: getNodePools
+      tags:
+        - nodepools
+      summary: Get node pools
+      description: |
+        Returns a list of node pools from a given cluster.
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
+        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: Node pools list
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolsResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    post:
+      operationId: addNodePool
+      tags:
+        - nodepools
+      summary: Create node pool
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - name: body
+          in: body
+          required: false
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4AddNodePoolRequest"
+          x-examples:
+            application/json:
+              {
+                "name": "My general purpose node pool",
+                "availability_zones": 2,
+                "scaling": {"min": 3, "max": 10},
+                "node_spec": {
+                  "aws": {
+                    "instance_type": "m4.2xlarge"
+                  },
+                  "labels": {
+                    "purpose": "general"
+                  }
+                }
+              }
+      description: |
+        This allows to add a
+        [node pool](https://docs.giantswarm.io/api/#tag/nodepools)
+        to a cluster.
+
+        Some, but not all, node pool configuration can be changed after
+        creation. The following settings will have a permanent effect:
+
+        - `availability_zones` (AWS only)
+        - `instance_type` (AWS only)
+        - `memory`, `storage`, and `cpu` (KVM only)
+        - `vm_size` (Azure only)
+
+        ### Availability Zones (AWS only)
+
+        On AWS, you can distribute the nodes of a node pool over several
+        availability zones to increase the cluster's resilience.
+
+        As a side effect, this impacts the maximum number of nodes a node pool
+        can have. The more availability zones are used, the fewer nodes are
+        possible. You can work around this by creating more node pools.
+
+        #### Details
+
+        Each node pool is assigned a `/22` IP address range, which allows for
+        1022 IP addresses.
+
+        If using, for example, three availability zones, the range will
+        be split into four `/24` ranges of 254 addresses each. Each of
+        the three availability zones is assigned one of these `/24` ranges.
+
+        Each of the `/24` address ranges then gets split into two `/25` with
+        126 hosts ) for public and private subnets. The private subnet is used
+        for nodes and internal load balancers (only if you create them within
+        Kubernetes). The public subnet will be used by public load balancers.
+
+        TODO: update this
+
+        > Tenant cluster come with two public loadbalancers by default. One
+        > for the Kubernetes API and one for Ingress.
+
+        __Note:__ AWS ELBs can take up to 8 IP addresses due to the way how
+        they scale. In addition to this, every AWS subnet has the first four
+        addresses (.1 to .4) reserved for internal use.
+
+        ### Initial node pool size and autoscaling
+
+        The API allows to define the size of node pools on creation using the
+        `scaling` attribute, setting a minimum and maximum node count.
+
+        On AWS, the pool size is controlled
+        by the [Kubernetes Autoscaler](https://github.com/kubernetes/autoscaler)
+        within the limits defined by the `scaling` setting. This setting can
+        also be modified any time later in the node pool lifecycle.
+
+        By setting both the minimum and maximum to the same value, autoscaling
+        is effectively disabled. This is also the default behaviour when no
+        initial node pool size is given, or when clusters are upgraded from
+        releases before 6.2.0.
+
+        Until autoscaling is available on providers other than AWS, for Azure
+        and KVM (on-premises) the `min` and `max` scaling value **must** be
+        identical.
+
+        ### Limitations
+
+        - Having multiple node pools in a cluster is currently only supported
+        on AWS.
+        - `scaling.min` and `scaling.max` must be identical on Azure and KVM.
+
+      responses:
+        "201":
+          description: Node pool created
+          headers:
+            Location:
+              type: string
+              description: URI of the new node pool resource
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolResponse"
+          examples:
+            application/json:
+              {
+                "id": "a1b",
+                "name": "My general purpose node pool",
+                "availability_zones": ["eu-central-1a", "eu-central-1c"],
+                "scaling": {"min": 3, "max": 10},
+                "node_spec": {
+                  "aws": {
+                    "instance_type": "m4.2xlarge"
+                  },
+                  "labels": {
+                    "purpose": "general"
+                  }
+                }
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+
+  /v5/clusters/{cluster_id}/nodepools/{nodepool_id}/:
+    get:
+      operationId: getNodePool
+      tags:
+        - nodepools
+      summary: Get node pool details
+      description: |
+        Returns all available details on a specific node pool
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
+        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/NodePoolIdPathParameter"
+      responses:
+        "200":
+          description: Node pool details
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolResponse"
+          examples:
+            application/json:
+              {
+                "id": "a3k",
+                "name": "Node pool name",
+                "availability_zones": ["europe-central-1a"],
+                "scaling": {"min": 3, "max": 5},
+                "node_spec": {
+                  "aws": {
+                    "instance_type": "m4.large"
+                  },
+                  "labels": {
+                    "TODO": "replace with realistic labels"
+                  }
+                }
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    patch:
+      operationId: modifyNodePool
+      tags:
+        - nodepools
+      summary: Modify node pool
+      description: |
+        Allows to rename a nod pool or change its scaling settings.
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
+        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/NodePoolIdPathParameter"
+        - name: body
+          in: body
+          required: true
+          description: Merge-patch body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4ModifyNodePoolRequest"
+          x-examples:
+            application/merge-patch+json:
+              {
+                "scaling": {
+                  "min": 5,
+                  "max": 30
+                }
+              }
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolResponse"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    delete:
+      operationId: deleteNodePool
+      tags:
+        - nodepools
+      summary: Delete node pool
+      description: |
+        Deletes a node pool.
+
+        Nodes in the pool will first be cordoned and drained. Note that it is
+        your responsibililty to make sure that workloads using the node pool can
+        be scheduled elsewhere. We recommend to double check the available
+        capacity of remaining node pools, as well as any node selectors and
+        affinities. Also you can do the draining yourself to observe the
+        outcome. Use
+
+        ```
+        kubectl cordon nodes -l giantswarm.nodepool_id=<nodepool_id>
+        kubectl drain nodes -l giantswarm.nodepool_id=<nodepool_id> ...
+        ```
+
+        TODO: adapt the command for correct label syntax
+      resposes:
+        "202":
+          description: Deleting node pool
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_DELETION_STARTED",
+                "message": "The cluster with ID 'wqtlq' is being deleted."
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Node pool not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The node pool with ID 'wqt' could not be found, or
+                perhaps you do not have access to it. Please make sure the
+                node pool ID is correct, and that you have access to the cluster
+                it belongs to."
+              }
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v5/clusters/{cluster_id}/nodepools/{nodepool_id}/status/:
+    get:
+      operationId: getNodePoolStatus
+      tags:
+        - nodepools
+      summary: Get node pool status
+      description: |
+        Returns information on a node pool and the nodes in it.
+
+        This endpoint exposes the status content of the Kubernetes resources representing
+        a node pool in the corresponding custom resource. That is, depending on the provider:
+
+        TODO: link to resources, as we do in `getClusterStatus`
+
+        Note that structure and style differ from the rest of the v4 API. Also note that
+        the structure depends on the release version and changes can be expected frequently.
+
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: Node pool status
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetNodePoolStatusResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
