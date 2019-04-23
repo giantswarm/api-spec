@@ -671,7 +671,7 @@ paths:
               {
                 "owner": "myteam",
                 "release_version": "7.1.0",
-                "name": "Example cluster with 2 node pools",
+                "name": "Example cluster with 3 m5.xlarge nodes",
                 "availability_zones": 2,
                 "scaling": {"min": 3, "max": 3},
                 "workers": [{"aws": {"instance_type": "m5.xlarge"}}]
