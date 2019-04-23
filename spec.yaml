@@ -2105,7 +2105,7 @@ paths:
         "200":
           description: Node pool status
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GetNodePoolStatusResponse"
+            $ref: "./definitions.yaml#/definitions/V5GetNodePoolStatusResponse"
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
