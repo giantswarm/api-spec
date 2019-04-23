@@ -51,7 +51,7 @@ tags:
     description: |
       This concept is introduced with v5 of this API and is currently only
       available on AWS.
-      
+
       Worker nodes in tenant clusters are grouped in node pools. All nodes in a
       node pool share the same configuration and scaling is controlled on a pool
       level. This allows to fulfill a variety of different workload requirements
@@ -642,7 +642,7 @@ paths:
 
         The cluster definition format allows to set a number of optional
         configuration details, like worker node configuration, with node
-        specification depending on the provider (e. g. on <span class="badge azure">Azure</span> the 
+        specification depending on the provider (e. g. on <span class="badge azure">Azure</span> the
         VM size, or on <span class="badge kvm">KVM</span> the memory size and number of CPU cores).
 
         One attribute is __mandatory__ upon creation: The `owner`
@@ -1670,7 +1670,7 @@ paths:
 
         In the v5 API, worker nodes are grouped into pools of worker nodes
         sharing the same configuration.
-        
+
         When creating a cluster without submitting the `nodepools` attribute,
         or with its value being an empty array, one node pool with default
         configuration will be created.
