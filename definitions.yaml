@@ -126,7 +126,9 @@ definitions:
           of the array is expected to contain the specification for all worker
           nodes. Not available on AWS.
       nodepools:
-        description: Specification of node pools to be created
+        description: |
+          Specification of node pools to be created immediately with the
+          cluster. Only available on AWS.
         type: array
         items:
           $ref: '#/definitions/V4AddNodePoolRequest'
