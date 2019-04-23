@@ -1980,9 +1980,6 @@ paths:
                 "node_spec": {
                   "aws": {
                     "instance_type": "m4.large"
-                  },
-                  "labels": {
-                    "TODO": "replace with realistic labels"
                   }
                 }
               }
