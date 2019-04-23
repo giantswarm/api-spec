@@ -1700,7 +1700,46 @@ paths:
       description: |
         Allows to retrieve cluster details on AWS installations.
 
-        For KVM and Azure please refer to the v4 equivalent.
+        __Providers__:
+        <span class="badge aws">AWS*</span>
+        &ndash; Only supports release `TODO` and higher on AWS. For other
+        providers, please refer to the [v4 equivalent](#operation/getCluster).
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: Cluster details
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ClusterDetailsResponse"
+          examples:
+            application/json:
+              {
+                "id": "7g4di",
+                "create_date": "2019-06-01T12:00:13.949270905Z",
+                "api_endpoint": "https://api.k8s.7g4di.example.com",
+                "name": "All purpose cluster",
+                "release_version": "8.0.0",
+                "owner": "acme",
+                "credential_id": "a1b2c",
+                "master": {
+                  "availability_zone": "europe-west-1c"
+                },
+                "nodepools": {
+                  "id": "string",
+                  "name": "string",
+                  "availability_zones": ["europe-west-1a", "europe-west-1b", "europe-west-1c"],
+                  "scaling": {"min": 3, "max": 30},
+                  "node_spec": {
+                    "aws": {
+                      "instance_type": "m5.2xlarge"
+                    }
+                  }
+                }
+              }
     patch:
       operationId: modifyClusterV5
       tags:

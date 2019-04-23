@@ -676,7 +676,7 @@ definitions:
           instance_type:
             type: string
             description: |
-              EC2 instance type used by all nodes
+              EC2 instance type used by all nodes in this pool
 
   V5GetNodePoolResponse:
     type: object
@@ -696,6 +696,7 @@ definitions:
           type: string
       scaling:
         description: |
+          Scaling range of the node pool.
           If `min` and `max` differ, the node pool is scaled automatically.
           If both have the same value, the cluster size is pinned.
         type: object
@@ -749,3 +750,48 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/V5AddNodePoolRequest'
+
+  V5ClusterDetailsResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique cluster identifier
+      api_endpoint:
+        type: string
+        description: URI of the Kubernetes API endpoint
+      create_date:
+        type: string
+        description: Date/time of cluster creation
+      owner:
+        type: string
+        description: |
+          Name of the organization owning the cluster
+      name:
+        type: string
+        description: Cluster name
+      credential_id:
+        type: string
+        description: |
+          ID of the credentials used to operate the cluster. See
+          [Set credentials](#operation/addCredentials) for details.
+      release_version:
+        type: string
+        description: |
+          The [release](https://docs.giantswarm.io/api/#tag/releases) version
+          used by the cluster
+      master:
+        type: object
+        description: |
+          Information about the master node
+        properties:
+          availability_zone:
+            type: string
+            description: |
+              Name of the availability zone the master node is placed in
+      nodepools:
+        description: |
+          Information about all node pools existing in this cluster
+        type: array
+        items:
+          $ref: '#/definitions/V5GetNodePoolResponse'
