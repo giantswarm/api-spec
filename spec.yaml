@@ -1756,14 +1756,11 @@ paths:
             application/json:
               {
                 "name": "My general purpose node pool",
-                "availability_zones": 2,
+                "availability_zones": {"number": 2},
                 "scaling": {"min": 3, "max": 10},
                 "node_spec": {
                   "aws": {
                     "instance_type": "m4.2xlarge"
-                  },
-                  "labels": {
-                    "purpose": "general"
                   }
                 }
               }
