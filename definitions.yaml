@@ -142,8 +142,8 @@ definitions:
       scaling:
         type: object
         description: |
-          Allows to modify scaling settings for KVM and Azure. Not available on
-          AWS. Both min and max are expected to have the same value.
+          Attributes specific to cluster node scaling. To have full control of
+          the cluster size, min and max can be set to the same value.
         properties:
           min:
             type: integer
@@ -219,6 +219,17 @@ definitions:
             type: integer
             description: |
               Maximum number of cluster nodes as configured
+      availability_zones:
+        description: List of availability zones a cluster is spread across.
+        type: array
+        items:
+          description: Name of the availability zone
+          type: string
+      workers:
+        description: Information about worker nodes in the cluster (deprecated)
+        type: array
+        items:
+          $ref: '#/definitions/V4NodeDefinition'
       kvm:
         type: object
         description: Attributes specific to clusters running on KVM (on-prem) installations.
@@ -239,6 +250,52 @@ definitions:
                   description: |
                     The protocol this port mapping is made for.
                   type: string
+
+  # Definition of a v4 cluster node
+  V4NodeDefinition:
+    type: object
+    properties:
+      aws:
+        type: object
+        description: |
+          Attributes specific to nodes running on Amazon Web Services (AWS)
+        properties:
+          instance_type:
+            type: string
+            description: |
+              EC2 instance type name. Must be the same for all worker nodes
+              of a cluster.
+      azure:
+        type: object
+        description: |
+          Attributes specific to nodes running on Microsoft Azure
+        properties:
+          vm_size:
+            type: string
+            description: |
+              Azure Virtual Machine size. Must be the same for all worker nodes
+              of a cluster.
+      memory:
+        type: object
+        properties:
+          size_gb:
+            type: number
+            description: RAM size in GB. Can be an integer or float.
+      storage:
+        type: object
+        properties:
+          size_gb:
+            type: number
+            description: Node storage size in GB. Can be an integer or float.
+      cpu:
+        type: object
+        properties:
+          cores:
+            type: integer
+            description: Number of CPU cores
+      labels:
+        type: object
+        additionalProperties: true
 
   V4GetClusterStatusResponse:
     type: object
