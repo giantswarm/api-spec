@@ -103,6 +103,11 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
+      availability_zones:
+        description: |
+          Number of availability zones a cluster should be spread across. The
+          default is provided via the [info](#operation/getInfo) endpoint.
+        type: integer
       scaling:
         type: object
         description: |
@@ -125,6 +130,8 @@ definitions:
           Worker node definition on KVM and Azure. If present, the first item
           of the array is expected to contain the specification for all worker
           nodes. Not available on AWS.
+        items:
+          $ref: '#/definitions/V4NodeDefinition'
 
   V4ModifyClusterRequest:
     type: object
@@ -153,6 +160,11 @@ definitions:
             type: integer
             description: |
               Maximum number of cluster nodes
+      workers:
+        type: array
+        description: Worker node array (deprecated)
+        items:
+          $ref: '#/definitions/V4NodeDefinition'
 
   V4ModifyNodePoolRequest:
     type: object
