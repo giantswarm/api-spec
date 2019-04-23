@@ -734,6 +734,33 @@ paths:
                 "release_version": "2.5.16",
                 "owner": "acme",
                 "credential_id": "a1b2c",
+                "availability_zones": ["fire-zone-1"],
+                "workers": [
+                  {
+                    "memory": {"size_gb": 2.0},
+                    "storage": {"size_gb": 20.0},
+                    "cpu": {"cores": 4},
+                    "labels": {
+                      "beta.kubernetes.io/arch": "amd64",
+                      "beta.kubernetes.io/os": "linux",
+                      "ip": "10.3.11.2",
+                      "kubernetes.io/hostname": "worker-1.x882ofna.k8s.gigantic.io",
+                      "nodetype": "hicpu"
+                    }
+                  },
+                  {
+                    "memory": {"size_gb": 8.0},
+                    "storage": {"size_gb": 20.0},
+                    "cpu": {"cores": 2},
+                    "labels": {
+                      "beta.kubernetes.io/arch": "amd64",
+                      "beta.kubernetes.io/os": "linux",
+                      "ip": "10.3.62.2",
+                      "kubernetes.io/hostname": "worker-2.x882ofna.k8s.gigantic.io",
+                      "nodetype": "hiram"
+                    }
+                  }
+                ],
                 "kvm": {
                   "port_mappings": [
                     {
@@ -814,6 +841,27 @@ paths:
         - `release_version`: By changing this attribute you can upgrade a
         cluster to a newer
         [release](https://docs.giantswarm.io/api/#tag/releases).
+
+        - `scaling`: Adjust the cluster node limits to make use of auto scaling
+        or to have full control over the node count. The latter can be
+        achieved by setting `min` and `max` to the same values. Note that
+        setting `min` and `max` to different values (effectively enabling
+        autoscaling) is only available on AWS with releases from 6.2.0.
+
+         - `workers` (deprecated): For backward compatibility reasons, it is
+        possible to provide this attribute as an array, where the number of
+        items contained in the array determines the intended number of worker
+        nodes in the cluster. The item count will be applied as both `min` and
+        `max` value of the scaling limits, effectively disabling autoscaling.
+        This requires the `scaling` attribute must not be present in the same
+        request.
+
+        ### Limitations
+
+        - As of now, existing worker nodes cannot be modified.
+        - The number of availability zones cannot be modified.
+        - When removing nodes (scaling down), it is not possible to determine
+        which nodes will be removed.
 
       responses:
         "200":
