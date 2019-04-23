@@ -2011,7 +2011,7 @@ paths:
           required: true
           description: Merge-patch body
           schema:
-            $ref: "./definitions.yaml#/definitions/V4ModifyNodePoolRequest"
+            $ref: "./definitions.yaml#/definitions/V5ModifyNodePoolRequest"
           x-examples:
             application/merge-patch+json:
               {

@@ -166,27 +166,6 @@ definitions:
         items:
           $ref: '#/definitions/V4NodeDefinition'
 
-  V4ModifyNodePoolRequest:
-    type: object
-    description: Request body for node pool modification
-    properties:
-      name:
-        type: string
-        description: New name of the node pool
-      scaling:
-        description: |
-          Attributes specific to node pool scaling. To have full control of
-          the cluster size, min and max can be set to the same value. If only
-          `min` or only `max` is specified, `min` and `max` will be set equally.
-        type: object
-        properties:
-          min:
-            description: Minimum number of nodes in the pool
-            type: integer
-          max:
-            description: Maximum number of nodes in the pool
-            type: integer
-
   # Details on existing cluster
   V4ClusterDetailsResponse:
     type: object
@@ -864,3 +843,24 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/V5GetNodePoolResponse'
+
+  V5ModifyNodePoolRequest:
+    type: object
+    description: Request body for node pool modification
+    properties:
+      name:
+        type: string
+        description: New name of the node pool
+      scaling:
+        description: |
+          Attributes specific to node pool scaling. To have full control of
+          the cluster size, min and max can be set to the same value. If only
+          `min` or only `max` is specified, `min` and `max` will be set equally.
+        type: object
+        properties:
+          min:
+            description: Minimum number of nodes in the pool
+            type: integer
+          max:
+            description: Maximum number of nodes in the pool
+            type: integer
