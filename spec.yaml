@@ -672,8 +672,8 @@ paths:
                 "owner": "myteam",
                 "release_version": "7.1.0",
                 "name": "Example cluster with 2 node pools",
-                "workers": TODO,
-                "scaling": TODO,
+                "scaling": {"min": 3, "max": 3},
+                "workers": [{"aws": {"instance_type": "m5.xlarge"}}]
               }
       responses:
         "201":
