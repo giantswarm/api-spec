@@ -1721,15 +1721,15 @@ paths:
                 "owner": "myteam",
                 "release_version": "7.1.0",
                 "name": "Production cluster using k8s 1.14",
-                "masters": {
-                  "availability_zones": [
-                    "europe-central-1c"
-                  ]
+                "master": {
+                  "availability_zone": "europe-central-1c"
                 },
                 "nodepools": [
                   {
                     "name": "General purpose",
-                    "availability_zones": ["*", "*"],
+                    "availability_zones": {
+                      "number": 2
+                    },
                     "scaling": {"min": 3, "max": 30},
                     "node_spec": {
                       "aws": {
@@ -1739,6 +1739,40 @@ paths:
                   }
                 ]
               }
+      responses:
+        "201":
+          description: Cluster created
+          schema:
+            $ref: './definitions.yaml#/definitions/V5ClusterDetailsResponse'
+          examples:
+            application/json:
+              {
+                "id": "n45do",
+                "owner": "myteam",
+                "release_version": "7.1.0",
+                "name": "Production cluster using k8s 1.14",
+                "master": {
+                  "availability_zone": "europe-central-1c"
+                },
+                "nodepools": [
+                  {
+                    "name": "General purpose",
+                    "availability_zones": ["europe-central-1a", "europe-central-1c"],
+                    "scaling": {"min": 3, "max": 30},
+                    "node_spec": {
+                      "aws": {
+                        "instance_type": "m4.2xlarge"
+                      }
+                    }
+                  }
+                ]
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v5/clusters/{cluster_id}/:
     get:
