@@ -833,6 +833,17 @@ definitions:
             description: |
               Name of the availability zone the master node is placed in
 
+  V5ModifyClusterRequest:
+    type: object
+    description: Request model for cluster modification
+    properties:
+      name:
+        type: string
+        description: New cluster name
+      release_version:
+        type: string
+        description: Release version to upgrade to
+
   V5ModifyNodePoolRequest:
     type: object
     description: Request body for node pool modification

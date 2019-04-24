@@ -1821,6 +1821,44 @@ paths:
         Allows to change cluster properties on AWS installations.
 
         For KVM and Azure please refer to the v4 equivalent.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - name: body
+          in: body
+          required: true
+          description: Merge-patch body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ModifyClusterRequest"
+          x-examples:
+            application/json:
+              {
+                "name": "New cluster name"
+              }
+      responses:
+        "200":
+          description: Cluster modified
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ClusterDetailsResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqtlq' could not be found, or
+                  perhaps you do..."
+              }
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v5/clusters/{cluster_id}/nodepools/:
     get:
