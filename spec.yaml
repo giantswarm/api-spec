@@ -1810,17 +1810,6 @@ paths:
                 "credential_id": "a1b2c",
                 "master": {
                   "availability_zone": "europe-west-1c"
-                },
-                "nodepools": {
-                  "id": "string",
-                  "name": "string",
-                  "availability_zones": ["europe-west-1a", "europe-west-1b", "europe-west-1c"],
-                  "scaling": {"min": 3, "max": 30},
-                  "node_spec": {
-                    "aws": {
-                      "instance_type": "m5.2xlarge"
-                    }
-                  }
                 }
               }
     patch:
