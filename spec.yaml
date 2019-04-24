@@ -50,7 +50,7 @@ tags:
   - name: nodepools
     description: |
       This concept is introduced with v5 of this API and is currently only
-      available on AWS.
+      available on <span class="badge aws">AWS</span>.
 
       Worker nodes in tenant clusters are grouped in node pools. All nodes in a
       node pool share the same configuration and scaling is controlled on a pool
@@ -1820,7 +1820,10 @@ paths:
       description: |
         Allows to change cluster properties on AWS installations.
 
-        For KVM and Azure please refer to the v4 equivalent.
+        __Providers__:
+        <span class="badge aws">AWS*</span>
+        &ndash; Only supports release `TODO` and higher on AWS. For other
+        providers, please refer to the [v4 equivalent](#operation/modifyCluster).
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
@@ -1868,6 +1871,10 @@ paths:
       summary: Get node pools
       description: |
         Returns a list of node pools from a given cluster.
+
+        __Providers__:
+        <span class="badge aws">AWS</span>
+        &ndash; Only supports release `TODO` and higher on AWS.
       parameters:
         - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
@@ -1879,17 +1886,35 @@ paths:
           description: Node pools list
           schema:
             $ref: "./definitions.yaml#/definitions/V5GetNodePoolsResponse"
+          examples:
+            application/json:
+              [
+                {
+                  "id": "a7r",
+                  "name": "Batch number crunching",
+                  "availability_zones": ["eu-west-1d"],
+                  "scaling": {"min": 2, "max": 5},
+                  "node_spec": {"aws": {"instance_type": "p3.8xlarge"}}
+                },
+                {
+                  "id": "6fe",
+                  "name": "Application servers",
+                  "availability_zones": ["eu-west-1a", "eu-west-1b", "eu-west-1c"],
+                  "scaling": {"min": 3, "max": 15},
+                  "node_spec": {"aws": {"instance_type": "p3.2xlarge"}}
+                }
+              ]
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
-          description: Node pool not found
+          description: Cluster not found
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The node pool with ID 'a6f' could not be found..."
+                "message": "The cluster with ID '6drr3' could not be found..."
               }
         default:
           description: error
@@ -1924,75 +1949,17 @@ paths:
                 }
               }
       description: |
-        This allows to add a
-        [node pool](https://docs.giantswarm.io/api/#tag/nodepools)
-        to a cluster.
+        This allows to add a node pool to a cluster.
+
+        __Providers__:
+        <span class="badge aws">AWS</span>
+        &ndash; Only supports release `TODO` and higher on AWS.
 
         Some, but not all, node pool configuration can be changed after
         creation. The following settings will have a permanent effect:
 
-        - `availability_zones` (AWS only)
-        - `instance_type` (AWS only)
-        - `memory`, `storage`, and `cpu` (KVM only)
-        - `vm_size` (Azure only)
-
-        ### Availability Zones (AWS only)
-
-        On AWS, you can distribute the nodes of a node pool over several
-        availability zones to increase the cluster's resilience.
-
-        As a side effect, this impacts the maximum number of nodes a node pool
-        can have. The more availability zones are used, the fewer nodes are
-        possible. You can work around this by creating more node pools.
-
-        #### Details
-
-        Each node pool is assigned a `/22` IP address range, which allows for
-        1022 IP addresses.
-
-        If using, for example, three availability zones, the range will
-        be split into four `/24` ranges of 254 addresses each. Each of
-        the three availability zones is assigned one of these `/24` ranges.
-
-        Each of the `/24` address ranges then gets split into two `/25` with
-        126 hosts ) for public and private subnets. The private subnet is used
-        for nodes and internal load balancers (only if you create them within
-        Kubernetes). The public subnet will be used by public load balancers.
-
-        TODO: update this
-
-        > Tenant cluster come with two public loadbalancers by default. One
-        > for the Kubernetes API and one for Ingress.
-
-        __Note:__ AWS ELBs can take up to 8 IP addresses due to the way how
-        they scale. In addition to this, every AWS subnet has the first four
-        addresses (.1 to .4) reserved for internal use.
-
-        ### Initial node pool size and autoscaling
-
-        The API allows to define the size of node pools on creation using the
-        `scaling` attribute, setting a minimum and maximum node count.
-
-        On AWS, the pool size is controlled
-        by the [Kubernetes Autoscaler](https://github.com/kubernetes/autoscaler)
-        within the limits defined by the `scaling` setting. This setting can
-        also be modified any time later in the node pool lifecycle.
-
-        By setting both the minimum and maximum to the same value, autoscaling
-        is effectively disabled. This is also the default behaviour when no
-        initial node pool size is given, or when clusters are upgraded from
-        releases before 6.2.0.
-
-        Until autoscaling is available on providers other than AWS, for Azure
-        and KVM (on-premises) the `min` and `max` scaling value **must** be
-        identical.
-
-        ### Limitations
-
-        - Having multiple node pools in a cluster is currently only supported
-        on AWS.
-        - `scaling.min` and `scaling.max` must be identical on Azure and KVM.
-
+        - `availability_zones`
+        - `instance_type`
       responses:
         "201":
           description: Node pool created
@@ -2012,14 +1979,25 @@ paths:
                 "node_spec": {
                   "aws": {
                     "instance_type": "m4.2xlarge"
-                  },
-                  "labels": {
-                    "purpose": "general"
                   }
                 }
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID '6drr3' could not be found..."
+              }
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v5/clusters/{cluster_id}/nodepools/{nodepool_id}/:
     get:
@@ -2028,7 +2006,11 @@ paths:
         - nodepools
       summary: Get node pool details
       description: |
-        Returns all available details on a specific node pool
+        Returns all available details on a specific node pool.
+
+        __Providers__:
+        <span class="badge aws">AWS</span>
+        &ndash; Only supports release `TODO` and higher on AWS.
       parameters:
         - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
@@ -2056,6 +2038,16 @@ paths:
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID '6drr3' could not be found..."
+              }
         default:
           description: error
           schema:
@@ -2066,7 +2058,11 @@ paths:
         - nodepools
       summary: Modify node pool
       description: |
-        Allows to rename a nod pool or change its scaling settings.
+        Allows to rename a node pool or change its scaling settings.
+
+        __Providers__:
+        <span class="badge aws">AWS</span>
+        &ndash; Only supports release `TODO` and higher on AWS.
       parameters:
         - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
@@ -2093,6 +2089,18 @@ paths:
           description: Success
           schema:
             $ref: "./definitions.yaml#/definitions/V5GetNodePoolResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Cluster not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID '6drr3' could not be found..."
+              }
         default:
           description: error
           schema:
@@ -2103,22 +2111,25 @@ paths:
         - nodepools
       summary: Delete node pool
       description: |
-        Deletes a node pool.
+        Triggers the deletion of a node pool.
+
+        __Providers__:
+        <span class="badge aws">AWS</span>
+        &ndash; Only supports release `TODO` and higher on AWS.
 
         Nodes in the pool will first be cordoned and drained. Note that it is
         your responsibililty to make sure that workloads using the node pool can
-        be scheduled elsewhere. We recommend to double check the available
+        be scheduled elsewhere. We recommend to double-check the available
         capacity of remaining node pools, as well as any node selectors and
-        affinities. Also you can do the draining yourself to observe the
-        outcome. Use
+        taints. Also you can do the draining yourself before issuing the
+        delete request, to observe the outcome. Use
 
         ```
-        kubectl cordon nodes -l giantswarm.nodepool_id=<nodepool_id>
         kubectl drain nodes -l giantswarm.nodepool_id=<nodepool_id> ...
         ```
 
         TODO: adapt the command for correct label syntax
-      resposes:
+      responses:
         "202":
           description: Deleting node pool
           schema:
@@ -2132,17 +2143,14 @@ paths:
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
-          description: Node pool not found
+          description: Not found
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The node pool with ID 'wqt' could not be found, or
-                perhaps you do not have access to it. Please make sure the
-                node pool ID is correct, and that you have access to the cluster
-                it belongs to."
+                "message": "The node pool with ID 'wqt' could not be found..."
               }
         default:
           description: error
@@ -2157,6 +2165,10 @@ paths:
       summary: Get node pool status
       description: |
         Returns information on a node pool and the nodes in it.
+
+        __Providers__:
+        <span class="badge aws">AWS</span>
+        &ndash; Only supports release `TODO` and higher on AWS.
 
         This endpoint exposes the status content of the Kubernetes resources representing
         a node pool in the corresponding custom resource. That is, depending on the provider:
@@ -2177,8 +2189,23 @@ paths:
           description: Node pool status
           schema:
             $ref: "./definitions.yaml#/definitions/V5GetNodePoolStatusResponse"
+          examples:
+            application/json:
+              {
+                "TODO": "Add meaningful response example."
+              }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The node pool with ID 'wqt' could not be found..."
+              }
         default:
           description: error
           schema:
