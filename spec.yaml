@@ -897,7 +897,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
       summary: Delete cluster
       description: |
         This operation triggers deleting a cluster with all resources attached to it.
@@ -958,7 +958,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
       responses:
         "200":
           description: Key pairs
@@ -980,7 +980,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
         - name: body
           in: body
           required: true
@@ -1071,7 +1071,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
       responses:
         "200":
           description: Cluster status
@@ -1792,7 +1792,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
       responses:
         "200":
           description: Cluster details
@@ -1930,7 +1930,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
         - name: body
           in: body
           required: false
@@ -2183,7 +2183,8 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
+        - $ref: './parameters.yaml#/parameters/NodePoolIdPathParameter'
       responses:
         "200":
           description: Node pool status
