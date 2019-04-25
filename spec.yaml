@@ -708,7 +708,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
       summary: Get cluster details (v4)
       description: |
         This operation allows to obtain basic details on a particular cluster.
@@ -800,6 +800,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
         - name: body
           in: body
           required: true
@@ -811,7 +812,6 @@ paths:
               {
                 "name": "New cluster name"
               }
-        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       summary: Modify cluster (v4)
       description: |
         This operation allows to modify an existing cluster.
@@ -1829,6 +1829,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
         - name: body
           in: body
           required: true
@@ -2110,6 +2111,13 @@ paths:
       tags:
         - nodepools
       summary: Delete node pool
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
+        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/NodePoolIdPathParameter"
       description: |
         Triggers the deletion of a node pool.
 
