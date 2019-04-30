@@ -3,7 +3,7 @@ extends: default
 rules:
   # don't fail if line is longer than 80 characters
   line-length:
-    max: 80
+    max: 120
     level: warning
 
   # don't warn about missing "---" at beginning
