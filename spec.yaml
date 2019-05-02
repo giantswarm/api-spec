@@ -1092,8 +1092,7 @@ paths:
     get:
       operationId: getClusterApps
       tags:
-        - app katalog
-        - clusters
+        - managed apps
       summary: Get cluster apps
       description: |
         Returns an array of apps installed on a given cluster.
@@ -1107,19 +1106,19 @@ paths:
               },
 
               "spec": {
+                "catalog": "sample-catalog"
                 "name": "prometheus-chart",
                 "namespace": "giantswarm",
-                "version": "0.2.0",
-                "catalog": "sample-catalog"
+                "version": "0.2.0"
               },
 
               "status": {
                 "app_version": "1.0.0",
-                "version": "0.2.0",
                 "release": {
                   "last_deployed": "2019-04-08T12:34:00Z",
                   "status": "DEPLOYED"
-                }
+                },
+                "version": "0.2.0",
               }
             }
           ]
@@ -1144,19 +1143,19 @@ paths:
                   },
 
                   "spec": {
+                    "catalog": "sample-catalog",
                     "name": "prometheus-chart",
                     "namespace": "giantswarm",
-                    "version": "0.2.0",
-                    "catalog": "sample-catalog"
+                    "version": "0.2.0"
                   },
 
                   "status": {
                     "app_version": "1.0.0",
-                    "version": "0.2.0",
                     "release": {
                       "last_deployed": "2019-04-08T12:34:00Z",
                       "status": "DEPLOYED"
-                    }
+                    },
+                    "version": "0.2.0"
                   }
                 }
               ]
