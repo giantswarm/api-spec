@@ -43,6 +43,8 @@ tags:
     externalDocs:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
       description: "User guide: Accessing Pods and Services from the Outside"
+  - name: managed apps
+    description: "An app is a helm chart that you can easily install on your tenant clusters. Use these endpoints to: find out what catalogs your installation supports, and list and install apps on on your tenant clusters."
   - name: organizations
     description: Organizations are groups of users who own resources like clusters.
   - name: users
