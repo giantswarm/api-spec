@@ -1090,6 +1090,84 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
+  /v4/clusters/{cluster_id}/apps/:
+    get:
+      operationId: getClusterApps
+      tags:
+        - managed apps
+      summary: Get cluster apps
+      description: |
+        Returns an array of apps installed on a given cluster.
+
+        ### Example
+        ```json
+          [
+            {
+              "metadata": {
+                "name": "my-awesome-prometheus",
+              },
+
+              "spec": {
+                "catalog": "sample-catalog"
+                "name": "prometheus-chart",
+                "namespace": "giantswarm",
+                "version": "0.2.0"
+              },
+
+              "status": {
+                "app_version": "1.0.0",
+                "release": {
+                  "last_deployed": "2019-04-08T12:34:00Z",
+                  "status": "DEPLOYED"
+                },
+                "version": "0.2.0",
+              }
+            }
+          ]
+        ```
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: Cluster apps
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetClusterAppsResponse"
+          examples:
+            application/json:
+              [
+                {
+                  "metadata": {
+                    "name": "my-awesome-prometheus",
+                  },
+
+                  "spec": {
+                    "catalog": "sample-catalog",
+                    "name": "prometheus-chart",
+                    "namespace": "giantswarm",
+                    "version": "0.2.0"
+                  },
+
+                  "status": {
+                    "app_version": "1.0.0",
+                    "release": {
+                      "last_deployed": "2019-04-08T12:34:00Z",
+                      "status": "DEPLOYED"
+                    },
+                    "version": "0.2.0"
+                  }
+                }
+              ]
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/organizations/:
     get:
       operationId: getOrganizations
