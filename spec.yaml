@@ -1274,6 +1274,85 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
+    post:
+      operationId: createClusterApp
+      tags:
+        - managed apps
+      summary: Install an app
+      description: |
+        Install an app on a tenant cluster by posting to this endpoint.
+
+        You'll notice there are two objects in this call, metadata and spec, and they both
+        have a 'name' field. metadata.name is the name you want to give this instance of
+        this app.
+
+        The spec field represents the app we'll be installing, and so spec.name refers to
+        the name of the chart that installs this app in the catalog.
+
+        The response you get on a succesful create includes the status of the app. However
+        since the App is still initialising and this is an asynchronous operation, it is
+        likely that the fields in this status object will be all empty values.
+
+        To check on the status of your app, perform a GET to /v4/clusters/{cluster_id}/apps/,
+        and check the status field of the app.
+        ###
+
+        ### Example POST
+        ```json
+          {
+            "metadata": {
+              "name": "my-awesome-prometheus",
+            },
+            "spec": {
+              "catalog": "sample-catalog",
+              "name": "prometheus-chart",
+              "namespace": "prometheus",
+              "version": "0.2.0"
+            }
+          }
+        ```
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: Create cluster app
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetClusterAppsResponse"
+          examples:
+            application/json:
+              {
+                "metadata": {
+                  "name": "my-awesome-prometheus",
+                },
+
+                "spec": {
+                  "catalog": "sample-catalog",
+                  "name": "prometheus-chart",
+                  "namespace": "giantswarm",
+                  "version": "0.2.0"
+                },
+
+                "status": {
+                  "app_version": "",
+                  "release": {
+                    "last_deployed": "0000-00-00T00:00:00Z",
+                    "status": ""
+                  },
+                  "version": ""
+                }
+              }
+
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/organizations/:
     get:
       operationId: getOrganizations
