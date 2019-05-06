@@ -347,7 +347,7 @@ definitions:
             description: Version of the installed app
           version:
             type: string
-            description: The version of the chart that was used to install this app
+            description: Version of the chart that was used to install this app
           release:
             type: object
             properties:
