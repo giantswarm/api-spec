@@ -332,7 +332,7 @@ definitions:
             description: Name of the chart that was used to install this app
           namespace:
             type: string
-            description: The namespace that this app is installed to
+            description: Namespace that this app is installed to
           version:
             type: string
             description: The version of the chart that was used to install this app
