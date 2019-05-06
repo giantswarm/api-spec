@@ -335,7 +335,7 @@ definitions:
             description: Namespace that this app is installed to
           version:
             type: string
-            description: The version of the chart that was used to install this app
+            description: Version of the chart that was used to install this app
           catalog:
             type: string
             description: The catalog that this app came from
