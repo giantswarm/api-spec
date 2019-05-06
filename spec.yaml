@@ -1321,7 +1321,7 @@ paths:
         "200":
           description: Create cluster app
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GetClusterAppsResponse"
+            $ref: "./definitions.yaml#/definitions/V4App"
           examples:
             application/json:
               {

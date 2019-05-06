@@ -315,51 +315,54 @@ definitions:
         type: object
         additionalProperties: true
 
+  V4App:
+    type: object
+    properties:
+      metadata:
+        type: object
+        properties:
+          name:
+            type: string
+            description: The identifier you set when creating this app
+      spec:
+        type: object
+        properties:
+          name:
+            type: string
+            description: The name of the chart that was used to install this app
+          namespace:
+            type: string
+            description: The namespace that this app is installed to
+          version:
+            type: string
+            description: The version of the chart that was used to install this app
+          catalog:
+            type: string
+            description: The catalog that this app came from
+      status:
+        type: object
+        properties:
+          app_version:
+            type: string
+            description: The version of the installed app
+          version:
+            type: string
+            description: The version of the chart that was used to install this app
+          release:
+            type: object
+            properties:
+              last_deployed:
+                type: string
+                description: Date and time that the app was last last deployed
+              status:
+                type: string
+                description: "A string representing the status of the app. (Can be: empty, DEPLOYED or FAILED)"
+
   V4GetClusterAppsResponse:
     type: array
     description: Array of apps
     items:
-      type: object
-      properties:
-        metadata:
-          type: object
-          properties:
-            name:
-              type: string
-              description: The identifier you set when creating this app
-        spec:
-          type: object
-          properties:
-            name:
-              type: string
-              description: The name of the chart that was used to install this app
-            namespace:
-              type: string
-              description: The namespace that this app is installed to
-            version:
-              type: string
-              description: The version of the chart that was used to install this app
-            catalog:
-              type: string
-              description: The catalog that this app came from
-        status:
-          type: object
-          properties:
-            app_version:
-              type: string
-              description: The version of the installed app
-            version:
-              type: string
-              description: The version of the chart that was used to install this app
-            release:
-              type: object
-              properties:
-                last_deployed:
-                  type: string
-                  description: Date and time that the app was last last deployed
-                status:
-                  type: string
-                  description: "A string representing the status of the app. (Can be: empty, DEPLOYED or FAILED)"
+      $ref: '#/definitions/V4App'
 
   V4GetClusterStatusResponse:
     type: object
