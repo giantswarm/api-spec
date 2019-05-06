@@ -344,7 +344,7 @@ definitions:
         properties:
           app_version:
             type: string
-            description: The version of the installed app
+            description: Version of the installed app
           version:
             type: string
             description: The version of the chart that was used to install this app
