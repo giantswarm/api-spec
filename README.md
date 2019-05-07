@@ -61,4 +61,3 @@ make run-server
 ```
 
 Then open [`http://localhost:8000/`](http://localhost:8000/) to access your specs displayed via ReDoc.
-
