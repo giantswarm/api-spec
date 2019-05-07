@@ -11,7 +11,7 @@ The specification YAML files are:
 - [`spec.yaml`](https://github.com/giantswarm/api-spec/blob/master/spec.yaml) - main specification file
 - [`definitions.yaml`](https://github.com/giantswarm/api-spec/blob/master/definitions.yaml) - definition of models for request and response bodies
 - [`parameters.yaml`](https://github.com/giantswarm/api-spec/blob/master/parameters.yaml) - definition of parameters used in paths and headers
-- [`responses.yaml`](https://github.com/giantswarm/api-spec/blob/master/responses.yaml) - still unused
+- [`responses.yaml`](https://github.com/giantswarm/api-spec/blob/master/responses.yaml) - re-usable response specs
 
 
 ## Human-friendly API Documentation
