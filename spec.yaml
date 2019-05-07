@@ -1231,6 +1231,49 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
+  /v4/clusters/{cluster_id}/apps/{app_name}/:
+    delete:
+      operationId: deleteClusterApp
+      tags:
+        - managed apps
+      summary: Delete an app
+      description: |
+        This operation allows a user to delete an app.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
+      responses:
+        "200":
+          description: App deleted
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_DELETED",
+                "message": "Your app 'acme' on 'adc23' has been deleted."
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: App not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The app could not be deleted. (not found: the app with name 'my-awesome-app' could not be found)"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/organizations/:
     get:
       operationId: getOrganizations
