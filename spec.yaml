@@ -1267,7 +1267,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_NOT_FOUND",
-                "message": "The app could not be deleted. (not found: the app with name 'my-awesome-app' could not be found)"
+                "message": "App could not be deleted. (app with name 'my-awesome-app' in cluster 'abc12' could not be found)"
               }
         default:
           description: Error
