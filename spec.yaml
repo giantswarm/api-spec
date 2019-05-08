@@ -1231,8 +1231,6 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
-<<<<<<< HEAD
-=======
   /v4/clusters/{cluster_id}/apps/{app_name}/:
     delete:
       operationId: deleteClusterApp
@@ -1276,7 +1274,6 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
->>>>>>> b10cfcfcbcd183083b888f34fd1908dd4e813c42
     post:
       operationId: createClusterApp
       tags:
@@ -1349,10 +1346,6 @@ paths:
                 }
               }
 
-<<<<<<< HEAD
-        "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
-=======
         "400":
           description: Invalid input
           schema:
@@ -1375,7 +1368,6 @@ paths:
                 "code": "RESOURCE_ALREADY_EXISTS",
                 "message": "An app with this name already exists."
               }
->>>>>>> b10cfcfcbcd183083b888f34fd1908dd4e813c42
         default:
           description: error
           schema:
