@@ -775,6 +775,14 @@ paths:
                   ]
                 }
               }
+        "301":
+          description: Version mismatch
+          headers:
+            Location:
+              type: string
+              description: |
+                URI of the new path to use for retrying the request, as the one
+                used is not usable for this cluster.
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
@@ -1812,6 +1820,14 @@ paths:
                   "availability_zone": "europe-west-1c"
                 }
               }
+        "301":
+          description: Version mismatch
+          headers:
+            Location:
+              type: string
+              description: |
+                URI of the new path to use for retrying the request, as the one
+                used is not usable for this cluster.
     patch:
       operationId: modifyClusterV5
       tags:
