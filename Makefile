@@ -74,7 +74,7 @@ test: lint
 # Run a server to show the HTML docs UI on http://localhost:8000
 run-server:
 	docker build -t api-spec-dev -f Dockerfile .
-	docker run -v ${PWD}:/www/yaml -p 8080:8000 api-spec-dev
+	docker run --rm -v ${PWD}:/www/yaml -p 8080:8000 api-spec-dev
 
 clean:
 	rm -rf spec-tmp.yaml* javascript html dynamic-html
