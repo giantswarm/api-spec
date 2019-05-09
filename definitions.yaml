@@ -322,10 +322,10 @@ definitions:
       spec:
         type: object
         required:
-        - name
-        - namespace
-        - version
-        - catalog
+          - name
+          - namespace
+          - version
+          - catalog
         properties:
           name:
             type: string
