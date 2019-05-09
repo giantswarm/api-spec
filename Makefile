@@ -25,7 +25,7 @@ lint: spec-tmp.yaml
 
 # Validate the swagger/OAI spec
 validate: spec-tmp.yaml lint
-	
+
 	# Useful to ensure gsclientgen client generation works
 	@echo "Validating with go-swagger"
 	docker run --rm -it \
@@ -71,7 +71,7 @@ test: lint
 	rm -f spec-tmp.yaml
 	rm -f spec-tmp.yamle
 
-# Run a server to show the HTML docs UI on http://localhost:8000
+# Run a server to show the HTML docs UI on http://localhost:8080
 run-server:
 	docker build -t api-spec-dev -f Dockerfile .
 	docker run --rm -v ${PWD}:/www/yaml -p 8080:8000 api-spec-dev
