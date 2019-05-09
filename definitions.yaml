@@ -315,6 +315,31 @@ definitions:
         type: object
         additionalProperties: true
 
+  V4CreateAppRequest:
+    type: object
+    description: A part of the App CR that we create behind the scenes
+    properties:
+      spec:
+        type: object
+        required:
+        - name
+        - namespace
+        - version
+        - catalog
+        properties:
+          name:
+            type: string
+            description: Name of the chart that should be used to install this app
+          namespace:
+            type: string
+            description: Namespace that this app will be installed to
+          version:
+            type: string
+            description: Version of the chart that should be used to install this app
+          catalog:
+            type: string
+            description: The catalog where the chart for this app can be found
+
   V4App:
     type: object
     properties:

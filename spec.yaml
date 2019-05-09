@@ -1274,17 +1274,13 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
-    post:
+    put:
       operationId: createClusterApp
       tags:
         - managed apps
       summary: Install an app
       description: |
         Install an app on a tenant cluster by posting to this endpoint.
-
-        You'll notice there are two objects in this call, metadata and spec, and they both
-        have a 'name' field. metadata.name is the name you want to give this instance of
-        this app.
 
         The spec field represents the app we'll be installing, and so spec.name refers to
         the name of the chart that installs this app in the catalog.
@@ -1297,12 +1293,9 @@ paths:
         and check the status field of the app.
         ###
 
-        ### Example POST
+        ### Example PUT request
         ```json
           {
-            "metadata": {
-              "name": "my-awesome-prometheus",
-            },
             "spec": {
               "catalog": "sample-catalog",
               "name": "prometheus-chart",
@@ -1317,6 +1310,21 @@ paths:
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
+        - name: body
+          in: body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4CreateAppRequest"
+          x-examples:
+            application/json:
+              {
+                "spec": {
+                  "catalog": "sample-catalog",
+                  "name": "prometheus-chart",
+                  "namespace": "prometheus",
+                  "version": "0.2.0"
+                }
+              }
       responses:
         "200":
           description: Create cluster app
