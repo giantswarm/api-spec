@@ -43,7 +43,7 @@ tags:
     externalDocs:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
       description: "User guide: Accessing Pods and Services from the Outside"
-  - name: managed apps
+  - name: apps
     description: "An app is a helm chart that you can easily install on your tenant clusters. Use these endpoints to: find out what catalogs your installation supports, and list and install apps on on your tenant clusters."
   - name: organizations
     description: Organizations are groups of users who own resources like clusters.
@@ -88,7 +88,7 @@ paths:
     get:
       operationId: getAppCatalogs
       tags:
-        - managed apps
+        - apps
       summary: Get a list of app catalogs configured on your installation.
       description: |
         Returns an array of app catalog objects, which contains further metadata,
@@ -1157,7 +1157,7 @@ paths:
     get:
       operationId: getClusterApps
       tags:
-        - managed apps
+        - apps
       summary: Get cluster apps
       description: |
         Returns an array of apps installed on a given cluster.
@@ -1235,7 +1235,7 @@ paths:
     delete:
       operationId: deleteClusterApp
       tags:
-        - managed apps
+        - apps
       summary: Delete an app
       description: |
         This operation allows a user to delete an app.
@@ -1277,7 +1277,7 @@ paths:
     put:
       operationId: createClusterApp
       tags:
-        - managed apps
+        - apps
       summary: Install an app
       description: |
         Install an app on a tenant cluster by posting to this endpoint.
