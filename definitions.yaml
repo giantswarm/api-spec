@@ -12,6 +12,41 @@ definitions:
         description: |
           A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
 
+  # App Catalogs Response
+  V4AppCatalogsResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            name:
+              description: A URL friendly identifier for the catalog.
+              type: string
+        spec:
+          type: object
+          properties:
+            title:
+              description: A display friendly title for this catalog.
+              type: string
+            description:
+              description: A description of the catalog.
+              type: string
+            logoURL:
+              description: A URL to a logo representing this catalog.
+              type: string
+            storage:
+              description: Contains information on where to find the full catalog, and what type of catalog it is.
+              type: object
+              properties:
+                URL:
+                  description: A URL where clients can download the full catalog.
+                  type: string
+                type:
+                  description: The format of this catalog. (Currently only helm is supported.)
+                  type: string
+
   # Info response
   V4InfoResponse:
     type: object
@@ -287,6 +322,80 @@ definitions:
       labels:
         type: object
         additionalProperties: true
+
+  V4CreateAppRequest:
+    type: object
+    description: A part of the App CR that we create behind the scenes
+    properties:
+      spec:
+        type: object
+        required:
+          - name
+          - namespace
+          - version
+          - catalog
+        properties:
+          name:
+            type: string
+            description: Name of the chart that should be used to install this app
+          namespace:
+            type: string
+            description: Namespace that this app will be installed to
+          version:
+            type: string
+            description: Version of the chart that should be used to install this app
+          catalog:
+            type: string
+            description: The catalog where the chart for this app can be found
+
+  V4App:
+    type: object
+    properties:
+      metadata:
+        type: object
+        properties:
+          name:
+            type: string
+            description: The identifier you set when creating this app
+      spec:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Name of the chart that was used to install this app
+          namespace:
+            type: string
+            description: Namespace that this app is installed to
+          version:
+            type: string
+            description: Version of the chart that was used to install this app
+          catalog:
+            type: string
+            description: The catalog that this app came from
+      status:
+        type: object
+        properties:
+          app_version:
+            type: string
+            description: Version of the installed app
+          version:
+            type: string
+            description: Version of the chart that was used to install this app
+          release:
+            type: object
+            properties:
+              last_deployed:
+                type: string
+                description: Date and time that the app was last last deployed
+              status:
+                type: string
+                description: "A string representing the status of the app. (Can be: empty, DEPLOYED or FAILED)"
+
+  V4GetClusterAppsResponse:
+    type: array
+    description: Array of apps
+    items:
+      $ref: '#/definitions/V4App'
 
   V4GetClusterStatusResponse:
     type: object

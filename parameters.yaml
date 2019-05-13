@@ -8,6 +8,13 @@ parameters:
     description: |
       As described in the [authentication](#section/Authentication) section
 
+  AppNamePathParameter:
+    name: app_name
+    in: path
+    required: true
+    type: string
+    description: App Name
+
   ClusterIdPathParameter:
     name: cluster_id
     in: path
