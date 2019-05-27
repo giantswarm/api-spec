@@ -1384,14 +1384,27 @@ paths:
   /v4/clusters/{cluster_id}/apps/{app_name}/config/:
     post:
       operationId: createClusterAppConfig
-      consumes:
-        - multipart/form-data
       tags:
         - apps
       summary: Create app config
       description: |
         This operation allows you to create a values configmap for a specific app. The app does
-        have to exist before hand.
+        not have to exist before hand.
+
+
+        ### Example POST request
+        ```json
+          {
+            "agent": {
+              "key": "secret-key-here",
+              "endpointHost": "saas-eu-west-1.instana.io",
+              "endpointPort": "443",
+            },
+            "zone": {
+              "name": "giantswarm-cluster"
+            }
+          }
+        ```
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
@@ -1399,22 +1412,23 @@ paths:
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
         - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
-        - in: formData
-          name: values.yaml
-          type: file
-          description: |
-            A yaml file with the values you want to set for this app.
+        - name: body
+          in: body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4CreateAppConfigRequest"
+          x-examples:
+            appication/json:
+              {
+                "agent": {
+                  "key": "secret-key-here",
+                  "endpointHost": "saas-eu-west-1.instana.io",
+                  "endpointPort": "443",
+                },
+                "zone": {
+                  "name": "giantswarm-cluster"
+                }
+              }
 
-            Below is an example file for configuring instana:
-
-                # values.yaml
-
-                agent:
-                  key: "secret-key-here"
-                  endpointHost: "saas-eu-west-1.instana.io"
-                  endpointPort: "443"
-                zone:
-                  name: "giantswarm-cluster"
       responses:
         "200":
           description: Success
