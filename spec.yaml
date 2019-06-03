@@ -1382,7 +1382,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
   /v4/clusters/{cluster_id}/apps/{app_name}/config/:
-    post:
+    put:
       operationId: createClusterAppConfig
       tags:
         - apps
