@@ -81,6 +81,23 @@ definitions:
               default:
                 description: Default number of availability zones for a cluster.
                 type: integer
+      stats:
+        type: object
+        description: Statistics about the installation
+        properties:
+          cluster_creation_duration:
+            type: object
+            description: Duration of cluster creation, summarized.
+            properties:
+              median:
+                type: integer
+                description: Median of the value distribution
+              p25:
+                type: integer
+                description: 75th percentile of the value distribution
+              p75:
+                type: integer
+                description: 75th percentile of the value distribution
       workers:
         description: Information related to worker nodes
         type: object
