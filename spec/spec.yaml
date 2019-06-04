@@ -1402,6 +1402,92 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
+  /v4/clusters/{cluster_id}/apps/{app_name}/config/:
+    put:
+      operationId: createClusterAppConfig
+      tags:
+        - apps
+      summary: Create app config
+      description: |
+        This operation allows you to create a values configmap for a specific app. The app does
+        not have to exist before hand.
+
+
+        ### Example POST request
+        ```json
+          {
+            "agent": {
+              "key": "secret-key-here",
+              "endpointHost": "saas-eu-west-1.instana.io",
+              "endpointPort": "443",
+            },
+            "zone": {
+              "name": "giantswarm-cluster"
+            }
+          }
+        ```
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
+        - name: body
+          in: body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4CreateAppConfigRequest"
+          x-examples:
+            appication/json:
+              {
+                "agent": {
+                  "key": "secret-key-here",
+                  "endpointHost": "saas-eu-west-1.instana.io",
+                  "endpointPort": "443",
+                },
+                "zone": {
+                  "name": "giantswarm-cluster"
+                }
+              }
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            appication/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "App config for 'my-awesome-app' on 'abc12' has been created."
+              }
+        "400":
+          description: Invalid input
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_INPUT",
+                "message": "App config could not be created. (invalid input)"
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "409":
+          description: App config already exists
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_ALREADY_EXISTS",
+                "message": "A config for 'my-awesome-app' on 'abc12' already exists."
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/organizations/:
     get:
       operationId: getOrganizations
