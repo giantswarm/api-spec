@@ -186,6 +186,13 @@ paths:
               "default": 1,
             }
           },
+          "stats": {
+            "cluster_creation_duration": {
+              "median": 750,
+              "p25": 700,
+              "p75": 800
+            }
+          },
           "workers": {
             "count_per_cluster": {
               "max": null,
@@ -212,6 +219,13 @@ paths:
             "availability_zones": {
               "max": 1,
               "default": 1,
+            }
+          },
+          "stats": {
+            "cluster_creation_duration": {
+              "median": 750,
+              "p25": 700,
+              "p75": 800
             }
           },
           "workers": {
@@ -242,6 +256,13 @@ paths:
                   "availability_zones": {
                     "max": 3,
                     "default": 1
+                  }
+                },
+                "stats": {
+                  "cluster_creation_duration": {
+                    "median": 750,
+                    "p25": 700,
+                    "p75": 800
                   }
                 },
                 "workers": {
