@@ -389,7 +389,6 @@ definitions:
             description: The catalog that this app came from
           user_config:
             $ref: '#/definitions/V4AppSpecUserConfigConfigMap'
-
       status:
         type: object
         properties:
@@ -413,7 +412,7 @@ definitions:
     type: object
     description: User definable configuration to be applied when the app is deployed
     properties:
-      config_map:
+      configmap:
         type: object
         properties:
           name:

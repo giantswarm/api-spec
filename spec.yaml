@@ -1197,7 +1197,7 @@ paths:
                 "namespace": "giantswarm",
                 "version": "0.2.0",
                 "user_config": {
-                  "config_map": {
+                  "configmap": {
                     "name": "prometheus-user-values",
                     "namespace": "123ab"
                   }
@@ -1240,7 +1240,7 @@ paths:
                     "namespace": "giantswarm",
                     "version": "0.2.0",
                     "user_config": {
-                      "config_map": {
+                      "configmap": {
                         "name": "prometheus-user-values",
                         "namespace": "123ab"
                       }
@@ -1335,7 +1335,7 @@ paths:
               "namespace": "prometheus",
               "version": "0.2.0",
               "user_config": {
-                "config_map": {
+                "configmap": {
                   "name": "prometheus-user-values",
                   "namespace": "123ab"
                 }
@@ -1363,7 +1363,7 @@ paths:
                   "namespace": "prometheus",
                   "version": "0.2.0",
                   "user_config": {
-                    "config_map": {
+                    "configmap": {
                       "name": "prometheus-user-values",
                       "namespace": "123ab"
                     }
@@ -1388,7 +1388,7 @@ paths:
                   "namespace": "giantswarm",
                   "version": "0.2.0",
                   "user_config": {
-                    "config_map": {
+                    "configmap": {
                       "name": "prometheus-user-values",
                       "namespace": "123ab"
                     }
