@@ -554,6 +554,9 @@ definitions:
       release_version:
         type: string
         description: The semantic version number of this cluster
+      path:
+        type: string
+        description: API path of the cluster resource
 
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:

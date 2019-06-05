@@ -688,17 +688,19 @@ paths:
               [
                 {
                   "id": "g8s3o",
-                  "create_date": "2017-06-08T12:31:47.215Z",
+                  "create_date": "2019-03-08T12:31:47.215Z",
                   "name": "Staging Cluster",
                   "owner": "acme",
-                  "release_version": "7.0.1"
+                  "release_version": "7.0.1",
+                  "path": "/v4/clusters/g8s3o/"
                 },
                 {
                   "id": "3dkr6",
-                  "create_date": "2017-05-22T13:58:02.024Z",
-                  "name": "Test Cluster",
+                  "create_date": "2019-07-22T13:58:02.024Z",
+                  "name": "Node Pools Cluster",
                   "owner": "testorg",
-                  "release_version": "7.1.0"
+                  "release_version": "9.0.0",
+                  "path": "/v5/clusters/3dkr6/"
                 }
               ]
         "401":
