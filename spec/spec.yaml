@@ -1195,7 +1195,13 @@ paths:
                 "catalog": "sample-catalog"
                 "name": "prometheus-chart",
                 "namespace": "giantswarm",
-                "version": "0.2.0"
+                "version": "0.2.0",
+                "user_config": {
+                  "configmap": {
+                    "name": "prometheus-user-values",
+                    "namespace": "123ab"
+                  }
+                }
               },
 
               "status": {
@@ -1232,7 +1238,13 @@ paths:
                     "catalog": "sample-catalog",
                     "name": "prometheus-chart",
                     "namespace": "giantswarm",
-                    "version": "0.2.0"
+                    "version": "0.2.0",
+                    "user_config": {
+                      "configmap": {
+                        "name": "prometheus-user-values",
+                        "namespace": "123ab"
+                      }
+                    }
                   },
 
                   "status": {
@@ -1321,7 +1333,13 @@ paths:
               "catalog": "sample-catalog",
               "name": "prometheus-chart",
               "namespace": "prometheus",
-              "version": "0.2.0"
+              "version": "0.2.0",
+              "user_config": {
+                "configmap": {
+                  "name": "prometheus-user-values",
+                  "namespace": "123ab"
+                }
+              }
             }
           }
         ```
@@ -1343,7 +1361,13 @@ paths:
                   "catalog": "sample-catalog",
                   "name": "prometheus-chart",
                   "namespace": "prometheus",
-                  "version": "0.2.0"
+                  "version": "0.2.0",
+                  "user_config": {
+                    "configmap": {
+                      "name": "prometheus-user-values",
+                      "namespace": "123ab"
+                    }
+                  }
                 }
               }
       responses:
@@ -1362,7 +1386,13 @@ paths:
                   "catalog": "sample-catalog",
                   "name": "prometheus-chart",
                   "namespace": "giantswarm",
-                  "version": "0.2.0"
+                  "version": "0.2.0",
+                  "user_config": {
+                    "configmap": {
+                      "name": "prometheus-user-values",
+                      "namespace": "123ab"
+                    }
+                  }
                 },
 
                 "status": {
