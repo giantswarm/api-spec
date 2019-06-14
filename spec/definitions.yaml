@@ -428,6 +428,11 @@ definitions:
     items:
       $ref: '#/definitions/V4App'
 
+  V4GetClusterAppConfigResponse:
+    type: object
+    description: The values configmap for a given app returned as a yaml file
+    additionalProperties: true
+
   V4CreateAppConfigRequest:
     type: object
     description: A part of the App CR that we create behind the scenes
