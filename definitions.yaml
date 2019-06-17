@@ -388,7 +388,7 @@ definitions:
             type: string
             description: The catalog that this app came from
           user_config:
-            $ref: '#/definitions/V4AppSpecUserConfigConfigMap'
+            $ref: './definitions.yaml#/definitions/V4AppSpecUserConfigConfigMap'
       status:
         type: object
         properties:
