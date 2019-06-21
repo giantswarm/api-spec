@@ -94,7 +94,7 @@ definitions:
                 description: Median of the value distribution
               p25:
                 type: integer
-                description: 75th percentile of the value distribution
+                description: 25th percentile of the value distribution
               p75:
                 type: integer
                 description: 75th percentile of the value distribution
