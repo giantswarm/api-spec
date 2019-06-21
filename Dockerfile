@@ -1,7 +1,7 @@
 FROM nginx:1.16-alpine
 RUN rm -r /etc/nginx/conf.d
 ADD docserver/index.html /www/
-ADD *.yaml /www/yaml/
+ADD spec/*.yaml /www/yaml/
 
 RUN mkdir /www/js
 ADD https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js /www/js/redoc.min.js
