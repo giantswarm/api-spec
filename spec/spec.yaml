@@ -1591,7 +1591,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_DELETED",
-                "message": "The user config of app 'my-app' has been deleted."
+                "message": "App config for 'my-app' on 'abc12' has been deleted."
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
