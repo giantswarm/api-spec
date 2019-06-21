@@ -1468,7 +1468,7 @@ paths:
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
-          description: App not found
+          description: App Config not found
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
