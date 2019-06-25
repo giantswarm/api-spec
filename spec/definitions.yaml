@@ -1003,7 +1003,7 @@ definitions:
             last_transition_time:
               type: string
               description: Date and time when the cluster transitioned into this condition
-            type:
+            condition:
               type: string
               description: A string describing the condition, e. g. 'Created'
       versions:
