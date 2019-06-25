@@ -1432,6 +1432,89 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
+    patch:
+      operationId: modifyApp
+      tags:
+        - apps
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
+        - name: body
+          in: body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4CreateAppRequest"
+          x-examples:
+            application/json:
+              {
+                "spec": {
+                  "catalog": "sample-catalog",
+                  "name": "prometheus-chart",
+                  "namespace": "prometheus",
+                  "version": "0.2.0",
+                  "user_config": {
+                    "configmap": {
+                      "name": "prometheus-user-values",
+                      "namespace": "123ab"
+                    }
+                  }
+                }
+              }
+
+      summary: Modify app
+      description: |
+        This operation allows you to modify an existing app.
+
+        The following attributes can be modified:
+
+        - `user_config`: This lets you change the configmap used to configure this app, as well as remove it entirely, by submitting empty values.
+        - `version`: Changing this field lets you upgrade or downgrade an app.
+
+        `catalog`, `name`, and `namespace` are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
+
+        The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
+        Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
+
+        The full request must be valid before it will be executed, currently this
+        means every member you attempt to add to the organization must actually
+        exist in the system. If any member you attempt to add is invalid, the entire
+        patch operation will fail, no members will be added or removed, and an error message
+        will explain which members in your request are invalid.
+      responses:
+        "200":
+          description: App modified
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4App"
+        "400":
+          description: Invalid input
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_INPUT",
+                "message": "The app could not be modified. (invalid input: name is not an editable field)"
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: App not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The app could not be modified. (not found: the app with name 'my-great-app' could not be found)"
+              }
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
   /v4/clusters/{cluster_id}/apps/{app_name}/config/:
     get:
       operationId: getClusterAppConfig
