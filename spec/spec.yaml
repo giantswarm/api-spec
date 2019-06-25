@@ -1195,7 +1195,13 @@ paths:
                 "catalog": "sample-catalog"
                 "name": "prometheus-chart",
                 "namespace": "giantswarm",
-                "version": "0.2.0"
+                "version": "0.2.0",
+                "user_config": {
+                  "configmap": {
+                    "name": "prometheus-user-values",
+                    "namespace": "123ab"
+                  }
+                }
               },
 
               "status": {
@@ -1232,7 +1238,13 @@ paths:
                     "catalog": "sample-catalog",
                     "name": "prometheus-chart",
                     "namespace": "giantswarm",
-                    "version": "0.2.0"
+                    "version": "0.2.0",
+                    "user_config": {
+                      "configmap": {
+                        "name": "prometheus-user-values",
+                        "namespace": "123ab"
+                      }
+                    }
                   },
 
                   "status": {
@@ -1321,7 +1333,13 @@ paths:
               "catalog": "sample-catalog",
               "name": "prometheus-chart",
               "namespace": "prometheus",
-              "version": "0.2.0"
+              "version": "0.2.0",
+              "user_config": {
+                "configmap": {
+                  "name": "prometheus-user-values",
+                  "namespace": "123ab"
+                }
+              }
             }
           }
         ```
@@ -1343,7 +1361,13 @@ paths:
                   "catalog": "sample-catalog",
                   "name": "prometheus-chart",
                   "namespace": "prometheus",
-                  "version": "0.2.0"
+                  "version": "0.2.0",
+                  "user_config": {
+                    "configmap": {
+                      "name": "prometheus-user-values",
+                      "namespace": "123ab"
+                    }
+                  }
                 }
               }
       responses:
@@ -1362,7 +1386,13 @@ paths:
                   "catalog": "sample-catalog",
                   "name": "prometheus-chart",
                   "namespace": "giantswarm",
-                  "version": "0.2.0"
+                  "version": "0.2.0",
+                  "user_config": {
+                    "configmap": {
+                      "name": "prometheus-user-values",
+                      "namespace": "123ab"
+                    }
+                  }
                 },
 
                 "status": {
@@ -1399,6 +1429,184 @@ paths:
               }
         default:
           description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v4/clusters/{cluster_id}/apps/{app_name}/config/:
+    get:
+      operationId: getClusterAppConfig
+      tags:
+        - apps
+      summary: Get app config
+      description: |
+        This operation allows you to fetch the user values configmap associated
+        with an app.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetClusterAppConfigResponse"
+          examples:
+            appication/json:
+              {
+                "agent": {
+                  "key": "secret-key-here",
+                  "endpointHost": "saas-eu-west-1.instana.io",
+                  "endpointPort": "443",
+                },
+                "zone": {
+                  "name": "giantswarm-cluster"
+                }
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: App Config not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "Unable to show app config. (app with name 'my-awesome-app' in cluster 'abc12' could not be found)"
+              }
+    put:
+      operationId: createClusterAppConfig
+      tags:
+        - apps
+      summary: Create app config
+      description: |
+        This operation allows you to create a values configmap for a specific app. The app does
+        not have to exist before hand.
+
+
+        ### Example POST request
+        ```json
+          {
+            "agent": {
+              "key": "secret-key-here",
+              "endpointHost": "saas-eu-west-1.instana.io",
+              "endpointPort": "443",
+            },
+            "zone": {
+              "name": "giantswarm-cluster"
+            }
+          }
+        ```
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
+        - name: body
+          in: body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4CreateAppConfigRequest"
+          x-examples:
+            appication/json:
+              {
+                "agent": {
+                  "key": "secret-key-here",
+                  "endpointHost": "saas-eu-west-1.instana.io",
+                  "endpointPort": "443",
+                },
+                "zone": {
+                  "name": "giantswarm-cluster"
+                }
+              }
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            appication/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "App config for 'my-awesome-app' on 'abc12' has been created."
+              }
+        "400":
+          description: Invalid input
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_INPUT",
+                "message": "App config could not be created. (invalid input)"
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "409":
+          description: App config already exists
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_ALREADY_EXISTS",
+                "message": "A config for 'my-awesome-app' on 'abc12' already exists."
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    delete:
+      operationId: deleteClusterAppConfig
+      tags:
+        - apps
+      summary: Delete an app config
+      description: |
+        This operation allows a user to delete an app's user config if it has been named according to the convention of {app-name}-user-values and
+        stored in the cluster ID namespace.
+
+        Calling this endpoint will delete the ConfigMap, but it does not remove the reference to the ConfigMap in the (spec.user_config.configmap field) from the app.
+
+        Do make sure you also update the app and remove the reference.
+
+        The preferred order is to first remove the reference to the configmap by
+        updating the app, and only then delete the configmap using this endpoint.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
+      responses:
+        "200":
+          description: App Config deleted
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_DELETED",
+                "message": "App config for 'my-app' on 'abc12' has been deleted."
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: App Config not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The user config of app 'my-app' could not be deleted. ('my-app' not found)"
+              }
+        default:
+          description: Error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 

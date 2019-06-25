@@ -360,6 +360,8 @@ definitions:
           catalog:
             type: string
             description: The catalog where the chart for this app can be found
+          user_config:
+            $ref: '#/definitions/V4AppSpecUserConfigConfigMap'
 
   V4App:
     type: object
@@ -385,6 +387,8 @@ definitions:
           catalog:
             type: string
             description: The catalog that this app came from
+          user_config:
+            $ref: './definitions.yaml#/definitions/V4AppSpecUserConfigConfigMap'
       status:
         type: object
         properties:
@@ -404,11 +408,35 @@ definitions:
                 type: string
                 description: "A string representing the status of the app. (Can be: empty, DEPLOYED or FAILED)"
 
+  V4AppSpecUserConfigConfigMap:
+    type: object
+    description: User definable configuration to be applied when the app is deployed
+    properties:
+      configmap:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Name of the config map containing values to apply, e.g. prometheus-user-values
+          namespace:
+            type: string
+            description: Namespace of the values config map on the control plane, e.g. 123ab
+
   V4GetClusterAppsResponse:
     type: array
     description: Array of apps
     items:
       $ref: '#/definitions/V4App'
+
+  V4GetClusterAppConfigResponse:
+    type: object
+    description: The values configmap for a given app returned as a yaml file
+    additionalProperties: true
+
+  V4CreateAppConfigRequest:
+    type: object
+    description: A part of the App CR that we create behind the scenes
+    additionalProperties: true
 
   V4GetClusterStatusResponse:
     type: object
