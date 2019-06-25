@@ -1581,7 +1581,8 @@ paths:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
-        - $ref: "./parameters.yaml#/parameters/OrganizationIdPathParameter"
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
+        - $ref: './parameters.yaml#/parameters/AppNamePathParameter'
       responses:
         "200":
           description: App Config deleted
