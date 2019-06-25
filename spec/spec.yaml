@@ -2551,3 +2551,42 @@ paths:
           description: error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v5/clusters/{cluster_id}/status/:
+    get:
+      operationId: getClusterStatusV5
+      tags:
+        - clusters
+      summary: Get cluster status
+      description: |
+        Returns an object about a cluster's current state and past status transitions.
+
+        __Providers__:
+        <span class="badge aws">AWS</span>
+        &ndash; Only supports release `TODO` and higher on AWS.
+
+        This endpoint exposes the status content of the Kubernetes resources representing
+        a cluster in the corresponding custom resource:
+
+        [`awsconfig.provider.giantswarm.io`](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AWSConfig)
+
+        Note that structure and style differ from the rest of the v5 API. Also note that
+        the structure depends on the release version and changes can be expected frequently.
+
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
+      responses:
+        "200":
+          description: Cluster status
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetClusterStatusResponse"
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
