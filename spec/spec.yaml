@@ -2588,7 +2588,23 @@ paths:
         "200":
           description: Cluster status
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GetClusterStatusResponse"
+            $ref: "./definitions.yaml#/definitions/V5GetClusterStatusResponse"
+          examples:
+            application/json:
+              {
+                "conditions": [
+                  {
+                    "last_transition_time": "2019-03-25T17:10:09.333633991Z",
+                    "type": "Created"
+                  }
+                ],
+                "versions": [
+                  {
+                    "last_transition_time": "2019-03-25T17:10:09.333633991Z",
+                    "version": "1.2.3"
+                  }
+                ]
+              }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:

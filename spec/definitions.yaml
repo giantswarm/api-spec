@@ -962,6 +962,34 @@ definitions:
             description: |
               Name of the availability zone the master node is placed in
 
+  V5GetClusterStatusResponse:
+    type: object
+    description: Cluster status information
+    properties:
+      conditions:
+        type: array
+        description: List of conditions the cluster has gone through
+        items:
+          type: object
+          properties:
+            last_transition_time:
+              type: string
+              description: Date and time when the cluster transitioned into this condition
+            type:
+              type: string
+              description: A string describing the condition, e. g. 'Created'
+      versions:
+        type: array
+        items:
+          type: object
+          properties:
+            last_transition_time:
+              type: string
+              description: Date and time when the cluster got created with or upgrated to this version
+            version:
+              type: string
+              description: Semantic version number
+
   V5ModifyClusterRequest:
     type: object
     description: Request model for cluster modification
