@@ -2573,6 +2573,11 @@ paths:
         Note that structure and style differ from the rest of the v5 API. Also note that
         the structure depends on the release version and changes can be expected frequently.
 
+        ## TODO
+
+        - Adapt the link above, as the current one is not correct
+        - Give response 200 example
+
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
