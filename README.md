@@ -8,10 +8,10 @@ The specs are written in the [OpenAPI v2.0](https://github.com/OAI/OpenAPI-Speci
 
 The specification YAML files are:
 
-- [`spec.yaml`](https://github.com/giantswarm/api-spec/blob/master/spec.yaml) - main specification file
-- [`definitions.yaml`](https://github.com/giantswarm/api-spec/blob/master/definitions.yaml) - definition of models for request and response bodies
-- [`parameters.yaml`](https://github.com/giantswarm/api-spec/blob/master/parameters.yaml) - definition of parameters used in paths and headers
-- [`responses.yaml`](https://github.com/giantswarm/api-spec/blob/master/responses.yaml) - re-usable response specs
+- [`spec.yaml`](https://github.com/giantswarm/api-spec/blob/master/spec/spec.yaml) - main specification file
+- [`definitions.yaml`](https://github.com/giantswarm/api-spec/blob/master/spec/definitions.yaml) - definition of models for request and response bodies
+- [`parameters.yaml`](https://github.com/giantswarm/api-spec/blob/master/spec/parameters.yaml) - definition of parameters used in paths and headers
+- [`responses.yaml`](https://github.com/giantswarm/api-spec/blob/master/spec/responses.yaml) - re-usable response specs
 
 
 ## Human-friendly API Documentation
