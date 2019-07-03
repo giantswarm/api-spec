@@ -989,11 +989,6 @@ definitions:
             type: string
             description: |
               Name of the availability zone the master node is placed in
-
-  V5GetClusterStatusResponse:
-    type: object
-    description: Cluster status information
-    properties:
       conditions:
         type: array
         description: List of conditions the cluster has gone through
