@@ -2582,11 +2582,18 @@ paths:
               {
                 "id": "a3k",
                 "name": "Node pool name",
-                "availability_zones": ["europe-central-1a"],
+                "availability_zones": [
+                  "europe-central-1a"
+                ],
                 "scaling": {"min": 3, "max": 5},
+                "subnet": "10.1.0.0/24",
                 "node_spec": {
                   "aws": {
                     "instance_type": "m4.large"
+                  },
+                  "volume_sizes_gb"; {
+                    "docker": 100,
+                    "kubelet": 100
                   }
                 }
               }
