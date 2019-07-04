@@ -1738,7 +1738,7 @@ paths:
             application/json:
               {
                 "code": "INVALID_INPUT",
-                "message": "App config could not be created. (invalid input)"
+                "message": "App config could not be modified. (invalid input)"
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
