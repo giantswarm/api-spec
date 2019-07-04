@@ -2591,7 +2591,7 @@ paths:
                   "aws": {
                     "instance_type": "m4.large"
                   },
-                  "volume_sizes_gb"; {
+                  "volume_sizes_gb": {
                     "docker": 100,
                     "kubelet": 100
                   }
