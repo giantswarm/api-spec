@@ -1044,8 +1044,3 @@ definitions:
           max:
             description: Maximum number of nodes in the pool
             type: integer
-
-  V5GetNodePoolStatusResponse:
-    type: object
-    description: Object about a cluster's current state
-    additionalProperties: true
