@@ -373,8 +373,6 @@ definitions:
           version:
             type: string
             description: Version of the chart that should be used to install this app
-          user_config:
-            $ref: '#/definitions/V4AppSpecUserConfigConfigMap'
 
   V4App:
     type: object

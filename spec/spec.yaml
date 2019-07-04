@@ -1442,10 +1442,9 @@ paths:
 
         The following attributes can be modified:
 
-        - `user_config`: This lets you change which configmap is used to configure this app, as well as remove it entirely, by submitting null values.
         - `version`: Changing this field lets you upgrade or downgrade an app.
 
-        `catalog`, `name`, and `namespace` are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
+        `catalog`, `name`, `namespace`, and 'user_config' are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
 
         The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
         Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
