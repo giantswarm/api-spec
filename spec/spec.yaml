@@ -45,6 +45,8 @@ tags:
       description: "User guide: Accessing Pods and Services from the Outside"
   - name: apps
     description: "An app is a helm chart that you can easily install on your tenant clusters. Use these endpoints to: find out what catalogs your installation supports, and list and install apps on on your tenant clusters."
+  - name: app configs
+    description: "Creating an app config lets you supply your apps with custom configuration values."
   - name: organizations
     description: Organizations are groups of users who own resources like clusters.
   - name: users
@@ -1436,7 +1438,7 @@ paths:
       operationId: modifyClusterApp
       tags:
         - apps
-      summary: Modify app
+      summary: Modify an app
       description: |
         This operation allows you to modify an existing app.
 
@@ -1444,7 +1446,7 @@ paths:
 
         - `version`: Changing this field lets you upgrade or downgrade an app.
 
-        `catalog`, `name`, `namespace`, and 'user_config' are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
+        `catalog`, `name`, `namespace`, and `user_config` are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
 
         The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
         Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
@@ -1502,7 +1504,7 @@ paths:
     get:
       operationId: getClusterAppConfig
       tags:
-        - apps
+        - app configs
       summary: Get app config
       description: |
         This operation allows you to fetch the user values configmap associated
@@ -1546,7 +1548,7 @@ paths:
     put:
       operationId: createClusterAppConfig
       tags:
-        - apps
+        - app configs
       summary: Create app config
       description: |
         This operation allows you to create a values configmap for a specific app. The app does
@@ -1630,7 +1632,7 @@ paths:
     delete:
       operationId: deleteClusterAppConfig
       tags:
-        - apps
+        - app configs
       summary: Delete an app config
       description: |
         This operation allows a user to delete an app's user config if it has been named according to the convention of {app-name}-user-values and
@@ -1680,7 +1682,7 @@ paths:
     patch:
       operationId: modifyClusterAppConfig
       tags:
-        - apps
+        - app configs
       summary: Modify app config
       description: |
         This operation allows you to modify the values configmap for a specific app.
