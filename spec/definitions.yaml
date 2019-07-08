@@ -877,6 +877,19 @@ definitions:
             type: string
             description: |
               EC2 instance type used by all nodes in this pool
+      volume_sizes_gb:
+        type: object
+        properties:
+          docker:
+            description: |
+              Size of the Docker volume, used to store docker images and
+              overlay file system data, in GB.
+            type: integer
+          kubelet:
+            description: |
+              Size of the kubelet volume of the worker, used e. g. for
+              volumes of type EmptyDir, in GB.
+            type: integer
 
   V5GetNodePoolResponse:
     type: object
@@ -907,6 +920,9 @@ definitions:
           max:
             description: Maximum number of nodes in the pool
             type: integer
+      subnet:
+        description: IP address block used by the node pool
+        type: string
       node_spec:
         description: Worker node specification
         type: object
@@ -1044,8 +1060,3 @@ definitions:
           max:
             description: Maximum number of nodes in the pool
             type: integer
-
-  V5GetNodePoolStatusResponse:
-    type: object
-    description: Object about a cluster's current state
-    additionalProperties: true
