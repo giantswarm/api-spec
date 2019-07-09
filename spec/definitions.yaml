@@ -360,8 +360,6 @@ definitions:
           catalog:
             type: string
             description: The catalog where the chart for this app can be found
-          user_config:
-            $ref: '#/definitions/V4AppSpecUserConfigConfigMap'
 
   V4ModifyAppRequest:
     type: object
