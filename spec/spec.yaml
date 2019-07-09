@@ -2555,7 +2555,7 @@ paths:
         "400":
           description: Bad request
           schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"          
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
