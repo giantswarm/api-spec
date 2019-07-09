@@ -811,7 +811,7 @@ definitions:
     properties:
       name:
         description: |
-          Node pool name (max character length of x)
+          Node pool name. _(Length between 1-100, cannot contain control codes such as newline.)_
         type: string
       availability_zones:
         description: |
@@ -825,11 +825,11 @@ definitions:
             type: integer
             description: |
               Number of zones to use. If given, the zones are picked
-              automatically.
+              automatically. _(Maximum limit of 4 supported.)_
           zones:
             type: array
             description: |
-              Names of the availability zones to use.
+              Names of the availability zones to use. _(Must be same region as the cluster.)_
             items:
               type: string
       scaling:
@@ -840,10 +840,10 @@ definitions:
         type: object
         properties:
           min:
-            description: Minimum number of nodes in the pool
+            description: Minimum number of nodes in the pool, must be greater than 0, less than `max`.
             type: integer
           max:
-            description: Maximum number of nodes in the pool
+            description: Maximum number of nodes in the pool, must be greater than `min`.
             type: integer
       node_spec:
         description: Worker node specification
@@ -862,7 +862,7 @@ definitions:
           instance_type:
             type: string
             description: |
-              EC2 instance type to use for all nodes in the node pool
+              EC2 instance type to use for all nodes in the node pool. _(Validated against available instance types.)_
 
   # Specification of a node in a node pool after creation
   V5GetNodePoolResponseNodeSpec:
