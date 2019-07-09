@@ -811,7 +811,7 @@ definitions:
     properties:
       name:
         description: |
-          Node pool name
+          Node pool name (max character length of x)
         type: string
       availability_zones:
         description: |
