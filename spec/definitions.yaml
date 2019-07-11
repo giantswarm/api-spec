@@ -835,15 +835,16 @@ definitions:
       scaling:
         description: |
           Attributes specific to cluster node scaling. To have full control of
-          the cluster size, min and max can be set to the same value. If only
-          `min` or only `max` is specified, `min` and `max` will be set equally.
+          the cluster size, min and max can be set to the same value, however `max`
+          must be greater or equal to `min`. If only `min` or only `max` is specified,
+          `min` and `max` will be set equally.
         type: object
         properties:
           min:
-            description: Minimum number of nodes in the pool, must be greater than 0, less than `max`.
+            description: Minimum number of nodes in the pool.
             type: integer
           max:
-            description: Maximum number of nodes in the pool, must be greater than `min`.
+            description: Maximum number of nodes in the pool.
             type: integer
       node_spec:
         description: Worker node specification
