@@ -2465,7 +2465,7 @@ paths:
                   "availability_zones": ["eu-west-1d"],
                   "scaling": {"min": 2, "max": 5},
                   "node_spec": {
-                    "aws": {"instance_type": "p3.8xlarge"}
+                    "aws": {"instance_type": "p3.8xlarge"},
                     "volume_sizes_gb": {"docker": 100, "kubelet": 100}
                   },
                   "status": {
