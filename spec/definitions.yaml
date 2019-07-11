@@ -927,6 +927,16 @@ definitions:
         description: Worker node specification
         type: object
         $ref: '#/definitions/V5GetNodePoolResponseNodeSpec'
+      status:
+        description: Information on the current size and status of the node pool
+        type: object
+        properties:
+          nodes:
+            description: Desired number of nodes in the pool
+            type: integer
+          nodes_ready:
+            description: Number of nodes in state NodeReady
+            type: integer
 
 
   # Request to create a new cluster in V5
