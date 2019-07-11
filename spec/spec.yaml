@@ -1355,8 +1355,10 @@ paths:
         correctly for you.
 
         ### Why can't I just set the `user_config` value myself?
-        This is a security measure and ensures that users of this API can't
-        access arbitrary configmaps of the control plane.
+        It simplifies usage while also being a security measure.
+
+        Furthermore it is also a security measure and ensures that users of this
+        API can't access arbitrary configmaps of the control plane.
 
         This API will only allow you to edit or access configmaps that adhere
         to a strict naming convention.
