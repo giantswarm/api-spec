@@ -811,13 +811,15 @@ definitions:
     properties:
       name:
         description: |
-          Node pool name
+          Node pool name. _(Length between 1-100, cannot contain control codes such as newline.)_
         type: string
       availability_zones:
         description: |
           Specifies how the nodes of a pool are spread over availability zones.
           The object must contain either the `number` attribute or the `zones`
           attribute, but not both.
+          The maximum `number` of availbility zones is the same as that found
+          under `general.availability_zones.max` from the `/v4/info/` endpoint.
           When not given, availability zones assignment is handled automatically.
         type: object
         properties:
@@ -825,25 +827,26 @@ definitions:
             type: integer
             description: |
               Number of zones to use. If given, the zones are picked
-              automatically.
+              automatically. _(Maximum limit of 4 supported.)_
           zones:
             type: array
             description: |
-              Names of the availability zones to use.
+              Names of the availability zones to use. _(Must be same region as the cluster.)_
             items:
               type: string
       scaling:
         description: |
           Attributes specific to cluster node scaling. To have full control of
-          the cluster size, min and max can be set to the same value. If only
-          `min` or only `max` is specified, `min` and `max` will be set equally.
+          the cluster size, min and max can be set to the same value, however `max`
+          must be greater or equal to `min`. If only `min` or only `max` is specified,
+          `min` and `max` will be set equally.
         type: object
         properties:
           min:
-            description: Minimum number of nodes in the pool
+            description: Minimum number of nodes in the pool.
             type: integer
           max:
-            description: Maximum number of nodes in the pool
+            description: Maximum number of nodes in the pool.
             type: integer
       node_spec:
         description: Worker node specification
@@ -862,7 +865,7 @@ definitions:
           instance_type:
             type: string
             description: |
-              EC2 instance type to use for all nodes in the node pool
+              EC2 instance type to use for all nodes in the node pool. _(Validated against available instance types.)_
 
   # Specification of a node in a node pool after creation
   V5GetNodePoolResponseNodeSpec:
