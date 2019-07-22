@@ -364,8 +364,17 @@ definitions:
           catalog:
             type: string
             description: The catalog where the chart for this app can be found
-          user_config:
-            $ref: '#/definitions/V4AppSpecUserConfigConfigMap'
+
+  V4ModifyAppRequest:
+    type: object
+    description: The fields that are editable when trying to modify an app
+    properties:
+      spec:
+        type: object
+        properties:
+          version:
+            type: string
+            description: Version of the chart that should be used to install this app
 
   V4App:
     type: object
