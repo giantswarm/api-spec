@@ -48,6 +48,7 @@ tags:
       url: https://docs.giantswarm.io/guides/accessing-services-from-the-outside/
       description: "User guide: Accessing Pods and Services from the Outside"
   - name: nodepools
+    x-internal: true
     description: |
       This concept is introduced with v5 of this API and is currently only
       available on <span class="badge aws">AWS</span>.
@@ -667,12 +668,8 @@ paths:
         clusters.
 
         The result array items are sparse representations of the cluster
-        objects. To fetch more details on a cluster, use the following
-        operations:
-
-        - [getCluster](#operation/getCluster) or [getClusterV5](#operation/getClusterV5) for cluster details
-        - [getNodePools](#operation/getNodePools) for node pool details
-        - [getClusterStatus](#operation/getClusterStatus) operations.
+        objects. To fetch more details on a cluster, use the
+        [getClusterStatus](#operation/getClusterStatus) operation.
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
@@ -1007,9 +1004,8 @@ paths:
         &ndash; All providers supported.
 
         Deleting a cluster causes the termination of all workloads running on
-        the cluster. Data stored on the worker nodes will be lost. On AWS, node
-        pools belonging to the cluster are deleted, too. There is no way to undo
-        this operation.
+        the cluster. Data stored on the worker nodes will be lost. There is no 
+        way to undo this operation.
 
         The response is sent as soon as the request is validated.
         At that point, workloads might still be running on the cluster and may be accessible for a little wile, until the cluster is actually deleted.
@@ -2683,6 +2679,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     post:
       operationId: addNodePool
+      x-internal: true
       tags:
         - nodepools
       summary: Create node pool
@@ -2837,6 +2834,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     patch:
       operationId: modifyNodePool
+      x-internal: true
       tags:
         - nodepools
       summary: Modify node pool
@@ -2890,6 +2888,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     delete:
       operationId: deleteNodePool
+      x-internal: true
       tags:
         - nodepools
       summary: Delete node pool
