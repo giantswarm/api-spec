@@ -655,12 +655,6 @@ paths:
       description: |
         This operation fetches a list of clusters.
 
-        __Providers__:
-        <span class="badge aws">AWS</span>
-        <span class="badge azure">Azure</span>
-        <span class="badge kvm">KVM</span>
-        &ndash; All providers supported
-
         The result depends on the permissions of the user.
         A normal user will get all the clusters the user has access
         to, via organization membership.
@@ -716,14 +710,6 @@ paths:
       description: |
         This operation is used to create a new Kubernetes cluster or
         "tenant cluster".
-
-        __Providers__:
-        <span class="badge azure">Azure</span>
-        <span class="badge kvm">KVM</span>
-        <span class="badge aws">AWS*</span>
-        &ndash; AWS support ends with release version `TODO`. For AWS clusters using
-        release `TODO` and higher, please refer to the
-        [v5 equivalent](#operation/addClusterV5).
 
         ### Cluster definition
 
@@ -799,14 +785,6 @@ paths:
       summary: Get cluster details (v4)
       description: |
         This operation allows to obtain basic details on a particular cluster.
-
-        __Providers__:
-        <span class="badge azure">Azure</span>
-        <span class="badge kvm">KVM</span>
-        <span class="badge aws">AWS*</span>
-        &ndash; AWS support ends with release version `TODO`. For AWS clusters
-        using release `TODO` and higher, please refer to the
-        [v5 equivalent](#operation/getClusterV5).
       responses:
         "200":
           description: Cluster details
@@ -911,14 +889,6 @@ paths:
       description: |
         This operation allows to modify an existing cluster.
 
-        __Providers__:
-        <span class="badge azure">Azure</span>
-        <span class="badge kvm">KVM</span>
-        <span class="badge aws">AWS*</span>
-        &ndash; AWS support ends with release version `TODO`. For AWS clusters
-        using release `TODO` and higher, please refer to the
-        [v5 equivalent](#operation/modifyClusterV5).
-
         A cluster modification is performed by submitting a `PATCH` request
         to the cluster resource (as described in the
         [addCluster](#operation/addCluster) and [getCluster](#operation/getCluster))
@@ -996,12 +966,6 @@ paths:
       summary: Delete cluster
       description: |
         This operation triggers deleting a cluster with all resources attached to it.
-
-        __Providers__:
-        <span class="badge azure">Azure</span>
-        <span class="badge kvm">KVM</span>
-        <span class="badge aws">AWS</span>
-        &ndash; All providers supported.
 
         Deleting a cluster causes the termination of all workloads running on
         the cluster. Data stored on the worker nodes will be lost. There is no 
@@ -1143,12 +1107,6 @@ paths:
       summary: Get cluster status
       description: |
         Returns an object about a cluster's current state and past status transitions.
-
-        __Providers__:
-        <span class="badge azure">Azure</span>
-        <span class="badge kvm">KVM</span>
-        <span class="badge aws">AWS</span>
-        &ndash; All providers supported.
 
         This endpoint exposes the status content of the Kubernetes resources representing
         a cluster in the corresponding custom resource. That is, depending on the provider:
@@ -2387,11 +2345,6 @@ paths:
       description: |
         Allows to create most recent clusters on AWS installations.
 
-        __Providers__:
-        <span class="badge aws">AWS*</span>
-        &ndash; Only supports release `TODO` and higher on AWS. For other
-        providers, please refer to the [v4 equivalent](#operation/addCluster).
-
         ### Node pools
 
         In the Giant Swarm API v5, worker nodes are grouped into pools of worker
@@ -2486,11 +2439,6 @@ paths:
       summary: Get cluster details (v5)
       description: |
         Allows to retrieve cluster details on AWS installations.
-
-        __Providers__:
-        <span class="badge aws">AWS*</span>
-        &ndash; Only supports release `TODO` and higher on AWS. For other
-        providers, please refer to the [v4 equivalent](#operation/getCluster).
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
@@ -2560,11 +2508,6 @@ paths:
       summary: Modify cluster (v5)
       description: |
         Allows to change cluster properties on AWS installations.
-
-        __Providers__:
-        <span class="badge aws">AWS*</span>
-        &ndash; Only supports release `TODO` and higher on AWS. For other
-        providers, please refer to the [v4 equivalent](#operation/modifyCluster).
       parameters:
         - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
@@ -2614,10 +2557,6 @@ paths:
       summary: Get node pools
       description: |
         Returns a list of node pools from a given cluster.
-
-        __Providers__:
-        <span class="badge aws">AWS</span>
-        &ndash; Only supports release `TODO` and higher on AWS.
       parameters:
         - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
@@ -2709,10 +2648,6 @@ paths:
       description: |
         This allows to add a node pool to a cluster.
 
-        __Providers__:
-        <span class="badge aws">AWS</span>
-        &ndash; Only supports release `TODO` and higher on AWS.
-
         Some, but not all, node pool configuration can be changed after
         creation. The following settings will have a permanent effect:
 
@@ -2776,10 +2711,6 @@ paths:
       summary: Get node pool details
       description: |
         Returns all available details on a specific node pool.
-
-        __Providers__:
-        <span class="badge aws">AWS</span>
-        &ndash; Only supports release `TODO` and higher on AWS.
       parameters:
         - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
@@ -2840,10 +2771,6 @@ paths:
       summary: Modify node pool
       description: |
         Allows to rename a node pool or change its scaling settings.
-
-        __Providers__:
-        <span class="badge aws">AWS</span>
-        &ndash; Only supports release `TODO` and higher on AWS.
       parameters:
         - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
@@ -2901,10 +2828,6 @@ paths:
         - $ref: "./parameters.yaml#/parameters/NodePoolIdPathParameter"
       description: |
         Triggers the deletion of a node pool.
-
-        __Providers__:
-        <span class="badge aws">AWS</span>
-        &ndash; Only supports release `TODO` and higher on AWS.
 
         Nodes in the pool will first be cordoned and drained. Note that it is
         your responsibililty to make sure that workloads using the node pool can
