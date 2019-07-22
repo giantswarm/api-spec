@@ -968,7 +968,7 @@ paths:
         This operation triggers deleting a cluster with all resources attached to it.
 
         Deleting a cluster causes the termination of all workloads running on
-        the cluster. Data stored on the worker nodes will be lost. There is no 
+        the cluster. Data stored on the worker nodes will be lost. There is no
         way to undo this operation.
 
         The response is sent as soon as the request is validated.
