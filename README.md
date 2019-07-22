@@ -28,6 +28,10 @@ As usual, collaboration on this spec is done based on feature branches and pull 
 
 Feature branches shall be merged into `master` only when the API functionality they describe is implemented and available to users of the Giant Swarm API.
 
+### Hidden operations
+
+Some API operations contained in the spec are not yet usable, yet we want to have them in the spec already. These operations are marked using the `x-internal: true` attribute and filtered out before rendering the documentation.
+
 ### Conventions
 
 - Attribute names use only lowercase letters and the underscore as a seperator, like `attribute_name`.
