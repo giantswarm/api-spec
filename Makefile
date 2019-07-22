@@ -53,4 +53,4 @@ test: lint
 # Run a server to show the HTML docs UI on http://localhost:8080
 run-server:
 	docker build -t api-spec-dev -f Dockerfile .
-	docker run --rm -v ${PWD}/spec:/www/yaml -p 8080:8000 api-spec-dev
+	docker run --rm -p 8080:8000 api-spec-dev

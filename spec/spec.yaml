@@ -2211,6 +2211,7 @@ paths:
   /v5/clusters/:
     post:
       operationId: addClusterV5
+      x-internal: true
       tags:
         - clusters
       summary: Create cluster (v5)
@@ -2310,6 +2311,7 @@ paths:
   /v5/clusters/{cluster_id}/:
     get:
       operationId: getClusterV5
+      x-internal: true
       tags:
         - clusters
       summary: Get cluster details (v5)
@@ -2383,6 +2385,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     patch:
       operationId: modifyClusterV5
+      x-internal: true
       tags:
         - clusters
       summary: Modify cluster (v5)
@@ -2436,6 +2439,7 @@ paths:
   /v5/clusters/{cluster_id}/nodepools/:
     get:
       operationId: getNodePools
+      x-internal: true
       tags:
         - nodepools
       summary: Get node pools
@@ -2596,6 +2600,7 @@ paths:
   /v5/clusters/{cluster_id}/nodepools/{nodepool_id}/:
     get:
       operationId: getNodePool
+      x-internal: true
       tags:
         - nodepools
       summary: Get node pool details
