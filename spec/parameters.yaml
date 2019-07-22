@@ -29,6 +29,13 @@ parameters:
     type: string
     description: Unique ID of a credential set
 
+  NodePoolIdPathParameter:
+    name: nodepool_id
+    in: path
+    required: true
+    type: string
+    description: Node Pool ID
+
   UserEmailPathParameter:
     name: email
     in: path
@@ -45,6 +52,7 @@ parameters:
         An ID for the organization.
         This ID must be unique and match this regular
         expression: ^[a-z0-9_]{4,30}$
+
 
   XRequestIDHeader:
     name: X-Request-ID

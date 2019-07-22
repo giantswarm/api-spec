@@ -137,7 +137,7 @@ definitions:
                 description: The instance type used in new cluster, if not specified
                 type: string
 
-  # Request to create a new cluster
+  # Request to create a new cluster in V4
   V4AddClusterRequest:
     type: object
     required:
@@ -156,28 +156,32 @@ definitions:
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
       availability_zones:
-        description: Number of availability zones a cluster should be spread across. The default is provided via the [info](#operation/getInfo) endpoint.
+        description: |
+          Number of availability zones a cluster should be spread across. The
+          default is provided via the [info](#operation/getInfo) endpoint.
         type: integer
       scaling:
         type: object
         description: |
-          Attributes specific to cluster node scaling. To have full control of
-          the cluster size, min and max can be set to the same value. If only
-          `min` or only `max` is specified, `min` and `max` will be set equally.
+          Attributes specific to cluster node scaling on KVM and Azure. To have
+          full control of the cluster size, min and max can be set to the same
+          value. If only `min` or only `max` is specified, `min` and `max` will
+          be set equally. Not available on AWS.
         properties:
           min:
             type: integer
             description: |
-              The minimum number of cluster nodes
+              Minimum number of cluster nodes
           max:
             type: integer
             description: |
-              The maximum number of cluster nodes
+              Maximum number of cluster nodes
       workers:
         type: array
         description: |
-          Worker node definition. If present, the first item of the array is
-          expected to contain the specification for all worker nodes.
+          Worker node definition on KVM and Azure. If present, the first item
+          of the array is expected to contain the specification for all worker
+          nodes. Not available on AWS.
         items:
           $ref: '#/definitions/V4NodeDefinition'
 
@@ -203,11 +207,11 @@ definitions:
           min:
             type: integer
             description: |
-              The minimum number of cluster nodes
+              Minimum number of cluster nodes
           max:
             type: integer
             description: |
-              The maximum number of cluster nodes
+              Maximum number of cluster nodes
       workers:
         type: array
         description: Worker node array (deprecated)
@@ -253,11 +257,11 @@ definitions:
           min:
             type: integer
             description: |
-              The minimum number of cluster nodes as configured
+              Minimum number of cluster nodes as configured
           max:
             type: integer
             description: |
-              The maximum number of cluster nodes as configured
+              Maximum number of cluster nodes as configured
       availability_zones:
         description: List of availability zones a cluster is spread across.
         type: array
@@ -290,7 +294,7 @@ definitions:
                     The protocol this port mapping is made for.
                   type: string
 
-  # Definition of a cluster node
+  # Definition of a v4 cluster node
   V4NodeDefinition:
     type: object
     properties:
@@ -587,6 +591,9 @@ definitions:
       release_version:
         type: string
         description: The semantic version number of this cluster
+      path:
+        type: string
+        description: API path of the cluster resource
 
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:
@@ -797,3 +804,281 @@ definitions:
       auth_token:
         type: string
         description: The newly created API token
+
+
+  # List of node pools
+  V5GetNodePoolsResponse:
+    type: array
+    items:
+      $ref: '#/definitions/V5GetNodePoolResponse'
+
+  # Add node pool
+  V5AddNodePoolRequest:
+    description: |
+      Request body structure for creating a node pool
+    type: object
+    properties:
+      name:
+        description: |
+          Node pool name. _(Length between 1-100, cannot contain control codes such as newline.)_
+        type: string
+      availability_zones:
+        description: |
+          Specifies how the nodes of a pool are spread over availability zones.
+          The object must contain either the `number` attribute or the `zones`
+          attribute, but not both.
+          The maximum `number` of availbility zones is the same as that found
+          under `general.availability_zones.max` from the `/v4/info/` endpoint.
+          When not given, availability zones assignment is handled automatically.
+        type: object
+        properties:
+          number:
+            type: integer
+            description: |
+              Number of zones to use. If given, the zones are picked
+              automatically. _(Maximum limit of 4 supported.)_
+          zones:
+            type: array
+            description: |
+              Names of the availability zones to use. _(Must be same region as the cluster.)_
+            items:
+              type: string
+      scaling:
+        description: |
+          Attributes specific to cluster node scaling. To have full control of
+          the cluster size, min and max can be set to the same value, however `max`
+          must be greater or equal to `min`. If only `min` or only `max` is specified,
+          `min` and `max` will be set equally.
+        type: object
+        properties:
+          min:
+            description: Minimum number of nodes in the pool.
+            type: integer
+          max:
+            description: Maximum number of nodes in the pool.
+            type: integer
+      node_spec:
+        description: Worker node specification
+        type: object
+        $ref: '#/definitions/V5AddNodePoolRequestNodeSpec'
+
+  # Specification of a node in a node pool to be created
+  V5AddNodePoolRequestNodeSpec:
+    type: object
+    properties:
+      aws:
+        type: object
+        description: |
+          Attributes specific to the AWS provider
+        properties:
+          instance_type:
+            type: string
+            description: |
+              EC2 instance type to use for all nodes in the node pool. _(Validated against available instance types.)_
+
+  # Specification of a node in a node pool after creation
+  V5GetNodePoolResponseNodeSpec:
+    type: object
+    properties:
+      aws:
+        type: object
+        description: |
+          Attributes specific to the AWS provider
+        properties:
+          instance_type:
+            type: string
+            description: |
+              EC2 instance type used by all nodes in this pool
+      volume_sizes_gb:
+        type: object
+        properties:
+          docker:
+            description: |
+              Size of the Docker volume, used to store docker images and
+              overlay file system data, in GB.
+            type: integer
+          kubelet:
+            description: |
+              Size of the kubelet volume of the worker, used e. g. for
+              volumes of type EmptyDir, in GB.
+            type: integer
+
+  V5GetNodePoolResponse:
+    type: object
+    properties:
+      id:
+        description: Node pool identifier. Unique within a tenant cluster.
+        type: string
+      name:
+        description: Node pool name
+        type: string
+      availability_zones:
+        description: |
+          Names of the availability zones used by the nodes of this pool.
+        type: array
+        items:
+          description: Name of the availability zone
+          type: string
+      scaling:
+        description: |
+          Scaling range of the node pool.
+          If `min` and `max` differ, the node pool is scaled automatically.
+          If both have the same value, the cluster size is pinned.
+        type: object
+        properties:
+          min:
+            description: Minimum number of nodes in the pool
+            type: integer
+          max:
+            description: Maximum number of nodes in the pool
+            type: integer
+      subnet:
+        description: IP address block used by the node pool
+        type: string
+      node_spec:
+        description: Worker node specification
+        type: object
+        $ref: '#/definitions/V5GetNodePoolResponseNodeSpec'
+      status:
+        description: Information on the current size and status of the node pool
+        type: object
+        properties:
+          nodes:
+            description: Desired number of nodes in the pool
+            type: integer
+          nodes_ready:
+            description: Number of nodes in state NodeReady
+            type: integer
+
+
+  # Request to create a new cluster in V5
+  V5AddClusterRequest:
+    type: object
+    required:
+      - owner
+    properties:
+      owner:
+        type: string
+        description: |
+          Name of the organization owning the cluster
+      name:
+        type: string
+        description: Cluster name
+      release_version:
+        type: string
+        description: |
+          The [release](https://docs.giantswarm.io/api/#tag/releases) version
+          to use in the new cluster. If not given, the latest release will be
+          used.
+      master:
+        type: object
+        description: |
+          Configuration regarding the master node. If not given, the master node
+          will be placed automatically.
+        properties:
+          availability_zone:
+            type: string
+            description: |
+              Name of the availability zone to use for the master node. If not
+              given, the master node will be placed automatically.
+      nodepools:
+        description: |
+          Specification of node pools to be created immediately with the
+          cluster.
+        type: array
+        items:
+          $ref: '#/definitions/V5AddNodePoolRequest'
+
+  V5ClusterDetailsResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique cluster identifier
+      api_endpoint:
+        type: string
+        description: URI of the Kubernetes API endpoint
+      create_date:
+        type: string
+        description: Date/time of cluster creation
+      owner:
+        type: string
+        description: |
+          Name of the organization owning the cluster
+      name:
+        type: string
+        description: Cluster name
+      credential_id:
+        type: string
+        description: |
+          ID of the credentials used to operate the cluster. See
+          [Set credentials](#operation/addCredentials) for details.
+      release_version:
+        type: string
+        description: |
+          The [release](https://docs.giantswarm.io/api/#tag/releases) version
+          used by the cluster
+      master:
+        type: object
+        description: |
+          Information about the master node
+        properties:
+          availability_zone:
+            type: string
+            description: |
+              Name of the availability zone the master node is placed in
+      conditions:
+        type: array
+        description: List of conditions the cluster has gone through
+        items:
+          type: object
+          properties:
+            last_transition_time:
+              type: string
+              description: Date and time when the cluster transitioned into this condition
+            condition:
+              type: string
+              description: A string describing the condition, e. g. 'Created'
+      versions:
+        type: array
+        items:
+          type: object
+          properties:
+            last_transition_time:
+              type: string
+              description: Date and time when the cluster got created with or upgrated to this version
+            version:
+              type: string
+              description: Semantic version number
+
+  V5ModifyClusterRequest:
+    type: object
+    description: Request model for cluster modification
+    properties:
+      name:
+        type: string
+        description: New cluster name
+      release_version:
+        type: string
+        description: Release version to upgrade to
+
+  V5ModifyNodePoolRequest:
+    type: object
+    description: Request body for node pool modification
+    properties:
+      name:
+        type: string
+        description: New name of the node pool
+      scaling:
+        description: |
+          Attributes specific to node pool scaling. To have full control of
+          the cluster size, min and max can be set to the same value. If only
+          `min` or only `max` is specified, `min` and `max` will be set equally.
+        type: object
+        properties:
+          min:
+            description: Minimum number of nodes in the pool
+            type: integer
+          max:
+            description: Maximum number of nodes in the pool
+            type: integer
