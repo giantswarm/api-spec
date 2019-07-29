@@ -3,6 +3,12 @@ jobs:
   build:
     machine: true
     steps:
+      - run:
+          name: Install yamllint
+          command: |
+            sudo apt-get update && sudo apt-get install -y python-pip
+            sudo pip install yamllint
+
       - checkout
 
       - run:
@@ -11,13 +17,6 @@ jobs:
             wget -q $(curl -sS -H "Authorization: token $RELEASE_TOKEN" https://api.github.com/repos/giantswarm/architect/releases/latest | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
             chmod +x ./architect
             ./architect version
-
-      - run:
-          name: Install yamllint
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y python-pip
-            sudo pip install yamllint
 
       - run:
           name: Test
