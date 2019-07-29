@@ -24,6 +24,14 @@ definitions:
             name:
               description: A URL friendly identifier for the catalog.
               type: string
+            labels:
+              description: The labels that are set on this app catalog
+              type: object
+              properties:
+                "application.giantswarm.io/catalog-type":
+                  type: string
+                "app-operator.giantswarm.io/version":
+                  type: string
         spec:
           type: object
           properties:
