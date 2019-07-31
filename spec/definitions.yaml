@@ -813,13 +813,6 @@ definitions:
         type: string
         description: The newly created API token
 
-
-  # List of node pools
-  V5GetNodePoolsResponse:
-    type: array
-    items:
-      $ref: '#/definitions/V5GetNodePoolResponse'
-
   # Add node pool
   V5AddNodePoolRequest:
     description: |

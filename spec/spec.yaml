@@ -2604,7 +2604,9 @@ paths:
         "200":
           description: Node pools list
           schema:
-            $ref: "./definitions.yaml#/definitions/V5GetNodePoolsResponse"
+            type: array
+            items:
+              $ref: "./definitions.yaml#/definitions/V5GetNodePoolResponse"
           examples:
             application/json:
               [
