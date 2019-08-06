@@ -7,7 +7,7 @@ lint:
 		-v $(PWD):/workdir \
 		-w /workdir \
 		giantswarm/yamllint \
-		-c ./yamllint/config.yaml \
+		-c ./.yamllint/config.yaml \
 		./spec/*
 
 # Validate the swagger/OAI spec

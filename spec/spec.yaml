@@ -103,7 +103,6 @@ paths:
         including a URL to fetch the full index of each catalog.
 
 
-
         #### About the Labels
 
 
@@ -1714,7 +1713,6 @@ paths:
         update the config using the `PATCH /v4/clusters/{cluster_id}/apps/{app_name}/config/`
 
         endpoint.
-
 
 
         ### Example POST request
