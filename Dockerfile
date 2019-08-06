@@ -10,9 +10,6 @@ RUN ./node_modules/.bin/openapi-filter /workdir/spec.yaml /workdir/spec-filtered
 FROM nginx:1.16-alpine
 RUN rm -r /etc/nginx/conf.d
 ADD docserver/index.html /www/
-ADD spec/definitions.yaml /www/yaml/
-ADD spec/parameters.yaml /www/yaml/
-ADD spec/responses.yaml /www/yaml/
 # Use filtered spec (not containing internal operations)
 COPY --from=builder /workdir/spec-filtered.yaml /www/yaml/spec.yaml
 

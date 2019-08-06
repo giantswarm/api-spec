@@ -3151,43 +3151,37 @@ components:
       required: true
       description: |
         As described in the [authentication](#section/Authentication) section
-      schema:
-        type: string
+      type: string
     AppNamePathParameter:
       name: app_name
       in: path
       required: true
       description: App Name
-      schema:
-        type: string
+      type: string
     ClusterIdPathParameter:
       name: cluster_id
       in: path
       required: true
       description: Cluster ID
-      schema:
-        type: string
+      type: string
     CredentialsIdPathParameter:
       name: credential_id
       in: path
       required: true
       description: Unique ID of a credential set
-      schema:
-        type: string
+      type: string
     NodePoolIdPathParameter:
       name: nodepool_id
       in: path
       required: true
       description: Node Pool ID
-      schema:
-        type: string
+      type: string
     UserEmailPathParameter:
       name: email
       in: path
       required: true
       description: The user's email address
-      schema:
-        type: string
+      type: string
     OrganizationIdPathParameter:
       name: organization_id
       in: path
@@ -3196,8 +3190,7 @@ components:
         An ID for the organization.
         This ID must be unique and match this regular
         expression: ^[a-z0-9_]{4,30}$
-      schema:
-        type: string
+      type: string
     XRequestIDHeader:
       name: X-Request-ID
       in: header
@@ -3205,8 +3198,7 @@ components:
       description: |
         A randomly generated key that can be used to track a request throughout
         services of Giant Swarm.
-      schema:
-        type: string
+      type: string
     XGiantSwarmActivityHeader:
       name: X-Giant-Swarm-Activity
       in: header
@@ -3215,8 +3207,7 @@ components:
         Name of an activity to track, like "list-clusters". This allows to
         analyze several API requests sent in context and gives an idea on
         the purpose.
-      schema:
-        type: string
+      type: string
     XGiantSwarmCmdLineHeader:
       name: X-Giant-Swarm-CmdLine
       in: header
@@ -3224,8 +3215,7 @@ components:
       description: |
         If activity has been issued by a CLI, this header can contain the
         command line
-      schema:
-        type: string
+      type: string
   responses:
     V4Generic401Response:
       description: Permission denied
