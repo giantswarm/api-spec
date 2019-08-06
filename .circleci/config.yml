@@ -19,8 +19,12 @@ jobs:
             ./architect version
 
       - run:
-          name: Test
-          command: make test
+          name: Lint
+          command: make lint
+
+      - run:
+          name: Validate
+          command: make validate
 
       - run:
           name: Build
