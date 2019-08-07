@@ -1,0 +1,275 @@
+get:
+  operationId: getCluster
+  tags:
+    - clusters
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+  summary: Get cluster details (v4)
+  description: |
+    This operation allows to obtain basic details on a particular cluster.
+  responses:
+    "200":
+      description: Cluster details
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4ClusterDetailsResponse"
+          examples:
+            response:
+              value:
+                id: wqtlq
+                create_date: 2017-03-03T10:50:45.949270905Z
+                api_endpoint: https://api.wqtlq.example.com
+                name: Just a Standard Cluster
+                release_version: 2.5.16
+                owner: acme
+                credential_id: a1b2c
+                availability_zones:
+                  - fire-zone-1
+                workers:
+                  - memory:
+                      size_gb: 2
+                    storage:
+                      size_gb: 20
+                    cpu:
+                      cores: 4
+                    labels:
+                      beta.kubernetes.io/arch: amd64
+                      beta.kubernetes.io/os: linux
+                      ip: 10.3.11.2
+                      kubernetes.io/hostname: worker-1.x882ofna.k8s.gigantic.io
+                      nodetype: hicpu
+                  - memory:
+                      size_gb: 8
+                    storage:
+                      size_gb: 20
+                    cpu:
+                      cores: 2
+                    labels:
+                      beta.kubernetes.io/arch: amd64
+                      beta.kubernetes.io/os: linux
+                      ip: 10.3.62.2
+                      kubernetes.io/hostname: worker-2.x882ofna.k8s.gigantic.io
+                      nodetype: hiram
+                kvm:
+                  port_mappings:
+                    - port: 30020
+                      protocol: http
+                    - port: 30021
+                      protocol: https
+    "301":
+      description: Version mismatch
+      headers:
+        Location:
+          description: |
+            URI of the new path to use for retrying the request, as the one
+            used is not usable for this cluster.
+          schema:
+            type: string
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Cluster not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The cluster with ID 'wqtlq' could not be found, or perhaps
+                  you do not have access to it. Please make sure the cluster
+                  ID is correct, and that you are a member of the
+                  organization that it belongs to.
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+patch:
+  operationId: modifyCluster
+  tags:
+    - clusters
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components.yaml#/components/schemas/V4ModifyClusterRequest"
+    description: Merge-patch body
+    required: true
+    x-examples:
+      application/merge-patch+json:
+        name: New cluster name
+  summary: Modify cluster (v4)
+  description: >
+    This operation allows to modify an existing cluster.
+
+
+    A cluster modification is performed by submitting a `PATCH` request
+
+    to the cluster resource (as described in the
+
+    [addCluster](#operation/addCluster) and [getCluster](#operation/getCluster))
+
+    in form of a [JSON Patch Merge
+
+    (RFC 7386)](https://tools.ietf.org/html/rfc7386). This means, only the
+
+    attributes to be modified have to be contained in the request body.
+
+
+    The following attributes can be modified:
+
+
+    - `name`: Rename the cluster to something more fitting.
+
+
+    - `owner`: Changing the owner organization name means to change cluster
+
+    ownership from one organization to another. The user performing the
+
+    request has to be a member of both organizations.
+
+
+    - `release_version`: By changing this attribute you can upgrade a
+
+    cluster to a newer
+
+    [release](https://docs.giantswarm.io/api/#tag/releases).
+
+
+    - `scaling`: Adjust the cluster node limits to make use of auto scaling
+
+    or to have full control over the node count. The latter can be
+
+    achieved by setting `min` and `max` to the same values. Note that
+
+    setting `min` and `max` to different values (effectively enabling
+
+    autoscaling) is only available on AWS with releases from 6.2.0.
+
+      - `workers` (deprecated): For backward compatibility reasons, it is
+    possible to provide this attribute as an array, where the number of
+
+    items contained in the array determines the intended number of worker
+
+    nodes in the cluster. The item count will be applied as both `min` and
+
+    `max` value of the scaling limits, effectively disabling autoscaling.
+
+    This requires the `scaling` attribute must not be present in the same
+
+    request.
+
+
+    ### Limitations
+
+
+    - As of now, existing worker nodes cannot be modified.
+
+    - The number of availability zones cannot be modified.
+
+    - When removing nodes (scaling down), it is not possible to determine
+
+    which nodes will be removed.
+  responses:
+    "200":
+      description: Cluster modified
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4ClusterDetailsResponse"
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Cluster not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The cluster with ID 'wqtlq' could not be found, or perhaps
+                  you do not have access to it. Please make sure the cluster
+                  ID is correct, and that you are a member of the
+                  organization that it belongs to.
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+delete:
+  operationId: deleteCluster
+  tags:
+    - clusters
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+  summary: Delete cluster
+  description: >
+    This operation triggers deleting a cluster with all resources attached
+    to it.
+
+
+    Deleting a cluster causes the termination of all workloads running on
+
+    the cluster. Data stored on the worker nodes will be lost. There is no
+
+    way to undo this operation.
+
+
+    The response is sent as soon as the request is validated.
+
+    At that point, workloads might still be running on the cluster and may be accessible for a little wile, until the cluster is actually deleted.
+  responses:
+    "202":
+      description: Deleting cluster
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_DELETION_STARTED
+                message: The cluster with ID 'wqtlq' is being deleted.
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Cluster not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The cluster with ID 'wqtlq' could not be found, or perhaps
+                  you do not have access to it. Please make sure the cluster
+                  ID is correct, and that you are a member of the
+                  organization that it belongs to.
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"

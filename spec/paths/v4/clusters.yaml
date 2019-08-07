@@ -1,0 +1,143 @@
+get:
+  operationId: getClusters
+  tags:
+    - clusters
+  summary: Get clusters
+  description: |
+    This operation fetches a list of clusters.
+
+    The result depends on the permissions of the user.
+    A normal user will get all the clusters the user has access
+    to, via organization membership.
+    A user with admin permission will receive a list of all existing
+    clusters.
+
+    The result array items are sparse representations of the cluster
+    objects. To fetch more details on a cluster, use the
+    [getClusterStatus](#operation/getClusterStatus) operation.
+  parameters:
+    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components.yaml#/components/schemas/V4ClusterListItem"
+          examples:
+            response:
+              value:
+                - id: g8s3o
+                  create_date: 2019-03-08T12:31:47.215Z
+                  name: Staging Cluster
+                  owner: acme
+                  release_version: 7.0.1
+                  path: /v4/clusters/g8s3o/
+                - id: 3dkr6
+                  create_date: 2019-07-22T13:58:02.024Z
+                  name: Node Pools Cluster
+                  owner: testorg
+                  release_version: 9.0.0
+                  path: /v5/clusters/3dkr6/
+    "401":
+      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"
+post:
+  operationId: addCluster
+  tags:
+    - clusters
+  summary: Create cluster (v4)
+  description: >
+    This operation is used to create a new Kubernetes cluster or
+
+    "tenant cluster".
+
+
+    ### Cluster definition
+
+
+    The cluster definition format allows to set a number of optional
+
+    configuration details, like worker node configuration, with node
+
+    specification depending on the provider (e. g. on Azure the
+
+    VM size, or on KVM the memory size and number of CPU cores).
+
+
+    One attribute is __mandatory__ upon creation: The `owner`
+
+    attribute must carry the name of the organization the cluster will
+
+    belong to. Note that the acting user must be a member of that
+
+    organization in order to create a cluster.
+
+
+    For all other attributes, defaults will be applied if the attribute
+
+    is not set. Check out the [getInfo](#operation/getInfo) operation for
+
+    more info about defaults. If no `release_version` is set, the latest
+
+    release version available for the provider will be used.
+  parameters:
+    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../components.yaml#/components/schemas/V4AddClusterRequest"
+    description: New cluster definition
+    required: true
+    x-examples:
+      application/json:
+        owner: myteam
+        release_version: 7.1.0
+        name: Example cluster with 3 m5.xlarge nodes
+        availability_zones: 2
+        scaling:
+          min: 3
+          max: 3
+        workers:
+          - aws:
+              instance_type: m5.xlarge
+  responses:
+    "201":
+      description: Cluster created
+      headers:
+        Location:
+          description: URI to obtain details on the new cluster using the
+            [getCluster](#operation/getCluster) operation
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_CREATED
+                message: A new cluster has been created with ID 'wqtlq'
+    "401":
+      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"

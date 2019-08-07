@@ -1,0 +1,277 @@
+delete:
+  operationId: deleteClusterApp
+  tags:
+    - apps
+  summary: Delete an app
+  description: |
+    This operation allows a user to delete an app.
+  parameters:
+    - $ref: "../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "../../../../../components.yaml#/components/parameters/AppNamePathParameter"
+  responses:
+    "200":
+      description: App deleted
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_DELETED
+                message: Your app 'acme' on 'adc23' has been deleted.
+    "401":
+      $ref: "../../../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: App not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: App could not be deleted. (app with name 'my-awesome-app'
+                  in cluster 'abc12' could not be found)
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+put:
+  operationId: createClusterApp
+  tags:
+    - apps
+  summary: Install an app
+  description: >
+    Install an app on a tenant cluster by posting to this endpoint.
+
+
+    The spec field represents the app we'll be installing, and so spec.name refers to
+
+    the name of the chart that installs this app in the catalog.
+
+
+    The response you get on a succesful create includes the status of the app. However
+
+    since the App is still initialising and this is an asynchronous operation, it is
+
+    likely that the fields in this status object will be all empty values.
+
+
+    To check on the status of your app, perform a GET to /v4/clusters/{cluster_id}/apps/,
+
+    and check the status field of the app.
+
+
+    ### Example PUT request
+
+    ```json
+      {
+        "spec": {
+          "catalog": "sample-catalog",
+          "name": "prometheus-chart",
+          "namespace": "prometheus",
+          "version": "0.2.0",
+        }
+      }
+    ```
+
+
+    ### About the user_config field in the response
+
+    This field is not editable by you, but is set automatically by the API
+
+    if a configmap named `{app_name}-user-values` exists in the tenant cluster
+
+    namespace on the control plane.
+
+
+    The `/v4/clusters/{cluster_id}/apps/{app_name}/config/` endpoints allows
+
+    you to create such a configmap using this API.
+
+
+    It is recommended to create your config before creating your app. This
+
+    will result in a faster deploy.
+
+
+    However, you can create your config after creating the app if you wish,
+
+    this API will take care of setting the `user_config` field of the app
+
+    correctly for you.
+
+
+    ### Why can't I just set the `user_config` value myself?
+
+    It simplifies usage while also being a security measure.
+
+
+    Furthermore it is also a security measure and ensures that users of this
+
+    API can't access arbitrary configmaps of the control plane.
+
+
+    This API will only allow you to edit or access configmaps that adhere
+
+    to a strict naming convention.
+  parameters:
+    - $ref: "../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "../../../../../components.yaml#/components/parameters/AppNamePathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../../../components.yaml#/components/schemas/V4CreateAppRequest"
+    x-examples:
+      application/json:
+        spec:
+          catalog: sample-catalog
+          name: prometheus-chart
+          namespace: prometheus
+          version: 0.2.0
+  responses:
+    "200":
+      description: Create cluster app
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4App"
+          examples:
+            response:
+              value:
+                metadata:
+                  name: my-awesome-prometheus
+                spec:
+                  catalog: sample-catalog
+                  name: prometheus-chart
+                  namespace: giantswarm
+                  version: 0.2.0
+                  user_config:
+                    configmap:
+                      name: prometheus-user-values
+                      namespace: 123ab
+                status:
+                  app_version: ""
+                  release:
+                    last_deployed: 0000-00-00T00:00:00Z
+                    status: ""
+                  version: ""
+    "400":
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: INVALID_INPUT
+                message: App could not be created. (invalid input)
+    "401":
+      $ref: "../../../../../components.yaml#/components/responses/V4Generic401Response"
+    "409":
+      description: App already exists
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_ALREADY_EXISTS
+                message: An app with this name already exists.
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+patch:
+  operationId: modifyClusterApp
+  tags:
+    - apps
+  summary: Modify an app
+  description: >
+    This operation allows you to modify an existing app.
+
+
+    The following attributes can be modified:
+
+
+    - `version`: Changing this field lets you upgrade or downgrade an app.
+
+
+    `catalog`, `name`, `namespace`, and `user_config` are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
+
+
+    The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
+
+    Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
+  parameters:
+    - $ref: "../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "../../../../../components.yaml#/components/parameters/AppNamePathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../../../components.yaml#/components/schemas/V4ModifyAppRequest"
+    x-examples:
+      application/merge-patch+json:
+        spec:
+          version: 0.3.0
+  responses:
+    "200":
+      description: App modified
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4App"
+    "400":
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: INVALID_INPUT
+                message: "The app could not be modified. (invalid input: name is
+                  not an editable field)"
+    "401":
+      $ref: "../../../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: App not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: "The app could not be modified. (not found: the app with
+                  name 'my-great-app' could not be found)"
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"

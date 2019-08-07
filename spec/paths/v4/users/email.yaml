@@ -1,0 +1,195 @@
+get:
+  operationId: getUser
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/UserEmailPathParameter"
+  tags:
+    - users
+  summary: Get user
+  description: |
+    Returns details about a specific user
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4UserListItem"
+          examples:
+            response:
+              value:
+                email: andy@example.com
+                created: 2017-01-15T12:00:00Z
+                expiry: 2019-01-15T00:00:00Z
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: User not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: "The user could not be found. (not found: user with email
+                  'bob@example.com' could not be found)"
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+put:
+  operationId: createUser
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/UserEmailPathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components.yaml#/components/schemas/V4CreateUserRequest"
+    description: User account details
+    required: true
+    x-examples:
+      application/json:
+        password: cGFzc3dvcmQ=
+        expiry: 2020-01-01T12:00:00.000Z
+  tags:
+    - users
+  summary: Create user
+  description: >
+    Creates a users in the system. Currently this endpoint is only available
+    to users with admin permissions.
+  responses:
+    "201":
+      description: User created
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_CREATED
+                message: The user with email 'bob@example.com' has been created.
+    "400":
+      description: User already exists
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_ALREADY_EXISTS
+                message: "The user could not be created. (invalid input: email
+                  'bob@example.com' already exists)"
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+patch:
+  operationId: modifyUser
+  tags:
+    - users
+  summary: Modify user
+  description: >
+    This operation allows you to change details of a given user. Only
+    administrators can edit accounts of other users.
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/UserEmailPathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components.yaml#/components/schemas/V4ModifyUserRequest"
+    description: User account details
+    required: true
+    x-examples:
+      application/json:
+        email: edited-email@example.com
+        expiry: 2037-01-15T00:00:00Z
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4UserListItem"
+          examples:
+            response:
+              value:
+                email: edited-email@example.com
+                created: 2017-01-15T12:00:00Z
+                expiry: 2037-01-15T00:00:00Z
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+delete:
+  operationId: deleteUser
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/UserEmailPathParameter"
+  tags:
+    - users
+  summary: Delete user
+  description: |
+    Deletes a users in the system. Currently this endpoint is only available
+    to users with admin permissions.
+  responses:
+    "200":
+      description: User deleted
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_DELETED
+                message: The user with email 'bob@example.com' has been deleted.
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: User not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: "The user could not be deleted. (not found: user with
+                  email 'bob@example.com' could not be found)"
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"

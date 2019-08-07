@@ -1,0 +1,170 @@
+get:
+  operationId: getNodePools
+  x-internal: true
+  tags:
+    - nodepools
+  summary: Get node pools
+  description: |
+    Returns a list of node pools from a given cluster.
+  parameters:
+    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+  responses:
+    "200":
+      description: Node pools list
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V5GetNodePoolsResponse"
+          examples:
+            response:
+              value:
+                - id: a7r
+                  name: Batch number crunching
+                  availability_zones:
+                    - eu-west-1d
+                  scaling:
+                    min: 2
+                    max: 5
+                  node_spec:
+                    aws:
+                      instance_type: p3.8xlarge
+                    volume_sizes_gb:
+                      docker: 100
+                      kubelet: 100
+                  status:
+                    nodes: 4
+                    nodes_ready: 3
+                - id: 6fe
+                  name: Application servers
+                  availability_zones:
+                    - eu-west-1a
+                    - eu-west-1b
+                    - eu-west-1c
+                  scaling:
+                    min: 3
+                    max: 15
+                  node_spec:
+                    aws:
+                      instance_type: p3.2xlarge
+                    volume_sizes_gb:
+                      docker: 100
+                      kubelet: 100
+                  status:
+                    nodes: 11
+                    nodes_ready: 11
+    "401":
+      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Cluster not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The cluster with ID '6drr3' could not be found...
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+post:
+  operationId: addNodePool
+  x-internal: true
+  tags:
+    - nodepools
+  summary: Create node pool
+  parameters:
+    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../../components.yaml#/components/schemas/V5AddNodePoolRequest"
+    x-examples:
+      application/json:
+        name: My general purpose node pool
+        availability_zones:
+          number: 2
+        scaling:
+          min: 3
+          max: 10
+        node_spec:
+          aws:
+            instance_type: m4.2xlarge
+  description: |
+    This allows to add a node pool to a cluster.
+
+    Some, but not all, node pool configuration can be changed after
+    creation. The following settings will have a permanent effect:
+
+    - `availability_zones`
+    - `instance_type`
+  responses:
+    "201":
+      description: Node pool created
+      headers:
+        Location:
+          description: URI of the new node pool resource
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V5GetNodePoolResponse"
+          examples:
+            response:
+              value:
+                id: a1b
+                name: My general purpose node pool
+                availability_zones:
+                  - eu-central-1a
+                  - eu-central-1c
+                scaling:
+                  min: 3
+                  max: 10
+                node_spec:
+                  aws:
+                    instance_type: m4.2xlarge
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: INVALID_INPUT
+                message: The node pool could not be created. (Invalid name, length
+                  is greater than maximum length of 100.)
+    "401":
+      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Cluster not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The cluster with ID '6drr3' could not be found...
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"

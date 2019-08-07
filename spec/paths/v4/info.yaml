@@ -1,0 +1,120 @@
+get:
+  operationId: getInfo
+  tags:
+    - info
+  summary: Get information on the installation
+  description: |
+    Returns a set of details on the installation. The output varies based
+    on the provider used in the installation.
+
+    This information is useful for example when creating new cluster, to
+    prevent creating clusters with more worker nodes than possible.
+
+    ### Example for an AWS-based installation
+
+    ```json
+    {
+      "general": {
+        "installation_name": "shire",
+        "provider": "aws",
+        "datacenter": "eu-central-1",
+        "availability_zones": {
+          "max": 3,
+          "default": 1,
+        }
+      },
+      "stats": {
+        "cluster_creation_duration": {
+          "median": 750,
+          "p25": 700,
+          "p75": 800
+        }
+      },
+      "workers": {
+        "count_per_cluster": {
+          "max": null,
+          "default": 3
+        },
+        "instance_type": {
+          "options": [
+            "m3.medium", "m3.large", "m3.xlarge"
+          ],
+          "default": "m3.large"
+        }
+      }
+    }
+    ```
+
+    ### Example for a KVM-based installation
+
+    ```json
+    {
+      "general": {
+        "installation_name": "isengard",
+        "provider": "kvm",
+        "datacenter": "string",
+        "availability_zones": {
+          "max": 1,
+          "default": 1,
+        }
+      },
+      "stats": {
+        "cluster_creation_duration": {
+          "median": 750,
+          "p25": 700,
+          "p75": 800
+        }
+      },
+      "workers": {
+        "count_per_cluster": {
+          "max": 8,
+          "default": 3
+        },
+      }
+    }
+    ```
+  parameters:
+    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+  responses:
+    "200":
+      description: Information
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V4InfoResponse"
+          examples:
+            response:
+              value:
+                general:
+                  installation_name: shire
+                  provider: aws
+                  datacenter: eu-central-1
+                  availability_zones:
+                    max: 3
+                    default: 1
+                stats:
+                  cluster_creation_duration:
+                    median: 750
+                    p25: 700
+                    p75: 800
+                workers:
+                  count_per_cluster:
+                    max: null
+                    default: 3
+                  instance_type:
+                    options:
+                      - m3.medium
+                      - m3.large
+                      - m3.xlarge
+                    default: m3.large
+    "401":
+      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"

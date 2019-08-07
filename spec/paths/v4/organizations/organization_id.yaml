@@ -1,0 +1,259 @@
+get:
+  operationId: getOrganization
+  tags:
+    - organizations
+  summary: Get organization details
+  description: |
+    This operation fetches organization details.
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/OrganizationIdPathParameter"
+  responses:
+    "200":
+      description: Organization details
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4Organization"
+          examples:
+            response:
+              value:
+                id: acme
+                members:
+                  - email: user1@example.com
+                  - email: user2@example.com
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Organization not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: "The organization could not be found. (not found: the
+                  organization with id 'acme' could not be found)"
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+put:
+  operationId: addOrganization
+  tags:
+    - organizations
+  summary: Create an organization
+  description: |
+    This operation allows a user to create an organization.
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/OrganizationIdPathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components.yaml#/components/schemas/V4Organization"
+    required: true
+    x-examples:
+      application/json:
+        id: string
+        members:
+          - email: myself@example.com
+          - email: colleague@example.com
+  responses:
+    "201":
+      description: Organization created
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4Organization"
+          examples:
+            response:
+              value:
+                id: acme
+                members:
+                  - email: user1@example.com
+                  - email: user2@example.com
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "409":
+      description: Organization already exists
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_ALREADY_EXISTS
+                message: The organization could not be created. (org already exists)
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+patch:
+  operationId: modifyOrganization
+  tags:
+    - organizations
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/OrganizationIdPathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            members:
+              type: array
+              description: List of members that belong to this organization
+              items:
+                $ref: "../../../components.yaml#/components/schemas/V4OrganizationMember"
+    required: true
+    x-examples:
+      application/merge-patch+json:
+        members:
+          - email: myself@example.com
+  summary: Modify organization
+  description: >
+    This operation allows you to modify an existing organization. You must
+    be
+
+    a member of the organization or an admin in order to use this endpoint.
+
+
+    The following attributes can be modified:
+
+
+    - `members`: By modifying the array of members, members can be added to or removed from the organization
+
+
+    The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
+
+    Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
+
+
+    The full request must be valid before it will be executed, currently this
+
+    means every member you attempt to add to the organization must actually
+
+    exist in the system. If any member you attempt to add is invalid, the entire
+
+    patch operation will fail, no members will be added or removed, and an error message
+
+    will explain which members in your request are invalid.
+  responses:
+    "200":
+      description: Organization modified
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4Organization"
+    "400":
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: INVALID_INPUT
+                message: "The organization could not be modified. (invalid input:
+                  user 'invalid-email' does not exist or is invalid)"
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Organization not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: "The organization could not be modified. (not found: the
+                  organization with id 'acme' could not be found)"
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+delete:
+  operationId: deleteOrganization
+  tags:
+    - organizations
+  summary: Delete an organization
+  description: >
+    This operation allows a user to delete an organization that they are a
+    member of.
+
+    Admin users can delete any organization.
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/OrganizationIdPathParameter"
+  responses:
+    "200":
+      description: Organization deleted
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_DELETED
+                message: The organization with ID 'acme' has been deleted.
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Organization not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: "The organization could not be deleted. (not found: the
+                  organization with id 'acme' could not be found)"
+    "409":
+      description: Organization has credentials
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: FAILURE
+                message: The organization cannot be deleted while it has
+                  credentials attached to it.  Please contact Giant Swarm
+                  support for help.
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"

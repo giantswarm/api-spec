@@ -1,0 +1,173 @@
+get:
+  operationId: getNodePool
+  x-internal: true
+  tags:
+    - nodepools
+  summary: Get node pool details
+  description: |
+    Returns all available details on a specific node pool.
+  parameters:
+    - $ref: "../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "../../../../../components.yaml#/components/parameters/NodePoolIdPathParameter"
+  responses:
+    "200":
+      description: Node pool details
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V5GetNodePoolResponse"
+          examples:
+            response:
+              value:
+                id: a3k
+                name: Node pool name
+                availability_zones:
+                  - europe-central-1a
+                scaling:
+                  min: 3
+                  max: 5
+                subnet: 10.1.0.0/24
+                node_spec:
+                  aws:
+                    instance_type: m4.large
+                  volume_sizes_gb:
+                    docker: 100
+                    kubelet: 100
+                status:
+                  nodes: 4
+                  nodes_ready: 3
+    "401":
+      $ref: "../../../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Cluster not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The cluster with ID '6drr3' could not be found...
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+patch:
+  operationId: modifyNodePool
+  x-internal: true
+  tags:
+    - nodepools
+  summary: Modify node pool
+  description: |
+    Allows to rename a node pool or change its scaling settings.
+  parameters:
+    - $ref: "../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "../../../../../components.yaml#/components/parameters/NodePoolIdPathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../../../components.yaml#/components/schemas/V5ModifyNodePoolRequest"
+    description: Merge-patch body
+    required: true
+    x-examples:
+      application/merge-patch+json:
+        scaling:
+          min: 5
+          max: 30
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V5GetNodePoolResponse"
+    "401":
+      $ref: "../../../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Cluster not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The cluster with ID '6drr3' could not be found...
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+delete:
+  operationId: deleteNodePool
+  x-internal: true
+  tags:
+    - nodepools
+  summary: Delete node pool
+  parameters:
+    - $ref: "../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "../../../../../components.yaml#/components/parameters/NodePoolIdPathParameter"
+  description: |
+    Triggers the deletion of a node pool.
+
+    Nodes in the pool will first be cordoned and drained. Note that it is
+    your responsibililty to make sure that workloads using the node pool can
+    be scheduled elsewhere. We recommend to double-check the available
+    capacity of remaining node pools, as well as any node selectors and
+    taints. Also you can do the draining yourself before issuing the
+    delete request, to observe the outcome. Use
+
+    ```
+    kubectl drain nodes -l giantswarm.nodepool_id= ...
+    ```
+
+    TODO: adapt the command for correct label syntax
+  responses:
+    "202":
+      description: Deleting node pool
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_DELETION_STARTED
+                message: The cluster with ID 'wqtlq' is being deleted.
+    "401":
+      $ref: "../../../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The node pool with ID 'wqt' could not be found...
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"

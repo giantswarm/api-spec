@@ -1,0 +1,37 @@
+get:
+  operationId: getOrganizations
+  tags:
+    - organizations
+  summary: Get organizations
+  description: |
+    This operation allows to fetch a list of organizations the user is a
+    member of. In the case of an admin user, the result includes all
+    existing organizations.
+  parameters:
+    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components.yaml#/components/schemas/V4OrganizationListItem"
+          examples:
+            response:
+              value:
+                - id: acme
+                - id: giantswarm
+                - id: testorg
+    "401":
+      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"

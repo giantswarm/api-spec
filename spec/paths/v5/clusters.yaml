@@ -1,0 +1,88 @@
+post:
+  operationId: addClusterV5
+  x-internal: true
+  tags:
+    - clusters
+  summary: Create cluster (v5)
+  description: |
+    Allows to create most recent clusters on AWS installations.
+
+    ### Node pools
+
+    In the Giant Swarm API v5, worker nodes are grouped into pools of worker
+    nodes where all nodes share the same configuration.
+
+    When creating a cluster without submitting the `nodepools` attribute,
+    or with its value being an empty array, one node pool with default
+    configuration will be created.
+
+    Node pools can be created, deleted and modified during the entire
+    lifetime of a cluster.
+
+    See
+    [node pools](#tag/nodepools) and
+    [Create node pool](#operation/addNodePool) for details.
+  parameters:
+    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../components.yaml#/components/schemas/V5AddClusterRequest"
+    description: New cluster definition
+    required: true
+    x-examples:
+      application/json:
+        owner: myteam
+        release_version: 7.1.0
+        name: Production cluster using k8s 1.14
+        master:
+          availability_zone: europe-central-1c
+        nodepools:
+          - name: General purpose
+            availability_zones:
+              number: 2
+            scaling:
+              min: 3
+              max: 30
+            node_spec:
+              aws:
+                instance_type: m4.2xlarge
+  responses:
+    "201":
+      description: Cluster created
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V5ClusterDetailsResponse"
+          examples:
+            response:
+              value:
+                id: n45do
+                owner: myteam
+                release_version: 7.1.0
+                name: Production cluster using k8s 1.14
+                master:
+                  availability_zone: europe-central-1c
+                nodepools:
+                  - name: General purpose
+                    availability_zones:
+                      - europe-central-1a
+                      - europe-central-1c
+                    scaling:
+                      min: 3
+                      max: 30
+                    node_spec:
+                      aws:
+                        instance_type: m4.2xlarge
+    "401":
+      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"

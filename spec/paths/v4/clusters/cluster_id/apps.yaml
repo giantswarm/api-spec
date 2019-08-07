@@ -1,0 +1,81 @@
+get:
+  operationId: getClusterApps
+  tags:
+    - apps
+  summary: Get cluster apps
+  description: |
+    Returns an array of apps installed on a given cluster.
+
+    ### Example
+    ```json
+      [
+        {
+          "metadata": {
+            "name": "my-awesome-prometheus",
+          },
+
+          "spec": {
+            "catalog": "sample-catalog"
+            "name": "prometheus-chart",
+            "namespace": "giantswarm",
+            "version": "0.2.0",
+            "user_config": {
+              "configmap": {
+                "name": "prometheus-user-values",
+                "namespace": "123ab"
+              }
+            }
+          },
+
+          "status": {
+            "app_version": "1.0.0",
+            "release": {
+              "last_deployed": "2019-04-08T12:34:00Z",
+              "status": "DEPLOYED"
+            },
+            "version": "0.2.0",
+          }
+        }
+      ]
+    ```
+  parameters:
+    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+  responses:
+    "200":
+      description: Cluster apps
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V4GetClusterAppsResponse"
+          examples:
+            response:
+              value:
+                - metadata:
+                    name: my-awesome-prometheus
+                  spec:
+                    catalog: sample-catalog
+                    name: prometheus-chart
+                    namespace: giantswarm
+                    version: 0.2.0
+                    user_config:
+                      configmap:
+                        name: prometheus-user-values
+                        namespace: 123ab
+                  status:
+                    app_version: 1.0.0
+                    release:
+                      last_deployed: 2019-04-08T12:34:00Z
+                      status: DEPLOYED
+                    version: 0.2.0
+    "401":
+      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"

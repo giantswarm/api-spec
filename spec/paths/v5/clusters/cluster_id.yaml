@@ -1,0 +1,121 @@
+get:
+  operationId: getClusterV5
+  x-internal: true
+  tags:
+    - clusters
+  summary: Get cluster details (v5)
+  description: |
+    Allows to retrieve cluster details on AWS installations.
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+  responses:
+    "200":
+      description: Cluster details
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V5ClusterDetailsResponse"
+          examples:
+            response:
+              value:
+                id: 7g4di
+                create_date: 2019-06-01T12:00:13.949270905Z
+                api_endpoint: https://api.k8s.7g4di.example.com
+                name: All purpose cluster
+                release_version: 8.0.0
+                owner: acme
+                credential_id: a1b2c
+                master:
+                  availability_zone: europe-west-1c
+                conditions:
+                  - last_transition_time: 2019-03-25T17:10:09.333633991Z
+                    condition: Created
+                versions:
+                  - last_transition_time: 2019-03-25T17:10:09.333633991Z
+                    version: 1.2.3
+    "301":
+      description: Version mismatch
+      headers:
+        Location:
+          description: |
+            URI of the new path to use for retrying the request, as the one
+            used is not usable for this cluster.
+          schema:
+            type: string
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Cluster not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The cluster with ID 'wqtlq' could not be found, or perhaps
+                  you do not have access to it. Please make sure the cluster
+                  ID is correct, and that you are a member of the
+                  organization that it belongs to.
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+patch:
+  operationId: modifyClusterV5
+  x-internal: true
+  tags:
+    - clusters
+  summary: Modify cluster (v5)
+  description: |
+    Allows to change cluster properties on AWS installations.
+  parameters:
+    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components.yaml#/components/schemas/V5ModifyClusterRequest"
+    description: Merge-patch body
+    required: true
+    x-examples:
+      application/json:
+        name: New cluster name
+  responses:
+    "200":
+      description: Cluster modified
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V5ClusterDetailsResponse"
+    "401":
+      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+    "404":
+      description: Cluster not found
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+          examples:
+            response:
+              value:
+                code: RESOURCE_NOT_FOUND
+                message: The cluster with ID 'wqtlq' could not be found, or perhaps
+                  you do...
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"

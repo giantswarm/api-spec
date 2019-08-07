@@ -1,0 +1,52 @@
+get:
+  operationId: getReleases
+  tags:
+    - releases
+  summary: Get releases
+  description: |
+    Lists all releases available for new clusters or for upgrading existing
+    clusters. Might also serve as an archive to obtain details on older
+    releases.
+  parameters:
+    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+  responses:
+    "200":
+      description: Releases list
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components.yaml#/components/schemas/V4ReleaseListItem"
+          examples:
+            response:
+              value:
+                - version: 1.14.9
+                  timestamp: 2017-09-21T08:14:03.37759Z
+                  changelog:
+                    - component: kubernetes
+                      description: Security fixes
+                    - component: calico
+                      description: Security fixes
+                  components:
+                    - name: kubernetes
+                      version: 1.5.8
+                    - name: calico
+                      version: 0.9.1
+                  active: false
+                - version: 2.8.4
+                  timestamp: 2017-11-11T12:24:56.59969Z
+                  changelog:
+                    - component: calico
+                      description: Bugfix
+                  components:
+                    - name: kubernetes
+                      version: 1.7.3
+                    - name: calico
+                      version: 1.1.1
+                  active: true
+    "401":
+      $ref: "../../components.yaml#/components/responses/V4Generic401Response"

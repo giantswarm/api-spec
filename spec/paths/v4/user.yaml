@@ -1,0 +1,33 @@
+get:
+  operationId: getCurrentUser
+  tags:
+    - users
+  summary: Get current user
+  description: |
+    Returns details about the currently authenticated user
+  parameters:
+    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V4UserListItem"
+          examples:
+            response:
+              value:
+                email: andy@example.com
+                created: 2017-01-15T12:00:00Z
+                expiry: 2019-01-15T00:00:00Z
+    "401":
+      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"

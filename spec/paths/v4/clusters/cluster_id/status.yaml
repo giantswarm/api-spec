@@ -1,0 +1,46 @@
+get:
+  operationId: getClusterStatus
+  tags:
+    - clusters
+  summary: Get cluster status
+  description: >
+    Returns an object about a cluster's current state and past status
+    transitions.
+
+
+    This endpoint exposes the status content of the Kubernetes resources representing
+
+    a cluster in the corresponding custom resource. That is, depending on the provider:
+
+
+    - [`awsconfig.provider.giantswarm.io`](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AWSConfig)
+
+    - [`azureconfig.provider.giantswarm.io`](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#AzureConfig)
+
+    - [`kvmconfig.provider.giantswarm.io`](https://godoc.org/github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1#KVMConfig)
+
+
+    Note that structure and style differ from the rest of the v4 API. Also note that
+
+    the structure depends on the release version and changes can be expected frequently.
+  parameters:
+    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+  responses:
+    "200":
+      description: Cluster status
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V4GetClusterStatusResponse"
+    "401":
+      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+    default:
+      description: error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
