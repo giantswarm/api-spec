@@ -94,25 +94,6 @@ components:
                 code: PERMISSION_DENIED
                 message: The requested resource cannot be accessed using the provided
                   authentication details.
-  securitySchemes:
-    AuthorizationHeaderToken:
-      description: |
-        Clients authenticate by passing an auth token via the `Authorization`
-        header with the format
-
-        ```
-        Authorization: giantswarm
-        ````
-
-        Auth tokens can be obtained using the
-        [createAuthToken](#operation/createAuthToken) operation.
-
-        For Giant Swarm staff who are authenticating using SSO,
-        pass the auth token via the `Authorization` header with a value of the
-        format `Bearer `.
-      type: apiKey
-      name: Authorization
-      in: header
   schemas:
     V4GenericResponse:
       type: object

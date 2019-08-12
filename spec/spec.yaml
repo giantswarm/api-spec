@@ -94,6 +94,26 @@ tags:
       A release provides _components_, like for example Kubernetes. For each
       release the contained components are listed. Changes in components are
       detailed in the _changelog_ of a release.
+components:
+  securitySchemes:
+    AuthorizationHeaderToken:
+      description: |
+        Clients authenticate by passing an auth token via the `Authorization`
+        header with the format
+
+        ```
+        Authorization: giantswarm
+        ````
+
+        Auth tokens can be obtained using the
+        [createAuthToken](#operation/createAuthToken) operation.
+
+        For Giant Swarm staff who are authenticating using SSO,
+        pass the auth token via the `Authorization` header with a value of the
+        format `Bearer `.
+      type: apiKey
+      name: Authorization
+      in: header
 security:
   - AuthorizationHeaderToken: []
 paths:

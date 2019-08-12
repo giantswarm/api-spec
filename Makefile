@@ -12,7 +12,7 @@ lint:
 
 # Validate the swagger/OAI spec
 validate: lint
-	docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli:latest generate \
+	docker run --rm -v ${PWD}:/local -v ${PWD}/out:/out openapitools/openapi-generator-cli:latest generate \
 			-i /local/spec/spec.yaml \
 			-g javascript \
 			-o /out/javascript
