@@ -74,17 +74,17 @@ get:
     }
     ```
   parameters:
-    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
   responses:
     "200":
       description: Information
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V4InfoResponse"
+            $ref: "./components.yaml#/components/schemas/V4InfoResponse"
           examples:
             response:
               value:
@@ -111,10 +111,10 @@ get:
                       - m3.xlarge
                     default: m3.large
     "401":
-      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     default:
       description: Error
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

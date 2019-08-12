@@ -7,18 +7,18 @@ get:
   description: |
     Allows to retrieve cluster details on AWS installations.
   parameters:
-    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   responses:
     "200":
       description: Cluster details
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V5ClusterDetailsResponse"
+            $ref: "./components.yaml#/components/schemas/V5ClusterDetailsResponse"
           examples:
             response:
               value:
@@ -47,13 +47,13 @@ get:
           schema:
             type: string
     "401":
-      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Cluster not found
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -67,7 +67,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 patch:
   operationId: modifyClusterV5
   x-internal: true
@@ -77,16 +77,16 @@ patch:
   description: |
     Allows to change cluster properties on AWS installations.
   parameters:
-    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../../components.yaml#/components/schemas/V5ModifyClusterRequest"
+          $ref: "./components.yaml#/components/schemas/V5ModifyClusterRequest"
     description: Merge-patch body
     required: true
     x-examples:
@@ -98,15 +98,15 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V5ClusterDetailsResponse"
+            $ref: "./components.yaml#/components/schemas/V5ClusterDetailsResponse"
     "401":
-      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Cluster not found
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -118,4 +118,4 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

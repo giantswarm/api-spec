@@ -16,10 +16,10 @@ get:
     objects. To fetch more details on a cluster, use the
     [getClusterStatus](#operation/getClusterStatus) operation.
   parameters:
-    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
   responses:
     "200":
       description: Success
@@ -28,7 +28,7 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components.yaml#/components/schemas/V4ClusterListItem"
+              $ref: "./components.yaml#/components/schemas/V4ClusterListItem"
           examples:
             response:
               value:
@@ -45,13 +45,13 @@ get:
                   release_version: 9.0.0
                   path: /v5/clusters/3dkr6/
     "401":
-      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     default:
       description: Error
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 post:
   operationId: addCluster
   tags:
@@ -92,15 +92,15 @@ post:
 
     release version available for the provider will be used.
   parameters:
-    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../components.yaml#/components/schemas/V4AddClusterRequest"
+          $ref: "./components.yaml#/components/schemas/V4AddClusterRequest"
     description: New cluster definition
     required: true
     x-examples:
@@ -127,17 +127,17 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
                 code: RESOURCE_CREATED
                 message: A new cluster has been created with ID 'wqtlq'
     "401":
-      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     default:
       description: error
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

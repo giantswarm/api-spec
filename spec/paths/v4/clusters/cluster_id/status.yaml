@@ -24,23 +24,23 @@ get:
 
     the structure depends on the release version and changes can be expected frequently.
   parameters:
-    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   responses:
     "200":
       description: Cluster status
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GetClusterStatusResponse"
+            $ref: "./components.yaml#/components/schemas/V4GetClusterStatusResponse"
     "401":
-      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     default:
       description: error
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

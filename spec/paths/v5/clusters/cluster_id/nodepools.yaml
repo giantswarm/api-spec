@@ -7,18 +7,18 @@ get:
   description: |
     Returns a list of node pools from a given cluster.
   parameters:
-    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   responses:
     "200":
       description: Node pools list
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V5GetNodePoolsResponse"
+            $ref: "./components.yaml#/components/schemas/V5GetNodePoolsResponse"
           examples:
             response:
               value:
@@ -57,13 +57,13 @@ get:
                     nodes: 11
                     nodes_ready: 11
     "401":
-      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Cluster not found
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -74,7 +74,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 post:
   operationId: addNodePool
   x-internal: true
@@ -82,16 +82,16 @@ post:
     - nodepools
   summary: Create node pool
   parameters:
-    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../../../components.yaml#/components/schemas/V5AddNodePoolRequest"
+          $ref: "./components.yaml#/components/schemas/V5AddNodePoolRequest"
     x-examples:
       application/json:
         name: My general purpose node pool
@@ -122,7 +122,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V5GetNodePoolResponse"
+            $ref: "./components.yaml#/components/schemas/V5GetNodePoolResponse"
           examples:
             response:
               value:
@@ -142,7 +142,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -150,13 +150,13 @@ post:
                 message: The node pool could not be created. (Invalid name, length
                   is greater than maximum length of 100.)
     "401":
-      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Cluster not found
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -167,4 +167,4 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

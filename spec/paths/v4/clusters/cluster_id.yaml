@@ -3,11 +3,11 @@ get:
   tags:
     - clusters
   parameters:
-    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   summary: Get cluster details (v4)
   description: |
     This operation allows to obtain basic details on a particular cluster.
@@ -17,7 +17,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4ClusterDetailsResponse"
+            $ref: "./components.yaml#/components/schemas/V4ClusterDetailsResponse"
           examples:
             response:
               value:
@@ -71,13 +71,13 @@ get:
           schema:
             type: string
     "401":
-      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Cluster not found
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -91,22 +91,22 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 patch:
   operationId: modifyCluster
   tags:
     - clusters
   parameters:
-    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../../components.yaml#/components/schemas/V4ModifyClusterRequest"
+          $ref: "./components.yaml#/components/schemas/V4ModifyClusterRequest"
     description: Merge-patch body
     required: true
     x-examples:
@@ -190,15 +190,15 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4ClusterDetailsResponse"
+            $ref: "./components.yaml#/components/schemas/V4ClusterDetailsResponse"
     "401":
-      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Cluster not found
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -212,17 +212,17 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 delete:
   operationId: deleteCluster
   tags:
     - clusters
   parameters:
-    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   summary: Delete cluster
   description: >
     This operation triggers deleting a cluster with all resources attached
@@ -245,20 +245,20 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
                 code: RESOURCE_DELETION_STARTED
                 message: The cluster with ID 'wqtlq' is being deleted.
     "401":
-      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Cluster not found
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -272,4 +272,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

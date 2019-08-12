@@ -39,18 +39,18 @@ get:
       ]
     ```
   parameters:
-    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   responses:
     "200":
       description: Cluster apps
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GetClusterAppsResponse"
+            $ref: "./components.yaml#/components/schemas/V4GetClusterAppsResponse"
           examples:
             response:
               value:
@@ -72,10 +72,10 @@ get:
                       status: DEPLOYED
                     version: 0.2.0
     "401":
-      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     default:
       description: error
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

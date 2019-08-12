@@ -9,42 +9,42 @@ get:
 
     The individual array items contain metadata on the key pairs, but neither the key nor the certificate. These can only be obtained upon creation, using the [addKeypair](#operation/addKeyPair) operation.
   parameters:
-    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   responses:
     "200":
       description: Key pairs
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GetKeyPairsResponse"
+            $ref: "./components.yaml#/components/schemas/V4GetKeyPairsResponse"
     "401":
-      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     default:
       description: error
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 post:
   operationId: addKeyPair
   tags:
     - key pairs
   summary: Create key pair
   parameters:
-    - $ref: "../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../../../components.yaml#/components/schemas/V4AddKeyPairRequest"
+          $ref: "./components.yaml#/components/schemas/V4AddKeyPairRequest"
     description: >
       While the `ttl_hours` attribute is optional and will be set to a
       default value when omitted, the `description` is mandatory.
@@ -93,7 +93,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../../../components.yaml#/components/schemas/V4AddKeyPairResponse"
+            $ref: "./components.yaml#/components/schemas/V4AddKeyPairResponse"
           examples:
             response:
               value:
@@ -106,4 +106,4 @@ post:
                 id: 02:cc:da:f9:fb:ce:c3:e5:e1:f6:27:d8:43:48:0d:37:4a:ee:b9:67
                 ttl_hours: 8640
     "401":
-      $ref: "../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"

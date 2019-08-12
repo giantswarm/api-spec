@@ -7,19 +7,19 @@ get:
   description: |
     Returns all available details on a specific node pool.
   parameters:
-    - $ref: "../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
-    - $ref: "../../../../../components.yaml#/components/parameters/NodePoolIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/NodePoolIdPathParameter"
   responses:
     "200":
       description: Node pool details
       content:
         application/json:
           schema:
-            $ref: "../../../../../components.yaml#/components/schemas/V5GetNodePoolResponse"
+            $ref: "./components.yaml#/components/schemas/V5GetNodePoolResponse"
           examples:
             response:
               value:
@@ -41,13 +41,13 @@ get:
                   nodes: 4
                   nodes_ready: 3
     "401":
-      $ref: "../../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Cluster not found
       content:
         application/json:
           schema:
-            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -58,7 +58,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 patch:
   operationId: modifyNodePool
   x-internal: true
@@ -68,17 +68,17 @@ patch:
   description: |
     Allows to rename a node pool or change its scaling settings.
   parameters:
-    - $ref: "../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
-    - $ref: "../../../../../components.yaml#/components/parameters/NodePoolIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/NodePoolIdPathParameter"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../../../../components.yaml#/components/schemas/V5ModifyNodePoolRequest"
+          $ref: "./components.yaml#/components/schemas/V5ModifyNodePoolRequest"
     description: Merge-patch body
     required: true
     x-examples:
@@ -92,15 +92,15 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../../../components.yaml#/components/schemas/V5GetNodePoolResponse"
+            $ref: "./components.yaml#/components/schemas/V5GetNodePoolResponse"
     "401":
-      $ref: "../../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Cluster not found
       content:
         application/json:
           schema:
-            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -111,7 +111,7 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 delete:
   operationId: deleteNodePool
   x-internal: true
@@ -119,12 +119,12 @@ delete:
     - nodepools
   summary: Delete node pool
   parameters:
-    - $ref: "../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
-    - $ref: "../../../../../components.yaml#/components/parameters/NodePoolIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/NodePoolIdPathParameter"
   description: |
     Triggers the deletion of a node pool.
 
@@ -146,20 +146,20 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
                 code: RESOURCE_DELETION_STARTED
                 message: The cluster with ID 'wqtlq' is being deleted.
     "401":
-      $ref: "../../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Not found
       content:
         application/json:
           schema:
-            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -170,4 +170,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

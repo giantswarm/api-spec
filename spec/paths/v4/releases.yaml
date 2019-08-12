@@ -8,10 +8,10 @@ get:
     clusters. Might also serve as an archive to obtain details on older
     releases.
   parameters:
-    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
   responses:
     "200":
       description: Releases list
@@ -20,7 +20,7 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components.yaml#/components/schemas/V4ReleaseListItem"
+              $ref: "./components.yaml#/components/schemas/V4ReleaseListItem"
           examples:
             response:
               value:
@@ -49,4 +49,4 @@ get:
                       version: 1.1.1
                   active: true
     "401":
-      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"

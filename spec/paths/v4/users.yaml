@@ -7,10 +7,10 @@ get:
     Returns a list of all users in the system. Currently this endpoint is
     only available to users with admin permissions.
   parameters:
-    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
   responses:
     "200":
       description: Success
@@ -19,7 +19,7 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components.yaml#/components/schemas/V4UserListItem"
+              $ref: "./components.yaml#/components/schemas/V4UserListItem"
           examples:
             response:
               value:
@@ -33,10 +33,10 @@ get:
                   created: 2017-03-15T13:00:00Z
                   expiry: 2021-01-15T00:00:00Z
     "401":
-      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     default:
       description: Error
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

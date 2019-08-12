@@ -7,19 +7,19 @@ get:
     This operation allows you to fetch the user values configmap associated
     with an app.
   parameters:
-    - $ref: "../../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
-    - $ref: "../../../../../../components.yaml#/components/parameters/AppNamePathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/AppNamePathParameter"
   responses:
     "200":
       description: Success
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GetClusterAppConfigResponse"
+            $ref: "./components.yaml#/components/schemas/V4GetClusterAppConfigResponse"
         appication/json:
           examples:
             response:
@@ -31,13 +31,13 @@ get:
                 zone:
                   name: giantswarm-cluster
     "401":
-      $ref: "../../../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: App Config not found
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -85,17 +85,17 @@ put:
       }
     ```
   parameters:
-    - $ref: "../../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
-    - $ref: "../../../../../../components.yaml#/components/parameters/AppNamePathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/AppNamePathParameter"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../../../../../components.yaml#/components/schemas/V4CreateAppConfigRequest"
+          $ref: "./components.yaml#/components/schemas/V4CreateAppConfigRequest"
     x-examples:
       appication/json:
         agent:
@@ -110,7 +110,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
         appication/json:
           examples:
             response:
@@ -123,20 +123,20 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
                 code: INVALID_INPUT
                 message: App config could not be created. (invalid input)
     "401":
-      $ref: "../../../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "409":
       description: App config already exists
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -147,7 +147,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 delete:
   operationId: deleteClusterAppConfig
   tags:
@@ -170,32 +170,32 @@ delete:
 
     updating the app, and only then delete the configmap using this endpoint.
   parameters:
-    - $ref: "../../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
-    - $ref: "../../../../../../components.yaml#/components/parameters/AppNamePathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/AppNamePathParameter"
   responses:
     "200":
       description: App Config deleted
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
                 code: RESOURCE_DELETED
                 message: App config for 'my-app' on 'abc12' has been deleted.
     "401":
-      $ref: "../../../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: App Config not found
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -207,7 +207,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 patch:
   operationId: modifyClusterAppConfig
   tags:
@@ -256,17 +256,17 @@ patch:
 
     Then the "server" and "admin" keys will be removed.
   parameters:
-    - $ref: "../../../../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../../../../components.yaml#/components/parameters/ClusterIdPathParameter"
-    - $ref: "../../../../../../components.yaml#/components/parameters/AppNamePathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/ClusterIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/AppNamePathParameter"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../../../../../components.yaml#/components/schemas/V4CreateAppConfigRequest"
+          $ref: "./components.yaml#/components/schemas/V4CreateAppConfigRequest"
     x-examples:
       application/json:
         agent:
@@ -277,7 +277,7 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
         appication/json:
           examples:
             response:
@@ -290,17 +290,17 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
                 code: INVALID_INPUT
                 message: App config could not be created. (invalid input)
     "401":
-      $ref: "../../../../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     default:
       description: Error
       content:
         application/json:
           schema:
-            $ref: "../../../../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

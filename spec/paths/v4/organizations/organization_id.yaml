@@ -6,18 +6,18 @@ get:
   description: |
     This operation fetches organization details.
   parameters:
-    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../components.yaml#/components/parameters/OrganizationIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/OrganizationIdPathParameter"
   responses:
     "200":
       description: Organization details
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4Organization"
+            $ref: "./components.yaml#/components/schemas/V4Organization"
           examples:
             response:
               value:
@@ -26,13 +26,13 @@ get:
                   - email: user1@example.com
                   - email: user2@example.com
     "401":
-      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Organization not found
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -44,7 +44,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 put:
   operationId: addOrganization
   tags:
@@ -53,16 +53,16 @@ put:
   description: |
     This operation allows a user to create an organization.
   parameters:
-    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../components.yaml#/components/parameters/OrganizationIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/OrganizationIdPathParameter"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../../components.yaml#/components/schemas/V4Organization"
+          $ref: "./components.yaml#/components/schemas/V4Organization"
     required: true
     x-examples:
       application/json:
@@ -76,7 +76,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4Organization"
+            $ref: "./components.yaml#/components/schemas/V4Organization"
           examples:
             response:
               value:
@@ -85,13 +85,13 @@ put:
                   - email: user1@example.com
                   - email: user2@example.com
     "401":
-      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "409":
       description: Organization already exists
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -102,17 +102,17 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 patch:
   operationId: modifyOrganization
   tags:
     - organizations
   parameters:
-    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../components.yaml#/components/parameters/OrganizationIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/OrganizationIdPathParameter"
   requestBody:
     content:
       application/json:
@@ -123,7 +123,7 @@ patch:
               type: array
               description: List of members that belong to this organization
               items:
-                $ref: "../../../components.yaml#/components/schemas/V4OrganizationMember"
+                $ref: "./components.yaml#/components/schemas/V4OrganizationMember"
     required: true
     x-examples:
       application/merge-patch+json:
@@ -163,13 +163,13 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4Organization"
+            $ref: "./components.yaml#/components/schemas/V4Organization"
     "400":
       description: Invalid input
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -177,13 +177,13 @@ patch:
                 message: "The organization could not be modified. (invalid input:
                   user 'invalid-email' does not exist or is invalid)"
     "401":
-      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Organization not found
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -195,7 +195,7 @@ patch:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
 delete:
   operationId: deleteOrganization
   tags:
@@ -207,31 +207,31 @@ delete:
 
     Admin users can delete any organization.
   parameters:
-    - $ref: "../../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
-    - $ref: "../../../components.yaml#/components/parameters/OrganizationIdPathParameter"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/OrganizationIdPathParameter"
   responses:
     "200":
       description: Organization deleted
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
                 code: RESOURCE_DELETED
                 message: The organization with ID 'acme' has been deleted.
     "401":
-      $ref: "../../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     "404":
       description: Organization not found
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -243,7 +243,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
@@ -256,4 +256,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

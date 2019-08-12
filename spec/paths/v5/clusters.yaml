@@ -23,15 +23,15 @@ post:
     [node pools](#tag/nodepools) and
     [Create node pool](#operation/addNodePool) for details.
   parameters:
-    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../components.yaml#/components/schemas/V5AddClusterRequest"
+          $ref: "./components.yaml#/components/schemas/V5AddClusterRequest"
     description: New cluster definition
     required: true
     x-examples:
@@ -57,7 +57,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V5ClusterDetailsResponse"
+            $ref: "./components.yaml#/components/schemas/V5ClusterDetailsResponse"
           examples:
             response:
               value:
@@ -79,10 +79,10 @@ post:
                       aws:
                         instance_type: m4.2xlarge
     "401":
-      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
     default:
       description: error
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"

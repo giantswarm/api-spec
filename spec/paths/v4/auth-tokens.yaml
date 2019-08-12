@@ -7,14 +7,14 @@ post:
     Creates a Auth Token for a given user. Must authenticate with email and
     password.
   parameters:
-    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../components.yaml#/components/schemas/V4CreateAuthTokenRequest"
+          $ref: "./components.yaml#/components/schemas/V4CreateAuthTokenRequest"
     description: Create Auth Token Request
     required: true
     x-examples:
@@ -27,13 +27,13 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V4CreateAuthTokenResponse"
+            $ref: "./components.yaml#/components/schemas/V4CreateAuthTokenResponse"
           examples:
             response:
               value:
                 auth_token: e5239484-2299-41df-b901-d0568db7e3f9
     "401":
-      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"
 delete:
   operationId: deleteAuthToken
   tags:
@@ -43,21 +43,21 @@ delete:
     Deletes the authentication token provided in the Authorization header.
     This effectively logs you out.
   parameters:
-    - $ref: "../../components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
-    - $ref: "../../components.yaml#/components/parameters/XRequestIDHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmActivityHeader"
-    - $ref: "../../components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
+    - $ref: "./components.yaml#/components/parameters/RequiredGiantSwarmAuthorizationHeader"
+    - $ref: "./components.yaml#/components/parameters/XRequestIDHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmActivityHeader"
+    - $ref: "./components.yaml#/components/parameters/XGiantSwarmCmdLineHeader"
   responses:
     "200":
       description: Success
       content:
         application/json:
           schema:
-            $ref: "../../components.yaml#/components/schemas/V4GenericResponse"
+            $ref: "./components.yaml#/components/schemas/V4GenericResponse"
           examples:
             response:
               value:
                 code: RESOURCE_DELETED
                 message: The authentication token has been succesfully deleted.
     "401":
-      $ref: "../../components.yaml#/components/responses/V4Generic401Response"
+      $ref: "./components.yaml#/components/responses/V4Generic401Response"

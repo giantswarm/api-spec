@@ -1,4 +1,11 @@
 openapi: 3.0.0
+servers:
+  - url: https://{path}
+    description: The production API server
+    variables:
+      path:
+        default: localhost:8000
+        description: The path to a giantswarm API server running on a control plane
 info:
   title: The Giant Swarm API
   description: >
