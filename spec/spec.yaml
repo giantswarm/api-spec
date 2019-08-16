@@ -296,11 +296,11 @@ paths:
                   "availability_zones": {
                     "max": 3,
                     "default": 1
-                  },
-                  "features": {
-                    "nodepools": {
-                      "release_version_minimum": "10.0.0"
-                    }
+                  }
+                },
+                "features": {
+                  "nodepools": {
+                    "release_version_minimum": "10.0.0"
                   }
                 },
                 "stats": {

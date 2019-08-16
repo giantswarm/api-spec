@@ -89,17 +89,17 @@ definitions:
               default:
                 description: Default number of availability zones for a cluster.
                 type: integer
-          features:
+      features:
+        type: object
+        description: Information on particular capabilities of the installation.
+        properties:
+          nodepools:
             type: object
-            description: Information on particular capabilities of the installation.
+            description: Support for grouping of worker nodes into node pools.
             properties:
-              nodepools:
-                type: object
-                description: Support for grouping of worker nodes into node pools.
-                properties:
-                  release_version_minimum:
-                    type: string
-                    description: The minimum release version number required to have support for node pools.
+              release_version_minimum:
+                type: string
+                description: The minimum release version number required to have support for node pools.
       stats:
         type: object
         description: Statistics about the installation
