@@ -61,6 +61,8 @@ tags:
     description: "An app is a helm chart that you can easily install on your tenant clusters. Use these endpoints to: find out what catalogs your installation supports, and list and install apps on on your tenant clusters."
   - name: app configs
     description: "Creating an app config lets you supply your apps with custom configuration values."
+  - name: app secrets
+    description: "Creating a secret lets you supply your apps with custom secret values."
   - name: organizations
     description: Organizations are groups of users who own resources like clusters.
   - name: users
@@ -1752,6 +1754,243 @@ paths:
               {
                 "code": "INVALID_INPUT",
                 "message": "App config could not be created. (invalid input)"
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v4/clusters/{cluster_id}/apps/{app_name}/secret/:
+    get:
+      operationId: getClusterAppSecret
+      tags:
+        - app secrets
+      summary: Get Secret
+      description: |
+        This operation allows you to fetch the Secret associated
+        with an app.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GetClusterAppSecretResponse"
+          examples:
+            appication/json:
+              {
+                "secret": "value"
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Secret not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "Unable to show Secret. (app with name 'my-awesome-app' in cluster 'abc12' could not be found)"
+              }
+    put:
+      operationId: createClusterAppSecret
+      tags:
+        - app secrets
+      summary: Create Secret
+      description: |
+        This operation allows you to create a Secret for a specific app. The app does
+        not have to exist before hand.
+
+        If the app does exist, this endpoint will ensure that the App CR gets it's
+        `spec.user_config.secret` field set correctly.
+
+        However, if the app exists and the `spec.user_config.secret` is already set to something,
+        then this request will fail. You will in that case most likely want to
+        update the Secret using the `PATCH /v4/clusters/{cluster_id}/apps/{app_name}/secret/`
+        endpoint.
+
+
+        ### Example POST request
+        ```json
+          {
+            "secret": "value"
+          }
+        ```
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
+        - name: body
+          in: body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4CreateClusterAppSecretRequest"
+          x-examples:
+            appication/json:
+              {
+                "secret": "value"
+              }
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            appication/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "Secret for 'my-awesome-app' on 'abc12' has been created."
+              }
+        "400":
+          description: Invalid input
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_INPUT",
+                "message": "Secret could not be created. (invalid input)"
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "409":
+          description: Secret already exists
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_ALREADY_EXISTS",
+                "message": "A Secret for 'my-awesome-app' on 'abc12' already exists."
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+    delete:
+      operationId: deleteClusterAppSecret
+      tags:
+        - app secrets
+      summary: Delete a Secret
+      description: |
+        This operation allows a user to delete an app's Secret if it has been named according to the convention of {app-name}-user-secret and
+        stored in the cluster ID namespace.
+
+        Calling this endpoint will delete the Secret, and also remove the reference to the Secret in the (spec.user_config.secret field) from the app.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
+        - $ref: './parameters.yaml#/parameters/AppNamePathParameter'
+      responses:
+        "200":
+          description: Secret deleted
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_DELETED",
+                "message": "Secret for 'my-app' on 'abc12' has been deleted."
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Secret not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The Secret of app 'my-app' could not be deleted. ('my-app' not found)"
+              }
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+    patch:
+      operationId: modifyClusterAppSecret
+      tags:
+        - app secrets
+      summary: Modify Secret
+      description: |
+        This operation allows you to modify the Secret for a specific app.
+        It's only possible to modify Secrets that have been named according to the convention of
+        {app-name}-secret and stored in the cluster ID namespace.
+
+        The full values key of the Secret will be replaced by the JSON body
+        of your request.
+
+        ### Example PATCH request
+        ```json
+          {
+            "secret": "new-value"
+          }
+        ```
+
+        If the Secret contained content like:
+
+        ```json
+          {
+            "secret": "old-value",
+            "secret2": "another-old-value"
+          }
+        ```
+
+        Then the "secret2" will be removed, and "secret" will be set to "new-value"
+
+      parameters:
+        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - $ref: "./parameters.yaml#/parameters/AppNamePathParameter"
+        - name: body
+          in: body
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4CreateClusterAppSecretRequest"
+          x-examples:
+            application/json:
+              {
+                "secret": "new-value"
+              }
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            appication/json:
+              {
+                "code": "RESOURCE_UPDATED",
+                "message": "Secret for 'my-awesome-app' on 'abc12' has been updated."
+              }
+        "400":
+          description: Invalid input
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_INPUT",
+                "message": "Secret could not be created. (invalid input)"
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"

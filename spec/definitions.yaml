@@ -470,6 +470,16 @@ definitions:
     description: A part of the App CR that we create behind the scenes
     additionalProperties: true
 
+  V4GetClusterAppSecretResponse:
+    type: object
+    description: The response for showing a Secret for a given app
+    additionalProperties: true
+
+  V4CreateClusterAppSecretRequest:
+    type: object
+    description: The values to be used when creating a Secret for a given app
+    additionalProperties: true
+
   V4GetClusterStatusResponse:
     type: object
     description: Object about a cluster's current state
