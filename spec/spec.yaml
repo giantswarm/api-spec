@@ -160,7 +160,6 @@ paths:
           ]
         ```
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -277,7 +276,6 @@ paths:
         }
         ```
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -375,7 +373,6 @@ paths:
       description: |
         Deletes the authentication token provided in the Authorization header. This effectively logs you out.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -402,7 +399,6 @@ paths:
       description: |
         Returns a list of all users in the system. Currently this endpoint is only available to users with admin permissions.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -436,7 +432,6 @@ paths:
       description: |
         Returns details about the currently authenticated user
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -459,7 +454,6 @@ paths:
     get:
       operationId: getUser
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -497,7 +491,6 @@ paths:
     put:
       operationId: createUser
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -554,7 +547,6 @@ paths:
       description: |
         This operation allows you to change details of a given user. Only administrators can edit accounts of other users.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -594,7 +586,6 @@ paths:
     delete:
       operationId: deleteUser
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -637,7 +628,6 @@ paths:
     post:
       operationId: modifyPassword
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -770,7 +760,6 @@ paths:
         release version available for the provider will be used.
 
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -818,7 +807,6 @@ paths:
       tags:
         - clusters
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -910,7 +898,6 @@ paths:
       tags:
         - clusters
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -999,7 +986,6 @@ paths:
       tags:
         - clusters
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1053,7 +1039,6 @@ paths:
 
         The individual array items contain metadata on the key pairs, but neither the key nor the certificate. These can only be obtained upon creation, using the [addKeypair](#operation/addKeyPair) operation.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1075,7 +1060,6 @@ paths:
         - key pairs
       summary: Create key pair
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1160,7 +1144,6 @@ paths:
         the structure depends on the release version and changes can be expected frequently.
 
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1219,7 +1202,6 @@ paths:
           ]
         ```
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1276,7 +1258,6 @@ paths:
       description: |
         This operation allows a user to delete an app.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1365,7 +1346,6 @@ paths:
         to a strict naming convention.
 
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1464,7 +1444,6 @@ paths:
         The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
         Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1523,7 +1502,6 @@ paths:
         This operation allows you to fetch the user values configmap associated
         with an app.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1590,7 +1568,6 @@ paths:
           }
         ```
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1666,7 +1643,6 @@ paths:
         The preferred order is to first remove the reference to the configmap by
         updating the app, and only then delete the configmap using this endpoint.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1739,7 +1715,6 @@ paths:
         Then the "server" and "admin" keys will be removed.
 
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1796,7 +1771,6 @@ paths:
         member of. In the case of an admin user, the result includes all
         existing organizations.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1830,7 +1804,6 @@ paths:
       description: |
         This operation fetches organization details.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1873,7 +1846,6 @@ paths:
       description: |
         This operation allows a user to create an organization.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1927,7 +1899,6 @@ paths:
       tags:
         - organizations
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2006,7 +1977,6 @@ paths:
         This operation allows a user to delete an organization that they are a member of.
         Admin users can delete any organization.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2097,7 +2067,6 @@ paths:
         ]
         ```
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2175,7 +2144,6 @@ paths:
         ```
 
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2272,7 +2240,6 @@ paths:
         ```
 
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2312,7 +2279,6 @@ paths:
         clusters. Might also serve as an archive to obtain details on older
         releases.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2402,7 +2368,6 @@ paths:
         [node pools](#tag/nodepools) and
         [Create node pool](#operation/addNodePool) for details.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2481,7 +2446,6 @@ paths:
       description: |
         Allows to retrieve cluster details on AWS installations.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2550,7 +2514,6 @@ paths:
       description: |
         Allows to change cluster properties on AWS installations.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2599,7 +2562,6 @@ paths:
       description: |
         Returns a list of node pools from a given cluster.
       parameters:
-        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
         - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
         - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
@@ -2664,7 +2626,6 @@ paths:
         - nodepools
       summary: Create node pool
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -2753,7 +2714,6 @@ paths:
       description: |
         Returns all available details on a specific node pool.
       parameters:
-        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
         - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
         - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
@@ -2813,7 +2773,6 @@ paths:
       description: |
         Allows to rename a node pool or change its scaling settings.
       parameters:
-        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
         - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
         - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
@@ -2861,7 +2820,6 @@ paths:
         - nodepools
       summary: Delete node pool
       parameters:
-        - $ref: "./parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader"
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
         - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
         - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
