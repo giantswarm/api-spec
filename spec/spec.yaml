@@ -707,7 +707,6 @@ paths:
         objects. To fetch more details on a cluster, use the
         [getClusterStatus](#operation/getClusterStatus) operation.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
