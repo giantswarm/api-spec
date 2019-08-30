@@ -1,13 +1,4 @@
 parameters:
-
-  RequiredGiantSwarmAuthorizationHeader:
-    name: Authorization
-    type: string
-    in: header
-    required: true
-    description: |
-      As described in the [authentication](#section/Authentication) section
-
   AppNamePathParameter:
     name: app_name
     in: path
