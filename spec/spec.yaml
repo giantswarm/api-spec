@@ -1772,7 +1772,6 @@ paths:
         This operation allows you to fetch the Secret associated
         with an app.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1825,7 +1824,6 @@ paths:
           }
         ```
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1889,7 +1887,6 @@ paths:
 
         Calling this endpoint will delete the Secret, and also remove the reference to the Secret in the (spec.user_config.secret field) from the app.
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
@@ -1955,7 +1952,6 @@ paths:
         Then the "secret2" will be removed, and "secret" will be set to "new-value"
 
       parameters:
-        - $ref: './parameters.yaml#/parameters/RequiredGiantSwarmAuthorizationHeader'
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
         - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
