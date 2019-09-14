@@ -272,6 +272,16 @@ paths:
               "max": 8,
               "default": 3
             },
+            "cpu": {
+              "cores": {
+                "min": 2
+              }
+            },
+            "memory": {
+              "size_gb": {
+                "min": 3
+              }
+            }
           }
         }
         ```

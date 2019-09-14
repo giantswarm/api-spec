@@ -155,6 +155,28 @@ definitions:
               default:
                 description: The instance type used in new cluster, if not specified
                 type: string
+          cpu:
+            description: CPU related limits. Only available on KVM installations.
+            type: object
+            properties:
+              cores:
+                description: Validation values for the CPU core count of a worker.
+                type: object
+                properties:
+                  min:
+                    description: The minimum amount of CPU cores a worker must have.
+                    type: integer
+          memory:
+            description: Memory related limits. Only avaialble on KVM installations.
+            type: object
+            properties:
+              size_gb:
+                description: Validation values for the amount of memory of a worker.
+                type: object
+                properties:
+                  min:
+                    description: The minimum amount of memory a worker must have.
+                    type: integer
 
   # Request to create a new cluster in V4
   V4AddClusterRequest:
