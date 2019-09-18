@@ -420,7 +420,7 @@ definitions:
             type: string
             description: The catalog that this app came from
           user_config:
-            $ref: './definitions.yaml#/definitions/V4AppSpecUserConfigConfigMap'
+            $ref: './definitions.yaml#/definitions/V4AppSpecUserConfig'
       status:
         type: object
         properties:
@@ -440,7 +440,7 @@ definitions:
                 type: string
                 description: "A string representing the status of the app. (Can be: empty, DEPLOYED or FAILED)"
 
-  V4AppSpecUserConfigConfigMap:
+  V4AppSpecUserConfig:
     type: object
     description: User definable configuration to be applied when the app is deployed
     properties:
@@ -453,6 +453,15 @@ definitions:
           namespace:
             type: string
             description: Namespace of the values config map on the control plane, e.g. 123ab
+      secret:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Name of the Secret on the control plane, which will become available wherever the app is installed
+          namespace:
+            type: string
+            description: Namespace of the Secret on the control plane, e.g. 123ab
 
   V4GetClusterAppsResponse:
     type: array
@@ -468,6 +477,16 @@ definitions:
   V4CreateAppConfigRequest:
     type: object
     description: A part of the App CR that we create behind the scenes
+    additionalProperties: true
+
+  V4GetClusterAppSecretResponse:
+    type: object
+    description: The response for showing a Secret for a given app
+    additionalProperties: true
+
+  V4CreateClusterAppSecretRequest:
+    type: object
+    description: The values to be used when creating a Secret for a given app
     additionalProperties: true
 
   V4GetClusterStatusResponse:
