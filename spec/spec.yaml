@@ -1882,7 +1882,7 @@ paths:
         - app secrets
       summary: Delete a Secret
       description: |
-        This operation allows a user to delete an app's Secret if it has been named according to the convention of {app-name}-user-secret and
+        This operation allows a user to delete an app's Secret if it has been named according to the convention of {app-name}-user-secrets and
         stored in the cluster ID namespace.
 
         Calling this endpoint will delete the Secret, and also remove the reference to the Secret in the (spec.user_config.secret field) from the app.
@@ -1928,7 +1928,7 @@ paths:
       description: |
         This operation allows you to modify the Secret for a specific app.
         It's only possible to modify Secrets that have been named according to the convention of
-        {app-name}-secret and stored in the cluster ID namespace.
+        {app-name}-user-secrets and stored in the cluster ID namespace.
 
         The full values key of the Secret will be replaced by the JSON body
         of your request.
