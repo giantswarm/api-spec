@@ -1019,13 +1019,6 @@ definitions:
             description: |
               Name of the availability zone to use for the master node. If not
               given, the master node will be placed automatically.
-      nodepools:
-        description: |
-          Specification of node pools to be created immediately with the
-          cluster.
-        type: array
-        items:
-          $ref: '#/definitions/V5AddNodePoolRequest'
 
   V5ClusterDetailsResponse:
     type: object

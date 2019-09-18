@@ -2620,21 +2620,7 @@ paths:
                 "name": "Production cluster using k8s 1.14",
                 "master": {
                   "availability_zone": "europe-central-1c"
-                },
-                "nodepools": [
-                  {
-                    "name": "General purpose",
-                    "availability_zones": {
-                      "number": 2
-                    },
-                    "scaling": {"min": 3, "max": 30},
-                    "node_spec": {
-                      "aws": {
-                        "instance_type": "m4.2xlarge"
-                      }
-                    }
-                  }
-                ]
+                }
               }
       responses:
         "201":
@@ -2651,18 +2637,7 @@ paths:
                 "master": {
                   "availability_zone": "europe-central-1c"
                 },
-                "nodepools": [
-                  {
-                    "name": "General purpose",
-                    "availability_zones": ["europe-central-1a", "europe-central-1c"],
-                    "scaling": {"min": 3, "max": 30},
-                    "node_spec": {
-                      "aws": {
-                        "instance_type": "m4.2xlarge"
-                      }
-                    }
-                  }
-                ]
+                "nodepools": []
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
