@@ -414,6 +414,10 @@ definitions:
           name:
             type: string
             description: The identifier you set when creating this app
+          labels:
+            type: object
+            description: The labels that are set on this App
+            additionalProperties: true
       spec:
         type: object
         properties:
