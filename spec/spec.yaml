@@ -225,6 +225,9 @@ paths:
             "availability_zones": {
               "max": 3,
               "default": 1,
+              "zones": [
+                "eu-central-1a", "eu-central-1b", "eu-central-1c"
+              ]
             }
           },
           "stats": {
@@ -295,7 +298,10 @@ paths:
                   "datacenter": "eu-central-1",
                   "availability_zones": {
                     "max": 3,
-                    "default": 1
+                    "default": 1,
+                    "zones": [
+                      "eu-central-1a", "eu-central-1b", "eu-central-1c"
+                    ]
                   }
                 },
                 "features": {
