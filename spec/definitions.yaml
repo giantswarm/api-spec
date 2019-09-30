@@ -89,6 +89,11 @@ definitions:
               default:
                 description: Default number of availability zones for a cluster.
                 type: integer
+              zones:
+                type: array
+                description: The availability zones available in the installation's region for use with tenant clusters.
+                items:
+                  type: string
       features:
         type: object
         description: Information on particular capabilities of the installation.
