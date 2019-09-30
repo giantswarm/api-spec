@@ -91,7 +91,7 @@ definitions:
                 type: integer
               zones:
                 type: array
-                description: The distinct availability zones available in the installation's region.
+                description: The availability zones available for in the installation's region for use with tenant clusters.
                 items:
                   type: string
       features:
