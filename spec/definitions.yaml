@@ -1082,7 +1082,7 @@ definitions:
           properties:
             last_transition_time:
               type: string
-              description: Date and time when the cluster got created with or upgrated to this version
+              description: Date and time when the cluster got created with or upgraded to this version
             version:
               type: string
               description: Semantic version number
