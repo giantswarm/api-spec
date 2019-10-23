@@ -15,3 +15,4 @@ Error messages and standard responses, like after creation of a resource, contai
 - `UNKNOWN_ATTRIBUTE`: Indicates the provided data structure contains unexpected fields.
 - `INVALID_INPUT`: Indicates that the user provided input that is not valid in some way.
 - `UNKNOWN_ERROR`: Indicates something went wrong in unpredictable ways.
+- `NOT_SUPPORTED`: This code is used for an API operation that is implemented in general, but not supported in the current installation for some reason. The reason should be detailed in the `message` part.
