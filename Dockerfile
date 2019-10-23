@@ -7,7 +7,8 @@ ADD spec/spec.yaml /workdir/
 RUN ./node_modules/.bin/openapi-filter /workdir/spec.yaml /workdir/spec-filtered.yaml
 
 # Step 2: Create webserver
-FROM nginx:1.16-alpine
+FROM nginxinc/nginx-unprivileged:1.16-alpine
+USER 0
 RUN rm -r /etc/nginx/conf.d
 ADD docserver/index.html /www/
 ADD spec/definitions.yaml /www/yaml/
@@ -21,5 +22,6 @@ ADD https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js /www/js/redoc.m
 RUN chmod 0644 /www/js/redoc.min.js
 
 ADD docserver/nginx.conf /etc/nginx/
+USER 101
 
 EXPOSE 8000
