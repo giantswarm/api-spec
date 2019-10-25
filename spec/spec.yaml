@@ -2852,7 +2852,7 @@ paths:
         - $ref: './parameters.yaml#/parameters/ClusterIdPathParameter'
         - name: body
           in: body
-          required: false
+          required: true
           schema:
             $ref: "./definitions.yaml#/definitions/V5AddNodePoolRequest"
           x-examples:
