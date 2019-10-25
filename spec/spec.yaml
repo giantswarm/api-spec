@@ -1525,7 +1525,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GetClusterAppConfigResponse"
           examples:
-            appication/json:
+            application/json:
               {
                 "agent": {
                   "key": "secret-key-here",
@@ -1590,7 +1590,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4CreateAppConfigRequest"
           x-examples:
-            appication/json:
+            application/json:
               {
                 "agent": {
                   "key": "secret-key-here",
@@ -1608,7 +1608,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
-            appication/json:
+            application/json:
               {
                 "code": "RESOURCE_CREATED",
                 "message": "App config for 'my-awesome-app' on 'abc12' has been created."
@@ -1750,7 +1750,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
-            appication/json:
+            application/json:
               {
                 "code": "RESOURCE_UPDATED",
                 "message": "App config for 'my-awesome-app' on 'abc12' has been updated."
@@ -1793,7 +1793,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GetClusterAppSecretResponse"
           examples:
-            appication/json:
+            application/json:
               {
                 "secret": "value"
               }
@@ -1844,7 +1844,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4CreateClusterAppSecretRequest"
           x-examples:
-            appication/json:
+            application/json:
               {
                 "secret": "value"
               }
@@ -1855,7 +1855,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
-            appication/json:
+            application/json:
               {
                 "code": "RESOURCE_CREATED",
                 "message": "Secret for 'my-awesome-app' on 'abc12' has been created."
@@ -1983,7 +1983,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
-            appication/json:
+            application/json:
               {
                 "code": "RESOURCE_UPDATED",
                 "message": "Secret for 'my-awesome-app' on 'abc12' has been updated."
