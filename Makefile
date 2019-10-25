@@ -2,6 +2,7 @@ PWD := $(shell pwd)
 PHONY: lint spec-tmp.yaml
 
 SWAGGER_VERSION=2.2.3
+GOSWAGGER_VERSION=0.19.0
 
 # YAML linting
 lint:
@@ -19,7 +20,7 @@ validate:
 	docker run --rm -it \
 		-v ${PWD}:/workdir \
 		-w /workdir \
-		quay.io/goswagger/swagger:0.16.0 \
+		quay.io/goswagger/swagger:v${GOSWAGGER_VERSION} \
 			validate ./spec/spec.yaml
 
 	@echo "Generating swagger representation"
