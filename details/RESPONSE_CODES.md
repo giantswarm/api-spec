@@ -2,6 +2,7 @@
 
 Error messages and standard responses, like after creation of a resource, contain both a `code` and a `message` part to inform about the outcome of an operation. The `code` part can be any of the following:
 
+- `INTERNAL_ERROR`: Used when an internal error has occurred (HTTP status code 500).
 - `INVALID_CREDENTIALS`: Indicates the provided credentials are not valid.
 - `PERMISSION_DENIED`: Indicates the provided credentials are valid, but the requested resource requires other permissions.
 - `RESOURCE_ALREADY_EXISTS`: Indicates a resource does already exist.
