@@ -66,3 +66,10 @@ make run-server
 
 Then open [`http://localhost:8080/`](http://localhost:8080/) to access your specs displayed via ReDoc.
 
+### Running a mock server
+
+```nohighlight
+make mock
+```
+
+Then access `http://localhost:4010` as your endpoint. E. g. `gsctl -e http://localhost:4010 list clusters`.

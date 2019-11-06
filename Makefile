@@ -55,3 +55,6 @@ test: lint
 run-server:
 	docker build -t api-spec-dev -f Dockerfile .
 	docker run --rm -p 8080:8000 api-spec-dev
+
+mock:
+	docker run --rm -it -p 4010:4010 -v $(shell pwd)/spec:/spec stoplight/prism:3 mock -h 0.0.0.0 "/spec/spec.yaml"
