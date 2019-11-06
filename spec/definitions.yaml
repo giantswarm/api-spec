@@ -964,6 +964,7 @@ definitions:
             description: |
               Names of the availability zones to use. _(Must be same region as the cluster.)_
             minItems: 1
+            maxItems: 4
             items:
               type: string
       scaling:
