@@ -132,10 +132,10 @@ definitions:
             properties:
               max:
                 description: Maximum number of worker a cluster can have. Might be null when unknown.
-                type: number
+                type: integer
               default:
                 description: Default number of workers in a new cluster will have, if not specifiec otherwise
-                type: number
+                type: integer
           instance_type:
             description: Instance types to be used for worker nodes. Only available for AWS clusters.
             type: object
