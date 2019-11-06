@@ -73,3 +73,5 @@ make mock
 ```
 
 Then access `http://localhost:4010` as your endpoint. E. g. `gsctl -e http://localhost:4010 list clusters`.
+
+Alternatively, you can run `make mock-dynamic` to let the mock server respond with dynamically generated [fake](https://github.com/json-schema-faker/json-schema-faker) data.

@@ -57,4 +57,7 @@ run-server:
 	docker run --rm -p 8080:8000 api-spec-dev
 
 mock:
-	docker run --rm -it -p 4010:4010 -v $(shell pwd)/spec:/spec stoplight/prism:3 mock -h 0.0.0.0 "/spec/spec.yaml"
+	docker run --rm -it -p 4010:4010 -v $(shell pwd)/spec:/spec stoplight/prism:3 mock -h 0.0.0.0 --cors "/spec/spec.yaml"
+
+mock-dynamic:
+	docker run --rm -it -p 4010:4010 -v $(shell pwd)/spec:/spec stoplight/prism:3 mock -h 0.0.0.0 --cors --dynamic "/spec/spec.yaml"
