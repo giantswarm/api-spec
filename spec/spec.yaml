@@ -3073,3 +3073,38 @@ paths:
           description: error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v5/exception-notifications/:
+    post:
+      operationId: createExceptionNotification
+      x-internal: true
+      tags:
+        - exception notification
+      summary: Notifies Giant Swarm that an error has occured in one of our clients.
+      description: |
+        This endpoint is used to notify Giant Swarm that an error has occured in one of our clients (Like our Web UI or gsctl). It is not intended to be called manually, our clients are configured to report errors when they occur.
+
+        Find us in your slack support channel if you want to contact us about any immediate issues.
+
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            description: An object representing the error that occured and additional context details.
+            additionalProperties: true
+      responses:
+        "200":
+          description: Exception notification created
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "An exception notification has been sent to Giant Swarm."
+              }
