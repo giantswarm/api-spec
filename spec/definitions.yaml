@@ -927,6 +927,9 @@ definitions:
         description: |
           Node pool name. _(Length between 1-100, cannot contain control codes such as newline.)_
         type: string
+        default: Unnamed node pool
+        minLength: 1
+        maxLength: 100
       availability_zones:
         description: |
           Specifies how the nodes of a pool are spread over availability zones.
@@ -1079,6 +1082,7 @@ definitions:
       name:
         type: string
         description: Cluster name
+        default: Unnamed cluster
       release_version:
         type: string
         description: |
