@@ -695,6 +695,7 @@ definitions:
       password:
         type: string
         description: A Base64 encoded password
+        format: byte
       expiry:
         type: string
         description: The date and time when this account will expire
@@ -719,9 +720,11 @@ definitions:
       current_password_base64:
         type: string
         description: Current password encoded in Base64. Not required for admins
+        format: byte
       new_password_base64:
         type: string
         description: New password encoded in Base64
+        format: byte
 
   V4AddCredentialsRequest:
     type: object
@@ -839,6 +842,7 @@ definitions:
       password_base64:
         type: string
         description: Your password as a base64 encoded string
+        format: byte
 
   # A response to a successful auth token request
   V4CreateAuthTokenResponse:
