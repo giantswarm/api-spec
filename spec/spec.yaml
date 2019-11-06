@@ -3079,7 +3079,7 @@ paths:
       operationId: createExceptionNotification
       x-internal: true
       tags:
-        - exception notification
+        - exception notifications
       summary: Notifies Giant Swarm that an error has occured in one of our clients.
       description: |
         This endpoint is used to notify Giant Swarm that an error has occured in one of our clients (Like our Web UI or gsctl). It is not intended to be called manually, our clients are configured to report errors when they occur.
