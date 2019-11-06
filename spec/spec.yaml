@@ -3111,3 +3111,7 @@ paths:
                 "code": "RESOURCE_CREATED",
                 "message": "An exception notification has been sent to Giant Swarm."
               }
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
