@@ -349,12 +349,14 @@ definitions:
           size_gb:
             type: number
             description: RAM size in GB. Can be an integer or float.
+            format: float
       storage:
         type: object
         properties:
           size_gb:
             type: number
             description: Node storage size in GB. Can be an integer or float.
+            format: float
       cpu:
         type: object
         properties:
