@@ -77,6 +77,9 @@ tags:
       A release provides _components_, like for example Kubernetes. For each
       release the contained components are listed. Changes in components are
       detailed in the _changelog_ of a release.
+  - name: exception notifications
+    x-internal: true
+
 securityDefinitions:
   AuthorizationHeaderToken:
     description: |
