@@ -687,7 +687,7 @@ definitions:
         type: string
         description: API path of the cluster resource
 
-  # A cluster array item, as return by getClusters
+  # A release array item, as return by getReleases
   V4ReleaseListItem:
     type: object
     required: ["version", "timestamp", "changelog", "components"]
