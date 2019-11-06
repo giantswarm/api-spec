@@ -111,6 +111,7 @@ definitions:
               release_version_minimum:
                 type: string
                 description: The minimum release version number required to have support for node pools.
+                format: semver
       stats:
         type: object
         description: Statistics about the installation
@@ -190,6 +191,7 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster
+        format: semver
       availability_zones:
         description: |
           Number of availability zones a cluster should be spread across. The
@@ -239,6 +241,7 @@ definitions:
       release_version:
         type: string
         description: Release version to use after an upgrade
+        format: semver
       scaling:
         type: object
         description: |
@@ -295,6 +298,7 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           currently running this cluster.
+        format: semver
       scaling:
         type: object
         description: |
@@ -422,6 +426,7 @@ definitions:
           version:
             type: string
             description: Version of the chart that should be used to install this app
+            format: semver
           catalog:
             type: string
             description: The catalog where the chart for this app can be found
@@ -436,6 +441,7 @@ definitions:
           version:
             type: string
             description: Version of the chart that should be used to install this app
+            format: semver
 
   V4App:
     type: object
@@ -458,6 +464,7 @@ definitions:
           version:
             type: string
             description: Version of the chart that was used to install this app
+            format: semver
           catalog:
             type: string
             description: The catalog that this app came from
@@ -469,9 +476,11 @@ definitions:
           app_version:
             type: string
             description: Version of the installed app
+            format: semver
           version:
             type: string
             description: Version of the chart that was used to install this app
+            format: semver
           release:
             type: object
             properties:
@@ -685,6 +694,7 @@ definitions:
       release_version:
         type: string
         description: The semantic version number of this cluster
+        format: semver
       path:
         type: string
         description: API path of the cluster resource
@@ -697,6 +707,7 @@ definitions:
       version:
         type: string
         description: The semantic version number
+        format: semver
       timestamp:
         type: string
         description: Date and time of the release creation
@@ -1093,6 +1104,7 @@ definitions:
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           to use in the new cluster. If not given, the latest release will be
           used.
+        format: semver
       master:
         type: object
         description: |
@@ -1136,6 +1148,7 @@ definitions:
         description: |
           The [release](https://docs.giantswarm.io/api/#tag/releases) version
           used by the cluster
+        format: semver
       master:
         type: object
         description: |
@@ -1170,6 +1183,7 @@ definitions:
             version:
               type: string
               description: Semantic version number
+              format: semver
 
   V5ModifyClusterRequest:
     type: object
@@ -1181,6 +1195,7 @@ definitions:
       release_version:
         type: string
         description: Release version to upgrade to
+        format: semver
 
   V5ModifyNodePoolRequest:
     type: object
