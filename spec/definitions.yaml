@@ -256,6 +256,7 @@ definitions:
       create_date:
         type: string
         description: Date/time of cluster creation
+        format: dateTime
       owner:
         type: string
         description: Name of the organization owning the cluster
@@ -441,6 +442,7 @@ definitions:
               last_deployed:
                 type: string
                 description: Date and time that the app was last last deployed
+                format: dateTime
               status:
                 type: string
                 description: "A string representing the status of the app. (Can be: empty, DEPLOYED or FAILED)"
@@ -518,6 +520,7 @@ definitions:
         create_date:
           type: string
           description: Date/time of creation
+          format: dateTime
         common_name:
           type: string
           description: The common name of the certificate subject.
@@ -562,6 +565,7 @@ definitions:
       create_date:
         type: string
         description: Date/time of creation
+        format: dateTime
       certificate_authority_data:
         type: string
         description: PEM-encoded CA certificate of the cluster
@@ -611,9 +615,11 @@ definitions:
       created:
         type: string
         description: The date and time that this account was created
+        format: dateTime
       expiry:
         type: string
         description: The date and time when this account will expire
+        format: dateTime
 
   # A cluster array item, as return by getClusters
   V4ClusterListItem:
@@ -625,6 +631,7 @@ definitions:
       create_date:
         type: string
         description: Date/time of cluster creation
+        format: dateTime
       name:
         type: string
         description: Cluster name
@@ -649,6 +656,7 @@ definitions:
       timestamp:
         type: string
         description: Date and time of the release creation
+        format: dateTime
       active:
         type: boolean
         description: |
@@ -699,6 +707,7 @@ definitions:
       expiry:
         type: string
         description: The date and time when this account will expire
+        format: dateTime
 
   V4ModifyUserRequest:
     type: object
@@ -710,6 +719,7 @@ definitions:
       expiry:
         type: string
         description: New expiry date. (Only editable by admins)
+        format: dateTime
 
   V4ModifyUserPasswordRequest:
     type: object
@@ -1041,6 +1051,7 @@ definitions:
       create_date:
         type: string
         description: Date/time of cluster creation
+        format: dateTime
       owner:
         type: string
         description: |
@@ -1076,6 +1087,7 @@ definitions:
             last_transition_time:
               type: string
               description: Date and time when the cluster transitioned into this condition
+              format: dateTime
             condition:
               type: string
               description: A string describing the condition, e. g. 'Created'
@@ -1087,6 +1099,7 @@ definitions:
             last_transition_time:
               type: string
               description: Date and time when the cluster got created with or upgraded to this version
+              format: dateTime
             version:
               type: string
               description: Semantic version number
