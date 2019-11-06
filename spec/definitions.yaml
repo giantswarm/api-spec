@@ -86,9 +86,13 @@ definitions:
               max:
                 description: Number of availability zones in the region of this installation.
                 type: integer
+                minimum: 0
+                maximum: 10
               default:
                 description: Default number of availability zones for a cluster.
                 type: integer
+                minimum: 1
+                maximum: 3
               zones:
                 type: array
                 description: The availability zones available in the installation's region for use with tenant clusters.
@@ -116,12 +120,15 @@ definitions:
               median:
                 type: integer
                 description: Median of the value distribution
+                minimum: 0
               p25:
                 type: integer
                 description: 25th percentile of the value distribution
+                minimum: 0
               p75:
                 type: integer
                 description: 75th percentile of the value distribution
+                minimum: 0
       workers:
         description: Information related to worker nodes
         type: object
@@ -133,9 +140,11 @@ definitions:
               max:
                 description: Maximum number of worker a cluster can have. Might be null when unknown.
                 type: integer
+                minimum: 0
               default:
                 description: Default number of workers in a new cluster will have, if not specifiec otherwise
                 type: integer
+                minimum: 0
           instance_type:
             description: Instance types to be used for worker nodes. Only available for AWS clusters.
             type: object
@@ -184,6 +193,8 @@ definitions:
           Number of availability zones a cluster should be spread across. The
           default is provided via the [info](#operation/getInfo) endpoint.
         type: integer
+        minimum: 1
+        maximum: 4
       scaling:
         type: object
         description: |
@@ -196,10 +207,14 @@ definitions:
             type: integer
             description: |
               Minimum number of cluster nodes
+            minimum: 1
+            maximum: 999
           max:
             type: integer
             description: |
               Maximum number of cluster nodes
+            minimum: 1
+            maximum: 999
       workers:
         type: array
         description: |
@@ -232,10 +247,14 @@ definitions:
             type: integer
             description: |
               Minimum number of cluster nodes
+            minimum: 1
+            maximum: 999
           max:
             type: integer
             description: |
               Maximum number of cluster nodes
+            minimum: 1
+            maximum: 999
       workers:
         type: array
         description: Worker node array (deprecated)
@@ -283,10 +302,14 @@ definitions:
             type: integer
             description: |
               Minimum number of cluster nodes as configured
+            minimum: 1
+            maximum: 999
           max:
             type: integer
             description: |
               Maximum number of cluster nodes as configured
+            minimum: 1
+            maximum: 999
       availability_zones:
         description: List of availability zones a cluster is spread across.
         type: array
@@ -314,6 +337,8 @@ definitions:
                   description: |
                     The port on the control plane that will forward traffic to the tenant cluster
                   type: integer
+                  minimum: 1
+                  maximum: 65535
                 protocol:
                   description: |
                     The protocol this port mapping is made for.
@@ -363,6 +388,7 @@ definitions:
           cores:
             type: integer
             description: Number of CPU cores
+            minimum: 2
       labels:
         type: object
         additionalProperties: true
@@ -519,6 +545,7 @@ definitions:
         ttl_hours:
           type: integer
           description: Expiration time (from creation) in hours
+          minimum: 1
         create_date:
           type: string
           description: Date/time of creation
@@ -543,6 +570,7 @@ definitions:
         type: integer
         format: int32
         description: Expiration time (from creation) in hours
+        minimum: 1
       cn_prefix:
         type: string
         description: The common name prefix of the certificate subject. This only allows characters that are usable in domain names (`a-z`, `0-9`, and `.-`, where `.-` must not occur at either the start or the end).
@@ -564,6 +592,7 @@ definitions:
       ttl_hours:
         type: integer
         description: Expiration time (from creation) in hours
+        minimum: 1
       create_date:
         type: string
         description: Date/time of creation
@@ -896,6 +925,7 @@ definitions:
             description: |
               Number of zones to use. If given, the zones are picked
               automatically. _(Maximum limit of 4 supported.)_
+            maximum: 4
           zones:
             type: array
             description: |
@@ -913,9 +943,11 @@ definitions:
           min:
             description: Minimum number of nodes in the pool.
             type: integer
+            minimum: 0
           max:
             description: Maximum number of nodes in the pool.
             type: integer
+            minimum: 0
       node_spec:
         description: Worker node specification
         type: object
@@ -988,9 +1020,11 @@ definitions:
           min:
             description: Minimum number of nodes in the pool
             type: integer
+            minimum: 1
           max:
             description: Maximum number of nodes in the pool
             type: integer
+            minimum: 1
       subnet:
         description: IP address block used by the node pool
         type: string
@@ -1005,9 +1039,11 @@ definitions:
           nodes:
             description: Desired number of nodes in the pool
             type: integer
+            minimum: 0
           nodes_ready:
             description: Number of nodes in state NodeReady
             type: integer
+            minimum: 0
 
 
   # Request to create a new cluster in V5
@@ -1134,6 +1170,8 @@ definitions:
           min:
             description: Minimum number of nodes in the pool
             type: integer
+            minimum: 1
           max:
             description: Maximum number of nodes in the pool
             type: integer
+            minimum: 1
