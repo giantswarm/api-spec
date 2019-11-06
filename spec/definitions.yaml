@@ -347,6 +347,9 @@ definitions:
                   description: |
                     The protocol this port mapping is made for.
                   type: string
+                  oneOf:
+                    - http
+                    - https
 
   # Definition of a v4 cluster node
   V4NodeDefinition:
@@ -477,7 +480,11 @@ definitions:
                 format: dateTime
               status:
                 type: string
-                description: "A string representing the status of the app. (Can be: empty, DEPLOYED or FAILED)"
+                description: A string representing the status of the app.
+                oneOf:
+                  - ""
+                  - DEPLOYED
+                  - FAILED
 
   V4AppSpecUserConfig:
     type: object
@@ -779,6 +786,9 @@ definitions:
     properties:
       provider:
         type: string
+        oneOf:
+          - aws
+          - azure
       aws:
         type: object
         description: Credentials specific to an AWS account
@@ -836,6 +846,9 @@ definitions:
       provider:
         type: string
         description: Either 'aws' or 'azure'
+        oneOf:
+          - aws
+          - azure
       aws:
         type: object
         description: Credentials specific to an AWS account
