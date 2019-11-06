@@ -690,7 +690,7 @@ definitions:
   # A release array item, as return by getReleases
   V4ReleaseListItem:
     type: object
-    required: ["version", "timestamp", "changelog", "components"]
+    required: ["active", "version", "timestamp", "changelog", "components"]
     properties:
       version:
         type: string
