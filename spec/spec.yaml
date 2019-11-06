@@ -3084,7 +3084,7 @@ paths:
       description: |
         This endpoint is used to notify Giant Swarm that an error has occured in one of our clients (like our Web UI or gsctl). It is not intended to be called manually, our clients are configured to report errors when they occur.
 
-        Find us in your slack support channel if you want to contact us about any immediate issues.
+        Find us in your Slack support channel if you want to contact us about any immediate issues.
 
       parameters:
         - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
