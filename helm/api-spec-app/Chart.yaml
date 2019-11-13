@@ -1,0 +1,7 @@
+apiVersion: v1
+name: api-spec-app
+namespace: docs
+appVersion: 0.0.1
+description: Serves the ReDoc container with the documentation of the GS API.
+home: https://github.com/giantswarm/api-spec
+version: [[ .Version ]]
