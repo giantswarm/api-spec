@@ -34,6 +34,7 @@ jobs:
 workflows:
   package-and-push-chart-on-tag:
     jobs:
+      - build
       - architect/push-to-app-catalog:
           name: "package and push api-spec"
           app_catalog: "giantswarm-operations-platform-catalog"
