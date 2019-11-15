@@ -259,6 +259,9 @@ definitions:
       owner:
         type: string
         description: Name of the organization owning the cluster
+      creator:
+        type: string
+        description: Username of the user who created the cluster
       name:
         type: string
         description: Cluster name
@@ -1041,6 +1044,9 @@ definitions:
         type: string
         description: |
           Name of the organization owning the cluster
+      creator:
+        type: string
+        description: Username of the user who created the cluster
       name:
         type: string
         description: Cluster name
