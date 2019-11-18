@@ -258,7 +258,7 @@ definitions:
         description: Date/time of cluster creation
       delete_date:
         type: string
-        format: date
+        format: date-time
         description: Date/time when cluster has been deleted
       owner:
         type: string
@@ -631,7 +631,7 @@ definitions:
         description: Date/time of cluster creation
       delete_date:
         type: string
-        format: date
+        format: date-time
         description: Date/time when cluster has been deleted
       name:
         type: string
@@ -1047,7 +1047,7 @@ definitions:
         description: Date/time of cluster creation
       delete_date:
         type: string
-        format: date
+        format: date-time
         description: Date/time when cluster has been deleted
       owner:
         type: string
