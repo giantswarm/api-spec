@@ -243,9 +243,17 @@ paths:
             },
             "instance_type": {
               "options": [
-                "m3.medium", "m3.large", "m3.xlarge"
+                "m5.xlarge", "m5.2xlarge", "m5.4xlarge"
               ],
-              "default": "m3.large"
+              "default": "m3.large",
+              "specification": [
+                {
+                  "name": "m5.xlarge",
+                  "description": "M5 series with medium resources",
+                  "cpu_cores": 4,
+                  "memory_size_gb": 16
+                }
+              ]
             }
           }
         }
