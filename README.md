@@ -48,13 +48,7 @@ Please obey these conventions when editing the spec YAML files:
 
 ### Validation
 
-Run `make validate` to check the specification YAML integrity.
-
-This requires `yamllint` to be available. To install it, either do `sudo pip install yamllint` or create the following alias:
-
-```
-alias yamllint="docker run --rm -ti -v $(pwd):/workdir giantswarm/yamllint"
-```
+Run `make validate` to check the YAML integrity as well as the validity of the OpenAPI spec.
 
 ### Rendering an HTML documentation preview
 

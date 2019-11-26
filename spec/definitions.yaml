@@ -256,6 +256,11 @@ definitions:
       create_date:
         type: string
         description: Date/time of cluster creation
+      delete_date:
+        type: string
+        format: date-time
+        description: Date/time when cluster has been deleted
+        x-nullable: true
       owner:
         type: string
         description: Name of the organization owning the cluster
@@ -625,6 +630,11 @@ definitions:
       create_date:
         type: string
         description: Date/time of cluster creation
+      delete_date:
+        type: string
+        format: date-time
+        description: Date/time when cluster has been deleted
+        x-nullable: true
       name:
         type: string
         description: Cluster name
@@ -1037,6 +1047,11 @@ definitions:
       create_date:
         type: string
         description: Date/time of cluster creation
+      delete_date:
+        type: string
+        format: date-time
+        description: Date/time when cluster has been deleted
+        x-nullable: true
       owner:
         type: string
         description: |
