@@ -1186,6 +1186,7 @@ paths:
             {
               "metadata": {
                 "name": "my-awesome-prometheus",
+                "labels": {}
               },
 
               "spec": {
@@ -1228,6 +1229,7 @@ paths:
                 {
                   "metadata": {
                     "name": "my-awesome-prometheus",
+                    "labels": {},
                   },
 
                   "spec": {
