@@ -181,8 +181,9 @@ definitions:
           to use in the new cluster
       availability_zones:
         description: |
-          Number of availability zones a cluster should be spread across. The
-          default is provided via the [info](#operation/getInfo) endpoint.
+          AWS - Stringified number of availability zones a cluster should be spread across.
+          Azure - A serialized list of availability zones a cluster should be spread across
+          The default is provided via the [info](#operation/getInfo) endpoint.
         type: string
       scaling:
         type: object
