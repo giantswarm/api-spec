@@ -755,6 +755,10 @@ paths:
         configuration details, like worker node configuration, with node
         specification depending on the provider (e. g. on <span class="badge azure">Azure</span> the
         VM size, or on <span class="badge kvm">KVM</span> the memory size and number of CPU cores).
+        Availability zones are also different between providers (e. g. on
+        <span class="badge azure">Azure</span> the availability zones property
+        is a stringified list of the specific availability zones, but on
+        <span class="badge aws">AWS</span> it will be a stringified number)
 
         One attribute is __mandatory__ upon creation: The `owner`
         attribute must carry the name of the organization the cluster will
@@ -782,7 +786,7 @@ paths:
                 "owner": "myteam",
                 "release_version": "7.1.0",
                 "name": "Example cluster with 3 m5.xlarge nodes",
-                "availability_zones": 2,
+                "availability_zones": "2",
                 "scaling": {"min": 3, "max": 3},
                 "workers": [{"aws": {"instance_type": "m5.xlarge"}}]
               }

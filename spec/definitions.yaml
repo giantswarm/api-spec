@@ -183,7 +183,7 @@ definitions:
         description: |
           Number of availability zones a cluster should be spread across. The
           default is provided via the [info](#operation/getInfo) endpoint.
-        type: integer
+        type: string
       scaling:
         type: object
         description: |
