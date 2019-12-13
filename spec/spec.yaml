@@ -77,6 +77,9 @@ tags:
       A release provides _components_, like for example Kubernetes. For each
       release the contained components are listed. Changes in components are
       detailed in the _changelog_ of a release.
+  - name: exception notifications
+    x-internal: true
+
 securityDefinitions:
   AuthorizationHeaderToken:
     description: |
@@ -3068,6 +3071,45 @@ paths:
               {
                 "code": "RESOURCE_NOT_FOUND",
                 "message": "The node pool with ID 'wqt' could not be found..."
+              }
+        default:
+          description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v5/exception-notifications/:
+    post:
+      operationId: addExceptionNotification
+      x-internal: true
+      tags:
+        - exception notifications
+      summary: Notifies Giant Swarm that an error has occured in one of our clients.
+      description: |
+        This endpoint is used to notify Giant Swarm that an error has occured in one of our clients (like our Web UI or gsctl). It is not intended to be called manually, our clients are configured to report errors when they occur.
+
+        Find us in your Slack support channel if you want to contact us about any immediate issues.
+
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/XRequestIDHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmActivityHeader"
+        - $ref: "./parameters.yaml#/parameters/XGiantSwarmCmdLineHeader"
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            description: An object representing the error that occured and additional context details.
+            additionalProperties: true
+      responses:
+        "200":
+          description: Exception notification created
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_CREATED",
+                "message": "An exception notification has been sent to Giant Swarm."
               }
         default:
           description: error
