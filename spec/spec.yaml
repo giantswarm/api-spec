@@ -3079,7 +3079,7 @@ paths:
 
   /v5/exception-notifications/:
     post:
-      operationId: createExceptionNotification
+      operationId: addExceptionNotification
       x-internal: true
       tags:
         - exception notifications
