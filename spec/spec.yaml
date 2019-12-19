@@ -1176,7 +1176,7 @@ paths:
 
   /v4/clusters/{cluster_id}/apps/:
     get:
-      operationId: getClusterApps
+      operationId: getClusterAppsV4
       tags:
         - apps
       summary: Get a list of apps on a cluster (v4)
@@ -1268,7 +1268,7 @@ paths:
 
   /v4/clusters/{cluster_id}/apps/{app_name}/:
     delete:
-      operationId: deleteClusterApp
+      operationId: deleteClusterAppV4
       tags:
         - apps
       summary: Delete an app (v4)
@@ -1310,7 +1310,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
     put:
-      operationId: createClusterApp
+      operationId: createClusterAppV4
       tags:
         - apps
       summary: Install an app (v4)
@@ -1447,7 +1447,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
     patch:
-      operationId: modifyClusterApp
+      operationId: modifyClusterAppV4
       tags:
         - apps
       summary: Modify an app (v4)
@@ -1515,7 +1515,7 @@ paths:
 
   /v4/clusters/{cluster_id}/apps/{app_name}/config/:
     get:
-      operationId: getClusterAppConfig
+      operationId: getClusterAppConfigV4
       tags:
         - app configs
       summary: Get app config (v4)
@@ -1560,7 +1560,7 @@ paths:
                 "message": "Unable to show app config. (app with name 'my-awesome-app' in cluster 'abc12' could not be found)"
               }
     put:
-      operationId: createClusterAppConfig
+      operationId: createClusterAppConfigV4
       tags:
         - app configs
       summary: Create app config (v4)
@@ -1653,7 +1653,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     delete:
-      operationId: deleteClusterAppConfig
+      operationId: deleteClusterAppConfigV4
       tags:
         - app configs
       summary: Delete an app config (v4)
@@ -1704,7 +1704,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
     patch:
-      operationId: modifyClusterAppConfig
+      operationId: modifyClusterAppConfigV4
       tags:
         - app configs
       summary: Modify app config (v4)
@@ -1791,7 +1791,7 @@ paths:
 
   /v4/clusters/{cluster_id}/apps/{app_name}/secret/:
     get:
-      operationId: getClusterAppSecret
+      operationId: getClusterAppSecretV4
       tags:
         - app secrets
       summary: Get Secret (v4)
@@ -1829,7 +1829,7 @@ paths:
                 "message": "Unable to show Secret. (app with name 'my-awesome-app' in cluster 'abc12' could not be found)"
               }
     put:
-      operationId: createClusterAppSecret
+      operationId: createClusterAppSecretV4
       tags:
         - app secrets
       summary: Create Secret (v4)
@@ -1907,7 +1907,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     delete:
-      operationId: deleteClusterAppSecret
+      operationId: deleteClusterAppSecretV4
       tags:
         - app secrets
       summary: Delete a Secret (v4)
@@ -1953,7 +1953,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
     patch:
-      operationId: modifyClusterAppSecret
+      operationId: modifyClusterAppSecretV4
       tags:
         - app secrets
       summary: Modify Secret (v4)
@@ -2031,7 +2031,7 @@ paths:
 
   /v5/clusters/{cluster_id}/apps/:
     get:
-      operationId: getClusterApps
+      operationId: getClusterAppsV5
       tags:
         - apps
       summary: Get a list of apps on a cluster (v5)
@@ -2122,7 +2122,7 @@ paths:
 
   /v5/clusters/{cluster_id}/apps/{app_name}/:
     delete:
-      operationId: deleteClusterApp
+      operationId: deleteClusterAppV5
       tags:
         - apps
       summary: Delete an app (v5)
@@ -2164,7 +2164,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
     put:
-      operationId: createClusterApp
+      operationId: createClusterAppV5
       tags:
         - apps
       summary: Install an app (v5)
@@ -2300,7 +2300,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
     patch:
-      operationId: modifyClusterApp
+      operationId: modifyClusterAppV5
       tags:
         - apps
       summary: Modify an app (v5)
@@ -2366,7 +2366,7 @@ paths:
 
   /v5/clusters/{cluster_id}/apps/{app_name}/config/:
     get:
-      operationId: getClusterAppConfig
+      operationId: getClusterAppConfigV5
       tags:
         - app configs
       summary: Get app config (v5)
@@ -2410,7 +2410,7 @@ paths:
                 "message": "Unable to show app config. (app with name 'my-awesome-app' in cluster 'abc12' could not be found)"
               }
     put:
-      operationId: createClusterAppConfig
+      operationId: createClusterAppConfigV5
       tags:
         - app configs
       summary: Create app config (v5)
@@ -2500,7 +2500,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     delete:
-      operationId: deleteClusterAppConfig
+      operationId: deleteClusterAppConfigV5
       tags:
         - app configs
       summary: Delete an app config (v5)
@@ -2550,7 +2550,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
     patch:
-      operationId: modifyClusterAppConfig
+      operationId: modifyClusterAppConfigV5
       tags:
         - app configs
       summary: Modify app config (v5)
@@ -2635,7 +2635,7 @@ paths:
 
   /v5/clusters/{cluster_id}/apps/{app_name}/secret/:
     get:
-      operationId: getClusterAppSecret
+      operationId: getClusterAppSecretV5
       tags:
         - app secrets
       summary: Get Secret (v5)
@@ -2672,7 +2672,7 @@ paths:
                 "message": "Unable to show Secret. (app with name 'my-awesome-app' in cluster 'abc12' could not be found)"
               }
     put:
-      operationId: createClusterAppSecret
+      operationId: createClusterAppSecretV5
       tags:
         - app secrets
       summary: Create Secret (v5)
@@ -2748,7 +2748,7 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     delete:
-      operationId: deleteClusterAppSecret
+      operationId: deleteClusterAppSecretV5
       tags:
         - app secrets
       summary: Delete a Secret (v5)
@@ -2793,7 +2793,7 @@ paths:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 
     patch:
-      operationId: modifyClusterAppSecret
+      operationId: modifyClusterAppSecretV5
       tags:
         - app secrets
       summary: Modify Secret (v5)
