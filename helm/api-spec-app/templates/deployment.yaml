@@ -29,3 +29,5 @@ spec:
       volumes:
       - name: cache-volume
         emptyDir: {}
+      serviceAccount: {{ .Values.name }}
+      serviceAccountName: {{ .Values.name }}
