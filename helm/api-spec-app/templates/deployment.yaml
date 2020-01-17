@@ -20,7 +20,7 @@ spec:
       containers:
         - name: {{ .Values.name }}
           # This is a public image, so no pullsecret required
-          image: quay.io/giantswarm/{{ .Values.name }}:latest
+          image: quay.io/giantswarm/{{ .Values.name }}:{{ .Values.image.tag }}
           ports:
             - containerPort: 8000
           volumeMounts:
