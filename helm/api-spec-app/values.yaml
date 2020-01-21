@@ -2,4 +2,4 @@ name: api-spec-app
 namespace: docs
 image:
   name: api-spec
-  tag: "[[ .Version ]]"
+  tag: "[[.Version]]"
