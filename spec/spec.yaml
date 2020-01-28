@@ -3983,7 +3983,8 @@ paths:
         - cluster labels
       summary: Set cluster labels
       description: |
-        Overwrite cluster labels with the supplied. Keys and labels should adhere to [Kubernetes labels syntax and character set](https://v1-16.docs.kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set).
+        Overwrite cluster labels with the supplied. Keys and labels should adhere to
+        [Kubernetes labels syntax and character set](https://v1-16.docs.kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set).
       parameters:
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
         - name: body
