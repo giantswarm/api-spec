@@ -81,7 +81,7 @@ tags:
     description: |
       Cluster labels allow users to group and tag clusters with own key value pairs.
 
-      Note: Cluster labeling is currently (as of February 2020) only available on <span class="badge aws">AWS</span> to selected Giant Swarm customers.
+      Note: Cluster labeling is currently (as of February 2020) only available on cluster releases 10 or higher on <span class="badge aws">AWS</span>.
   - name: exception notifications
     x-internal: true
 
