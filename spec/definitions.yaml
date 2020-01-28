@@ -1137,3 +1137,13 @@ definitions:
           max:
             description: Maximum number of nodes in the pool
             type: integer
+
+  # cluster labels response
+  V5ClusterLabels:
+    type: object
+    additionalProperties: false
+    properties:
+      labels:
+        type: object
+        additionalProperties:
+          type: string

@@ -77,6 +77,11 @@ tags:
       A release provides _components_, like for example Kubernetes. For each
       release the contained components are listed. Changes in components are
       detailed in the _changelog_ of a release.
+  - name: cluster labels
+    description: |
+      Cluster labels allow users to group and tag clusters with own key value pairs.
+
+      Note: Cluster labeling is currently (as of February 2020) only available on <span class="badge aws">AWS</span> to selected Giant Swarm customers.
   - name: exception notifications
     x-internal: true
 
@@ -3935,6 +3940,91 @@ paths:
           description: error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v5/clusters/{cluster_id}/labels/:
+    get:
+      operationId: getClusterLabels
+      tags:
+        - cluster labels
+      summary: Get cluster labels
+      description: |
+        Return the user defined labels attached to the supplied cluster.
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: The user supplied labels attached to this cluster
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+          examples:
+            application/json:
+              {
+                "labels": {
+                  "environment": "testing",
+                  "region": "north-west",
+                  "foo": "bar"
+                }
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqt' could not be found..."
+              }
+    put:
+      operationId: setClusterLabels
+      tags:
+        - cluster labels
+      summary: Set cluster labels
+      description: |
+        Overwrite cluster labels with the supplied. Keys and labels should adhere to [Kubernetes labels syntax and character set](https://v1-16.docs.kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set).
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - name: body
+          in: body
+          required: true
+          description: Cluster labels
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+          x-examples:
+            application/json:
+              {
+                "labels": {
+                  "environment": "testing-2",
+                  "region": "north-west-2"
+                }
+              }
+      responses:
+        "200":
+          description: The updated user supplied labels attached to this cluster
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+          examples:
+            application/json:
+              {
+                "labels": {
+                  "environment": "testing-2",
+                  "region": "north-west-2"
+                }
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqt' could not be found..."
+              }
 
   /v5/exception-notifications/:
     post:
