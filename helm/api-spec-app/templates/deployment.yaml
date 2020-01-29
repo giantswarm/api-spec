@@ -21,7 +21,7 @@ spec:
       securityContext:
         runAsUser: 1000
       containers:
-        - name: {{ .Values.name }}
+        - name: {{ .Values.image.name }}
           # This is a public image, so no pullsecret required
           image: quay.io/giantswarm/{{ .Values.image.name }}:{{ .Values.image.sha }}
           ports:
