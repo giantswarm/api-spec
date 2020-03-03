@@ -3555,7 +3555,13 @@ paths:
                     "last_transition_time": "2019-03-25T17:10:09.333633991Z",
                     "version": "1.2.3"
                   }
-                ]
+                ],
+                "labels": {
+                  "aws-operator.giantswarm.io/version":"8.1.1",
+                  "giantswarm.io/cluster":"7g4di",
+                  "giantswarm.io/organization":"acme",
+                  "release.giantswarm.io/version":"11.0.0"
+                }
               }
         "301":
           description: Version mismatch
@@ -3948,14 +3954,14 @@ paths:
         - cluster labels
       summary: Get cluster labels
       description: |
-        Return the user defined labels attached to the supplied cluster.
+        Return labels attached to the supplied cluster.
       parameters:
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       responses:
         "200":
-          description: The user supplied labels attached to this cluster
+          description: Labels attached to this cluster
           schema:
-            $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+            $ref: "./definitions.yaml#/definitions/V5ClusterLabelsResponse"
           examples:
             application/json:
               {
@@ -3983,29 +3989,36 @@ paths:
         - cluster labels
       summary: Set cluster labels
       description: |
-        Overwrite cluster labels with the supplied. Keys and labels should adhere to
+        Set cluster labels. Keys and labels should adhere to
         [Kubernetes labels syntax and character set](https://v1-16.docs.kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set).
+
+        Label changes should be written as a [JSON Merge Patch, RFC 7386](https://tools.ietf.org/html/rfc7386).
+
+        Changes to labels containing `giantswarm.io` is forbidden,
+        changes to label `release.giantswarm.io/version`
+        will be validated against available Giant Swarm releases.
       parameters:
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
         - name: body
           in: body
           required: true
-          description: Cluster labels
+          description: Labels to attach to this cluster.
           schema:
-            $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+            $ref: "./definitions.yaml#/definitions/V5ClusterLabelsResponse"
           x-examples:
             application/json:
               {
                 "labels": {
                   "environment": "testing-2",
-                  "region": "north-west-2"
+                  "region": "north-west-2",
+                  "label-to-remove": null
                 }
               }
       responses:
         "200":
-          description: The updated user supplied labels attached to this cluster
+          description: Labels attached to this cluster after update
           schema:
-            $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+            $ref: "./definitions.yaml#/definitions/V5ClusterLabelsResponse"
           examples:
             application/json:
               {

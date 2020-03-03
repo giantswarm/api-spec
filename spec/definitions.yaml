@@ -1105,6 +1105,8 @@ definitions:
             version:
               type: string
               description: Semantic version number
+      labels:
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
 
   V5ModifyClusterRequest:
     type: object
@@ -1139,11 +1141,27 @@ definitions:
             type: integer
 
   # cluster labels response
-  V5ClusterLabels:
+  V5ClusterLabelsResponse:
     type: object
+    description: Cluster labels
     additionalProperties: false
     properties:
       labels:
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
         type: object
+        title: Labels object
+        description: Object containing keys with string values representing the labels attached to the cluster
         additionalProperties:
+          title: Labels
+          description: Key value pairs representing the labels attached to the cluster
           type: string
+
+  # cluster labels
+  V5ClusterLabels:
+    type: object
+    title: Labels object
+    description: Object containing keys with string values representing the labels attached to the cluster
+    additionalProperties:
+      title: Labels
+      description: Key value pairs representing the labels attached to the cluster
+      type: string
