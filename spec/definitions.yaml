@@ -932,6 +932,10 @@ definitions:
             type: string
             description: |
               EC2 instance type to use for all nodes in the node pool. _(Validated against available instance types.)_
+          spot_instance_enabled:
+            type: boolean
+            description: |
+              If true, the node pool will be filled with spot instances.
 
   # Specification of a node in a node pool after creation
   V5GetNodePoolResponseNodeSpec:
@@ -942,6 +946,10 @@ definitions:
         description: |
           Attributes specific to the AWS provider
         properties:
+          spot_instance_enabled:
+            type: boolean
+            description: |
+              If true, the node pool will be filled with spot instances.
           instance_type:
             type: string
             description: |
