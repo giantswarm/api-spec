@@ -946,14 +946,14 @@ definitions:
         description: |
           Attributes specific to the AWS provider
         properties:
-          spot_instance_enabled:
-            type: boolean
-            description: |
-              If true, the node pool will be filled with spot instances.
           instance_type:
             type: string
             description: |
               EC2 instance type used by all nodes in this pool
+          spot_instance_enabled:
+            type: boolean
+            description: |
+              If true, the node pool will be filled with spot instances.
       volume_sizes_gb:
         type: object
         properties:
