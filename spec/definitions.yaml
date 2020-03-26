@@ -945,7 +945,7 @@ definitions:
             type: string
             description: |
               EC2 instance type to use for all nodes in the node pool. _(Validated against available instance types.)_
-          use_alike:
+          use_alike_instance_types:
             type: boolean
             description: |
               If true, instances alike the instance_type will be used.
@@ -976,7 +976,7 @@ definitions:
             type: string
             description: |
               EC2 instance type used by all nodes in this pool
-          use_alike:
+          use_alike_instance_types:
             type: boolean
             description: |
               If true, instances alike the instance_type will be used.
