@@ -941,7 +941,7 @@ definitions:
                 description: |
                   Percentage of on demand instances above the base capacity.
                 type: integer
-                x-nullable: false
+                minimum: 0
           instance_type:
             type: string
             description: |
