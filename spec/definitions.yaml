@@ -260,7 +260,7 @@ definitions:
         type: string
         format: date-time
         description: Date/time when cluster has been deleted
-        x-nullable: false
+        x-nullable: true
       owner:
         type: string
         description: Name of the organization owning the cluster
