@@ -928,14 +928,27 @@ definitions:
         description: |
           Attributes specific to the AWS provider
         properties:
+          instance_distribution:
+            description: |
+              Attributes defining the instance distribution in a node pool.
+            type: object
+            properties:
+              on_demand_base_capacity:
+                description: |
+                  Base capacity of on demand machines.
+                type: integer
+              on_demand_percentage_above_base_capacity:
+                description: |
+                  Percentage of on demand instances above the base capacity.
+                type: integer
           instance_type:
             type: string
             description: |
               EC2 instance type to use for all nodes in the node pool. _(Validated against available instance types.)_
-          spot_instance_enabled:
+          use_alike:
             type: boolean
             description: |
-              If true, the node pool will be filled with spot instances.
+              If true, instances alike the instance_type will be used.
 
   # Specification of a node in a node pool after creation
   V5GetNodePoolResponseNodeSpec:
@@ -946,14 +959,27 @@ definitions:
         description: |
           Attributes specific to the AWS provider
         properties:
+          instance_distribution:
+            description: |
+              Attributes defining the instance distribution in a node pool.
+            type: object
+            properties:
+              on_demand_base_capacity:
+                description: |
+                  Base capacity of on demand machines.
+                type: integer
+              on_demand_percentage_above_base_capacity:
+                description: |
+                  Percentage of on demand instances above the base capacity.
+                type: integer
           instance_type:
             type: string
             description: |
               EC2 instance type used by all nodes in this pool
-          spot_instance_enabled:
+          use_alike:
             type: boolean
             description: |
-              If true, the node pool will be filled with spot instances.
+              If true, instances alike the instance_type will be used.
       volume_sizes_gb:
         type: object
         properties:
