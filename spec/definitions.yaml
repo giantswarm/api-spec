@@ -937,11 +937,13 @@ definitions:
                 description: |
                   Base capacity of on demand machines.
                 type: integer
+                minimum: 0
               on_demand_percentage_above_base_capacity:
                 description: |
                   Percentage of on demand instances above the base capacity.
                 type: integer
                 minimum: 0
+                maximum: 100
           instance_type:
             type: string
             description: |
