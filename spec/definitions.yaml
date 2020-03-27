@@ -1049,8 +1049,8 @@ definitions:
           nodes_ready:
             description: Number of nodes in state NodeReady
             type: integer
-          spot_nodes:
-            description: Number of nodes with lifecycle spot
+          spot_instances:
+            description: Number of instances with lifecycle spot
             type: integer
 
 
