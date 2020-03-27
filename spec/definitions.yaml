@@ -1034,11 +1034,20 @@ definitions:
         description: Information on the current size and status of the node pool
         type: object
         properties:
+          instance_types:
+            description: Instance types currently running in the node pool
+            type: array
+            items:
+              description: Instance type of a node.
+              type: string
           nodes:
             description: Desired number of nodes in the pool
             type: integer
           nodes_ready:
             description: Number of nodes in state NodeReady
+            type: integer
+          spot_nodes:
+            description: Number of nodes with lifecycle spot
             type: integer
 
 
