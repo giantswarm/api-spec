@@ -81,7 +81,7 @@ tags:
     description: |
       Cluster labels allow users to group and tag clusters with custom key-value-pairs.
 
-      Note: Cluster labelling is currently (as of February 2020) only available on cluster releases 10 or higher on <span class="badge aws">AWS</span>.
+      Note: Cluster labelling is currently only available on release version 10 or higher on <span class="badge aws">AWS</span>.
   - name: exception notifications
     x-internal: true
 
