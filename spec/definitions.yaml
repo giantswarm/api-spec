@@ -1164,7 +1164,7 @@ definitions:
   V5ListClustersByLabel:
     type: object
     required:
-    - labels
+      - labels
     properties:
       labels:
         title: Label selector
