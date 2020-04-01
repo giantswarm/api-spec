@@ -1157,9 +1157,9 @@ definitions:
     title: Labels object
     description: Object containing keys with string values representing the labels attached to the cluster
     additionalProperties:
+      type: string
       title: Labels
       description: Key value pairs representing the labels attached to the cluster
-      type: string
 
   V5ListClustersByLabel:
     type: object
@@ -1167,6 +1167,6 @@ definitions:
       - labels
     properties:
       labels:
-        title: Label selector
         type: string
+        title: Label selector
         description: The label selector string for filtering the clusters
