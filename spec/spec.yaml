@@ -40,6 +40,11 @@ tags:
       special attention to provider tags <span class="badge aws">AWS</span>
       <span class="badge azure">Azure</span> <span class="badge kvm">KVM</span>
       to find additional information regarding provider compatibility.
+  - name: cluster labels
+    description: |
+      Cluster labels allow users to group and tag clusters with custom key-value-pairs.
+
+      Note: Cluster labelling is currently only available on release version 10 or higher on <span class="badge aws">AWS</span>.
   - name: info
     description: Information about the Giant Swarm installation
   - name: key pairs
@@ -77,11 +82,6 @@ tags:
       A release provides _components_, like for example Kubernetes. For each
       release the contained components are listed. Changes in components are
       detailed in the _changelog_ of a release.
-  - name: cluster labels
-    description: |
-      Cluster labels allow users to group and tag clusters with custom key-value-pairs.
-
-      Note: Cluster labelling is currently only available on release version 10 or higher on <span class="badge aws">AWS</span>.
   - name: exception notifications
     x-internal: true
 
@@ -4064,7 +4064,7 @@ paths:
         to, based on their organization memberships.
         Admin users however, will search over all existing clusters.
 
-        The resulting array contains a sparse representation of the cluster objects. To fetch more details on a cluster, use 
+        The resulting array contains a sparse representation of the cluster objects. To fetch more details on a cluster, use
         the [getClusterV5](#operation/getClusterV5) operation.
       parameters:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
