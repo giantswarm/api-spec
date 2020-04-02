@@ -34,7 +34,10 @@ jobs:
 workflows:
   package-and-push-chart-on-tag:
     jobs:
-      - build
+      - build:
+          filters:  # required since `architect/push-to-app-catalog` has tag filters AND requires `build`
+            tags:
+              only: /.*/
       - architect/push-to-app-catalog:
           name: "package and push api-spec"
           app_catalog: "giantswarm-operations-platform-catalog"
