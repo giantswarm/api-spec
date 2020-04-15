@@ -4,6 +4,7 @@ Error messages and standard responses, like after creation of a resource, contai
 
 - `INTERNAL_ERROR`: Used when an internal error has occurred (HTTP status code 500).
 - `INVALID_CREDENTIALS`: Indicates the provided credentials are not valid.
+- `NOT_YET_AVAILABLE`: Indicates that the API operation used is not ready yet. Should occur with HTTP status code 503.
 - `PERMISSION_DENIED`: Indicates the provided credentials are valid, but the requested resource requires other permissions.
 - `RESOURCE_ALREADY_EXISTS`: Indicates a resource does already exist.
 - `RESOURCE_CREATED`: Indicates a resource has been created.
