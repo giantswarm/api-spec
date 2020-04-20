@@ -40,6 +40,11 @@ tags:
       special attention to provider tags <span class="badge aws">AWS</span>
       <span class="badge azure">Azure</span> <span class="badge kvm">KVM</span>
       to find additional information regarding provider compatibility.
+  - name: cluster labels
+    description: |
+      Cluster labels allow users to group and tag clusters with custom key-value-pairs.
+
+      Note: Cluster labelling is currently only available on release version 10 or higher on <span class="badge aws">AWS</span>.
   - name: info
     description: Information about the Giant Swarm installation
   - name: key pairs
@@ -734,7 +739,12 @@ paths:
                   "name": "Node Pools Cluster",
                   "owner": "testorg",
                   "release_version": "9.0.0",
-                  "path": "/v5/clusters/3dkr6/"
+                  "path": "/v5/clusters/3dkr6/",
+                  "labels": {
+                    "environment": "testing",
+                    "region": "north-west",
+                    "foo": "bar"
+                  }
                 }
               ]
         "401":
@@ -3562,7 +3572,13 @@ paths:
                     "last_transition_time": "2019-03-25T17:10:09.333633991Z",
                     "version": "1.2.3"
                   }
-                ]
+                ],
+                "labels": {
+                  "aws-operator.giantswarm.io/version":"8.1.1",
+                  "giantswarm.io/cluster":"7g4di",
+                  "giantswarm.io/organization":"acme",
+                  "release.giantswarm.io/version":"11.0.0"
+                }
               }
         "301":
           description: Version mismatch
@@ -3945,6 +3961,178 @@ paths:
               }
         default:
           description: error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+
+  /v5/clusters/{cluster_id}/labels/:
+    get:
+      operationId: getClusterLabels
+      tags:
+        - cluster labels
+      summary: Get cluster labels
+      description: |
+        Returns the labels that this cluster is labelled with
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+      responses:
+        "200":
+          description: Cluster labels
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ClusterLabelsResponse"
+          examples:
+            application/json:
+              {
+                "labels": {
+                  "environment": "testing",
+                  "region": "north-west",
+                  "foo": "bar"
+                }
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqt' could not be found..."
+              }
+    put:
+      operationId: setClusterLabels
+      tags:
+        - cluster labels
+      summary: Set cluster labels
+      description: |
+        Set cluster labels. Keys and labels should adhere to
+        [Kubernetes labels syntax and character set](https://v1-16.docs.kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set).
+
+        Label changes should be written as a [JSON Merge Patch, RFC 7386](https://tools.ietf.org/html/rfc7386).
+
+        Changes to labels containing `giantswarm.io` is forbidden,
+        changes to label `release.giantswarm.io/version`
+        will be validated against available Giant Swarm releases.
+      parameters:
+        - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
+        - name: body
+          in: body
+          required: true
+          description: Labels to attach to this cluster.
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ClusterLabelsResponse"
+          x-examples:
+            application/json:
+              {
+                "labels": {
+                  "environment": "testing-2",
+                  "region": "north-west-2",
+                  "label-to-remove": null
+                }
+              }
+      responses:
+        "200":
+          description: Labels attached to this cluster after update
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ClusterLabelsResponse"
+          examples:
+            application/json:
+              {
+                "labels": {
+                  "environment": "testing-2",
+                  "region": "north-west-2"
+                }
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        "404":
+          description: Not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_NOT_FOUND",
+                "message": "The cluster with ID 'wqt' could not be found..."
+              }
+
+  /v5/clusters/by_label/:
+    post:
+      operationId: getV5ClustersByLabel
+      tags:
+        - clusters
+      summary: Get clusters by labels (v5)
+      description: |
+        This operation fetches a list of node pool clusters based
+        on a label selector.
+
+        The operation accepts label selectors in the same way that `kubectl get -l` does
+        ([kubernetes label selectors description](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors))
+        for listing clusters based on their labels.
+
+        The result depends on the permissions of the user.
+        A normal user can search over all the clusters that they have access
+        to, based on their organization memberships.
+        Admin users however, will search over all existing clusters.
+
+        The resulting array contains a sparse representation of the cluster objects. To fetch more details on a cluster, use
+        the [getClusterV5](#operation/getClusterV5) operation.
+      parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
+        - name: body
+          in: body
+          required: true
+          description: Label selector
+          schema:
+            $ref: "./definitions.yaml#/definitions/V5ListClustersByLabel"
+          x-examples:
+            application/json:
+              {
+                "labels": "environment=testing",
+              }
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "./definitions.yaml#/definitions/V4ClusterListItem"
+          examples:
+            application/json:
+              [
+                {
+                  "id": "g8s2o",
+                  "create_date": "2019-03-08T12:31:47.215Z",
+                  "name": "Cluster",
+                  "owner": "acme",
+                  "release_version": "9.0.1",
+                  "path": "/v5/clusters/g8s2o/",
+                  "labels": {
+                    "environment": "testing",
+                    "region": "east-2"
+                  }
+                },
+                {
+                  "id": "3dkr6",
+                  "create_date": "2019-07-22T13:58:02.024Z",
+                  "name": "Node Pools Cluster",
+                  "owner": "testorg",
+                  "release_version": "9.0.0",
+                  "path": "/v5/clusters/3dkr6/",
+                  "labels": {
+                    "environment": "testing",
+                    "region": "north-west",
+                    "foo": "bar"
+                  }
+                }
+              ]
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: Error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
 

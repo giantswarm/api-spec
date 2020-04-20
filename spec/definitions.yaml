@@ -651,6 +651,8 @@ definitions:
       path:
         type: string
         description: API path of the cluster resource
+      labels:
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
 
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:
@@ -1105,6 +1107,8 @@ definitions:
             version:
               type: string
               description: Semantic version number
+      labels:
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
 
   V5ModifyClusterRequest:
     type: object
@@ -1137,3 +1141,32 @@ definitions:
           max:
             description: Maximum number of nodes in the pool
             type: integer
+
+  # cluster labels response
+  V5ClusterLabelsResponse:
+    type: object
+    description: Cluster labels
+    additionalProperties: false
+    properties:
+      labels:
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+
+  # cluster labels
+  V5ClusterLabels:
+    type: object
+    title: Labels object
+    description: Object containing keys with string values representing the labels attached to the cluster
+    additionalProperties:
+      type: string
+      title: Labels
+      description: Key value pairs representing the labels attached to the cluster
+
+  V5ListClustersByLabel:
+    type: object
+    required:
+      - labels
+    properties:
+      labels:
+        type: string
+        title: Label selector
+        description: The label selector string for filtering the clusters
