@@ -105,6 +105,13 @@ definitions:
               release_version_minimum:
                 type: string
                 description: The minimum release version number required to have support for node pools.
+          spot_instances:
+            type: object
+            description: Allows to use cheaper spot instances instead of on-demand EC2 instances.
+            properties:
+              release_version_minimum:
+                type: string
+                description: The minimum release version number required to have support for spot instances.
       stats:
         type: object
         description: Statistics about the installation
@@ -934,6 +941,7 @@ definitions:
           instance_distribution:
             description: |
               Attributes defining the instance distribution in the node pool being created.
+              Added with AWS release v11.2.0.
             type: object
             properties:
               on_demand_base_capacity:
@@ -966,6 +974,7 @@ definitions:
               If true, instance types alike the type set via `instance_type` will be used. This can
               increase the likelihood to get instances for this pool, especially spot instances at
               a low rate. If false, only the exact type set as `instance_type` is used.
+              Added with AWS release v11.2.0.
 
   # Specification of a node in a node pool after creation
   V5GetNodePoolResponseNodeSpec:
