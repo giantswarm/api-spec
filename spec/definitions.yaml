@@ -105,6 +105,13 @@ definitions:
               release_version_minimum:
                 type: string
                 description: The minimum release version number required to have support for node pools.
+          spot_instances:
+            type: object
+            description: Allows to use cheaper spot instances instead of on-demand EC2 instances.
+            properties:
+              release_version_minimum:
+                type: string
+                description: The minimum release version number required to have support for spot instances.
       stats:
         type: object
         description: Statistics about the installation
@@ -886,6 +893,7 @@ definitions:
           Specifies how the nodes of a pool are spread over availability zones.
           The object must contain either the `number` attribute or the `zones`
           attribute, but not both.
+
           The maximum `number` of availbility zones is the same as that found
           under `general.availability_zones.max` from the `/v4/info/` endpoint.
           When not given, availability zones assignment is handled automatically.
@@ -930,10 +938,43 @@ definitions:
         description: |
           Attributes specific to the AWS provider
         properties:
+          instance_distribution:
+            description: |
+              Attributes defining the instance distribution in the node pool being created.
+              Added with AWS release v11.2.0.
+            type: object
+            properties:
+              on_demand_base_capacity:
+                description: |
+                  Base capacity of on-demand EC2 instances to use for worker nodes in this pools.
+                  When this is larger than 0, this value defines a number of worker nodes that
+                  will be created using on-demand EC2 instances, regardless of the value
+                  configured as `on_demand_percentage_above_base_capacity`.
+                type: integer
+                minimum: 0
+                default: 0
+              on_demand_percentage_above_base_capacity:
+                description: |
+                  Percentage of on-demand EC2 instances to use for worker nodes, instead of spot
+                  instances, for instances exceeding `on_demand_base_capacity`. For example, to
+                  have half of the worker nodes use spot instances and half use on-demand, set this
+                  value to 50.
+                type: integer
+                minimum: 0
+                maximum: 100
+                default: 100
           instance_type:
             type: string
             description: |
               EC2 instance type to use for all nodes in the node pool. _(Validated against available instance types.)_
+          use_alike_instance_types:
+            type: boolean
+            default: false
+            description: |
+              If true, instance types alike the type set via `instance_type` will be used. This can
+              increase the likelihood to get instances for this pool, especially spot instances at
+              a low rate. If false, only the exact type set as `instance_type` is used.
+              Added with AWS release v11.2.0.
 
   # Specification of a node in a node pool after creation
   V5GetNodePoolResponseNodeSpec:
@@ -944,10 +985,31 @@ definitions:
         description: |
           Attributes specific to the AWS provider
         properties:
+          instance_distribution:
+            description: |
+              Attributes defining the instance distribution in a node pool.
+            type: object
+            properties:
+              on_demand_base_capacity:
+                description: |
+                  Base capacity of on-demand EC2 instances to use for worker nodes in this pools.
+                  Find details on this attribute in the [addNodePool](#operation/addNodePool) operation.
+                type: integer
+              on_demand_percentage_above_base_capacity:
+                description: |
+                  Percentage of on-demand EC2 instances to use for worker nodes, instead of spot
+                  instances, for instances exceeding `on_demand_base_capacity`.
+                  Find details on this attribute in the [addNodePool](#operation/addNodePool) operation.
+                type: integer
           instance_type:
             type: string
             description: |
-              EC2 instance type used by all nodes in this pool
+              EC2 instance type used by all nodes in this pool.
+          use_alike_instance_types:
+            type: boolean
+            description: |
+              Whether this node pool can use different instance types alike the configured one.
+              Find details on this attribute in the [addNodePool](#operation/addNodePool) operation.
       volume_sizes_gb:
         type: object
         properties:
@@ -1002,11 +1064,21 @@ definitions:
         description: Information on the current size and status of the node pool
         type: object
         properties:
+          instance_types:
+            description: Instance types currently in use in this node pool.
+            type: array
+            items:
+              description: EC2 instance type identifier
+              type: string
           nodes:
-            description: Desired number of nodes in the pool
+            description: Desired number of nodes in the pool according to the
+              cluster-autoscaler
             type: integer
           nodes_ready:
             description: Number of nodes in state NodeReady
+            type: integer
+          spot_instances:
+            description: Number of instances with lifecycle spot
             type: integer
 
 

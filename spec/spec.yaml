@@ -246,7 +246,7 @@ paths:
           },
           "workers": {
             "count_per_cluster": {
-              "max": null,
+              "max": 999,
               "default": 3
             },
             "instance_type": {
@@ -325,7 +325,7 @@ paths:
                 },
                 "workers": {
                   "count_per_cluster": {
-                    "max": null,
+                    "max": 999,
                     "default": 3
                   },
                   "instance_type": {
