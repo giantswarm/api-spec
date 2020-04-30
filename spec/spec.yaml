@@ -815,7 +815,7 @@ paths:
                 "message": "A new cluster has been created with ID 'wqtlq'"
               }
         "400":
-          description: Instance type not found
+          description: Invalid request
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
