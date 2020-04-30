@@ -3534,7 +3534,7 @@ paths:
                 "nodepools": []
               }
         "400":
-          description: Instance type not found
+          description: Invalid request
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
