@@ -814,6 +814,16 @@ paths:
                 "code": "RESOURCE_CREATED",
                 "message": "A new cluster has been created with ID 'wqtlq'"
               }
+        "400":
+          description: Instance type not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_REQUEST",
+                "message": "The instance type 'm6.superb' does not exist or is unknown."
+              }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         default:
@@ -3522,6 +3532,16 @@ paths:
                   "availability_zone": "europe-central-1c"
                 },
                 "nodepools": []
+              }
+        "400":
+          description: Instance type not found
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_REQUEST",
+                "message": "The instance type 'm6.superb' does not exist or is unknown."
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
