@@ -1112,7 +1112,21 @@ definitions:
             description: |
               Name of the availability zone to use for the master node. If not
               given, the master node will be placed automatically.
-
+      master_nodes:
+        type: object
+        description: |
+          Defines how many master nodes the cluster should have.
+        properties:
+          high_availability:
+            type: boolean
+            default: true
+            description: |
+              Specifies whether or not this cluster should run with redundant master
+              nodes (high availability). When true, three master nodes will be started,
+              each one in a different availability zone that is selected randomly.
+              This is the recommended setting for production clusters. When false, only
+              one master node will be created, also in a randomly selected availability
+              zone.
   V5ClusterDetailsResponse:
     type: object
     properties:
@@ -1156,6 +1170,22 @@ definitions:
             type: string
             description: |
               Name of the availability zone the master node is placed in
+      master_nodes:
+        type: object
+        description: |
+          Information on the master node(s) of this cluster
+        properties:
+          high_availability:
+            type: boolean
+            description: |
+              When true, the cluster has (or should have) three master nodes.
+              Otherwise it should have one.
+          availability_zones:
+            type: array
+            description: |
+              Availability zones of the master node(s) of this cluster.
+            items:
+              type: string
       conditions:
         type: array
         description: List of conditions the cluster has gone through
