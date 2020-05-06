@@ -1214,6 +1214,14 @@ definitions:
             description: Maximum number of nodes in the pool
             type: integer
 
+  V5SetClusterLabelsRequest:
+    type: object
+    description: Cluster labels
+    additionalProperties: false
+    properties:
+      labels:
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+
   # cluster labels response
   V5ClusterLabelsResponse:
     type: object
@@ -1233,7 +1241,7 @@ definitions:
       title: Labels
       description: Key value pairs representing the labels attached to the cluster
 
-  V5ListClustersByLabel:
+  V5ListClustersByLabelRequest:
     type: object
     required:
       - labels

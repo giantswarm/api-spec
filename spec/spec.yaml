@@ -3993,6 +3993,9 @@ paths:
       description: |
         Returns the labels that this cluster is labelled with
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
       responses:
         "200":
@@ -4035,13 +4038,16 @@ paths:
         changes to label `release.giantswarm.io/version`
         will be validated against available Giant Swarm releases.
       parameters:
+        - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmActivityHeader'
+        - $ref: './parameters.yaml#/parameters/XGiantSwarmCmdLineHeader'
         - $ref: "./parameters.yaml#/parameters/ClusterIdPathParameter"
         - name: body
           in: body
           required: true
           description: Labels to attach to this cluster.
           schema:
-            $ref: "./definitions.yaml#/definitions/V5ClusterLabelsResponse"
+            $ref: "./definitions.yaml#/definitions/V5SetClusterLabelsRequest"
           x-examples:
             application/json:
               {
@@ -4107,7 +4113,7 @@ paths:
           required: true
           description: Label selector
           schema:
-            $ref: "./definitions.yaml#/definitions/V5ListClustersByLabel"
+            $ref: "./definitions.yaml#/definitions/V5ListClustersByLabelRequest"
           x-examples:
             application/json:
               {
