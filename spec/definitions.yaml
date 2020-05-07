@@ -659,7 +659,7 @@ definitions:
         type: string
         description: API path of the cluster resource
       labels:
-        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabelsProperty"
 
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:
@@ -1180,7 +1180,7 @@ definitions:
               type: string
               description: Semantic version number
       labels:
-        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabelsProperty"
 
   V5ModifyClusterRequest:
     type: object
@@ -1220,7 +1220,7 @@ definitions:
     additionalProperties: false
     properties:
       labels:
-        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabelsRequestProperty"
 
   # cluster labels response
   V5ClusterLabelsResponse:
@@ -1229,10 +1229,10 @@ definitions:
     additionalProperties: false
     properties:
       labels:
-        $ref: "./definitions.yaml#/definitions/V5ClusterLabels"
+        $ref: "./definitions.yaml#/definitions/V5ClusterLabelsProperty"
 
   # cluster labels
-  V5ClusterLabels:
+  V5ClusterLabelsProperty:
     type: object
     title: Labels object
     description: Object containing keys with string values representing the labels attached to the cluster
@@ -1240,6 +1240,16 @@ definitions:
       type: string
       title: Labels
       description: Key value pairs representing the labels attached to the cluster
+
+  V5ClusterLabelsRequestProperty:
+    type: object
+    title: Labels object
+    description: Object containing keys with string values representing label changes
+    additionalProperties:
+      type: string
+      title: Labels
+      description: Key value pairs representing the labels to be changed
+      x-nullable: true
 
   V5ListClustersByLabelRequest:
     type: object
