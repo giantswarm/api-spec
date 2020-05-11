@@ -98,6 +98,13 @@ definitions:
         type: object
         description: Information on particular capabilities of the installation.
         properties:
+          ha_masters:
+            type: object
+            description: Support for multiple master nodes.
+            properties:
+              release_version_minimum:
+                type: string
+                description: The minimum release version number required to have support for multiple master nodes.
           nodepools:
             type: object
             description: Support for grouping of worker nodes into node pools.
