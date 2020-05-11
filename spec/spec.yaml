@@ -562,7 +562,7 @@ paths:
             application/json:
               {
                 "code": "RESOURCE_ALREADY_EXISTS",
-                "message": "The user could not be created. (invalid input: email 'bob@example.com' already exists)"
+                "message": "User could not be created. (conflict: email 'bob@example.com' already exists)"
               }
     patch:
       operationId: modifyUser
