@@ -539,6 +539,22 @@ paths:
                 "message": "The user with email 'bob@example.com' has been created."
               }
         "400":
+          description: Invalid input
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_INPUT",
+                "message": "User could not be created. (invalid input)"
+              }
+        "401":
+          $ref: "./responses.yaml#/responses/V4Generic401Response"
+        default:
+          description: Error
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+        "409":
           description: User already exists
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
@@ -548,12 +564,6 @@ paths:
                 "code": "RESOURCE_ALREADY_EXISTS",
                 "message": "The user could not be created. (invalid input: email 'bob@example.com' already exists)"
               }
-        "401":
-          $ref: "./responses.yaml#/responses/V4Generic401Response"
-        default:
-          description: Error
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
     patch:
       operationId: modifyUser
       tags:
