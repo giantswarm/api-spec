@@ -1003,13 +1003,13 @@ paths:
           schema:
             $ref: "./definitions.yaml#/definitions/V4ClusterDetailsResponse"
         "400":
-          description: The requested scaling is too large
+          description: Invalid input
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
-                "code": "LIMIT_EXCEEDED",
+                "code": "INVALID_INPUT",
                 "message": "The cluster could not be scaled. The maximum number of worker nodes is 3."
               }
         "401":
