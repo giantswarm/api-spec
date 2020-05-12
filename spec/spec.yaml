@@ -1002,6 +1002,16 @@ paths:
           description: Cluster modified
           schema:
             $ref: "./definitions.yaml#/definitions/V4ClusterDetailsResponse"
+        "400":
+          description: The requested scaling is too large
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "LIMIT_EXCEEDED",
+                "message": "The cluster could not be scaled. The maximum number of worker nodes is 3."
+              }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
@@ -1016,16 +1026,6 @@ paths:
                   perhaps you do not have access to it. Please make sure the
                   cluster ID is correct, and that you are a member of the
                   organization that it belongs to."
-              }
-        "429":
-          description: The requested scaling is too large
-          schema:
-            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
-          examples:
-            application/json:
-              {
-                "code": "LIMIT_EXCEEDED",
-                "message": "The cluster could not be scaled. The maximum number of worker nodes is 3."
               }
         default:
           description: error
