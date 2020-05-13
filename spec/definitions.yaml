@@ -1242,6 +1242,17 @@ definitions:
       release_version:
         type: string
         description: Release version to upgrade to
+      master_nodes:
+        type: object
+        properties:
+          high_availability:
+            description: |
+              Setting this attribute to `true` allows to switch a cluster from
+              using a single master node to multiple (3) master nodes in
+              separate availability zones for high availability. Note that the
+              switch from multiple master nodes to a single master node is not
+              supported.
+            type: boolean
 
   V5ModifyNodePoolRequest:
     type: object
