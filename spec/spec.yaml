@@ -539,14 +539,14 @@ paths:
                 "message": "The user with email 'bob@example.com' has been created."
               }
         "400":
-          description: User already exists
+          description: Invalid input
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
           examples:
             application/json:
               {
-                "code": "RESOURCE_ALREADY_EXISTS",
-                "message": "The user could not be created. (invalid input: email 'bob@example.com' already exists)"
+                "code": "INVALID_INPUT",
+                "message": "User could not be created. (invalid input)"
               }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
@@ -554,6 +554,16 @@ paths:
           description: Error
           schema:
             $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+        "409":
+          description: User already exists
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "RESOURCE_ALREADY_EXISTS",
+                "message": "User could not be created. (conflict: email 'bob@example.com' already exists)"
+              }
     patch:
       operationId: modifyUser
       tags:
@@ -992,6 +1002,16 @@ paths:
           description: Cluster modified
           schema:
             $ref: "./definitions.yaml#/definitions/V4ClusterDetailsResponse"
+        "400":
+          description: Invalid input
+          schema:
+            $ref: "./definitions.yaml#/definitions/V4GenericResponse"
+          examples:
+            application/json:
+              {
+                "code": "INVALID_INPUT",
+                "message": "The cluster could not be scaled. The maximum number of worker nodes is 3."
+              }
         "401":
           $ref: "./responses.yaml#/responses/V4Generic401Response"
         "404":
