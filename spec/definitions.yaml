@@ -1202,6 +1202,10 @@ definitions:
               Availability zones of the master node(s) of this cluster.
             items:
               type: string
+          num_ready:
+            type: integer
+            description: |
+              Number of master nodes that are reported as `Ready`.
       conditions:
         type: array
         description: List of conditions the cluster has gone through
