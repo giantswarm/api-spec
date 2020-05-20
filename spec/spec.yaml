@@ -1367,7 +1367,7 @@ paths:
         - apps
       summary: Install an app (v4)
       description: |
-        Install an app on a tenant cluster using this endpoint.
+        Install an app on a tenant cluster by using this endpoint.
         For apps on v5 clusters, please use the v5 version of this endpoint.
 
         The spec field represents the app we'll be installing, and so spec.name refers to
@@ -2226,7 +2226,7 @@ paths:
         - apps
       summary: Install an app (v5)
       description: |
-        Install an app on a tenant cluster using this endpoint.
+        Install an app on a tenant cluster by using this endpoint.
 
         The spec field represents the app we'll be installing, and so spec.name refers to
         the name of the app in the catalog.
