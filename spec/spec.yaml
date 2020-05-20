@@ -1367,11 +1367,14 @@ paths:
         - apps
       summary: Install an app (v4)
       description: |
-        Install an app on a tenant cluster by posting to this endpoint.
+        Install an app on a tenant cluster using this endpoint.
         For apps on v5 clusters, please use the v5 version of this endpoint.
 
         The spec field represents the app we'll be installing, and so spec.name refers to
-        the name of the chart that installs this app in the catalog.
+        the name of the app in the catalog.
+
+        The app_name in the path of this request is the name you want to give the instance
+        of this app.
 
         The response you get on a succesful create includes the status of the app. However
         since the App is still initialising and this is an asynchronous operation, it is
@@ -1382,11 +1385,13 @@ paths:
 
         ### Example PUT request
         ```json
+          /v4/clusters/abc12/apps/my-very-own-efk/
+
           {
             "spec": {
-              "catalog": "sample-catalog",
-              "name": "prometheus-chart",
-              "namespace": "prometheus",
+              "catalog": "giantswarm",
+              "name": "efk-stack-app",
+              "namespace": "efk-stack-app",
               "version": "0.2.0",
             }
           }
@@ -2221,10 +2226,13 @@ paths:
         - apps
       summary: Install an app (v5)
       description: |
-        Install an app on a tenant cluster by posting to this endpoint.
+        Install an app on a tenant cluster using this endpoint.
 
         The spec field represents the app we'll be installing, and so spec.name refers to
-        the name of the chart that installs this app in the catalog.
+        the name of the app in the catalog.
+
+        The app_name in the path of this request is the name you want to give the instance
+        of this app.
 
         The response you get on a succesful create includes the status of the app. However
         since the App is still initialising and this is an asynchronous operation, it is
@@ -2235,11 +2243,13 @@ paths:
 
         ### Example PUT request
         ```json
+          /v5/clusters/abc12/apps/my-very-own-efk/
+
           {
             "spec": {
-              "catalog": "sample-catalog",
-              "name": "prometheus-chart",
-              "namespace": "prometheus",
+              "catalog": "giantswarm",
+              "name": "efk-stack-app",
+              "namespace": "efk-stack-app",
               "version": "0.2.0",
             }
           }
