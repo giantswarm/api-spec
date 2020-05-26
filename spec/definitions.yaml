@@ -1209,6 +1209,7 @@ definitions:
             type: integer
             description: |
               Number of master nodes that are reported as `Ready`.
+            format: int32
             x-nullable: true
       conditions:
         type: array
