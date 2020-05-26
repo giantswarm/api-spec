@@ -1202,6 +1202,7 @@ definitions:
             type: array
             description: |
               Availability zones of the master node(s) of this cluster.
+            x-nullable: true
             items:
               type: string
           num_ready:
