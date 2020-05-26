@@ -1181,6 +1181,7 @@ definitions:
           *Deprecation notice:* This attribute is replaced by `master_nodes`.
           It will be served until July 30, 2020 in the case that the cluster
           specification has one master node only.
+        x-nullable: true
         properties:
           availability_zone:
             type: string
@@ -1190,6 +1191,7 @@ definitions:
         type: object
         description: |
           Information on the master node(s) of this cluster
+        x-nullable: true
         properties:
           high_availability:
             type: boolean
@@ -1206,6 +1208,7 @@ definitions:
             type: integer
             description: |
               Number of master nodes that are reported as `Ready`.
+            x-nullable: true
       conditions:
         type: array
         description: List of conditions the cluster has gone through
