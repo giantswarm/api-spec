@@ -1399,11 +1399,11 @@ paths:
 
         ### About the user_config field in the response
         This field is not editable by you, but is set automatically by the API
-        if a configmap named `{app_name}-user-values` exists in the tenant cluster
+        if a ConfigMap named `{app_name}-user-values` exists in the tenant cluster
         namespace on the control plane.
 
         The `/v4/clusters/{cluster_id}/apps/{app_name}/config/` endpoints allows
-        you to create such a configmap using this API.
+        you to create such a ConfigMap using this API.
 
         It is recommended to create your config before creating your app. This
         will result in a faster deploy.
@@ -1517,7 +1517,10 @@ paths:
 
         - `version`: Changing this field lets you upgrade or downgrade an app.
 
-        `catalog`, `name`, `namespace`, and `user_config` are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
+        `catalog`, `name`, `namespace`, are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
+
+        `user_config` holds a reference to a user-values ConfigMap and is also not editable at this endpoint.
+        A user-values ConfigMap can be created using the [corresponding v4 app config creator endpoint](https://docs.giantswarm.io/api/#operation/createClusterAppConfigV4).
 
         The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
         Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
@@ -1577,7 +1580,7 @@ paths:
         - app configs
       summary: Get app config (v4)
       description: |
-        This operation allows you to fetch the user values configmap associated
+        This operation allows you to fetch the user-values ConfigMap associated
         with an app.
 
         For apps on v5 clusters, please use the v5 version of this endpoint.
@@ -1622,7 +1625,7 @@ paths:
         - app configs
       summary: Create app config (v4)
       description: |
-        This operation allows you to create a values configmap for a specific app. The app does
+        This operation allows you to create a user-values ConfigMap for a specific app. The app does
         not have to exist before hand.
 
         If the app does exist, this endpoint will ensure that the App CR gets it's
@@ -1722,8 +1725,8 @@ paths:
 
         Do make sure you also update the app and remove the reference.
 
-        The preferred order is to first remove the reference to the configmap by
-        updating the app, and only then delete the configmap using this endpoint.
+        The preferred order is to first remove the reference to the ConfigMap by
+        updating the app, and only then delete the ConfigMap using this endpoint.
 
         For apps on v5 clusters, please use the v5 version of this endpoint.
       parameters:
@@ -1766,11 +1769,11 @@ paths:
         - app configs
       summary: Modify app config (v4)
       description: |
-        This operation allows you to modify the values configmap for a specific app.
+        This operation allows you to modify the values ConfigMap for a specific app.
         It's only possible to modify app configs that have been named according to the convention of
         {app-name}-user-values and stored in the cluster ID namespace.
 
-        The full values key of the configmap will be replaced by the JSON body
+        The full values key of the ConfigMap will be replaced by the JSON body
         of your request.
 
         For apps on v5 clusters, please use the v5 version of this endpoint.
@@ -1784,7 +1787,7 @@ paths:
           }
         ```
 
-        If the configmap contained content like:
+        If the ConfigMap contained content like:
 
         ```json
           {
@@ -2257,11 +2260,11 @@ paths:
 
         ### About the user_config field in the response
         This field is not editable by you, but is set automatically by the API
-        if a configmap named `{app_name}-user-values` exists in the tenant cluster
+        if a ConfigMap named `{app_name}-user-values` exists in the tenant cluster
         namespace on the control plane.
 
-        The `/v4/clusters/{cluster_id}/apps/{app_name}/config/` endpoints allows
-        you to create such a configmap using this API.
+        The `/v5/clusters/{cluster_id}/apps/{app_name}/config/` endpoints allows
+        you to create such a ConfigMap using this API.
 
         It is recommended to create your config before creating your app. This
         will result in a faster deploy.
@@ -2373,7 +2376,10 @@ paths:
 
         - `version`: Changing this field lets you upgrade or downgrade an app.
 
-        `catalog`, `name`, `namespace`, and `user_config` are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
+        `catalog`, `name`, `namespace`, are not editable. If you need to move or rename an app, you should instead delete the app and make it again.
+
+        `user_config` holds a reference to a user-values ConfigMap and is also not editable at this endpoint.
+        A user-values ConfigMap can be created using the [corresponding v5 app config creator endpoint](https://docs.giantswarm.io/api/#operation/createClusterAppConfigV5).
 
         The request body must conform with the [JSON Patch Merge (RFC 7386)](https://tools.ietf.org/html/rfc7386) standard.
         Requests have to be sent with the `Content-Type: application/merge-patch+json` header.
@@ -2433,7 +2439,7 @@ paths:
         - app configs
       summary: Get app config (v5)
       description: |
-        This operation allows you to fetch the user values configmap associated
+        This operation allows you to fetch the user-values ConfigMap associated
         with an app.
 
       parameters:
@@ -2477,7 +2483,7 @@ paths:
         - app configs
       summary: Create app config (v5)
       description: |
-        This operation allows you to create a values configmap for a specific app. The app does
+        This operation allows you to create a user-values ConfigMap for a specific app. The app does
         not have to exist before hand.
 
         If the app does exist, this endpoint will ensure that the App CR gets it's
@@ -2574,8 +2580,8 @@ paths:
 
         Do make sure you also update the app and remove the reference.
 
-        The preferred order is to first remove the reference to the configmap by
-        updating the app, and only then delete the configmap using this endpoint.
+        The preferred order is to first remove the reference to the ConfigMap by
+        updating the app, and only then delete the ConfigMap using this endpoint.
 
       parameters:
         - $ref: './parameters.yaml#/parameters/XRequestIDHeader'
@@ -2617,11 +2623,11 @@ paths:
         - app configs
       summary: Modify app config (v5)
       description: |
-        This operation allows you to modify the values configmap for a specific app.
+        This operation allows you to modify the values ConfigMap for a specific app.
         It's only possible to modify app configs that have been named according to the convention of
         {app-name}-user-values and stored in the cluster ID namespace.
 
-        The full values key of the configmap will be replaced by the JSON body
+        The full values key of the ConfigMap will be replaced by the JSON body
         of your request.
 
         ### Example PATCH request
@@ -2633,7 +2639,7 @@ paths:
           }
         ```
 
-        If the configmap contained content like:
+        If the ConfigMap contained content like:
 
         ```json
           {
