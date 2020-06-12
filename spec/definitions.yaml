@@ -708,6 +708,13 @@ definitions:
             version:
               type: string
               description: Version number of the component
+      state:
+        type: string
+        description: |
+          Can be `active` implying new clusters should use this version, `wip`
+          implying that the version is for testing, or `deprecated` implying
+          that the version should be avoided as there are newer releases with
+          fixes or improvements.
 
   V4CreateUserRequest:
     type: object
