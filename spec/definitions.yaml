@@ -98,6 +98,13 @@ definitions:
         type: object
         description: Information on particular capabilities of the installation.
         properties:
+          ha_masters:
+            type: object
+            description: Support for multiple master nodes.
+            properties:
+              release_version_minimum:
+                type: string
+                description: The minimum release version number required to have support for multiple master nodes.
           nodepools:
             type: object
             description: Support for grouping of worker nodes into node pools.
@@ -1112,14 +1119,33 @@ definitions:
         type: object
         description: |
           Configuration regarding the master node. If not given, the master node
-          will be placed automatically.
+          will be placed automatically. Must not be used together with
+          the `master_nodes` property.
+
+          *Deprecation notice:* This property has been replaced by `master_nodes`
+          and is deprecated. It will still be accepted in requests until
+          July 30, 2020. After that, using it will issue an error `400 Bad Request`.
         properties:
           availability_zone:
             type: string
             description: |
               Name of the availability zone to use for the master node. If not
               given, the master node will be placed automatically.
-
+      master_nodes:
+        type: object
+        description: |
+          Defines how many master nodes the cluster should have.
+        properties:
+          high_availability:
+            type: boolean
+            default: true
+            description: |
+              Specifies whether or not this cluster should run with redundant master
+              nodes (high availability). When true, three master nodes will be started,
+              each one in a different availability zone that is selected randomly.
+              This is the recommended setting for production clusters. When false, only
+              one master node will be created, also in a randomly selected availability
+              zone.
   V5ClusterDetailsResponse:
     type: object
     properties:
@@ -1157,12 +1183,41 @@ definitions:
       master:
         type: object
         description: |
-          Information about the master node
+          Legacy information about the master node.
+
+          *Deprecation notice:* This attribute is replaced by `master_nodes`.
+          It will be served until July 30, 2020 in the case that the cluster
+          specification has one master node only.
+        x-nullable: true
         properties:
           availability_zone:
             type: string
             description: |
               Name of the availability zone the master node is placed in
+      master_nodes:
+        type: object
+        description: |
+          Information on the master node(s) of this cluster
+        x-nullable: true
+        properties:
+          high_availability:
+            type: boolean
+            description: |
+              When true, the cluster has (or should have) three master nodes.
+              Otherwise it should have one.
+          availability_zones:
+            type: array
+            description: |
+              Availability zones of the master node(s) of this cluster.
+            x-nullable: true
+            items:
+              type: string
+          num_ready:
+            type: integer
+            description: |
+              Number of master nodes that are reported as `Ready`.
+            format: int8
+            x-nullable: true
       conditions:
         type: array
         description: List of conditions the cluster has gone through
@@ -1199,6 +1254,17 @@ definitions:
       release_version:
         type: string
         description: Release version to upgrade to
+      master_nodes:
+        type: object
+        properties:
+          high_availability:
+            description: |
+              Setting this attribute to `true` allows to switch a cluster from
+              using a single master node to multiple (3) master nodes in
+              separate availability zones for high availability. Note that the
+              switch from multiple master nodes to a single master node is not
+              supported.
+            type: boolean
 
   V5ModifyNodePoolRequest:
     type: object

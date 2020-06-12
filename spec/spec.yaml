@@ -3548,8 +3548,8 @@ paths:
                 "owner": "myteam",
                 "release_version": "11.0.0",
                 "name": "Production cluster using k8s 1.16",
-                "master": {
-                  "availability_zone": "europe-central-1c"
+                "master_nodes": {
+                  "high_availability": "true"
                 }
               }
       responses:
@@ -3564,8 +3564,9 @@ paths:
                 "owner": "myteam",
                 "release_version": "11.0.0",
                 "name": "Production cluster using k8s 1.16",
-                "master": {
-                  "availability_zone": "europe-central-1c"
+                "master_nodes": {
+                  "high_availability": true,
+                  "availability_zones": ["europe-central-1a", "europe-central-1c", "europe-central-1d"]
                 },
                 "nodepools": []
               }
