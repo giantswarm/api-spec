@@ -1117,7 +1117,7 @@ definitions:
 
           *Deprecation notice:* This property has been replaced by `master_nodes`
           and is deprecated. It will still be accepted in requests until
-          July 30, 2020. After that, using it will issue an error `400 Bad Request`.
+          August 31, 2020. After that, using it will issue an error `400 Bad Request`.
         properties:
           availability_zone:
             type: string
@@ -1179,7 +1179,7 @@ definitions:
           Legacy information about the master node.
 
           *Deprecation notice:* This attribute is replaced by `master_nodes`.
-          It will be served until July 30, 2020 in the case that the cluster
+          It will be served until August 31, 2020 in the case that the cluster
           specification has one master node only.
         x-nullable: true
         properties:
