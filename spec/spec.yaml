@@ -3548,8 +3548,8 @@ paths:
                 "owner": "myteam",
                 "release_version": "11.0.0",
                 "name": "Production cluster using k8s 1.16",
-                "master": {
-                  "availability_zone": "europe-central-1c"
+                "master_nodes": {
+                  "high_availability": "true"
                 }
               }
       responses:
@@ -3564,8 +3564,9 @@ paths:
                 "owner": "myteam",
                 "release_version": "11.0.0",
                 "name": "Production cluster using k8s 1.16",
-                "master": {
-                  "availability_zone": "europe-central-1c"
+                "master_nodes": {
+                  "high_availability": true,
+                  "availability_zones": ["europe-central-1a", "europe-central-1c", "europe-central-1d"]
                 },
                 "nodepools": []
               }
@@ -3608,14 +3609,19 @@ paths:
             application/json:
               {
                 "id": "7g4di",
-                "create_date": "2019-06-01T12:00:13.949270905Z",
+                "create_date": "2020-06-16T12:00:13.949270905Z",
                 "api_endpoint": "https://api.k8s.7g4di.example.com",
-                "name": "All purpose cluster",
-                "release_version": "11.0.0",
+                "name": "Production cluster",
+                "release_version": "11.4.0",
                 "owner": "acme",
                 "credential_id": "a1b2c",
                 "master": {
                   "availability_zone": "europe-west-1c"
+                },
+                "master_nodes": {
+                  "high_availability": true,
+                  "availability_zones": ["europe-west-1c", "europe-west-1a", "europe-west-1b"],
+                  "num_ready": 3
                 },
                 "conditions": [
                   {
@@ -3633,7 +3639,7 @@ paths:
                   "aws-operator.giantswarm.io/version":"8.1.1",
                   "giantswarm.io/cluster":"7g4di",
                   "giantswarm.io/organization":"acme",
-                  "release.giantswarm.io/version":"11.0.0"
+                  "release.giantswarm.io/version":"11.4.0"
                 }
               }
         "301":
