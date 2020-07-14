@@ -989,6 +989,7 @@ definitions:
     properties:
       azure:
         type: object
+        x-nullable: true
         description: |
           Attributes specific to the Azure provider
         properties:
