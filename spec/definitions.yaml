@@ -984,6 +984,7 @@ definitions:
               Added with AWS release v11.2.0.
       azure:
         type: object
+        x-nullable: true
         description: |
           Attributes specific to the Azure provider
         properties:
