@@ -942,6 +942,7 @@ definitions:
     properties:
       aws:
         type: object
+        x-nullable: true
         description: |
           Attributes specific to the AWS provider
         properties:
