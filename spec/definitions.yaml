@@ -982,6 +982,15 @@ definitions:
               increase the likelihood to get instances for this pool, especially spot instances at
               a low rate. If false, only the exact type set as `instance_type` is used.
               Added with AWS release v11.2.0.
+      azure:
+        type: object
+        description: |
+          Attributes specific to the Azure provider
+        properties:
+          vm_size:
+            type: string
+            description: |
+              Azure VM size to use for all nodes in the node pool. _(Validated against available VM sizes.)_
 
   # Specification of a node in a node pool after creation
   V5GetNodePoolResponseNodeSpec:
@@ -1098,7 +1107,6 @@ definitions:
           spot_instances:
             description: Number of instances with lifecycle spot
             type: integer
-
 
   # Request to create a new cluster in V5
   V5AddClusterRequest:
