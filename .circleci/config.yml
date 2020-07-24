@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@0.10.0
+  architect: giantswarm/architect@0.10.1
 
 jobs:
   build:
@@ -12,8 +12,8 @@ jobs:
       - run:
           name: Install architect
           command: |
-            wget -q $(curl -sS -H "Authorization: token $RELEASE_TOKEN" https://api.github.com/repos/giantswarm/architect/releases/latest | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
-            chmod +x ./architect
+            architect_version="2.1.0"
+            curl -fsSL https://github.com/giantswarm/architect/releases/download/v${architect_version}/architect-v${architect_version}-linux-amd64.tar.gz | tar -xzv --strip-components 1 --wildcards '*/architect'
             ./architect version
 
       - run:
