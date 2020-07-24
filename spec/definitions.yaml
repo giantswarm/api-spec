@@ -668,11 +668,18 @@ definitions:
       labels:
         $ref: "./definitions.yaml#/definitions/V5ClusterLabelsProperty"
 
-  # A cluster array item, as return by getClusters
+  # A release array item, as return by getReleases
   V4ReleaseListItem:
     type: object
     required: ["version", "timestamp", "changelog", "components"]
     properties:
+      eol_date:
+        type: string
+        format: date-time
+        description: |
+          End-of-life date and time. After this date/time, a cluster
+          using this release will no longer be supported by Giant
+          Swarm.
       version:
         type: string
         description: The semantic version number

@@ -3471,6 +3471,7 @@ paths:
                 {
                   "version": "1.14.9",
                   "timestamp": "2017-09-21T08:14:03.37759Z",
+                  "eol_date": "2018-04-01T10:00:00Z",
                   "changelog": [
                     {
                       "component": "kubernetes",
