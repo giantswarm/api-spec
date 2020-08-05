@@ -671,7 +671,7 @@ definitions:
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:
     type: object
-    required: ["version", "timestamp", "changelog", "components"]
+    required: ["version", "timestamp", "active", "changelog", "components"]
     properties:
       version:
         type: string
@@ -681,6 +681,7 @@ definitions:
         description: Date and time of the release creation
       active:
         type: boolean
+        x-nullable: false
         description: |
           If true, the version is available for new clusters and cluster
           upgrades. Older versions become unavailable and thus have the
