@@ -671,7 +671,7 @@ definitions:
   # A cluster array item, as return by getClusters
   V4ReleaseListItem:
     type: object
-    required: ["version", "timestamp", "changelog", "components"]
+    required: ["version", "timestamp", "active", "changelog", "components"]
     properties:
       version:
         type: string
