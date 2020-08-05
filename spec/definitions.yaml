@@ -681,6 +681,7 @@ definitions:
         description: Date and time of the release creation
       active:
         type: boolean
+        x-nullable: false
         description: |
           If true, the version is available for new clusters and cluster
           upgrades. Older versions become unavailable and thus have the
