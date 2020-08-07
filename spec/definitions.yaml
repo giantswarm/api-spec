@@ -683,9 +683,10 @@ definitions:
         type: boolean
         x-nullable: false
         description: |
-          If true, the version is available for new clusters and cluster
+          If `true`, the version is recommended for use in cluster creation and cluster
           upgrades. Older versions become unavailable and thus have the
-          value `false` here.
+          value `false` here. Cluster creation with this version is still possible
+          but not recommended.
       changelog:
         description: |
           Structured list of changes in this release, in comparison to the
