@@ -912,6 +912,9 @@ definitions:
             description: |
               Number of zones to use. If given, the zones are picked
               automatically. _(Maximum limit of 4 supported.)_
+
+              On Azure, to increase the chances of finding available GPU instances,
+              set the value to `-1`.
           zones:
             type: array
             description: |
