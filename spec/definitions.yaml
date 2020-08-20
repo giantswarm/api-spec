@@ -914,7 +914,7 @@ definitions:
               automatically. _(Maximum limit of 4 supported.)_
 
               On Azure, to increase the chances of finding available GPU instances,
-              set the value to `-1`.
+              set the value to `-1` (no specific AZ selected).
           zones:
             type: array
             description: |
