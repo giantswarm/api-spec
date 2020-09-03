@@ -20,7 +20,7 @@ info:
 
     ## Versioning
 
-    Some endpoints are different, depdending on the release version of the tenant cluster that they expect. All V5 endpoints except a cluster release version newer than `10.0.0` on  <span class="badge aws">AWS</span>, or `12.2.0` on <span class="badge azure">Azure</span>. Cluster release versions older than that, or on different providers, must be used with V4 endpoints.
+    Some endpoint paths are different, depending on the release version of the tenant cluster that they expect. All V5 endpoints except a cluster release version newer than `10.0.0` on  <span class="badge aws">AWS</span>, or `12.2.0` on <span class="badge azure">Azure</span>. Cluster release versions older than that, or on different providers, must be used with V4 endpoints.
     If there is no V5 endpoint for a specific command (e.g. `Get clusters`), then release version rules don't apply, and the V4 endpoint must be used.
 
   termsOfService: https://giantswarm.io/terms/
