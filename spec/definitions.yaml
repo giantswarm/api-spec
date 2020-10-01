@@ -76,6 +76,11 @@ definitions:
           datacenter:
             description: Identifier of the datacenter or cloud provider region, e. g. "eu-west-1"
             type: string
+          supported_k8s_version_skews:
+            description: The supported Kubernetes version skews.
+            type: array
+            items:
+              type: string
           availability_zones:
             type: object
             description: Number of availability zones which a cluster can be spread across.

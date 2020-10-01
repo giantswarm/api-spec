@@ -234,6 +234,9 @@ paths:
             "installation_name": "shire",
             "provider": "aws",
             "datacenter": "eu-central-1",
+            "supported_k8s_version_skews": [
+                "1.17", "1.18", "1.19"
+            ],
             "availability_zones": {
               "max": 3,
               "default": 1,
@@ -272,6 +275,9 @@ paths:
             "installation_name": "isengard",
             "provider": "kvm",
             "datacenter": "string",
+            "supported_k8s_version_skews": [
+                "1.17", "1.18", "1.19"
+            ],
             "availability_zones": {
               "max": 1,
               "default": 1,
@@ -308,6 +314,9 @@ paths:
                   "installation_name": "shire",
                   "provider": "aws",
                   "datacenter": "eu-central-1",
+                  "supported_k8s_version_skews": [
+                      "1.17", "1.18", "1.19"
+                  ],
                   "availability_zones": {
                     "max": 3,
                     "default": 1,
