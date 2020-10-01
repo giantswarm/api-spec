@@ -235,7 +235,7 @@ paths:
             "provider": "aws",
             "datacenter": "eu-central-1",
             "supported_k8s_version_skews": [
-                "1.17", "1.18", "1.19"
+              "1.17", "1.18", "1.19"
             ],
             "availability_zones": {
               "max": 3,
@@ -276,7 +276,7 @@ paths:
             "provider": "kvm",
             "datacenter": "string",
             "supported_k8s_version_skews": [
-                "1.17", "1.18", "1.19"
+              "1.17", "1.18", "1.19"
             ],
             "availability_zones": {
               "max": 1,
@@ -315,7 +315,7 @@ paths:
                   "provider": "aws",
                   "datacenter": "eu-central-1",
                   "supported_k8s_version_skews": [
-                      "1.17", "1.18", "1.19"
+                    "1.17", "1.18", "1.19"
                   ],
                   "availability_zones": {
                     "max": 3,
