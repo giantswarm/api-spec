@@ -76,11 +76,22 @@ definitions:
           datacenter:
             description: Identifier of the datacenter or cloud provider region, e. g. "eu-west-1"
             type: string
-          supported_k8s_version_skews:
-            description: The supported Kubernetes version skews.
+          kubernetes_versions:
+            description: A list of the available Kubernetes versions available, and their EOL dates.
             type: array
             items:
-              type: string
+              type: object
+              required:
+                - minor_version
+                - eol_date
+              properties:
+                minor_version:
+                  description: The version of the Kubernetes release.
+                  type: string
+                eol_date:
+                  description: The date when the release becomes EOL.
+                  type: string
+                  format: date-time
           availability_zones:
             type: object
             description: Number of availability zones which a cluster can be spread across.

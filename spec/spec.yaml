@@ -234,8 +234,15 @@ paths:
             "installation_name": "shire",
             "provider": "aws",
             "datacenter": "eu-central-1",
-            "supported_k8s_version_skews": [
-              "1.17", "1.18", "1.19"
+            "kubernetes_versions": [
+              {
+                "minor_version": "1.15",
+                "eol_date": "2020-03-24T00:00:47.215Z"
+              },
+              {
+                "minor_version": "1.16",
+                "eol_date": "2020-08-26T00:00:47.215Z"
+              }
             ],
             "availability_zones": {
               "max": 3,
@@ -275,8 +282,15 @@ paths:
             "installation_name": "isengard",
             "provider": "kvm",
             "datacenter": "string",
-            "supported_k8s_version_skews": [
-              "1.17", "1.18", "1.19"
+            "kubernetes_versions": [
+              {
+                "minor_version": "1.15",
+                "eol_date": "2020-03-24T00:00:47.215Z"
+              },
+              {
+                "minor_version": "1.16",
+                "eol_date": "2020-08-26T00:00:47.215Z"
+              }
             ],
             "availability_zones": {
               "max": 1,
@@ -314,8 +328,15 @@ paths:
                   "installation_name": "shire",
                   "provider": "aws",
                   "datacenter": "eu-central-1",
-                  "supported_k8s_version_skews": [
-                    "1.17", "1.18", "1.19"
+                  "kubernetes_versions": [
+                    {
+                      "minor_version": "1.15",
+                      "eol_date": "2020-03-24T00:00:47.215Z"
+                    },
+                    {
+                      "minor_version": "1.16",
+                      "eol_date": "2020-08-26T00:00:47.215Z"
+                    }
                   ],
                   "availability_zones": {
                     "max": 3,
