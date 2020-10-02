@@ -77,7 +77,7 @@ definitions:
             description: Identifier of the datacenter or cloud provider region, e. g. "eu-west-1"
             type: string
           kubernetes_versions:
-            description: A list of the available Kubernetes versions available, and their EOL dates.
+            description: Information on some kubernetes versions and their end of life dates.
             type: array
             items:
               type: object
