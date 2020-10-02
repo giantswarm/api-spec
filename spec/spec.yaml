@@ -237,11 +237,11 @@ paths:
             "kubernetes_versions": [
               {
                 "minor_version": "1.15",
-                "eol_date": "2020-03-24T00:00:47.215Z"
+                "eol_date": "2020-03-24"
               },
               {
                 "minor_version": "1.16",
-                "eol_date": "2020-08-26T00:00:47.215Z"
+                "eol_date": "2020-08-26"
               }
             ],
             "availability_zones": {
@@ -285,11 +285,11 @@ paths:
             "kubernetes_versions": [
               {
                 "minor_version": "1.15",
-                "eol_date": "2020-03-24T00:00:47.215Z"
+                "eol_date": "2020-03-24"
               },
               {
                 "minor_version": "1.16",
-                "eol_date": "2020-08-26T00:00:47.215Z"
+                "eol_date": "2020-08-26"
               }
             ],
             "availability_zones": {
@@ -331,11 +331,11 @@ paths:
                   "kubernetes_versions": [
                     {
                       "minor_version": "1.15",
-                      "eol_date": "2020-03-24T00:00:47.215Z"
+                      "eol_date": "2020-03-24"
                     },
                     {
                       "minor_version": "1.16",
-                      "eol_date": "2020-08-26T00:00:47.215Z"
+                      "eol_date": "2020-08-26"
                     }
                   ],
                   "availability_zones": {

@@ -91,7 +91,7 @@ definitions:
                 eol_date:
                   description: The date when the release becomes EOL.
                   type: string
-                  format: date-time
+                  format: date
           availability_zones:
             type: object
             description: Number of availability zones which a cluster can be spread across.
