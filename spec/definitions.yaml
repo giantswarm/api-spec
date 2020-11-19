@@ -1183,6 +1183,29 @@ definitions:
 
               When `false`, only one master node will be created, also in a randomly
               selected availability zone.
+          availability_zones_selection_mode:
+            type: string
+            default: auto
+            description: |
+              Specifies how the availability zone(s) for the master node(s) should be selected.
+              Possible values are `auto`, `manual` and `disabled`
+
+              When set to `auto` the system will randomly assign an availability zone to each
+              master node.
+
+              When set to `manual` the request needs to contain an additional field `availability_zones`
+              containing the list of desired availability zones the master nodes should be placed in.
+
+              When set to `disabled` the master nodes will not be placed in any availability zone
+              (supported on Azure clusters only).
+          availability_zones:
+            type: array
+            items:
+              type: string
+            description: |
+              When `availability_zones_selection_mode` is set to `manual`, this field becomes
+              mandatory and allow manually specifying the availability zone(s) where the master node(s)
+              should be created in.
   V5ClusterDetailsResponse:
     type: object
     properties:
