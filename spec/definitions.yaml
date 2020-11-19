@@ -1206,6 +1206,8 @@ definitions:
               When `availability_zones_selection_mode` is set to `manual`, this field becomes
               mandatory and allow manually specifying the availability zone(s) where the master node(s)
               should be created in.
+
+              This parameter is supported on Azure clusters only.
   V5ClusterDetailsResponse:
     type: object
     properties:
