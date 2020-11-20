@@ -1099,6 +1099,7 @@ definitions:
         properties:
           min:
             description: Minimum number of nodes in the pool
+            x-nullable: true
             type: integer
           max:
             description: Maximum number of nodes in the pool
