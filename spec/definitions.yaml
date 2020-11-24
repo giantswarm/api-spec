@@ -948,6 +948,7 @@ definitions:
           min:
             description: Minimum number of nodes in the pool.
             type: integer
+            x-nullable: true
           max:
             description: Maximum number of nodes in the pool.
             type: integer
@@ -1346,6 +1347,7 @@ definitions:
           min:
             description: Minimum number of nodes in the pool
             type: integer
+            x-nullable: true
           max:
             description: Maximum number of nodes in the pool
             type: integer
