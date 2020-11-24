@@ -49,7 +49,7 @@ tags:
     description: |
       Cluster labels allow users to group and tag clusters with custom key-value-pairs.
 
-      Note: Cluster labelling is currently only available on release version 10 or higher on <span class="badge aws">AWS</span>, or release version 13 or higher on <span class="badge azure">Azure</span>.
+      Note: Cluster labelling is currently only available on release version 10 or higher on <span class="badge aws">AWS</span>, and release version 13 or higher on <span class="badge azure">Azure</span>.
   - name: info
     description: Information about the Giant Swarm installation
   - name: key pairs
