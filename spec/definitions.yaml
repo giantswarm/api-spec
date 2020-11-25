@@ -1188,6 +1188,25 @@ definitions:
 
               When `false`, only one master node will be created, also in a randomly
               selected availability zone.
+          availability_zones:
+            type: array
+            items:
+              type: string
+            description: |
+              This field allows manually specifying the availability zone(s) where the master node(s)
+              should be created in.
+
+              This parameter is currently only supported on <span class="badge azure">Azure</span>.
+          azure:
+            type: object
+            description: |
+              Attributes specific to nodes running on <span class="badge azure">Azure</span>.
+            properties:
+              availability_zones_unspecified:
+                type: boolean
+                description: |
+                  If this field is set to true, the content of the `availability_zones' field will be ignored and
+                  the master nodes will be placed in no availability zone.
   V5ClusterDetailsResponse:
     type: object
     properties:
