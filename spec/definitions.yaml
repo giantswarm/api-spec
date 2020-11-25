@@ -224,6 +224,7 @@ definitions:
         properties:
           min:
             type: integer
+            x-nullable: true
             description: |
               Minimum number of cluster nodes
           max:
@@ -260,6 +261,7 @@ definitions:
         properties:
           min:
             type: integer
+            x-nullable: true
             description: |
               Minimum number of cluster nodes
           max:
@@ -315,6 +317,7 @@ definitions:
         properties:
           min:
             type: integer
+            x-nullable: true
             description: |
               Minimum number of cluster nodes as configured
           max:
@@ -1099,6 +1102,7 @@ definitions:
         properties:
           min:
             description: Minimum number of nodes in the pool
+            x-nullable: true
             type: integer
           max:
             description: Maximum number of nodes in the pool
