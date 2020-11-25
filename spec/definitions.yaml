@@ -1196,7 +1196,7 @@ definitions:
           azure:
             type: object
             description: |
-              Attributes specific to nodes running on Microsoft Azure
+              Attributes specific to nodes running on <span class="badge azure">Azure</span>.
             properties:
               availability_zones_unspecified:
                 type: boolean
