@@ -1192,7 +1192,7 @@ definitions:
               This field allows manually specifying the availability zone(s) where the master node(s)
               should be created in.
 
-              This parameter is supported on Azure clusters only.
+              This parameter is currently only supported on <span class="badge azure">Azure</span>.
           azure:
             type: object
             description: |
