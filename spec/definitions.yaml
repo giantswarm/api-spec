@@ -76,6 +76,22 @@ definitions:
           datacenter:
             description: Identifier of the datacenter or cloud provider region, e. g. "eu-west-1"
             type: string
+          kubernetes_versions:
+            description: Information on some kubernetes versions and their end of life dates.
+            type: array
+            items:
+              type: object
+              required:
+                - minor_version
+                - eol_date
+              properties:
+                minor_version:
+                  description: The version of the Kubernetes release.
+                  type: string
+                eol_date:
+                  description: The date when the release becomes EOL.
+                  type: string
+                  format: date
           availability_zones:
             type: object
             description: Number of availability zones which a cluster can be spread across.
@@ -208,6 +224,7 @@ definitions:
         properties:
           min:
             type: integer
+            x-nullable: true
             description: |
               Minimum number of cluster nodes
           max:
@@ -244,6 +261,7 @@ definitions:
         properties:
           min:
             type: integer
+            x-nullable: true
             description: |
               Minimum number of cluster nodes
           max:
@@ -299,6 +317,7 @@ definitions:
         properties:
           min:
             type: integer
+            x-nullable: true
             description: |
               Minimum number of cluster nodes as configured
           max:
@@ -913,6 +932,9 @@ definitions:
             description: |
               Number of zones to use. If given, the zones are picked
               automatically. _(Maximum limit of 4 supported.)_
+
+              On Azure, to increase the chances of finding available GPU instances,
+              set the value to `-1` (no specific AZ selected).
           zones:
             type: array
             description: |
@@ -930,6 +952,7 @@ definitions:
           min:
             description: Minimum number of nodes in the pool.
             type: integer
+            x-nullable: true
           max:
             description: Maximum number of nodes in the pool.
             type: integer
@@ -1080,6 +1103,7 @@ definitions:
         properties:
           min:
             description: Minimum number of nodes in the pool
+            x-nullable: true
             type: integer
           max:
             description: Maximum number of nodes in the pool
@@ -1165,6 +1189,25 @@ definitions:
 
               When `false`, only one master node will be created, also in a randomly
               selected availability zone.
+          availability_zones:
+            type: array
+            items:
+              type: string
+            description: |
+              This field allows manually specifying the availability zone(s) where the master node(s)
+              should be created in.
+
+              This parameter is currently only supported on <span class="badge azure">Azure</span>.
+          azure:
+            type: object
+            description: |
+              Attributes specific to nodes running on <span class="badge azure">Azure</span>.
+            properties:
+              availability_zones_unspecified:
+                type: boolean
+                description: |
+                  If this field is set to true, the content of the `availability_zones' field will be ignored and
+                  the master nodes will be placed in no availability zone.
   V5ClusterDetailsResponse:
     type: object
     properties:
@@ -1303,6 +1346,7 @@ definitions:
           min:
             description: Minimum number of nodes in the pool
             type: integer
+            x-nullable: true
           max:
             description: Maximum number of nodes in the pool
             type: integer

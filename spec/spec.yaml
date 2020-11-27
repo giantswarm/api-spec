@@ -18,6 +18,11 @@ info:
 
     The source of this documentation is available on [GitHub](https://github.com/giantswarm/api-spec).
 
+    ## Versioning
+
+    Some endpoint paths are different, depending on the release version of the tenant cluster that they expect. All V5 endpoints except a cluster release version newer than `10.0.0` on  <span class="badge aws">AWS</span>, or `13.0.0` on <span class="badge azure">Azure</span>. Cluster release versions older than that, or on different providers, must be used with V4 endpoints.
+    If there is no V5 endpoint for a specific command (e.g. `Get clusters`), then release version rules don't apply, and the V4 endpoint must be used.
+
   termsOfService: https://giantswarm.io/terms/
   version: 4.0.0
   license:
@@ -44,7 +49,7 @@ tags:
     description: |
       Cluster labels allow users to group and tag clusters with custom key-value-pairs.
 
-      Note: Cluster labelling is currently only available on release version 10 or higher on <span class="badge aws">AWS</span>.
+      Note: Cluster labelling is currently only available on tenant cluster release version 10 or higher on <span class="badge aws">AWS</span>, and tenant cluster release version 13 or higher on <span class="badge azure">Azure</span>.
   - name: info
     description: Information about the Giant Swarm installation
   - name: key pairs
@@ -229,6 +234,16 @@ paths:
             "installation_name": "shire",
             "provider": "aws",
             "datacenter": "eu-central-1",
+            "kubernetes_versions": [
+              {
+                "minor_version": "1.15",
+                "eol_date": "2020-03-24"
+              },
+              {
+                "minor_version": "1.16",
+                "eol_date": "2020-08-26"
+              }
+            ],
             "availability_zones": {
               "max": 3,
               "default": 1,
@@ -267,6 +282,16 @@ paths:
             "installation_name": "isengard",
             "provider": "kvm",
             "datacenter": "string",
+            "kubernetes_versions": [
+              {
+                "minor_version": "1.15",
+                "eol_date": "2020-03-24"
+              },
+              {
+                "minor_version": "1.16",
+                "eol_date": "2020-08-26"
+              }
+            ],
             "availability_zones": {
               "max": 1,
               "default": 1,
@@ -303,6 +328,16 @@ paths:
                   "installation_name": "shire",
                   "provider": "aws",
                   "datacenter": "eu-central-1",
+                  "kubernetes_versions": [
+                    {
+                      "minor_version": "1.15",
+                      "eol_date": "2020-03-24"
+                    },
+                    {
+                      "minor_version": "1.16",
+                      "eol_date": "2020-08-26"
+                    }
+                  ],
                   "availability_zones": {
                     "max": 3,
                     "default": 1,
