@@ -107,7 +107,7 @@ definitions:
                 type: integer
               zones:
                 type: array
-                description: The availability zones available in the installation's region for use with tenant clusters.
+                description: The availability zones available in the installation's region for use with workload clusters.
                 items:
                   type: string
       features:
@@ -342,14 +342,14 @@ definitions:
           port_mappings:
             type: array
             description: |
-              Reveals the ports on the control plane that are mapped to this tenant cluster's ingress
+              Reveals the ports on the control plane that are mapped to this workload cluster's ingress
               and which protocol that port supports. Only shown and relevant on our on-prem KVM clusters.
             items:
               type: object
               properties:
                 port:
                   description: |
-                    The port on the control plane that will forward traffic to the tenant cluster
+                    The port on the control plane that will forward traffic to the workload cluster
                   type: integer
                 protocol:
                   description: |
@@ -1082,7 +1082,7 @@ definitions:
     type: object
     properties:
       id:
-        description: Node pool identifier. Unique within a tenant cluster.
+        description: Node pool identifier. Unique within a workload cluster.
         type: string
       name:
         description: Node pool name
