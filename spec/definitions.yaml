@@ -337,7 +337,7 @@ definitions:
           $ref: '#/definitions/V4NodeDefinition'
       kvm:
         type: object
-        description: Attributes specific to clusters running on KVM (on-prem) installations.
+        description: Attributes specific to clusters running on KVM (on-premises) installations.
         properties:
           port_mappings:
             type: array
