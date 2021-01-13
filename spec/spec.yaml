@@ -59,9 +59,6 @@ tags:
       description: "User guide: Accessing Pods and Services from the Outside"
   - name: node pools
     description: |
-      This concept is introduced with v5 of this API and is currently (as of October 2019) only
-      available on <span class="badge aws">AWS</span> to selected Giant Swarm customers.
-
       Node pools are groups of worker nodes. All worker nodes in a
       node pool share the same configuration. Also scaling is controlled on a pool
       level. This allows to fulfill a variety of different workload requirements
