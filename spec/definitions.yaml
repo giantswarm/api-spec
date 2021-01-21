@@ -1032,11 +1032,11 @@ definitions:
               max_price:
                 description: |
                   The maximum price that a single node pool VM instance can reach before it is deallocated.
-                  By setting this value to `-1`, the maximum price will be fixed to the on-demand price of
+                  By setting this value to `0`, the maximum price will be fixed to the on-demand price of
                   the instance.
                   The value can be a floating point number with a maximum of 5 decimal places.
                 type: number
-                default: -1
+                default: 0
 
   # Specification of a node in a node pool after creation
   V5GetNodePoolResponseNodeSpec:
