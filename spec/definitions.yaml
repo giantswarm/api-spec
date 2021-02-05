@@ -1036,6 +1036,7 @@ definitions:
                   the instance.
                   The value can be a floating point number with a maximum of 5 decimal places.
                 type: number
+                format: float
                 default: 0
 
   # Specification of a node in a node pool after creation
