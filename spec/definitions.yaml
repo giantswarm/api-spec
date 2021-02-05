@@ -1031,7 +1031,7 @@ definitions:
                 default: false
               max_price:
                 description: |
-                  The maximum price that a single node pool VM instance can reach before it is deallocated.
+                  The maximum price in USD that a single node pool VM instance can reach before it is deallocated.
                   By setting this value to `0`, the maximum price will be fixed to the on-demand price of
                   the instance.
                   The value can be a floating point number with a maximum of 5 decimal places.
