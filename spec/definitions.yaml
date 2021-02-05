@@ -1064,7 +1064,7 @@ definitions:
                 type: boolean
               max_price:
                 description: |
-                  The maximum price that a single node pool VM instance can reach before it is deallocated.
+                  The maximum price in USD that a single node pool VM instance can reach before it is deallocated.
                   Find details on this attribute in the [addNodePool](#operation/addNodePool) operation.
                 type: number
       aws:
