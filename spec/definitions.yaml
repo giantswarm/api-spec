@@ -1019,6 +1019,25 @@ definitions:
             type: string
             description: |
               Azure VM size to use for all nodes in the node pool. _(Validated against available VM sizes.)_
+          spot_instances:
+            description: |
+              Attributes defining the presence and configuration of Spot Instances.
+            type: object
+            properties:
+              enabled:
+                description: |
+                  Whether the feature is enabled or not.
+                type: boolean
+                default: false
+              max_price:
+                description: |
+                  The maximum price per hour (in USD) that a single node pool VM instance can reach before it is deallocated.
+                  By setting this value to `0`, the maximum price will be fixed to the on-demand price of
+                  the instance.
+                  The value can be a floating point number with a maximum of 5 decimal places.
+                type: number
+                format: float
+                default: 0
 
   # Specification of a node in a node pool after creation
   V5GetNodePoolResponseNodeSpec:
@@ -1034,6 +1053,21 @@ definitions:
             type: string
             description: |
               Azure virtual machine size used by all nodes in this pool.
+          spot_instances:
+            description: |
+              Attributes defining the presence and configuration of Spot Instances.
+            type: object
+            properties:
+              enabled:
+                description: |
+                  Whether the feature is enabled or not.
+                type: boolean
+              max_price:
+                description: |
+                  The maximum price per hour (in USD) that a single node pool VM instance can reach before it is deallocated.
+                  Find details on this attribute in the [addNodePool](#operation/addNodePool) operation.
+                type: number
+                format: float
       aws:
         type: object
         x-nullable: true
