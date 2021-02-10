@@ -1,5 +1,4 @@
 definitions:
-
   # Generic response model
   V4GenericResponse:
     type: object
@@ -238,7 +237,7 @@ definitions:
           of the array is expected to contain the specification for all worker
           nodes. Not available on AWS.
         items:
-          $ref: '#/definitions/V4NodeDefinition'
+          $ref: "#/definitions/V4NodeDefinition"
 
   V4ModifyClusterRequest:
     type: object
@@ -272,7 +271,7 @@ definitions:
         type: array
         description: Worker node array (deprecated)
         items:
-          $ref: '#/definitions/V4NodeDefinition'
+          $ref: "#/definitions/V4NodeDefinition"
 
   # Details on existing cluster
   V4ClusterDetailsResponse:
@@ -290,7 +289,6 @@ definitions:
         description: Date/time of cluster creation
       delete_date:
         type: string
-        format: date-time
         description: Date/time when cluster has been deleted
         x-nullable: true
       owner:
@@ -334,7 +332,7 @@ definitions:
         description: Information about worker nodes in the cluster (deprecated)
         type: array
         items:
-          $ref: '#/definitions/V4NodeDefinition'
+          $ref: "#/definitions/V4NodeDefinition"
       kvm:
         type: object
         description: Attributes specific to clusters running on KVM (on-premises) installations.
@@ -468,7 +466,7 @@ definitions:
             type: string
             description: The catalog that this app came from
           user_config:
-            $ref: './definitions.yaml#/definitions/V4AppSpecUserConfig'
+            $ref: "./definitions.yaml#/definitions/V4AppSpecUserConfig"
       status:
         type: object
         properties:
@@ -515,7 +513,7 @@ definitions:
     type: array
     description: Array of apps
     items:
-      $ref: '#/definitions/V4App'
+      $ref: "#/definitions/V4App"
 
   V4GetClusterAppConfigResponse:
     type: object
@@ -626,7 +624,7 @@ definitions:
         type: array
         description: List of members that belong to this organization
         items:
-          $ref: '#/definitions/V4OrganizationMember'
+          $ref: "#/definitions/V4OrganizationMember"
 
   # An organization as returned by getOrganizations as an array item
   V4OrganizationListItem:
@@ -670,7 +668,6 @@ definitions:
         description: Date/time of cluster creation
       delete_date:
         type: string
-        format: date-time
         description: Date/time when cluster has been deleted
         x-nullable: true
       name:
@@ -879,7 +876,7 @@ definitions:
       List of credential sets for an organization. As of now, this can contain
       either zero or one items.
     items:
-      $ref: '#/definitions/V4GetCredentialResponse'
+      $ref: "#/definitions/V4GetCredentialResponse"
 
   # A request for an auth token
   V4CreateAuthTokenRequest:
@@ -900,12 +897,11 @@ definitions:
         type: string
         description: The newly created API token
 
-
   # List of node pools
   V5GetNodePoolsResponse:
     type: array
     items:
-      $ref: '#/definitions/V5GetNodePoolResponse'
+      $ref: "#/definitions/V5GetNodePoolResponse"
 
   # Add node pool
   V5AddNodePoolRequest:
@@ -960,7 +956,7 @@ definitions:
       node_spec:
         description: Worker node specification
         type: object
-        $ref: '#/definitions/V5AddNodePoolRequestNodeSpec'
+        $ref: "#/definitions/V5AddNodePoolRequestNodeSpec"
 
   # Specification of a node in a node pool to be created
   V5AddNodePoolRequestNodeSpec:
@@ -1149,7 +1145,7 @@ definitions:
       node_spec:
         description: Worker node specification
         type: object
-        $ref: '#/definitions/V5GetNodePoolResponseNodeSpec'
+        $ref: "#/definitions/V5GetNodePoolResponseNodeSpec"
       status:
         description: Information on the current size and status of the node pool
         type: object
@@ -1257,7 +1253,6 @@ definitions:
         description: Date/time of cluster creation
       delete_date:
         type: string
-        format: date-time
         description: Date/time when cluster has been deleted
         x-nullable: true
       owner:
