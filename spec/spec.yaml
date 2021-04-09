@@ -162,7 +162,7 @@ paths:
                 "logoURL": "https://s.giantswarm.io/app-catalog/1/images/sample-catalog.png",
 
                 "storage": {
-                  "URL": "https://giantswarm.github.com/sample-catalog/",
+                  "URL": "https://giantswarm.github.io/sample-catalog/",
                   "type": "helm"
                 },
                 "title": "Sample Catalog"
@@ -196,7 +196,7 @@ paths:
                     "logoURL": "https://s.giantswarm.io/app-catalog/1/images/sample-catalog.png",
 
                     "storage": {
-                      "URL": "https://giantswarm.github.com/sample-catalog/",
+                      "URL": "https://giantswarm.github.io/sample-catalog/",
                       "type": "helm"
                     },
                     "title": "Sample Catalog"
