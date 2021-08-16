@@ -7,7 +7,7 @@ ADD spec/spec.yaml /workdir/
 RUN ./node_modules/.bin/openapi-filter /workdir/spec.yaml /workdir/spec-filtered.yaml
 
 # Step 2: Create webserver
-FROM nginxinc/nginx-unprivileged:1.16-alpine
+FROM quay.io/giantswarm/nginx-unprivileged:1.21-alpine
 USER 0
 RUN rm -r /etc/nginx/conf.d
 ADD docserver/index.html /www/
