@@ -27,11 +27,11 @@ workflows:
           requires:
             - lint
       - architect/push-to-app-catalog:
-          name: "package and push api-spec"
-          app_catalog: "giantswarm-operations-platform-catalog"
-          app_catalog_test: "giantswarm-operations-platform-test-catalog"
-          chart: "api-spec-app"
-          # Trigger job on git tag.
+          name: push-to-app-catalog
+          context: architect
+          app_catalog: giantswarm-operations-platform-catalog
+          app_catalog_test: giantswarm-operations-platform-test-catalog
+          chart: api-spec-app
           filters:
             tags:
               only: /^v.*/
