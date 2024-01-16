@@ -1,44 +1,31 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@2.7.0
+  architect: giantswarm/architect@4.38.0
 
 jobs:
-  build:
+  lint:
     machine:
       image: ubuntu-2204:2023.07.2
     steps:
       - checkout
-
       - run:
-          name: Install architect
-          command: |
-            architect_version="2.1.0"
-            curl -fsSL https://github.com/giantswarm/architect/releases/download/v${architect_version}/architect-v${architect_version}-linux-amd64.tar.gz | tar -xzv --strip-components 1 --wildcards '*/architect'
-            ./architect version
-
-      - run:
-          name: Test
+          name: Verify OpenAPI spec syntax
           command: make test
 
-      - run:
-          name: Build
-          command: ./architect build
-
-      - run:
-          name: Deploy (default branch only)
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              ./architect deploy
-            fi
 
 workflows:
   package-and-push-chart-on-tag:
     jobs:
-      - build:
-          filters:  # required since `architect/push-to-app-catalog` has tag filters AND requires `build`
+      - lint
+      - architect/push-to-registries:
+          name: push-to-registries
+          context: architect
+          filters:
             tags:
               only: /.*/
+          requires:
+            - lint
       - architect/push-to-app-catalog:
           name: "package and push api-spec"
           app_catalog: "giantswarm-operations-platform-catalog"
@@ -49,4 +36,4 @@ workflows:
             tags:
               only: /^v.*/
           requires:
-            - build
+            - push-to-registries
