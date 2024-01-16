@@ -10,7 +10,7 @@ definitions:
       code:
         type: string
         description: |
-          A machine readable [response code](https://github.com/giantswarm/api-spec/blob/master/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
+          A machine readable [response code](https://github.com/giantswarm/api-spec/blob/main/details/RESPONSE_CODES.md) like e. g. `INVALID_CREDENTIALS`
 
   # App Catalogs Response
   V4AppCatalogsResponse:
