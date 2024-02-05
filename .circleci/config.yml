@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@4.38.0
+  architect: giantswarm/architect@5.0.0
 
 jobs:
   lint:
@@ -15,7 +15,7 @@ jobs:
 
 
 workflows:
-  package-and-push-chart-on-tag:
+  build-workflow:
     jobs:
       - lint
       - architect/push-to-registries:
@@ -23,7 +23,7 @@ workflows:
           context: architect
           filters:
             tags:
-              only: /.*/
+              only: /^v.*/
           requires:
             - lint
       - architect/push-to-app-catalog:
