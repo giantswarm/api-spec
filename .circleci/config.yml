@@ -18,6 +18,9 @@ workflows:
   build-workflow:
     jobs:
       - lint
+          filters:
+            tags:
+              only: /^v.*/
       - architect/push-to-registries:
           name: push-to-registries
           context: architect
