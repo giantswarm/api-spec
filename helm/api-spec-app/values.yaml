@@ -4,3 +4,6 @@ image:
   name: api-spec
   tag: "[[.Version]]"
   sha: "[[.SHA]]"
+global:
+  podSecurityStandards:
+    enforced: false
