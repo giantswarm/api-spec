@@ -1,5 +1,3 @@
-[![Docker Repository on Quay](https://quay.io/repository/giantswarm/api-spec/status "Docker Repository on Quay")](https://quay.io/repository/giantswarm/api-spec)
-
 # Giant Swarm API Specification
 
 This repository holds the specification for the Giant Swarm API, starting at version `v4`.
