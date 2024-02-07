@@ -1,6 +1,7 @@
 name: api-spec-app
 namespace: docs
 image:
+  registry: gsoci.azurecr.io
   name: api-spec
   tag: "[[.Version]]"
   sha: "[[.SHA]]"
