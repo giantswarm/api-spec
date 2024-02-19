@@ -1,63 +1,23 @@
-PWD := $(shell pwd)
-PHONY: lint spec-tmp.yaml
+# DO NOT EDIT. Generated with:
+#
+#    devctl@6.20.0
+#
 
-SWAGGER_VERSION=2.2.3
-GOSWAGGER_VERSION=0.19.0
+include Makefile.*.mk
 
-# YAML linting
-lint:
-	docker run --rm -ti \
-		-v $(PWD):/workdir \
-		-w /workdir \
-		giantswarm/yamllint \
-		-c ./yamllint/config.yaml \
-		./spec/*
+##@ General
 
-# Validate the swagger/OAI spec
-validate:
-	# Useful to ensure gsclientgen client generation works
-	@echo "Validating with go-swagger"
-	docker run --rm -it \
-		-v ${PWD}:/workdir \
-		-w /workdir \
-		quay.io/goswagger/swagger:v${GOSWAGGER_VERSION} \
-			validate ./spec/spec.yaml
+# The help target prints out all targets with their descriptions organized
+# beneath their categories. The categories are represented by '##@' and the
+# target descriptions by '##'. The awk commands is responsible for reading the
+# entire set of makefiles included in this invocation, looking for lines of the
+# file as xyz: ## something, and then pretty-format the target and help. Then,
+# if there's a line with ##@ something, that gets pretty-printed as a category.
+# More info on the usage of ANSI control characters for terminal formatting:
+# https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters
+# More info on the awk command:
+# http://linuxcommand.org/lc3_adv_awk.php
 
-	@echo "Generating swagger representation"
-	docker run --rm -it \
-		-v $(shell pwd):/code/yaml \
-		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
-		--input-spec /code/yaml/spec/spec.yaml \
-		--lang swagger --output /tmp/
-
-	@echo "Generating JavaScript client code for test purposes"
-	docker run --rm -it \
-		-v $(shell pwd):/code/yaml \
-		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
-		--input-spec /code/yaml/spec/spec.yaml \
-		--lang javascript --output /tmp/
-
-# This is exclusively for testing on CircleCI.
-# The --rm=false is required to prevent an error on CircleCI.
-test: lint
-	docker run --rm=false -it \
-		-v $(shell pwd):/code/yaml \
-		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
-		--input-spec /code/yaml/spec/spec.yaml \
-		--lang swagger --output /tmp/
-	docker run --rm=false -it \
-		-v $(shell pwd):/code/yaml \
-		jimschubert/swagger-codegen-cli:${SWAGGER_VERSION} generate \
-		--input-spec /code/yaml/spec/spec.yaml \
-		--lang javascript --output /tmp/
-
-# Run a server to show the HTML docs UI on http://localhost:8080
-run-server:
-	docker build -t api-spec-dev -f Dockerfile .
-	docker run --rm -p 8080:8000 api-spec-dev
-
-mock:
-	docker run --rm -it -p 4010:4010 -v $(shell pwd)/spec:/spec stoplight/prism:3 mock -h 0.0.0.0 --cors "/spec/spec.yaml"
-
-mock-dynamic:
-	docker run --rm -it -p 4010:4010 -v $(shell pwd)/spec:/spec stoplight/prism:3 mock -h 0.0.0.0 --cors --dynamic "/spec/spec.yaml"
+.PHONY: help
+help: ## Display this help.
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z%\\\/_0-9-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
