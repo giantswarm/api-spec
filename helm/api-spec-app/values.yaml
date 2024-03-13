@@ -5,6 +5,13 @@ image:
   name: api-spec
   tag: "[[.Version]]"
   sha: "[[.SHA]]"
+resources:
+  requests:
+    cpu: 5m
+    memory: 5M
+  limits:
+    cpu: 50m
+    memory: 20M
 global:
   podSecurityStandards:
     enforced: false
